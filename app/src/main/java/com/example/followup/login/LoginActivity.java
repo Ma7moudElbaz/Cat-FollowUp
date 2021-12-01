@@ -9,7 +9,7 @@ import android.widget.Toast;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
-import com.example.followup.projects.ProjectsActivity;
+import com.example.followup.home.HomeActivity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 import com.google.android.material.textfield.TextInputEditText;
@@ -34,7 +34,7 @@ public class LoginActivity extends LocalizationActivity {
 
     private ProgressDialog dialog;
 
-    String device_token ="";
+    String device_token = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class LoginActivity extends LocalizationActivity {
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
                     }
-
+                    dialog.dismiss();
                 }
 
                 @Override
@@ -157,7 +157,7 @@ public class LoginActivity extends LocalizationActivity {
                         UserUtils.setSubscribedTopic(getBaseContext(), topicToSubscribe);
                         FirebaseMessaging.getInstance().subscribeToTopic(topicToSubscribe);
 
-                        Intent i = new Intent(getBaseContext(), ProjectsActivity.class);
+                        Intent i = new Intent(getBaseContext(), HomeActivity.class);
                         startActivity(i);
 //                            finish();
 

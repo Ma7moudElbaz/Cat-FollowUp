@@ -14,7 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.example.followup.R;
-import com.example.followup.projects.ProjectsActivity;
+import com.example.followup.home.HomeActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -33,7 +33,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendNotification(RemoteMessage remoteMessage) {
-        Intent intent = new Intent(this, ProjectsActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
                 1915, intent, PendingIntent.FLAG_ONE_SHOT);
         String channelId = "High";

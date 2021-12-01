@@ -6,10 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.login.LoginActivity;
 import com.example.followup.R;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends LocalizationActivity {
 
     Button signIn;
     @Override

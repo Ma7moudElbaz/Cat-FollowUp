@@ -3,8 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/btn_gray.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/drawable/btn_yellow.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/drawable/et_gray.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/drawable/et_gray_border.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/drawable/ic_add.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/drawable/ic_uae.xml" value="0.1328125" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_projects.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/bottom_nav.xml" value="0.11666666666666667" />
       </map>
     </option>
   </component>

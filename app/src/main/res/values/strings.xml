@@ -110,4 +110,6 @@
     <string name="submit">Submit</string>
     <string name="rejection_reason">Rejection Reason</string>
     <string name="po_attach">PO Attach</string>
+    <string name="projects">Projects</string>
+    <string name="content_description">content description</string>
 </resources>

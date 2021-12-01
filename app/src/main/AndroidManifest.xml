@@ -22,7 +22,7 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
-            android:name=".projects.ProjectsActivity"
+            android:name=".home.HomeActivity"
             android:exported="false" />
         <activity
             android:name=".login.LoginActivity"
