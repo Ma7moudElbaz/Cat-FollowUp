@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="countries">
+        <item>اسم الدوله</item>
+        <item>مصر</item>
+        <item>الامارات</item>
+        <item>السعوديه</item>
+    </string-array>
+
+    <string-array name="payment">
+        <item>طريقه الدفع</item>
+        <item>نقدي</item>
+        <item>تحويل بنكي</item>
+    </string-array>
+
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="or_sign_up_if_you_are_new">او قم بالتسجيل اذا كنت جديد !</string>
+    <string name="sign_up">التسجيل</string>
+    <string name="img_description">الوصف</string>
+    <string name="email_address">البريد الاكتروني</string>
+    <string name="password">كلمه المرور</string>
+    <string name="please_login_to_your_account">من فضلك ادخل الي حسابك</string>
+    <string name="welcome_back">مرحبا</string>
+    <string name="forgot_password">نسيت كلمه المرور؟</string>
+    <string name="requests">الطلبات</string>
+    <string name="profile">الحساب</string>
+    <string name="notifications">الاشعارات</string>
+    <string name="settings">الاعدادات</string>
+    <string name="empty" />
+    <string name="type_to_search">ابحث</string>
+    <string name="my_requests">طلباتي</string>
+    <string name="need_my_approval">تحتاج للموافقه</string>
+    <string name="language">اللغه</string>
+    <string name="your_name">الاسم</string>
+    <string name="location">المنطقه</string>
+    <string name="change_language">تغيير اللغه</string>
+    <string name="english">English</string>
+    <string name="arabic">العربيه</string>
+    <string name="done">تم</string>
+    <string name="network_error">خطأ فالاتصال بالشبكه</string>
+    <string name="fill_fields">املأ جميع الحقول</string>
+    <string name="production">الإ نتاج</string>
+    <string name="printing">الطباعه</string>
+    <string name="purchasing">المشتريات</string>
+    <string name="contact_person">الشخص المسؤول</string>
+    <string name="client">العميل</string>
+    <string name="description">الوصف</string>
+    <string name="status">الحاله</string>
+    <string name="qty">الكميه</string>
+    <string name="new_purchase_request">طلب شراء جديد</string>
+    <string name="new_printing_request">طلب طباعة جديد</string>
+    <string name="new_production_request">طلب إنتاج جديد</string>
+    <string name="client_add">العميل</string>
+    <string name="client_name">اسم العميل</string>
+    <string name="contact_person_add">الشخص المسؤول</string>
+    <string name="select_country">الدوله</string>
+    <string name="job_name">اسم العمل</string>
+    <string name="line_item">Line Item</string>
+    <string name="quantity">الكميه</string>
+    <string name="items_with_description">العناصر مع الوصف</string>
+    <string name="finish_branding">Finish/Branding</string>
+    <string name="packaging">التعبئة والتغليف</string>
+    <string name="delivery">التوصيل</string>
+    <string name="inside_cairo">داخل القاهرة</string>
+    <string name="outside_cairo">خارج القاهرة</string>
+    <string name="specify">Specify</string>
+    <string name="special_requirements">متطلبات خاصة</string>
+    <string name="reference">مرجع</string>
+    <string name="send_request">ارسال الطلب</string>
+    <string name="choose_image">اختر صورة</string>
+    <string name="pages">الصفحات</string>
+    <string name="paper_weight">وزن الورق</string>
+    <string name="colors">الألوان</string>
+    <string name="lamination">Lamination</string>
+    <string name="matte">Matte</string>
+    <string name="glossy">Glossy</string>
+    <string name="none">لا يوجد</string>
+    <string name="binding">Binding</string>
+    <string name="wire">Wire</string>
+    <string name="staple">Staple</string>
+    <string name="di_cut">Di-Cut</string>
+    <string name="venue">Venue</string>
+    <string name="days_number">عدد الأيام</string>
+    <string name="requested_date">التاريخ المطلوب</string>
+    <string name="screen">شاشة</string>
+    <string name="lights">أضواء</string>
+    <string name="sound">اصوات</string>
+    <string name="request_details">تفاصيل الطلب</string>
+    <string name="country">الدولة</string>
+    <string name="new_quotation">New Quotation</string>
+    <string name="supplier_name">اسم المورد</string>
+    <string name="cost">التكلفه</string>
+    <string name="delivery_date">تاريخ التسليم</string>
+    <string name="storage">تخزين</string>
+    <string name="assembly_dismantling">Assembly Dismantling</string>
+    <string name="notes">ملحوظات</string>
+    <string name="add_quotation">Add Quotation</string>
+    <string name="printing_type">نوع الطباعة</string>
+    <string name="purchasing_type">نوع الشراء</string>
+    <string name="view_quotations">View Quotations</string>
+    <string name="reject">رفض</string>
+    <string name="approve">موافقه</string>
+    <string name="quotations">Quotations</string>
+    <string name="select_payment_type">طريقه الدفع</string>
+    <string name="created_by">انشأ من قبل</string>
+    <string name="company_name">اسم الشركه</string>
+    <string name="po_number">PO Number</string>
+    <string name="submit">Submit</string>
+    <string name="rejection_reason">Rejection Reason</string>
+    <string name="po_attach">PO Attach</string>
+</resources>

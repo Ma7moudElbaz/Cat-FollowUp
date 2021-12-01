@@ -1,0 +1,104 @@
+package com.example.followup.utils;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+
+public class UserUtils {
+
+    private static SharedPreferences getSharedPreferences(Context context) {
+        return context.getSharedPreferences("APP_PREF", Context.MODE_PRIVATE);
+    }
+
+    public static void setAccessToken(Context context, String accessToken) {
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString("accessToken", "Bearer "+accessToken);
+        editor.apply();
+    }
+
+
+    public static String getAccessToken(Context context) {
+        return getSharedPreferences(context).getString("accessToken", "default");
+    }
+
+    public static void setLoginData(Context context,String loginName,String loginPassword){
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString("loginName", loginName);
+        editor.putString("loginPassword", loginPassword);
+        editor.apply();
+    }
+
+    public static String getLoginName(Context context) {
+        return getSharedPreferences(context).getString("loginName", "");
+    }
+
+    public static String getLoginPassword(Context context) {
+        return getSharedPreferences(context).getString("loginPassword", "");
+    }
+
+
+    public static void setUserId(Context context, int user_id) {
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putInt("user_id", user_id);
+        editor.apply();
+    }
+
+    public static int getUserId(Context context) {
+        return getSharedPreferences(context).getInt("user_id", 0);
+    }
+
+
+    public static void setCountryId(Context context, int country_id) {
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putInt("country_id", country_id);
+        editor.apply();
+    }
+
+    public static int getCountryId(Context context) {
+        return getSharedPreferences(context).getInt("country_id", 0);
+    }
+
+
+    public static void setDepartmentId(Context context, int department_id) {
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putInt("department_id", department_id);
+        editor.apply();
+    }
+
+    public static int getDepartmentId(Context context) {
+        return getSharedPreferences(context).getInt("department_id", 0);
+    }
+
+    public static void setUserName(Context context,String userName){
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString("userName", userName);
+        editor.apply();
+    }
+
+
+    public static String getUserName(Context context) {
+        return getSharedPreferences(context).getString("userName", "");
+    }
+
+    public static void setUserEmail(Context context,String userName){
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString("userEmail", userName);
+        editor.apply();
+    }
+
+
+    public static String getUserEmail(Context context) {
+        return getSharedPreferences(context).getString("userEmail", "");
+    }
+
+    public static void setSubscribedTopic(Context context,String userName){
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putString("subscribedTopic", userName);
+        editor.apply();
+    }
+
+
+    public static String getSubscribedTopic(Context context) {
+        return getSharedPreferences(context).getString("subscribedTopic", "");
+    }
+
+}
