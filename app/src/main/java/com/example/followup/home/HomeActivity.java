@@ -19,6 +19,7 @@ import com.example.followup.webservice.Webservice;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity extends LocalizationActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class HomeActivity extends LocalizationActivity implements NavigationBarView.OnItemSelectedListener {
 
     public void setProjects() {
         if (bottomNavigationView.getSelectedItemId() != R.id.navigation_projects) {
@@ -57,7 +58,6 @@ public class HomeActivity extends LocalizationActivity implements BottomNavigati
 
 
     BottomNavigationView bottomNavigationView;
-    FloatingActionButton add_project_fab;
     BadgeDrawable badge;
 
     @Override
@@ -65,24 +65,16 @@ public class HomeActivity extends LocalizationActivity implements BottomNavigati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        initFields();
-
         bottomNavigationView = findViewById(R.id.btm_nav);
-        bottomNavigationView.setOnNavigationItemSelectedListener(this);
+        bottomNavigationView.setOnItemSelectedListener(this);
 
         badge = bottomNavigationView.getOrCreateBadge(R.id.navigation_notifications);
         getNotificationNumber();
 
         setContentFragment(new ProjectsFragment());
 
-        add_project_fab.setOnClickListener(v -> {
-
-        });
     }
 
-    private void initFields() {
-        add_project_fab = findViewById(R.id.add_project_fab);
-    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -130,4 +122,5 @@ public class HomeActivity extends LocalizationActivity implements BottomNavigati
         });
 
     }
+
 }
