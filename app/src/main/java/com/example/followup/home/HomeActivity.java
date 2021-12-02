@@ -10,6 +10,10 @@ import android.widget.Toast;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
+import com.example.followup.home.notifications.NotificationsFragment;
+import com.example.followup.home.profile.ProfileFragment;
+import com.example.followup.home.projects.ProjectsFragment;
+import com.example.followup.home.settings.SettingsFragment;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 import com.google.android.material.badge.BadgeDrawable;
@@ -69,7 +73,7 @@ public class HomeActivity extends LocalizationActivity implements BottomNavigati
         badge = bottomNavigationView.getOrCreateBadge(R.id.navigation_notifications);
         getNotificationNumber();
 
-//        setContentFragment(new ProjectsFragment());
+        setContentFragment(new ProjectsFragment());
 
         add_project_fab.setOnClickListener(v -> {
 
@@ -84,15 +88,15 @@ public class HomeActivity extends LocalizationActivity implements BottomNavigati
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-//        if (id == R.id.navigation_projects) {
-//            setContentFragment(new ProjectsFragment());
-//        } else if (id == R.id.navigation_profile) {
-//            setContentFragment(new ProfileFragment());
-//        } else if (id == R.id.navigation_notifications) {
-//            setContentFragment(new NotificationsFragment());
-//        } else if (id == R.id.navigation_settings) {
-//            setContentFragment(new SettingsFragment());
-//        }
+        if (id == R.id.navigation_projects) {
+            setContentFragment(new ProjectsFragment());
+        } else if (id == R.id.navigation_profile) {
+            setContentFragment(new ProfileFragment());
+        } else if (id == R.id.navigation_notifications) {
+            setContentFragment(new NotificationsFragment());
+        } else if (id == R.id.navigation_settings) {
+            setContentFragment(new SettingsFragment());
+        }
         return true;
     }
 

@@ -7,33 +7,17 @@ import android.content.res.Configuration;
 import androidx.annotation.NonNull;
 
 import com.akexorcist.localizationactivity.core.LocalizationApplicationDelegate;
+import com.akexorcist.localizationactivity.ui.LocalizationApplication;
 
 import java.util.Locale;
 
 
-public class App extends Application {
-    final LocalizationApplicationDelegate localizationDelegate = new LocalizationApplicationDelegate();
+public class App extends LocalizationApplication {
 
+    @NonNull
     @Override
-    protected void attachBaseContext(Context base) {
-
-        localizationDelegate.setDefaultLanguage(base, Locale.ENGLISH);
-        super.attachBaseContext(localizationDelegate.attachBaseContext(base));
+    public Locale getDefaultLanguage(@NonNull Context context) {
+        return Locale.ENGLISH;
     }
 
-    @Override
-    public void onConfigurationChanged(@NonNull Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        localizationDelegate.onConfigurationChanged(this);
-    }
-
-    @Override
-    public Context getApplicationContext() {
-        return localizationDelegate.getApplicationContext(super.getApplicationContext());
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-    }
 }
