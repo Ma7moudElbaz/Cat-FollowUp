@@ -26,10 +26,12 @@
             android:exported="false" />
         <activity
             android:name=".home.HomeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".login.LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".splash.SplashActivity"
             android:exported="true"

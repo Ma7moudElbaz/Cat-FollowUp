@@ -51,23 +51,107 @@
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center" />
         </RelativeLayout>
+        
+        <com.google.android.material.tabs.TabLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:tabMode="scrollable"
+            app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget">
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/purchasing"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/printing"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/production"
+            />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/photography"
+            />
+
+
+    </com.google.android.material.tabs.TabLayout>
 
 
 
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_project_fab"
+
+    <com.github.clans.fab.FloatingActionMenu
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:contentDescription="@string/content_description"
-        app:backgroundTint="@color/colorAccent"
-        app:elevation="0dp"
-        app:srcCompat="@drawable/ic_add"
-        app:tint="@color/white" />
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="15dp"
+        app:menu_animationDelayPerItem="50"
+        app:menu_backgroundColor="@android:color/transparent"
+        app:menu_colorNormal="@color/colorAccent"
+        app:menu_colorPressed="@color/colorAccent"
+        app:menu_colorRipple="#99FFFFFF"
+        app:menu_fab_size="normal"
+        app:menu_icon="@drawable/ic_add"
+        app:menu_openDirection="up"
+        app:menu_shadowColor="#66000000"
+        app:menu_shadowRadius="4dp"
+        app:menu_shadowXOffset="1dp"
+        app:menu_shadowYOffset="3dp"
+        app:menu_showShadow="false">
+
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/photography_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_photography"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_size="mini"
+            app:menu_colorPressed="@color/colorAccent"
+            app:menu_colorRipple="#99FFFFFF" />
+
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/purchase_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_purchase"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_size="mini"
+            app:menu_colorPressed="@color/colorAccent"
+            app:menu_colorRipple="#99FFFFFF" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/production_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_production"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_size="mini"
+            app:menu_colorPressed="@color/colorAccent"
+            app:menu_colorRipple="#99FFFFFF" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/printing_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_print"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_size="mini"
+            app:menu_colorPressed="@color/colorAccent"
+            app:menu_colorRipple="#99FFFFFF" />
+
+    </com.github.clans.fab.FloatingActionMenu>
 
 </RelativeLayout>
