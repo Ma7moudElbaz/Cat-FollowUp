@@ -3,64 +3,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".splash.SplashActivity"
+    android:background="@color/black"
     android:orientation="vertical"
-    android:background="@color/black">
+    tools:context=".splash.SplashActivity">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_dots_white"
+        android:contentDescription="@string/img_description"
         android:padding="20dp"
-        android:contentDescription="@string/img_description" />
+        android:src="@drawable/ic_dots_white" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_dots_yellow"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:contentDescription="@string/img_description" />
+        android:layout_alignParentBottom="true"
+        android:contentDescription="@string/img_description"
+        android:src="@drawable/ic_dots_yellow" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_centerInParent="true"
+        android:orientation="vertical"
         android:padding="20dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/cat_logo_login"
-            android:contentDescription="@string/img_description" />
+            android:contentDescription="@string/img_description"
+            android:src="@drawable/cat_logo_login" />
 
         <Button
             android:id="@+id/btn_sign_in"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
             android:background="@drawable/btn_yellow"
             android:text="@string/sign_in"
-            android:textColor="@color/black"
-            android:layout_marginTop="60dp"/>
+            android:textColor="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
             android:text="@string/or_sign_up_if_you_are_new"
             android:textColor="@color/white"
-            android:layout_marginTop="30dp"
             android:visibility="gone" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="@drawable/btn_gray"
             android:text="@string/sign_up"
-            android:layout_marginTop="10dp"
             android:textColor="@color/white"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     </LinearLayout>
 

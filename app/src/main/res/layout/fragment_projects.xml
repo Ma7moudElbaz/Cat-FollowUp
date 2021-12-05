@@ -26,6 +26,7 @@
                 android:layout_centerVertical="true"
                 android:text="@string/all_projects"
                 android:textColor="@color/black"
+                android:textStyle="bold"
                 android:textSize="24sp" />
 
             <ProgressBar
@@ -34,6 +35,34 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_gravity="center" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/filter_btn"
+                android:background="@drawable/et_gray"
+                android:drawableEnd="@drawable/ic_search"
+                android:drawableTint="@color/black"
+                android:hint="@string/type_to_search"
+                android:padding="8dp" />
+
+            <ImageView
+                android:id="@+id/filter_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/black_curved"
+                android:padding="10dp"
+                android:src="@drawable/ic_filter" />
         </RelativeLayout>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -49,10 +78,10 @@
         android:id="@+id/add_project_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:contentDescription="@string/content_description"
         app:backgroundTint="@color/colorAccent"
         app:elevation="0dp"
