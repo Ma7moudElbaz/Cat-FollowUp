@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         android:text="@string/settings"
         android:textColor="@color/black"
+        android:textStyle="bold"
         android:textSize="24sp" />
 
     <RelativeLayout

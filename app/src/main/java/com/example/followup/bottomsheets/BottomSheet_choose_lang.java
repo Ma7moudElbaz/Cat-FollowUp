@@ -1,4 +1,4 @@
-package com.example.followup.home.settings;
+package com.example.followup.bottomsheets;
 
 import android.content.Context;
 import android.os.Bundle;
