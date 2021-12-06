@@ -45,6 +45,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/english"
+                android:textAlignment="viewStart"
                 android:textColor="@color/gray"
                 android:textSize="18sp" />
 
