@@ -47,6 +47,7 @@
                 android:text="@string/english"
                 android:textAlignment="viewStart"
                 android:textColor="@color/gray"
+                app:buttonTint="@color/colorAccent"
                 android:textSize="18sp" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
@@ -57,6 +58,7 @@
                 android:text="@string/arabic"
                 android:textAlignment="viewStart"
                 android:textColor="@color/gray"
+                app:buttonTint="@color/colorAccent"
                 android:textSize="18sp" />
 
         </RadioGroup>

@@ -114,4 +114,14 @@
     <string name="all_projects">All Projects</string>
     <string name="project_name">Project Name</string>
     <string name="photography">Photography</string>
+    <string name="service_type">Service Type</string>
+    <string name="new_request">New Request</string>
+    <string name="item_name">Item Name</string>
+    <string name="digital">Digital</string>
+    <string name="offset">Offset</string>
+    <string name="print_type">Print Type</string>
+    <string name="delivery_address">Delivery Address</string>
+    <string name="attach_file">Attach File</string>
+    <string name="choose_file">Choose File</string>
+    <string name="no_file_choose">No file choose</string>
 </resources>

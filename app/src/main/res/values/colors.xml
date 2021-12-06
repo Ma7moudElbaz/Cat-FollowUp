@@ -9,14 +9,13 @@
     <color name="et_border_color">#CDD4D9</color>
 
     <color name="list_item_bg">#F6F9FF</color>
+    <color name="service_type_bg">#DEECFE</color>
     <color name="notification_list_item_bg">#FAFAFA</color>
     <color name="text_dark_blue">#0050A6</color>
     <color name="line_blue">#B30050A6</color>
     <color name="text_light_blue">#03A9F4</color>
     <color name="green">#23DB80</color>
     <color name="red">#ED6F6F</color>
-
-
 
 
     <color name="white">#FEFEFE</color>

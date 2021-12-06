@@ -22,6 +22,9 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
+            android:name=".requests.printing.AddPrintingActivity"
+            android:exported="false" />
+        <activity
             android:name=".project_requests.RequestsActivity"
             android:exported="false" />
         <activity
