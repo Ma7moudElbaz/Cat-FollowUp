@@ -18,7 +18,6 @@ import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 
 import org.json.JSONException;

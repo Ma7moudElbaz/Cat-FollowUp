@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.followup.R;
-import com.example.followup.requests.printing.AddPrintingActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ProjectsFragment extends Fragment {
