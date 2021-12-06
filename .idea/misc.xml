@@ -5,6 +5,8 @@
       <map>
         <entry key="app/src/main/res/drawable-ldpi/black_curved.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable-xhdpi/add_forms_curved.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/drawable-xhdpi/et_gray.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/drawable-xhdpi/et_gray_border.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable-xhdpi/service_type_curved.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/add_forms_curved.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/black_curved.xml" value="0.25052083333333336" />
@@ -21,6 +23,7 @@
         <entry key="app/src/main/res/drawable/transparent_bg.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/white_curved.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/layout/activity_add_printing.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_add_project.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_projects.xml" value="0.25" />

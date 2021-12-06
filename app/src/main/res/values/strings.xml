@@ -125,4 +125,10 @@
     <string name="attach_file">Attach File</string>
     <string name="choose_file">Choose File</string>
     <string name="no_file_choose">No file choose</string>
+    <string name="add_new_project">Add New Project</string>
+    <string name="client_company">Client Company</string>
+    <string name="project_timeline">Project TimeLine</string>
+    <string name="sales_contact">Sales Contact</string>
+    <string name="manage_this_project_by_myself">Manage this project by myself</string>
+    <string name="add">Add</string>
 </resources>
