@@ -137,4 +137,8 @@
     <string name="dimensions">Dimensions</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="color">Color</string>
+    <string name="material">Material</string>
+    <string name="branding">Branding</string>
+    <string name="brand">Brand</string>
 </resources>
