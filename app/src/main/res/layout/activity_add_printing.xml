@@ -22,9 +22,9 @@
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/description"
             android:src="@drawable/ic_back"
-            app:tint="@color/black"
-            android:contentDescription="@string/description" />
+            app:tint="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -46,8 +46,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/add_forms_curved"
-            android:padding="15dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="15dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -87,7 +87,7 @@
                     android:textSize="16sp" />
 
                 <EditText
-                    android:id="@+id/line_item"
+                    android:id="@+id/item_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
@@ -233,8 +233,8 @@
                         android:id="@+id/digital"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/digital"
-                        android:checked="true"/>
+                        android:checked="true"
+                        android:text="@string/digital" />
 
                     <RadioButton
                         android:id="@+id/offset"
@@ -418,6 +418,8 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -466,17 +468,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:padding="5dp"
-                    android:background="@drawable/et_white">
+                    android:background="@drawable/et_white"
+                    android:padding="5dp">
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/choose_file"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:elevation="0dp"
                         android:text="@string/choose_file"
                         android:textAllCaps="false"
-                        android:elevation="0dp"
-                        android:textColor="@color/black"/>
+                        android:textColor="@color/black" />
 
 
                     <TextView
@@ -489,7 +491,6 @@
 
 
             </LinearLayout>
-
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -519,7 +520,6 @@
             </LinearLayout>
 
 
-
             <Button
                 android:id="@+id/btn_send_request"
                 android:layout_width="match_parent"
@@ -528,12 +528,11 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/btn_yellow"
                 android:baselineAligned="false"
-                android:textColor="@color/black"
+                android:text="@string/send_request"
                 android:textAllCaps="false"
-                android:text="@string/send_request" />
+                android:textColor="@color/black" />
 
         </LinearLayout>
     </ScrollView>
-
 
 </LinearLayout>

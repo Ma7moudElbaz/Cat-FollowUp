@@ -22,6 +22,15 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
+            android:name=".requests.purchasing.AddPurchasingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".requests.photography.AddPhotographyActivity"
+            android:exported="false" />
+        <activity
+            android:name=".requests.production.AddProductionActivity"
+            android:exported="false" />
+        <activity
             android:name=".home.projects.AddProjectActivity"
             android:exported="false" />
         <activity
@@ -29,7 +38,13 @@
             android:exported="false" />
         <activity
             android:name=".project_requests.RequestsActivity"
-            android:exported="false" />
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".home.HomeActivity"
             android:exported="false"
@@ -40,14 +55,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".splash.SplashActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <service
             android:name=".utils.MyFirebaseMessagingService"
