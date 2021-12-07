@@ -26,8 +26,8 @@
                 android:layout_centerVertical="true"
                 android:text="@string/all_projects"
                 android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="24sp" />
+                android:textSize="24sp"
+                android:textStyle="bold" />
 
             <ProgressBar
                 android:id="@+id/loading"
@@ -51,6 +51,8 @@
                 android:drawableEnd="@drawable/ic_search"
                 android:drawableTint="@color/black"
                 android:hint="@string/type_to_search"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
                 android:padding="8dp" />
 
             <ImageView

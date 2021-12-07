@@ -141,4 +141,10 @@
     <string name="material">Material</string>
     <string name="branding">Branding</string>
     <string name="brand">Brand</string>
+    <string name="days">Days</string>
+    <string name="project_type">Project Type</string>
+    <string name="number_of_cameras">Number Of Cameras</string>
+    <string name="lighting">Lighting</string>
+    <string name="chroma">Chroma</string>
+    <string name="props">Props</string>
 </resources>

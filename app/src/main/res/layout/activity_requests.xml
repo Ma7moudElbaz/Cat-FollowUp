@@ -61,6 +61,37 @@
 
         </RelativeLayout>
 
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/filter_btn"
+                android:background="@drawable/et_gray"
+                android:drawableEnd="@drawable/ic_search"
+                android:drawableTint="@color/black"
+                android:hint="@string/type_to_search"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:padding="8dp" />
+
+            <ImageView
+                android:id="@+id/filter_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="5dp"
+                android:background="@drawable/black_curved"
+                android:padding="10dp"
+                android:src="@drawable/ic_filter" />
+        </RelativeLayout>
+
         <com.google.android.material.tabs.TabLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -121,8 +152,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_photography"
             app:fab_colorNormal="@color/colorAccent"
+            app:fab_colorPressed="@color/colorAccent"
             app:fab_size="mini"
-            app:menu_colorPressed="@color/colorAccent"
             app:menu_colorRipple="#99FFFFFF" />
 
 
@@ -132,9 +163,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_purchase"
             app:fab_colorNormal="@color/colorAccent"
-            app:fab_size="mini"
-            app:menu_colorPressed="@color/colorAccent"
-            app:menu_colorRipple="#99FFFFFF" />
+            app:fab_size="mini"/>
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/production_btn"
@@ -142,9 +171,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_production"
             app:fab_colorNormal="@color/colorAccent"
-            app:fab_size="mini"
-            app:menu_colorPressed="@color/colorAccent"
-            app:menu_colorRipple="#99FFFFFF" />
+            app:fab_size="mini"/>
 
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/printing_btn"
@@ -152,9 +179,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_print"
             app:fab_colorNormal="@color/colorAccent"
-            app:fab_size="mini"
-            app:menu_colorPressed="@color/colorAccent"
-            app:menu_colorRipple="#99FFFFFF" />
+            app:fab_size="mini"/>
 
     </com.github.clans.fab.FloatingActionMenu>
 
