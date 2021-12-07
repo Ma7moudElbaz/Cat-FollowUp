@@ -149,4 +149,6 @@
     <string name="props">Props</string>
     <string name="successfully_added">Successfully Added</string>
     <string name="track_your_request">Track Your Request</string>
+    <string name="expiry_date">Expiry Date</string>
+    <string name="add_supplier_cost">Add Supplier Cost</string>
 </resources>

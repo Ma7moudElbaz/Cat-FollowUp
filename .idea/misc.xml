@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable-ldpi/black_curved.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable-xhdpi/add_forms_curved.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/drawable-xhdpi/btn_yellow.xml" value="0.1328125" />
         <entry key="app/src/main/res/drawable-xhdpi/et_gray.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable-xhdpi/et_gray_border.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable-xhdpi/job_order_bg.xml" value="0.25052083333333336" />
@@ -13,6 +14,7 @@
         <entry key="app/src/main/res/drawable/black_curved.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/btn_gray.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/btn_yellow.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/drawable/calender_yellow.xml" value="0.1328125" />
         <entry key="app/src/main/res/drawable/et_gray.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/et_gray_border.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.25052083333333336" />
@@ -29,9 +31,14 @@
         <entry key="app/src/main/res/font-v26/poppins.xml" value="0.26458333333333334" />
         <entry key="app/src/main/res/font/poppins.xml" value="0.26458333333333334" />
         <entry key="app/src/main/res/layout/activity_add_photography.xml" value="0.234375" />
+        <entry key="app/src/main/res/layout/activity_add_photography_supplier_cost.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_add_print.xml" value="0.11666666666666667" />
+        <entry key="app/src/main/res/layout/activity_add_print_supplier_cost.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_printing.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_production.xml" value="0.2203125" />
+        <entry key="app/src/main/res/layout/activity_add_production_supplier_cost.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_add_project.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_add_purchase_supplier_cost.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_add_purchasing.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_job_orders.xml" value="0.18" />
