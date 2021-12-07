@@ -22,7 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_back"
-            app:tint="@color/black" />
+            app:tint="@color/black"
+            android:contentDescription="@string/description" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -31,7 +32,7 @@
             android:text="@string/add_new_project"
             android:textColor="@color/black"
             android:textSize="24sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
     </LinearLayout>
 

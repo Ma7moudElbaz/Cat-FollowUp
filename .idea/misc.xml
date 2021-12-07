@@ -22,8 +22,10 @@
         <entry key="app/src/main/res/drawable/service_type_curved.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/transparent_bg.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/white_curved.xml" value="0.25052083333333336" />
-        <entry key="app/src/main/res/layout/activity_add_printing.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/activity_add_project.xml" value="0.234375" />
+        <entry key="app/src/main/res/font-v26/poppins.xml" value="0.26458333333333334" />
+        <entry key="app/src/main/res/font/poppins.xml" value="0.26458333333333334" />
+        <entry key="app/src/main/res/layout/activity_add_printing.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_add_project.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_projects.xml" value="0.25" />

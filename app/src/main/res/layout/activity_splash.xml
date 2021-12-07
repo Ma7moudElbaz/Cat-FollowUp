@@ -43,24 +43,8 @@
             android:layout_marginTop="60dp"
             android:background="@drawable/btn_yellow"
             android:text="@string/sign_in"
+            android:textAllCaps="false"
             android:textColor="@color/black" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:text="@string/or_sign_up_if_you_are_new"
-            android:textColor="@color/white"
-            android:visibility="gone" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/btn_gray"
-            android:text="@string/sign_up"
-            android:textColor="@color/white"
-            android:visibility="gone" />
 
     </LinearLayout>
 

@@ -18,7 +18,8 @@
             android:layout_gravity="end"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_close"
-            app:tint="@color/black" />
+            app:tint="@color/black"
+            android:contentDescription="@string/description" />
 
         <TextView
             android:id="@+id/name"

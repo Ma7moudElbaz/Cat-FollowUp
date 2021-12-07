@@ -130,4 +130,6 @@
     <string name="sales_contact">Sales Contact</string>
     <string name="manage_this_project_by_myself">Manage this project by myself</string>
     <string name="add">Add</string>
+    <string name="designer_in_charge">Designer in charge</string>
+    <string name="login">Login</string>
 </resources>
