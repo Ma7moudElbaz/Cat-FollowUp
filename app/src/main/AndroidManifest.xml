@@ -11,7 +11,7 @@
 
     <application
         android:name=".utils.App"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:networkSecurityConfig="@xml/network_security_config"
@@ -23,37 +23,47 @@
         tools:targetApi="n">
         <activity
             android:name=".supplier_costs.AddPhotographySupplierCostActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"  />
         <activity
             android:name=".supplier_costs.AddProductionSupplierCostActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"  />
         <activity
             android:name=".supplier_costs.AddPurchaseSupplierCostActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"  />
         <activity
             android:name=".supplier_costs.AddPrintSupplierCostActivity"
             android:exported="false" />
         <activity
             android:name=".job_orders.JobOrdersActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"  />
         <activity
             android:name=".requests.purchase.AddPurchaseActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"  />
         <activity
             android:name=".requests.photography.AddPhotographyActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".requests.production.AddProductionActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".home.projects.AddProjectActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"  />
         <activity
             android:name=".requests.print.AddPrintActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".project_requests.RequestsActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
