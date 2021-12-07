@@ -22,7 +22,22 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
-            android:name=".requests.purchasing.AddPurchasingActivity"
+            android:name=".supplier_costs.AddPhotographySupplierCostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".supplier_costs.AddProductionSupplierCostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".supplier_costs.AddPurchaseSupplierCostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".supplier_costs.AddPrintSupplierCostActivity"
+            android:exported="false" />
+        <activity
+            android:name=".job_orders.JobOrdersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".requests.purchase.AddPurchaseActivity"
             android:exported="false" />
         <activity
             android:name=".requests.photography.AddPhotographyActivity"
@@ -34,7 +49,7 @@
             android:name=".home.projects.AddProjectActivity"
             android:exported="false" />
         <activity
-            android:name=".requests.printing.AddPrintingActivity"
+            android:name=".requests.print.AddPrintActivity"
             android:exported="false" />
         <activity
             android:name=".project_requests.RequestsActivity"

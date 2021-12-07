@@ -147,4 +147,6 @@
     <string name="lighting">Lighting</string>
     <string name="chroma">Chroma</string>
     <string name="props">Props</string>
+    <string name="successfully_added">Successfully Added</string>
+    <string name="track_your_request">Track Your Request</string>
 </resources>

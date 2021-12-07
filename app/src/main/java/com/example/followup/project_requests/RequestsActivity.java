@@ -7,9 +7,9 @@ import android.os.Bundle;
 
 import com.example.followup.R;
 import com.example.followup.requests.photography.AddPhotographyActivity;
-import com.example.followup.requests.printing.AddPrintingActivity;
+import com.example.followup.requests.print.AddPrintActivity;
 import com.example.followup.requests.production.AddProductionActivity;
-import com.example.followup.requests.purchasing.AddPurchasingActivity;
+import com.example.followup.requests.purchase.AddPurchaseActivity;
 import com.github.clans.fab.FloatingActionButton;
 
 public class RequestsActivity extends AppCompatActivity {
@@ -22,9 +22,9 @@ public class RequestsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_requests);
         initFields();
 
-        addPrinting.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), AddPrintingActivity.class)));
+        addPrinting.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), AddPrintActivity.class)));
         addProduction.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), AddProductionActivity.class)));
-        addPurchasing.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), AddPurchasingActivity.class)));
+        addPurchasing.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), AddPurchaseActivity.class)));
         addPhotography.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), AddPhotographyActivity.class)));
     }
 
