@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 import com.example.followup.R;
 import com.example.followup.requests.photography.AddPhotographyActivity;
@@ -15,28 +14,18 @@ import com.github.clans.fab.FloatingActionButton;
 
 public class RequestsActivity extends AppCompatActivity {
 
-    FloatingActionButton addPhotography,addProduction,addPurchasing,addPrinting;
+    FloatingActionButton addPhotography, addProduction, addPurchasing, addPrinting;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests);
         initFields();
 
-        addPrinting.setOnClickListener(v -> {
-            startActivity(new Intent(getBaseContext(), AddPrintingActivity.class));
-        });
-
-        addProduction.setOnClickListener(v -> {
-            startActivity(new Intent(getBaseContext(), AddProductionActivity.class));
-        });
-
-        addPurchasing.setOnClickListener(v -> {
-            startActivity(new Intent(getBaseContext(), AddPurchasingActivity.class));
-        });
-
-        addPhotography.setOnClickListener(v -> {
-            startActivity(new Intent(getBaseContext(), AddPhotographyActivity.class));
-        });
+        addPrinting.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), AddPrintingActivity.class)));
+        addProduction.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), AddProductionActivity.class)));
+        addPurchasing.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), AddPurchasingActivity.class)));
+        addPhotography.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), AddPhotographyActivity.class)));
     }
 
     private void initFields() {
