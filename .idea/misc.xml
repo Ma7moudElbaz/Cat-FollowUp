@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/drawable-xhdpi/et_gray_border.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable-xhdpi/job_order_bg.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable-xhdpi/service_type_curved.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/drawable-xhdpi/white_curved.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/add_forms_curved.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/black_curved.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/btn_gray.xml" value="0.25052083333333336" />
@@ -19,6 +20,7 @@
         <entry key="app/src/main/res/drawable/et_gray_border.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/ic_approve.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/drawable/ic_arrow_down.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/ic_back.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/ic_job_orders.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/ic_photography.xml" value="0.25052083333333336" />
@@ -28,6 +30,7 @@
         <entry key="app/src/main/res/drawable/service_type_curved.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/transparent_bg.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/white_curved.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/drawable/white_curved_more.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/font-v26/poppins.xml" value="0.26458333333333334" />
         <entry key="app/src/main/res/font/poppins.xml" value="0.26458333333333334" />
         <entry key="app/src/main/res/layout/activity_add_photography.xml" value="0.234375" />
@@ -38,16 +41,18 @@
         <entry key="app/src/main/res/layout/activity_add_production.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/activity_add_production_supplier_cost.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_add_project.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/activity_add_purchase_supplier_cost.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_add_purchase_supplier_cost.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_add_purchasing.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.234375" />
+        <entry key="app/src/main/res/layout/activity_job_order_details.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/activity_job_orders.xml" value="0.18" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.23076923076923078" />
         <entry key="app/src/main/res/layout/activity_projects.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_request_details.xml" value="0.23076923076923078" />
+        <entry key="app/src/main/res/layout/activity_request_details.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_requests.xml" value="0.11666666666666667" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.18" />
         <entry key="app/src/main/res/layout/bottom_sheet_choose_lang.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/bottom_sheet_po_number.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/bottom_sheet_successfully_added.xml" value="0.18" />
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.10260416666666666" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.33" />

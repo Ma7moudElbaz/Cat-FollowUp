@@ -1,5 +1,23 @@
 <resources>
 
+
+
+    <string-array  name="job_orders_steps">
+        <item>Job Order\nCreation</item>
+        <item>Sales\nApproval</item>
+        <item>Magdy\nApproval</item>
+        <item>Hesham\nApproval</item>
+    </string-array>
+
+
+
+    <string-array  name="request_steps">
+        <item>Request\nCost</item>
+        <item>Nagat\nApproval</item>
+        <item>Sales\nApproval</item>
+    </string-array>
+
+
     <string-array name="countries">
         <item>Select Country</item>
         <item>Egypt</item>
@@ -151,4 +169,6 @@
     <string name="track_your_request">Track Your Request</string>
     <string name="expiry_date">Expiry Date</string>
     <string name="add_supplier_cost">Add Supplier Cost</string>
+    <string name="job_order_details">Job Order Details</string>
+    <string name="request_po_number">Request PO Number</string>
 </resources>

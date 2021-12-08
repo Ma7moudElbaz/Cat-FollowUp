@@ -150,4 +150,6 @@
     <string name="track_your_request">Track Your Request</string>
     <string name="expiry_date">Expiry Date</string>
     <string name="add_supplier_cost">Add Supplier Cost</string>
+    <string name="job_order_details">Job Order Details</string>
+    <string name="request_po_number">Request PO Number</string>
 </resources>

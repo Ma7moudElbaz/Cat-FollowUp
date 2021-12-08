@@ -22,8 +22,20 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
+            android:name=".job_orders.JobOrderDetailsActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"  >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+        </activity>
+        <activity
             android:name=".requests.RequestDetailsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".supplier_costs.AddPhotographySupplierCostActivity"
             android:exported="false"
@@ -38,7 +50,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".supplier_costs.AddPrintSupplierCostActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".job_orders.JobOrdersActivity"
             android:exported="false"
@@ -65,14 +78,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".project_requests.RequestsActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".home.HomeActivity"
             android:exported="false"
