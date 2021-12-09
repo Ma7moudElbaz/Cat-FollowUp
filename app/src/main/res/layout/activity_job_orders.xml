@@ -58,7 +58,8 @@
                 android:hint="@string/type_to_search"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
-                android:padding="8dp" />
+                android:padding="8dp"
+                android:autofillHints="" />
 
             <ImageView
                 android:id="@+id/filter_btn"

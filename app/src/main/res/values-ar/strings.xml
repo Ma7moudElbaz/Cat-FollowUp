@@ -152,4 +152,10 @@
     <string name="add_supplier_cost">Add Supplier Cost</string>
     <string name="job_order_details">Job Order Details</string>
     <string name="request_po_number">Request PO Number</string>
+    <string name="timeline">TimeLine</string>
+    <string name="view_requests">View Requests</string>
+    <string name="cancel">Cancel</string>
+    <string name="test_text">Laurem epsum</string>
+    <string name="test_date">17/11/2021</string>
+    <string name="request_cost">Request Cost</string>
 </resources>
