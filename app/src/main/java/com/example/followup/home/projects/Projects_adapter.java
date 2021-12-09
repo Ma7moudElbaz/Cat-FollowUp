@@ -1,6 +1,7 @@
 package com.example.followup.home.projects;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.followup.R;
+import com.example.followup.project_requests.RequestsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +47,8 @@ public class Projects_adapter extends RecyclerView.Adapter<Projects_adapter.View
         holder.timeline.setText(items.get(position).getProject_timeline());
         holder.status.setText(String.valueOf(items.get(position).getStatus()));
         holder.created_by.setText(items.get(position).getCreated_by());
+
+        holder.view_requests.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, RequestsActivity.class)));
 
 
     }
