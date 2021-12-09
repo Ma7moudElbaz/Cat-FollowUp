@@ -4,9 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.followup.R;
+import com.example.followup.job_orders.JobOrdersActivity;
 import com.example.followup.requests.photography.AddPhotographyActivity;
 import com.example.followup.requests.print.AddPrintActivity;
 import com.example.followup.requests.production.AddProductionActivity;
@@ -16,14 +20,24 @@ import com.google.android.material.tabs.TabLayout;
 
 public class RequestsActivity extends AppCompatActivity {
 
+    ImageView back;
     FloatingActionButton addPhotography, addProduction, addPurchasing, addPrinting;
     TabLayout requests_tab;
+    TextView job_orders;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests);
         initFields();
+
+        back.setOnClickListener(v -> onBackPressed());
+        job_orders.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(), JobOrdersActivity.class));
+            }
+        });
 
         requests_tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -69,5 +83,8 @@ public class RequestsActivity extends AppCompatActivity {
         addPurchasing = findViewById(R.id.purchase_btn);
         addPrinting = findViewById(R.id.print_btn);
         requests_tab = findViewById(R.id.requests_tab);
+        back = findViewById(R.id.back);
+        job_orders = findViewById(R.id.job_orders);
+
     }
 }

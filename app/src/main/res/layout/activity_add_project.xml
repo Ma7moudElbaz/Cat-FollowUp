@@ -209,13 +209,14 @@
             </LinearLayout>
 
             <CheckBox
+                android:id="@+id/manage_myself"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/colorAccent"
                 android:text="@string/manage_this_project_by_myself" />
 
             <Button
-                android:id="@+id/btn_send_request"
+                android:id="@+id/add"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
