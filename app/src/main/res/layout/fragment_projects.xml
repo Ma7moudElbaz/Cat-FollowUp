@@ -28,13 +28,6 @@
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />
-
-            <ProgressBar
-                android:id="@+id/loading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_gravity="center" />
         </RelativeLayout>
 
         <RelativeLayout
@@ -91,4 +84,12 @@
         app:elevation="0dp"
         app:srcCompat="@drawable/ic_add"
         app:tint="@color/white" />
+
+
+
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"/>
 </RelativeLayout>
