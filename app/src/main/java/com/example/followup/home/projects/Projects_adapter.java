@@ -43,7 +43,7 @@ public class Projects_adapter extends RecyclerView.Adapter<Projects_adapter.View
         holder.client_name.setText(items.get(position).getClient_name());
         holder.country.setText(items.get(position).getProject_country());
         holder.timeline.setText(items.get(position).getProject_timeline());
-        holder.status.setText(items.get(position).getStatus());
+        holder.status.setText(String.valueOf(items.get(position).getStatus()));
         holder.created_by.setText(items.get(position).getCreated_by());
 
 
