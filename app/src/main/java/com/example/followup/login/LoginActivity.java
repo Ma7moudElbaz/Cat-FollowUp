@@ -108,58 +108,17 @@ public class LoginActivity extends LocalizationActivity {
                         UserUtils.setDepartmentId(getBaseContext(), department_id);
 
                         UserUtils.setUserId(getBaseContext(), res.getInt("id"));
-                        UserUtils.setCountryId(getBaseContext(), res.getInt("country_id"));
+//                        UserUtils.setCountryId(getBaseContext(), res.getInt("country_id"));
                         UserUtils.setUserName(getBaseContext(), res.getString("name"));
                         UserUtils.setUserEmail(getBaseContext(), res.getString("email"));
 
                         updateDeviceToken();
 
-                        String topicToSubscribe = "";
-                        switch (department_id) {
-                            case 2:
-                                topicToSubscribe = "nagat";
-                                break;
-                            case 3:
-                                topicToSubscribe = "magdy";
-                                break;
-                            case 4:
-                                topicToSubscribe = "hisham";
-                                break;
-                            case 5:
-                                topicToSubscribe = "sherif";
-                                break;
-                            case 6:
-                                topicToSubscribe = "gamal";
-                                break;
-                            case 7:
-                                topicToSubscribe = "naser";
-                                break;
-                            case 9:
-                                topicToSubscribe = "hossam";
-                                break;
-                            case 10:
-                                topicToSubscribe = "adel";
-                                break;
-                            case 11:
-                                topicToSubscribe = "hazem";
-                                break;
-                            case 12:
-                                topicToSubscribe = "spranza";
-                                break;
-                            case 13:
-                                topicToSubscribe = "hany";
-                                break;
-                        }
+                        subscribeToFirebaseTopic(department_id);
 
-                        if (UserUtils.getSubscribedTopic(getBaseContext()) != null) {
-                            FirebaseMessaging.getInstance().unsubscribeFromTopic(UserUtils.getSubscribedTopic(getBaseContext()));
-                        }
-                        UserUtils.setSubscribedTopic(getBaseContext(), topicToSubscribe);
-                        FirebaseMessaging.getInstance().subscribeToTopic(topicToSubscribe);
 
                         Intent i = new Intent(getBaseContext(), HomeActivity.class);
                         startActivity(i);
-//                            finish();
 
                     } else {
                         Toast.makeText(LoginActivity.this, response.errorBody().string(), Toast.LENGTH_LONG).show();
@@ -178,6 +137,52 @@ public class LoginActivity extends LocalizationActivity {
             }
         });
 
+    }
+
+    private void subscribeToFirebaseTopic(int department_id) {
+
+        String topicToSubscribe = "";
+        switch (department_id) {
+            case 2:
+                topicToSubscribe = "nagat";
+                break;
+            case 3:
+                topicToSubscribe = "magdy";
+                break;
+            case 4:
+                topicToSubscribe = "hisham";
+                break;
+            case 5:
+                topicToSubscribe = "sherif";
+                break;
+            case 6:
+                topicToSubscribe = "gamal";
+                break;
+            case 7:
+                topicToSubscribe = "naser";
+                break;
+            case 9:
+                topicToSubscribe = "hossam";
+                break;
+            case 10:
+                topicToSubscribe = "adel";
+                break;
+            case 11:
+                topicToSubscribe = "hazem";
+                break;
+            case 12:
+                topicToSubscribe = "spranza";
+                break;
+            case 13:
+                topicToSubscribe = "hany";
+                break;
+        }
+
+        if (UserUtils.getSubscribedTopic(getBaseContext()) != null) {
+            FirebaseMessaging.getInstance().unsubscribeFromTopic(UserUtils.getSubscribedTopic(getBaseContext()));
+        }
+        UserUtils.setSubscribedTopic(getBaseContext(), topicToSubscribe);
+        FirebaseMessaging.getInstance().subscribeToTopic(topicToSubscribe);
     }
 
     public void updateDeviceToken() {
