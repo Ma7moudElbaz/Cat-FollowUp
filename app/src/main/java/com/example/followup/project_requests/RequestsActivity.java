@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.job_orders.JobOrdersActivity;
 import com.example.followup.requests.photography.AddPhotographyActivity;
@@ -18,7 +19,7 @@ import com.example.followup.requests.purchase.AddPurchaseActivity;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
-public class RequestsActivity extends AppCompatActivity {
+public class RequestsActivity extends LocalizationActivity {
 
     ImageView back;
     FloatingActionButton addPhotography, addProduction, addPurchasing, addPrinting;

@@ -4,9 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 
-public class JobOrderDetailsActivity extends AppCompatActivity {
+public class JobOrderDetailsActivity extends LocalizationActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

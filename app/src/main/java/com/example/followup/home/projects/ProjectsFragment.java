@@ -56,7 +56,7 @@ public class ProjectsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initFields(view);
         fab_addProject.setOnClickListener(v -> startActivity(new Intent(getActivity(), AddProjectActivity.class)));
-        getProjects(currentPageNum);
+
     }
 
     public void getProjects(int pageNum) {
@@ -148,7 +148,11 @@ public class ProjectsFragment extends Fragment {
                 }
             }
         });
+    }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        getProjects(currentPageNum);
     }
 }

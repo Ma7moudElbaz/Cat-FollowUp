@@ -4,9 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 
-public class AddPhotographySupplierCostActivity extends AppCompatActivity {
+public class AddPhotographySupplierCostActivity extends LocalizationActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

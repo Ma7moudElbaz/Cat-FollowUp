@@ -10,9 +10,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 
-public class AddProjectActivity extends AppCompatActivity {
+public class AddProjectActivity extends LocalizationActivity {
 
     ImageView back;
     EditText client_company, project_name, client_name, country, project_timeLine, sales_contact;
