@@ -66,12 +66,12 @@ public class Photography_adapter extends RecyclerView.Adapter<Photography_adapte
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            item_name = itemView.findViewById(R.id.client_company);
-            created_by = itemView.findViewById(R.id.project_name);
-            status = itemView.findViewById(R.id.client_name);
-            location = itemView.findViewById(R.id.country);
-            country = itemView.findViewById(R.id.timeline);
-            days = itemView.findViewById(R.id.status);
+            item_name = itemView.findViewById(R.id.item_name);
+            created_by = itemView.findViewById(R.id.created_by);
+            status = itemView.findViewById(R.id.status);
+            location = itemView.findViewById(R.id.location);
+            country = itemView.findViewById(R.id.country);
+            days = itemView.findViewById(R.id.days);
             parent_layout = itemView.findViewById(R.id.parent_layout);
 
         }

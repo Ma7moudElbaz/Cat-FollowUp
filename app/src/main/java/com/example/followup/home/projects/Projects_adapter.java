@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.followup.R;
+import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.RequestsActivity;
 
 import java.util.ArrayList;
@@ -48,8 +49,11 @@ public class Projects_adapter extends RecyclerView.Adapter<Projects_adapter.View
         holder.status.setText(String.valueOf(items.get(position).getStatus_message()));
         holder.created_by.setText(items.get(position).getCreated_by());
 
-        holder.view_requests.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, RequestsActivity.class)));
-
+        holder.view_requests.setOnClickListener(v -> {
+            Intent i = new Intent(mContext, RequestsActivity.class);
+            i.putExtra("project_id",items.get(position).getId());
+            mContext.startActivity(i);
+        });
 
     }
 

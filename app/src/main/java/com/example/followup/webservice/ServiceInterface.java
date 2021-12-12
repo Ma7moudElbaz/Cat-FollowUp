@@ -30,6 +30,9 @@ public interface ServiceInterface {
     @GET("projects")
     Call<ResponseBody> getProjects(@Header("Authorization") String auth, @Query("page") int pageNo);
 
+    @GET("requests")
+    Call<ResponseBody> getRequests(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("type_id") int type_id, @Query("page") int pageNo);
+
 
 
 

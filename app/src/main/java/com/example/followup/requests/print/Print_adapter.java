@@ -64,9 +64,10 @@ public class Print_adapter extends RecyclerView.Adapter<Print_adapter.ViewHolder
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            item_name = itemView.findViewById(R.id.client_company);
-            created_by = itemView.findViewById(R.id.project_name);
-            status = itemView.findViewById(R.id.client_name);
+
+            item_name = itemView.findViewById(R.id.item_name);
+            created_by = itemView.findViewById(R.id.created_by);
+            status = itemView.findViewById(R.id.status);
             designer = itemView.findViewById(R.id.designer);
             print_type = itemView.findViewById(R.id.print_type);
             quantity = itemView.findViewById(R.id.quantity);

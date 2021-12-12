@@ -45,7 +45,7 @@ public class Purchase_adapter extends RecyclerView.Adapter<Purchase_adapter.View
         holder.status.setText(String.valueOf(items.get(position).getStatus_message()));
         holder.color.setText(items.get(position).getColor());
         holder.material.setText(items.get(position).getMaterial());
-        holder.quantity.setText(items.get(position).getQuantity());
+        holder.quantity.setText(String.valueOf(items.get(position).getQuantity()));
 
         holder.parent_layout.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, RequestDetailsActivity.class)));
 
@@ -64,9 +64,9 @@ public class Purchase_adapter extends RecyclerView.Adapter<Purchase_adapter.View
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            item_name = itemView.findViewById(R.id.client_company);
-            created_by = itemView.findViewById(R.id.project_name);
-            status = itemView.findViewById(R.id.client_name);
+            item_name = itemView.findViewById(R.id.item_name);
+            created_by = itemView.findViewById(R.id.created_by);
+            status = itemView.findViewById(R.id.status);
             color = itemView.findViewById(R.id.color);
             material = itemView.findViewById(R.id.material);
             quantity = itemView.findViewById(R.id.quantity);

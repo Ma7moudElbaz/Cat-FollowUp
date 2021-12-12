@@ -154,6 +154,8 @@ public class ProjectsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        projects_list.clear();
+        currentPageNum = 1;
         getProjects(currentPageNum);
     }
 }

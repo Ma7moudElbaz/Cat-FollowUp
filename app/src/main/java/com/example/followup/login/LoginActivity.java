@@ -103,7 +103,8 @@ public class LoginActivity extends LocalizationActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.code() == 200) {
-                        JSONObject res = new JSONObject(response.body().string());
+                        JSONObject res = new JSONObject(response.body().string()).getJSONObject("data");
+
                         int department_id = res.getInt("department_id");
                         UserUtils.setDepartmentId(getBaseContext(), department_id);
 
@@ -114,7 +115,7 @@ public class LoginActivity extends LocalizationActivity {
 
                         updateDeviceToken();
 
-                        subscribeToFirebaseTopic(department_id);
+//                        subscribeToFirebaseTopic(department_id);
 
 
                         Intent i = new Intent(getBaseContext(), HomeActivity.class);

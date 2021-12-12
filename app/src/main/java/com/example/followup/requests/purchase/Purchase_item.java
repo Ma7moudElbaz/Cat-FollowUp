@@ -1,16 +1,19 @@
 package com.example.followup.requests.purchase;
 
+import com.example.followup.home.Attach_item;
+
 import java.util.ArrayList;
 
 public class Purchase_item {
 
-    private final int id, type_id, status_code, quantity;
-    private final String status_message,item_name, description, delivery_address, note, color, material, brand, created_by_id, created_by_name;
-    private final ArrayList<String> attach_files;
+    private final int id, type_id,created_by_id, status_code, quantity;
+    private final String status_message,item_name, description, delivery_address, note, color, material, brand, created_by_name;
+    private final ArrayList<Attach_item> attach_files;
 
-    public Purchase_item(int id, int type_id, int status_code, int quantity, String status_message, String item_name, String description, String delivery_address, String note, String color, String material, String brand, String created_by_id, String created_by_name, ArrayList<String> attach_files) {
+    public Purchase_item(int id, int type_id, int created_by_id, int status_code, int quantity, String status_message, String item_name, String description, String delivery_address, String note, String color, String material, String brand, String created_by_name, ArrayList<Attach_item> attach_files) {
         this.id = id;
         this.type_id = type_id;
+        this.created_by_id = created_by_id;
         this.status_code = status_code;
         this.quantity = quantity;
         this.status_message = status_message;
@@ -21,7 +24,6 @@ public class Purchase_item {
         this.color = color;
         this.material = material;
         this.brand = brand;
-        this.created_by_id = created_by_id;
         this.created_by_name = created_by_name;
         this.attach_files = attach_files;
     }
@@ -34,12 +36,20 @@ public class Purchase_item {
         return type_id;
     }
 
+    public int getCreated_by_id() {
+        return created_by_id;
+    }
+
     public int getStatus_code() {
         return status_code;
     }
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public String getStatus_message() {
+        return status_message;
     }
 
     public String getItem_name() {
@@ -70,19 +80,11 @@ public class Purchase_item {
         return brand;
     }
 
-    public String getCreated_by_id() {
-        return created_by_id;
-    }
-
     public String getCreated_by_name() {
         return created_by_name;
     }
 
-    public ArrayList<String> getAttach_files() {
+    public ArrayList<Attach_item> getAttach_files() {
         return attach_files;
-    }
-
-    public String getStatus_message() {
-        return status_message;
     }
 }
