@@ -97,7 +97,8 @@ public class ProjectsFragment extends Fragment {
                 JSONObject currentObject = list.getJSONObject(i);
                 final int id = currentObject.getInt("id");
                 final int user_id = currentObject.getInt("user_id");
-                final int status = currentObject.getInt("status");
+                final int status_code = currentObject.getInt("status");
+                final String status_message = currentObject.getString("status");
                 final String client_company = currentObject.getString("client_company");
                 final String project_name = currentObject.getString("project_name");
                 final String client_name = currentObject.getString("client_name");
@@ -106,7 +107,7 @@ public class ProjectsFragment extends Fragment {
                 final String created_at = currentObject.getString("created_at");
                 final String created_by = currentObject.getJSONObject("user").getString("name");
 
-                projects_list.add(new Project_item(id,user_id,status,client_company,project_name,client_name,project_country,project_timeline,created_at,created_by));
+                projects_list.add(new Project_item(id,user_id,status_code, status_message, client_company,project_name,client_name,project_country,project_timeline,created_at,created_by));
 
             }
 

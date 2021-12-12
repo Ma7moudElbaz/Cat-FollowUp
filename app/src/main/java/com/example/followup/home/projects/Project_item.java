@@ -4,13 +4,14 @@ package com.example.followup.home.projects;
 import java.io.Serializable;
 
 public class Project_item implements Serializable {
-    private final int id, user_id,status;
-    private final String client_company,project_name,client_name,project_country,project_timeline,created_at,created_by;
+    private final int id, user_id, status_code;
+    private final String status_message,client_company,project_name,client_name,project_country,project_timeline,created_at,created_by;
 
-    public Project_item(int id, int user_id, int status, String client_company, String project_name, String client_name, String project_country, String project_timeline, String created_at, String created_by) {
+    public Project_item(int id, int user_id, int status_code, String status_message, String client_company, String project_name, String client_name, String project_country, String project_timeline, String created_at, String created_by) {
         this.id = id;
         this.user_id = user_id;
-        this.status = status;
+        this.status_code = status_code;
+        this.status_message = status_message;
         this.client_company = client_company;
         this.project_name = project_name;
         this.client_name = client_name;
@@ -28,8 +29,8 @@ public class Project_item implements Serializable {
         return user_id;
     }
 
-    public int getStatus() {
-        return status;
+    public int getStatus_code() {
+        return status_code;
     }
 
     public String getClient_company() {
@@ -58,5 +59,9 @@ public class Project_item implements Serializable {
 
     public String getCreated_by() {
         return created_by;
+    }
+
+    public String getStatus_message() {
+        return status_message;
     }
 }

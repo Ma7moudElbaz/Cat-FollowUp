@@ -39,13 +39,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/client_company"
+                        android:text="@string/item_name"
                         android:textColor="@color/text_request_gray"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/client_company"
+                        android:id="@+id/item_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/test_text"
@@ -64,13 +64,13 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/project_name"
+                        android:text="@string/sales_contact"
                         android:textColor="@color/text_request_gray"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/project_name"
+                        android:id="@+id/sales_contact"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/test_text"
@@ -85,51 +85,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:orientation="horizontal"
-                android:weightSum="2">
+                android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="0dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/client_name"
+                        android:text="@string/status"
                         android:textColor="@color/text_request_gray"
                         android:textSize="12sp"
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/client_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/test_text"
-                        android:textColor="@color/black"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="5dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/country"
-                        android:textColor="@color/text_request_gray"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/country"
+                        android:id="@+id/status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/test_text"
@@ -167,16 +140,17 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/timeline"
+                            android:text="@string/designer"
+                            android:textAllCaps="true"
                             android:textColor="@color/text_light_blue"
                             android:textSize="12sp"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/timeline"
+                            android:id="@+id/designer"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/test_date"
+                            android:text="@string/test_text"
                             android:textColor="@color/text_dark_blue"
                             android:textSize="14sp"
                             android:textStyle="bold" />
@@ -207,13 +181,14 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/status"
+                            android:text="@string/print_type"
+                            android:textAllCaps="true"
                             android:textColor="@color/text_light_blue"
                             android:textSize="12sp"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/status"
+                            android:id="@+id/print_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/test_text"
@@ -245,7 +220,8 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/created_by"
+                            android:text="@string/qty"
+                            android:textAllCaps="true"
                             android:textColor="@color/text_light_blue"
                             android:textSize="12sp"
                             android:textStyle="bold" />
@@ -260,66 +236,8 @@
                             android:textStyle="bold" />
 
                     </LinearLayout>
-
                 </RelativeLayout>
-
-
             </LinearLayout>
-
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@color/line_blue" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="5dp"
-                android:orientation="horizontal"
-                android:weightSum="3">
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/done"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_green"
-                    android:padding="5dp"
-                    android:text="@string/done"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="13sp" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/cancel"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_red"
-                    android:text="@string/cancel"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="13sp" />
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/view_requests"
-                    android:layout_width="0dp"
-                    android:layout_height="40dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_blue"
-                    android:text="@string/view_requests"
-                    android:textAllCaps="false"
-                    android:textColor="@color/white"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
