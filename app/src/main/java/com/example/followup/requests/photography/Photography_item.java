@@ -1,16 +1,19 @@
 package com.example.followup.requests.photography;
 
+import com.example.followup.home.Attach_item;
+
 import java.util.ArrayList;
 
 public class Photography_item {
 
-    private final int id, type_id, status_code,quantity;
-    private final String status_message,item_name,description,delivery_address,note,country,location,days,project_type,numbers_cameras,lighting,chroma,props,created_by_id,created_by_name;
-    private final ArrayList<String> attach_files;
+    private final int id, type_id,created_by_id, status_code,quantity;
+    private final String status_message,item_name,description,delivery_address,note,country,location,days,project_type,camera_type,numbers_cameras,lighting,chroma,props,created_by_name;
+    private final ArrayList<Attach_item> attach_files;
 
-    public Photography_item(int id, int type_id, int status_code, int quantity, String status_message, String item_name, String description, String delivery_address, String note, String country, String location, String days, String project_type, String numbers_cameras, String lighting, String chroma, String props, String created_by_id, String created_by_name, ArrayList<String> attach_files) {
+    public Photography_item(int id, int type_id, int created_by_id, int status_code, int quantity, String status_message, String item_name, String description, String delivery_address, String note, String country, String location, String days, String project_type, String camera_type, String numbers_cameras, String lighting, String chroma, String props, String created_by_name, ArrayList<Attach_item> attach_files) {
         this.id = id;
         this.type_id = type_id;
+        this.created_by_id = created_by_id;
         this.status_code = status_code;
         this.quantity = quantity;
         this.status_message = status_message;
@@ -22,11 +25,11 @@ public class Photography_item {
         this.location = location;
         this.days = days;
         this.project_type = project_type;
+        this.camera_type = camera_type;
         this.numbers_cameras = numbers_cameras;
         this.lighting = lighting;
         this.chroma = chroma;
         this.props = props;
-        this.created_by_id = created_by_id;
         this.created_by_name = created_by_name;
         this.attach_files = attach_files;
     }
@@ -37,6 +40,10 @@ public class Photography_item {
 
     public int getType_id() {
         return type_id;
+    }
+
+    public int getCreated_by_id() {
+        return created_by_id;
     }
 
     public int getStatus_code() {
@@ -83,6 +90,10 @@ public class Photography_item {
         return project_type;
     }
 
+    public String getCamera_type() {
+        return camera_type;
+    }
+
     public String getNumbers_cameras() {
         return numbers_cameras;
     }
@@ -99,15 +110,11 @@ public class Photography_item {
         return props;
     }
 
-    public String getCreated_by_id() {
-        return created_by_id;
-    }
-
     public String getCreated_by_name() {
         return created_by_name;
     }
 
-    public ArrayList<String> getAttach_files() {
+    public ArrayList<Attach_item> getAttach_files() {
         return attach_files;
     }
 }

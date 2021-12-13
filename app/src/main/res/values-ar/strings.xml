@@ -159,4 +159,5 @@
     <string name="test_date">17/11/2021</string>
     <string name="request_cost">Request Cost</string>
     <string name="designer">DESIGNER</string>
+    <string name="camera_type">Camera Type</string>
 </resources>
