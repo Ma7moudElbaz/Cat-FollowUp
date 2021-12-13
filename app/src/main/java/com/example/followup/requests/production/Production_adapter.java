@@ -45,7 +45,7 @@ public class Production_adapter extends RecyclerView.Adapter<Production_adapter.
         holder.status.setText(String.valueOf(items.get(position).getStatus_message()));
         holder.designer.setText(items.get(position).getDesigner_name());
         holder.country.setText(items.get(position).getCountry());
-        holder.quantity.setText(items.get(position).getQuantity());
+        holder.quantity.setText(String.valueOf(items.get(position).getQuantity()));
 
         holder.parent_layout.setOnClickListener(v -> mContext.startActivity(new Intent(mContext, RequestDetailsActivity.class)));
 

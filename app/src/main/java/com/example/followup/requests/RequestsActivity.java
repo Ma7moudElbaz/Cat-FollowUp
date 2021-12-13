@@ -18,6 +18,7 @@ import com.example.followup.requests.photography.AddPhotographyActivity;
 import com.example.followup.requests.print.AddPrintActivity;
 import com.example.followup.requests.print.Print_requests_fragment;
 import com.example.followup.requests.production.AddProductionActivity;
+import com.example.followup.requests.production.Production_requests_fragment;
 import com.example.followup.requests.purchase.AddPurchaseActivity;
 import com.example.followup.requests.purchase.Purchase_requests_fragment;
 import com.github.clans.fab.FloatingActionButton;
@@ -107,7 +108,7 @@ public class RequestsActivity extends LocalizationActivity {
                 setContentFragment(new Print_requests_fragment());
                 break;
             case 2:
-                Toast.makeText(getBaseContext(), "Production", Toast.LENGTH_SHORT).show();
+                setContentFragment(new Production_requests_fragment());
                 break;
             case 3:
                 Toast.makeText(getBaseContext(), "Photography", Toast.LENGTH_SHORT).show();
