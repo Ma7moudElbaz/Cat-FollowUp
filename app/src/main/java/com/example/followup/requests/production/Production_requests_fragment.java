@@ -105,7 +105,7 @@ public class Production_requests_fragment extends Fragment {
                 final int created_by_id = currentObject.getInt("created_by_id");
                 final int status_code = currentObject.getInt("status");
                 final int quantity = currentObject.getInt("quantity");
-                final String status_message = currentObject.getString("status");
+                final String status_message = currentObject.getString("status_message");
                 final String item_name = currentObject.getString("item_name");
                 final String description = currentObject.getString("description");
                 final String delivery_address = currentObject.getString("delivery_address");
@@ -115,8 +115,7 @@ public class Production_requests_fragment extends Fragment {
                 final String days = currentObject.getString("days");
                 final String dimensions = currentObject.getString("dimension");
                 final String screen = currentObject.getString("screen");
-//                final String designer_name = currentObject.getString("designer_name");
-                final String designer_name = "";
+                final String designer_name = currentObject.getString("designer_name");
                 final String created_by_name = currentObject.getString("created_by_name");
 
                 ArrayList<Attach_item> attach_files = new ArrayList<>();

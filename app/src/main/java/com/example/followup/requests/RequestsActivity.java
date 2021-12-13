@@ -15,6 +15,7 @@ import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.job_orders.JobOrdersActivity;
 import com.example.followup.requests.photography.AddPhotographyActivity;
+import com.example.followup.requests.photography.Photography_requests_fragment;
 import com.example.followup.requests.print.AddPrintActivity;
 import com.example.followup.requests.print.Print_requests_fragment;
 import com.example.followup.requests.production.AddProductionActivity;
@@ -111,7 +112,7 @@ public class RequestsActivity extends LocalizationActivity {
                 setContentFragment(new Production_requests_fragment());
                 break;
             case 3:
-                Toast.makeText(getBaseContext(), "Photography", Toast.LENGTH_SHORT).show();
+                setContentFragment(new Photography_requests_fragment());
                 break;
         }
     }
