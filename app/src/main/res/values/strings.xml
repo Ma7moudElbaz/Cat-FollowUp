@@ -1,8 +1,7 @@
 <resources>
 
 
-
-    <string-array  name="job_orders_steps">
+    <string-array name="job_orders_steps">
         <item>Job Order\nCreation</item>
         <item>Sales\nApproval</item>
         <item>Magdy\nApproval</item>
@@ -10,8 +9,7 @@
     </string-array>
 
 
-
-    <string-array  name="request_steps">
+    <string-array name="request_steps">
         <item>Request\nCost</item>
         <item>Nagat\nApproval</item>
         <item>Sales\nApproval</item>
@@ -178,4 +176,6 @@
     <string name="test_date">17/11/2021</string>
     <string name="request_cost">Request Cost</string>
     <string name="designer">DESIGNER</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

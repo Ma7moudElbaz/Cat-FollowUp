@@ -128,12 +128,13 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <FrameLayout
+            android:id="@+id/contentLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            tools:listitem="@layout/item_projects" />
+            android:layout_above="@+id/bottom_nav_container" />
+
     </LinearLayout>
 
 
@@ -195,12 +196,5 @@
 
     </com.github.clans.fab.FloatingActionMenu>
 
-
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center" />
 
 </RelativeLayout>
