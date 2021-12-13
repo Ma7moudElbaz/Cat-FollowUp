@@ -112,9 +112,9 @@ public class Print_requests_fragment extends Fragment {
                 final String pages = currentObject.getString("pages");
                 final String paper_weight = currentObject.getString("paper_weight");
                 final String print_type = currentObject.getString("print_type");
-                final String colors = currentObject.getString("colors");
+                final String colors = currentObject.getString("color");
                 final String limitation = currentObject.getString("limitation");
-                final String binding = currentObject.getString("bounding");
+                final String binding = currentObject.getString("binding");
                 final String di_cut = currentObject.getString("di_cut");
                 final String designer_name = currentObject.getString("designer_name");
                 final String created_by_name = currentObject.getString("created_by_name");
