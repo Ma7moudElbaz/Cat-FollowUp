@@ -204,7 +204,7 @@
                     android:background="@drawable/et_white"
                     android:hint="@string/delivery_date"
                     android:importantForAutofill="no"
-                    android:inputType="text"
+                    android:inputType="date"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textSize="16sp" />

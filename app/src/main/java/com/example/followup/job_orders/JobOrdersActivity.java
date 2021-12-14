@@ -1,7 +1,5 @@
 package com.example.followup.job_orders;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;

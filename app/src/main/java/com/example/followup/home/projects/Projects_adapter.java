@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.example.followup.R;
-import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.RequestsActivity;
 
 import java.util.ArrayList;
