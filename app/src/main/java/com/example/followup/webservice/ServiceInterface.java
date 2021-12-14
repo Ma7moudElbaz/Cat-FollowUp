@@ -33,89 +33,10 @@ public interface ServiceInterface {
     @GET("requests")
     Call<ResponseBody> getRequests(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("type_id") int type_id, @Query("page") int pageNo);
 
-
-
-
-    @GET("purchasings")
-    Call<ResponseBody> getPurchasingRequests(@Header("Authorization") String auth, @Query("page") int pageNo);
-
-    @GET("purchasings/{id}")
-    Call<ResponseBody> getSinglePurchasingRequest(@Header("Authorization") String auth, @Path("id") int id);
-
-    @POST("purchasings/store")
+    @POST("projects")
     @FormUrlEncoded
-    Call<ResponseBody> addPurchasingRequest(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
+    Call<ResponseBody> addProject(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
 
-    @POST("purchasings/quotation")
-    @FormUrlEncoded
-    Call<ResponseBody> addPurchasingQuotation(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
-
-    @PUT("purchasings/quotation/status")
-    @FormUrlEncoded
-    Call<ResponseBody> changePurchasingQuotationStatus(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
-
-    @PUT("purchasings/payment")
-    @FormUrlEncoded
-    Call<ResponseBody> changePurchasingPayment(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
-
-    @PUT("purchasings/approve")
-    @FormUrlEncoded
-    Call<ResponseBody> approvePurchasing(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
-
-    @GET("printings")
-    Call<ResponseBody> getPrintingRequests(@Header("Authorization") String auth, @Query("page") int pageNo);
-
-    @GET("printings/{id}")
-    Call<ResponseBody> getSinglePrintingRequest(@Header("Authorization") String auth, @Path("id") int id);
-
-    @POST("printings/store")
-    @FormUrlEncoded
-    Call<ResponseBody> addPrintingRequest(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
-
-    @POST("printings/quotation")
-    @FormUrlEncoded
-    Call<ResponseBody> addPrintingQuotation(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
-
-    @PUT("printings/quotation/status")
-    @FormUrlEncoded
-    Call<ResponseBody> changePrintingQuotationStatus(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
-
-    @PUT("printings/payment")
-    @FormUrlEncoded
-    Call<ResponseBody> changePrintingPayment(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
-
-    @PUT("printings/approve")
-    @FormUrlEncoded
-    Call<ResponseBody> approvePrinting(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
-
-    @GET("productions")
-    Call<ResponseBody> getProductionRequests(@Header("Authorization") String auth, @Query("page") int pageNo);
-
-    @GET("productions/{id}")
-    Call<ResponseBody> getSingleProductionRequest(@Header("Authorization") String auth, @Path("id") int id);
-
-    @POST("productions/store")
-    @FormUrlEncoded
-    Call<ResponseBody> addProductionRequest(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
-
-    @POST("productions/quotation")
-    @FormUrlEncoded
-    Call<ResponseBody> addProductionQuotation(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
-
-    @PUT("productions/quotation/status")
-    @FormUrlEncoded
-    Call<ResponseBody> changeProductionQuotationStatus(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
-
-    @PUT("productions/payment")
-    @FormUrlEncoded
-    Call<ResponseBody> changeProductionPayment(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
-
-    @PUT("productions/approve")
-    @FormUrlEncoded
-    Call<ResponseBody> approveProduction(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
-
-    @GET("notifications")
-    Call<ResponseBody> getNotifications(@Header("Authorization") String auth, @Query("page") int pageNo);
 
     @GET("unreadNotificationsNumber")
     Call<ResponseBody> getNotificationsNumber(@Header("Authorization") String auth);

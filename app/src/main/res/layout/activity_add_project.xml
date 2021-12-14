@@ -21,9 +21,9 @@
             android:id="@+id/back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/description"
             android:src="@drawable/ic_back"
-            app:tint="@color/black"
-            android:contentDescription="@string/description" />
+            app:tint="@color/black" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
             android:text="@string/add_new_project"
             android:textColor="@color/black"
             android:textSize="24sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -175,13 +175,14 @@
                     android:background="@drawable/et_gray_border"
                     android:hint="@string/project_timeline"
                     android:importantForAutofill="no"
-                    android:inputType="text"
+                    android:inputType="date"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/sales_contact_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
@@ -213,6 +214,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/colorAccent"
+                android:checked="true"
                 android:text="@string/manage_this_project_by_myself" />
 
             <Button

@@ -1,16 +1,16 @@
-package com.example.followup.requests.purchase;
+package com.example.followup.requests.models;
 
 import com.example.followup.home.Attach_item;
 
 import java.util.ArrayList;
 
-public class Purchase_item {
+public class Production_item {
 
-    private final int id, type_id,created_by_id, status_code, quantity;
-    private final String status_message,item_name, description, delivery_address, note, color, material, brand, created_by_name;
+    private final int id, type_id,created_by_id, status_code,quantity;
+    private final String status_message,item_name,description,delivery_address,note,country,venue,days,dimensions,screen,designer_name,created_by_name;
     private final ArrayList<Attach_item> attach_files;
 
-    public Purchase_item(int id, int type_id, int created_by_id, int status_code, int quantity, String status_message, String item_name, String description, String delivery_address, String note, String color, String material, String brand, String created_by_name, ArrayList<Attach_item> attach_files) {
+    public Production_item(int id, int type_id, int created_by_id, int status_code, int quantity, String status_message, String item_name, String description, String delivery_address, String note, String country, String venue, String days, String dimensions, String screen, String designer_name, String created_by_name, ArrayList<Attach_item> attach_files) {
         this.id = id;
         this.type_id = type_id;
         this.created_by_id = created_by_id;
@@ -21,9 +21,12 @@ public class Purchase_item {
         this.description = description;
         this.delivery_address = delivery_address;
         this.note = note;
-        this.color = color;
-        this.material = material;
-        this.brand = brand;
+        this.country = country;
+        this.venue = venue;
+        this.days = days;
+        this.dimensions = dimensions;
+        this.screen = screen;
+        this.designer_name = designer_name;
         this.created_by_name = created_by_name;
         this.attach_files = attach_files;
     }
@@ -68,16 +71,28 @@ public class Purchase_item {
         return note;
     }
 
-    public String getColor() {
-        return color;
+    public String getCountry() {
+        return country;
     }
 
-    public String getMaterial() {
-        return material;
+    public String getVenue() {
+        return venue;
     }
 
-    public String getBrand() {
-        return brand;
+    public String getDays() {
+        return days;
+    }
+
+    public String getDimensions() {
+        return dimensions;
+    }
+
+    public String getScreen() {
+        return screen;
+    }
+
+    public String getDesigner_name() {
+        return designer_name;
     }
 
     public String getCreated_by_name() {

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import androidx.fragment.app.Fragment;
@@ -14,14 +13,14 @@ import androidx.fragment.app.FragmentTransaction;
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.job_orders.JobOrdersActivity;
-import com.example.followup.requests.photography.AddPhotographyActivity;
-import com.example.followup.requests.photography.Photography_requests_fragment;
-import com.example.followup.requests.print.AddPrintActivity;
-import com.example.followup.requests.print.Print_requests_fragment;
-import com.example.followup.requests.production.AddProductionActivity;
-import com.example.followup.requests.production.Production_requests_fragment;
-import com.example.followup.requests.purchase.AddPurchaseActivity;
-import com.example.followup.requests.purchase.Purchase_requests_fragment;
+import com.example.followup.requests.Add.AddPhotographyActivity;
+import com.example.followup.requests.list.Photography_requests_fragment;
+import com.example.followup.requests.Add.AddPrintActivity;
+import com.example.followup.requests.list.Print_requests_fragment;
+import com.example.followup.requests.Add.AddProductionActivity;
+import com.example.followup.requests.list.Production_requests_fragment;
+import com.example.followup.requests.Add.AddPurchaseActivity;
+import com.example.followup.requests.list.Purchase_requests_fragment;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 

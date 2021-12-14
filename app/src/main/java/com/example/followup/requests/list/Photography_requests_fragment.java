@@ -1,4 +1,4 @@
-package com.example.followup.requests.production;
+package com.example.followup.requests.list;
 
 import android.os.Bundle;
 
@@ -18,8 +18,8 @@ import android.widget.Toast;
 import com.example.followup.R;
 import com.example.followup.home.Attach_item;
 import com.example.followup.requests.RequestsActivity;
-import com.example.followup.requests.print.Print_adapter;
-import com.example.followup.requests.print.Print_item;
+import com.example.followup.requests.adapters.Photography_adapter;
+import com.example.followup.requests.models.Photography_item;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 
@@ -33,45 +33,42 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Production_requests_fragment extends Fragment {
-
+public class Photography_requests_fragment extends Fragment {
     RecyclerView recyclerView;
     ProgressBar loading;
 
-    ArrayList<Production_item> production_list;
-    Production_adapter production_adapter;
+    ArrayList<Photography_item> photography_list;
+    Photography_adapter photography_adapter;
 
     int currentPageNum = 1;
     int lastPageNum;
     boolean mHasReachedBottomOnce = false;
 
     int projectId;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_production_requests_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_photography_requests, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initFields(view);
-
     }
 
-    public void getRequests(int selectedTab, int pageNum) {
+    public void getRequests(int selectedTab,int pageNum) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getRequests(UserUtils.getAccessToken(getContext()), projectId, (selectedTab + 1), pageNum).enqueue(new Callback<ResponseBody>() {
+        Webservice.getInstance().getApi().getRequests(UserUtils.getAccessToken(getContext()),projectId,(selectedTab+1), pageNum).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray requestsArray = responseObject.getJSONArray("data");
-                    setPrintList(requestsArray);
+                    setPhotographyList(requestsArray);
                     JSONObject metaObject = responseObject.getJSONObject("meta");
                     lastPageNum = metaObject.getInt("last_page");
 
@@ -94,9 +91,10 @@ public class Production_requests_fragment extends Fragment {
     }
 
 
-    public void setPrintList(JSONArray list) {
+    public void setPhotographyList(JSONArray list) {
         try {
             for (int i = 0; i < list.length(); i++) {
+
 
 
                 JSONObject currentObject = list.getJSONObject(i);
@@ -111,22 +109,25 @@ public class Production_requests_fragment extends Fragment {
                 final String delivery_address = currentObject.getString("delivery_address");
                 final String note = currentObject.getString("note");
                 final String country = currentObject.getString("country");
-                final String venue = currentObject.getString("venue");
+                final String location = currentObject.getString("location");
                 final String days = currentObject.getString("days");
-                final String dimensions = currentObject.getString("dimension");
-                final String screen = currentObject.getString("screen");
-                final String designer_name = currentObject.getString("designer_name");
+                final String project_type = currentObject.getString("project_type");
+                final String camera_type = currentObject.getString("camera_type");
+                final String numbers_cameras = currentObject.getString("numbers_cameras");
+                final String lighting = currentObject.getString("lighting");
+                final String chroma = currentObject.getString("chroma");
+                final String props = currentObject.getString("props");
                 final String created_by_name = currentObject.getString("created_by_name");
 
                 ArrayList<Attach_item> attach_files = new ArrayList<>();
 
-                production_list.add(new Production_item(id, type_id, created_by_id, status_code, quantity, status_message,
-                        item_name, description, delivery_address, note, country, venue, days, dimensions, screen,
-                        designer_name, created_by_name, attach_files));
+              photography_list.add(new Photography_item(id,type_id,created_by_id,status_code,quantity, status_message,
+                        item_name,description,delivery_address,note,country,location,days,project_type,camera_type,numbers_cameras,
+                        lighting,chroma,props,created_by_name,attach_files));
 
             }
 
-            production_adapter.notifyDataSetChanged();
+            photography_adapter.notifyDataSetChanged();
             mHasReachedBottomOnce = false;
             currentPageNum++;
 
@@ -137,20 +138,20 @@ public class Production_requests_fragment extends Fragment {
     }
 
     private void initFields(View view) {
-        RequestsActivity activity = (RequestsActivity) getActivity();
+        RequestsActivity activity= (RequestsActivity) getActivity();
         projectId = activity.getProjectId();
 
         loading = view.findViewById(R.id.loading);
         recyclerView = view.findViewById(R.id.recycler_view);
-        production_list = new ArrayList<>();
+        photography_list = new ArrayList<>();
         initRecyclerView();
     }
 
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        production_adapter = new Production_adapter(getContext(), production_list);
-        recyclerView.setAdapter(production_adapter);
+        photography_adapter = new Photography_adapter(getContext(), photography_list);
+        recyclerView.setAdapter(photography_adapter);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -161,7 +162,7 @@ public class Production_requests_fragment extends Fragment {
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        getRequests(0, currentPageNum);
+                        getRequests(0,currentPageNum);
 
                 }
             }
@@ -171,8 +172,8 @@ public class Production_requests_fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        production_list.clear();
+        photography_list.clear();
         currentPageNum = 1;
-        getRequests(2, currentPageNum);
+        getRequests(3,currentPageNum);
     }
 }

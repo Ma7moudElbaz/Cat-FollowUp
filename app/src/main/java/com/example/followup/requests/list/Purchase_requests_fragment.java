@@ -1,4 +1,4 @@
-package com.example.followup.requests.purchase;
+package com.example.followup.requests.list;
 
 import android.os.Bundle;
 
@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.example.followup.R;
 import com.example.followup.home.Attach_item;
 import com.example.followup.requests.RequestsActivity;
+import com.example.followup.requests.adapters.Purchase_adapter;
+import com.example.followup.requests.models.Purchase_item;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 
