@@ -36,6 +36,10 @@ public interface ServiceInterface {
     @FormUrlEncoded
     Call<ResponseBody> addProject(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
 
+    @POST("requests")
+    @FormUrlEncoded
+    Call<ResponseBody> addRequest(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
+
 
     @GET("unreadNotificationsNumber")
     Call<ResponseBody> getNotificationsNumber(@Header("Authorization") String auth);

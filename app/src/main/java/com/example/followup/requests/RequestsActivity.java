@@ -57,8 +57,8 @@ public class RequestsActivity extends LocalizationActivity {
         requests_tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                 tabPosition = tab.getPosition();
-                 setRequestsFragment(tabPosition);
+                tabPosition = tab.getPosition();
+                setRequestsFragment(tabPosition);
 
             }
 
@@ -73,10 +73,29 @@ public class RequestsActivity extends LocalizationActivity {
             }
         });
 
-        addPrinting.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), AddPrintActivity.class)));
-        addProduction.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), AddProductionActivity.class)));
-        addPurchasing.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), AddPurchaseActivity.class)));
-        addPhotography.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), AddPhotographyActivity.class)));
+        addPrinting.setOnClickListener(v -> {
+            Intent i = new Intent(getBaseContext(), AddPrintActivity.class);
+            i.putExtra("project_id", projectId);
+            startActivity(i);
+        });
+
+        addProduction.setOnClickListener(v -> {
+            Intent i = new Intent(getBaseContext(), AddProductionActivity.class);
+            i.putExtra("project_id", projectId);
+            startActivity(i);
+        });
+
+        addPurchasing.setOnClickListener(v -> {
+            Intent i = new Intent(getBaseContext(), AddPurchaseActivity.class);
+            i.putExtra("project_id", projectId);
+            startActivity(i);
+        });
+
+        addPhotography.setOnClickListener(v -> {
+            Intent i = new Intent(getBaseContext(), AddPhotographyActivity.class);
+            i.putExtra("project_id", projectId);
+            startActivity(i);
+        });
     }
 
 
@@ -99,7 +118,7 @@ public class RequestsActivity extends LocalizationActivity {
         setContentFragment(new Purchase_requests_fragment());
     }
 
-    private void setRequestsFragment(int selectedTab){
+    private void setRequestsFragment(int selectedTab) {
         switch (selectedTab) {
             case 0:
                 setContentFragment(new Purchase_requests_fragment());

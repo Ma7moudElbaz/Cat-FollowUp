@@ -11,12 +11,15 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -41,6 +44,7 @@ public class AddProjectActivity extends LocalizationActivity {
     private ProgressDialog dialog;
     DatePickerDialog picker;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,17 +53,17 @@ public class AddProjectActivity extends LocalizationActivity {
         setSalesContactVisibility(manage_myself.isChecked());
         manage_myself.setOnCheckedChangeListener((buttonView, isChecked) -> setSalesContactVisibility(isChecked));
         back.setOnClickListener(v -> onBackPressed());
+        project_timeLine.setOnClickListener(v -> showDatePicker(project_timeLine));
+        project_timeLine.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                showDatePicker(project_timeLine);
+            }
+        });
+
 
         add.setOnClickListener(v -> {
             if (validateFields()) {
                 addProject();
-            }
-        });
-
-        project_timeLine.setOnClickListener(v -> showDatePicker());
-        project_timeLine.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                showDatePicker();
             }
         });
 
@@ -164,20 +168,22 @@ public class AddProjectActivity extends LocalizationActivity {
         }
     }
 
+    private void showDatePicker(TextView textview) {
 
-    private void showDatePicker() {
         final Calendar cldr = Calendar.getInstance();
-        int day = cldr.get(Calendar.DAY_OF_MONTH);
-        int month = cldr.get(Calendar.MONTH);
-        int year = cldr.get(Calendar.YEAR);
         // date picker dialog
         picker = new DatePickerDialog(AddProjectActivity.this,
-                (view, year1, monthOfYear, dayOfMonth) -> {
+                (view, year, monthOfYear, dayOfMonth) -> {
+
+                    cldr.set(Calendar.YEAR, year);
+                    cldr.set(Calendar.MONTH, monthOfYear);
+                    cldr.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+
                     String myFormat = "yy-MM-dd"; //In which you need put here
                     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
-                    project_timeLine.setText(sdf.format(cldr.getTime()));
-                }, year, month, day);
+                    textview.setText(sdf.format(cldr.getTime()));
+                }, cldr.get(Calendar.YEAR), cldr.get(Calendar.MONTH),
+                cldr.get(Calendar.DAY_OF_MONTH));
         picker.show();
     }
-
 }
