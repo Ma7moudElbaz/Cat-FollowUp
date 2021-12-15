@@ -1,4 +1,4 @@
-package com.example.followup.requests;
+package com.example.followup.requests.request_details;
 
 import android.os.Bundle;
 
@@ -14,8 +14,9 @@ public class RequestDetailsActivity extends LocalizationActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_details);
+        step_view = findViewById(R.id.step_view);
 
-//        step_view.go(1, true);
+        step_view.go(1, true);
 
 
     }

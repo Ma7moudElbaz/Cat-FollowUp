@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".requests.RequestDetailsActivity">
+    tools:context=".requests.request_details.RequestDetailsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -45,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
+            android:visibility="gone"
             app:sv_animationType="All"
             app:sv_doneCircleColor="@color/green"
             app:sv_doneCircleRadius="20dp"
@@ -62,6 +63,37 @@
             app:sv_stepNumberTextSize="20sp"
             app:sv_stepPadding="4dp"
             app:sv_steps="@array/request_steps" />
+
+        <params.com.stepview.StatusViewScroller
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:entries="@array/request_steps"
+            app:circleColor="@color/green"
+            app:circleColorCurrent="@color/stepper_gray"
+            app:circleColorIncomplete="@color/stepper_gray"
+            app:circleColorType="fillStroke"
+            app:circleStrokeColor="@color/green"
+            app:circleStrokeColorCurrent="@color/green"
+            app:circleStrokeColorIncomplete="@color/stepper_gray"
+            app:circleStrokeWidth="2dp"
+            app:completeDrawable="@drawable/ic_done"
+            app:currentCount="2"
+            app:drawLabels="true"
+            app:lineColor="@color/light_gray"
+            app:lineColorCurrent="@color/green"
+            app:lineColorIncomplete="@color/light_gray"
+            app:lineGap="5dp"
+            app:lineLength="80dp"
+            app:lineWidth="0.7dp"
+            app:stepCount="3"
+            app:textColorLabelsCurrent="@color/black"
+            app:textColorLabelsIncomplete="@color/light_gray"
+            app:textSizeLabels="18sp"
+            app:currentStepZoom="0.2"
+            app:alignStatusWithCurrent="true"
+            app:strictObeyLineLength= "true"/>
 
     </LinearLayout>
 

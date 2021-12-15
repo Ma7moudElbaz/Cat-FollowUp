@@ -78,5 +78,8 @@ dependencies {
     //stepper
     implementation 'com.shuhart.stepview:stepview:1.5.1'
 
+    //stepView
+    implementation 'com.params.stepview:stepview:1.0.2'
+
 
 }

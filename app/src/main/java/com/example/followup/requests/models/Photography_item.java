@@ -6,16 +6,15 @@ import java.util.ArrayList;
 
 public class Photography_item {
 
-    private final int id, type_id,created_by_id, status_code,quantity;
-    private final String status_message,item_name,description,delivery_address,note,country,location,days,project_type,camera_type,numbers_cameras,lighting,chroma,props,created_by_name;
+    private final int id, type_id, created_by_id, status_code;
+    private final String status_message, item_name, description, delivery_address, note, country, location, days, project_type, camera_type, numbers_cameras, lighting, chroma, props, created_by_name;
     private final ArrayList<Attach_item> attach_files;
 
-    public Photography_item(int id, int type_id, int created_by_id, int status_code, int quantity, String status_message, String item_name, String description, String delivery_address, String note, String country, String location, String days, String project_type, String camera_type, String numbers_cameras, String lighting, String chroma, String props, String created_by_name, ArrayList<Attach_item> attach_files) {
+    public Photography_item(int id, int type_id, int created_by_id, int status_code, String status_message, String item_name, String description, String delivery_address, String note, String country, String location, String days, String project_type, String camera_type, String numbers_cameras, String lighting, String chroma, String props, String created_by_name, ArrayList<Attach_item> attach_files) {
         this.id = id;
         this.type_id = type_id;
         this.created_by_id = created_by_id;
         this.status_code = status_code;
-        this.quantity = quantity;
         this.status_message = status_message;
         this.item_name = item_name;
         this.description = description;
@@ -48,10 +47,6 @@ public class Photography_item {
 
     public int getStatus_code() {
         return status_code;
-    }
-
-    public int getQuantity() {
-        return quantity;
     }
 
     public String getStatus_message() {

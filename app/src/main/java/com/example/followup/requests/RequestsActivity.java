@@ -115,7 +115,7 @@ public class RequestsActivity extends LocalizationActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        setContentFragment(new Purchase_requests_fragment());
+        setRequestsFragment(tabPosition);
     }
 
     private void setRequestsFragment(int selectedTab) {

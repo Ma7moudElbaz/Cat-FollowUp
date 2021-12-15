@@ -45,6 +45,7 @@ public class Photography_requests_fragment extends Fragment {
     boolean mHasReachedBottomOnce = false;
 
     int projectId;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -58,10 +59,10 @@ public class Photography_requests_fragment extends Fragment {
         initFields(view);
     }
 
-    public void getRequests(int selectedTab,int pageNum) {
+    public void getRequests(int selectedTab, int pageNum) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getRequests(UserUtils.getAccessToken(getContext()),projectId,(selectedTab+1), pageNum).enqueue(new Callback<ResponseBody>() {
+        Webservice.getInstance().getApi().getRequests(UserUtils.getAccessToken(getContext()), projectId, (selectedTab + 1), pageNum).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -96,13 +97,11 @@ public class Photography_requests_fragment extends Fragment {
             for (int i = 0; i < list.length(); i++) {
 
 
-
                 JSONObject currentObject = list.getJSONObject(i);
                 final int id = currentObject.getInt("id");
                 final int type_id = currentObject.getInt("type_id");
                 final int created_by_id = currentObject.getInt("created_by_id");
                 final int status_code = currentObject.getInt("status");
-                final int quantity = currentObject.getInt("quantity");
                 final String status_message = currentObject.getString("status_message");
                 final String item_name = currentObject.getString("item_name");
                 final String description = currentObject.getString("description");
@@ -113,7 +112,7 @@ public class Photography_requests_fragment extends Fragment {
                 final String days = currentObject.getString("days");
                 final String project_type = currentObject.getString("project_type");
                 final String camera_type = currentObject.getString("camera_type");
-                final String numbers_cameras = currentObject.getString("numbers_cameras");
+                final String numbers_cameras = currentObject.getString("number_camera");
                 final String lighting = currentObject.getString("lighting");
                 final String chroma = currentObject.getString("chroma");
                 final String props = currentObject.getString("props");
@@ -121,9 +120,9 @@ public class Photography_requests_fragment extends Fragment {
 
                 ArrayList<Attach_item> attach_files = new ArrayList<>();
 
-              photography_list.add(new Photography_item(id,type_id,created_by_id,status_code,quantity, status_message,
-                        item_name,description,delivery_address,note,country,location,days,project_type,camera_type,numbers_cameras,
-                        lighting,chroma,props,created_by_name,attach_files));
+                photography_list.add(new Photography_item(id, type_id, created_by_id, status_code, status_message,
+                        item_name, description, delivery_address, note, country, location, days, project_type, camera_type, numbers_cameras,
+                        lighting, chroma, props, created_by_name, attach_files));
 
             }
 
@@ -138,7 +137,7 @@ public class Photography_requests_fragment extends Fragment {
     }
 
     private void initFields(View view) {
-        RequestsActivity activity= (RequestsActivity) getActivity();
+        RequestsActivity activity = (RequestsActivity) getActivity();
         projectId = activity.getProjectId();
 
         loading = view.findViewById(R.id.loading);
@@ -162,7 +161,7 @@ public class Photography_requests_fragment extends Fragment {
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        getRequests(0,currentPageNum);
+                        getRequests(0, currentPageNum);
 
                 }
             }
@@ -174,6 +173,6 @@ public class Photography_requests_fragment extends Fragment {
         super.onResume();
         photography_list.clear();
         currentPageNum = 1;
-        getRequests(3,currentPageNum);
+        getRequests(3, currentPageNum);
     }
 }

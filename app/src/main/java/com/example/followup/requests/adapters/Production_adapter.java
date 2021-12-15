@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.followup.R;
-import com.example.followup.requests.RequestDetailsActivity;
+import com.example.followup.requests.request_details.RequestDetailsActivity;
 import com.example.followup.requests.models.Production_item;
 
 import java.util.ArrayList;

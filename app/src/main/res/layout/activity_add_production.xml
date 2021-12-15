@@ -177,7 +177,7 @@
                     android:background="@drawable/et_white"
                     android:hint="@string/days"
                     android:importantForAutofill="no"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textSize="16sp" />

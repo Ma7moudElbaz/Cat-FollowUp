@@ -44,7 +44,7 @@
         <entry key="app/src/main/res/layout/activity_add_print.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_add_print_supplier_cost.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_add_printing.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_add_production.xml" value="0.2203125" />
+        <entry key="app/src/main/res/layout/activity_add_production.xml" value="0.2054794520547945" />
         <entry key="app/src/main/res/layout/activity_add_production_supplier_cost.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_project.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_add_purchase.xml" value="0.25" />
@@ -55,7 +55,7 @@
         <entry key="app/src/main/res/layout/activity_job_orders.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.23076923076923078" />
         <entry key="app/src/main/res/layout/activity_projects.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_request_details.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_request_details.xml" value="0.30386740331491713" />
         <entry key="app/src/main/res/layout/activity_requests.xml" value="1.0" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.18" />
         <entry key="app/src/main/res/layout/bottom_sheet_choose_lang.xml" value="0.25" />
