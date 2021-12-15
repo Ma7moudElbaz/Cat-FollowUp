@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
@@ -31,7 +32,7 @@ import retrofit2.Response;
 
 public class AddPrintActivity extends LocalizationActivity {
 
-    TextView item_name, quantity, description, pages, paper_weight, colors, di_cut, delivery_address, notes, designer_in_charge;
+    EditText item_name, quantity, description, pages, paper_weight, colors, di_cut, delivery_address, notes, designer_in_charge;
     Button choose_file, send_request;
     RadioGroup print_type, lamination, binding;
     ImageView back;
@@ -211,11 +212,11 @@ public class AddPrintActivity extends LocalizationActivity {
         map.put("color", colors.getText().toString());
         map.put("di_cut", di_cut.getText().toString());
         map.put("delivery_address", delivery_address.getText().toString());
-        map.put("notes", notes.getText().toString());
-        map.put("designer_in_charge", designer_in_charge.getText().toString());
-        map.put("print_type", print_type_text);
-        map.put("lamination", lamination_text);
-        map.put("binding", binding_text);
+        map.put("note", notes.getText().toString());
+        map.put("designer_name", designer_in_charge.getText().toString());
+        map.put("print_type", print_type_text.toLowerCase());
+        map.put("lamination", lamination_text.toLowerCase());
+        map.put("binding", binding_text.toLowerCase());
         return map;
     }
 

@@ -113,7 +113,7 @@ public class Print_requests_fragment extends Fragment {
                 final String paper_weight = currentObject.getString("paper_weight");
                 final String print_type = currentObject.getString("print_type");
                 final String colors = currentObject.getString("color");
-                final String limitation = currentObject.getString("limitation");
+                final String lamination = currentObject.getString("lamination");
                 final String binding = currentObject.getString("binding");
                 final String di_cut = currentObject.getString("di_cut");
                 final String designer_name = currentObject.getString("designer_name");
@@ -124,7 +124,7 @@ public class Print_requests_fragment extends Fragment {
 
                 print_list.add(new Print_item(id,type_id,created_by_id,status_code,quantity, status_message,
                         item_name,description,delivery_address,note,pages,paper_weight,print_type,colors,
-                        limitation,binding,di_cut,designer_name,created_by_name,attach_files));
+                        lamination,binding,di_cut,designer_name,created_by_name,attach_files));
 
             }
 

@@ -47,7 +47,7 @@
         <entry key="app/src/main/res/layout/activity_add_production.xml" value="0.2203125" />
         <entry key="app/src/main/res/layout/activity_add_production_supplier_cost.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_project.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/activity_add_purchase.xml" value="0.234375" />
+        <entry key="app/src/main/res/layout/activity_add_purchase.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_purchase_supplier_cost.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_add_purchasing.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.234375" />
