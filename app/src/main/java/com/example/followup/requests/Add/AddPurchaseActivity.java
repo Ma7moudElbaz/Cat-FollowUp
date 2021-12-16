@@ -110,7 +110,7 @@ public class AddPurchaseActivity extends LocalizationActivity {
             description.setError("This is required field");
             return false;
         }
-        if (brand.length() == 0 && brand.equals("Yes")) {
+        if (brand.length() == 0 && branding_text.equalsIgnoreCase("Yes")) {
             brand.setError("This is required field");
             return false;
         }
@@ -167,7 +167,7 @@ public class AddPurchaseActivity extends LocalizationActivity {
         map.put("delivery_address", delivery_address.getText().toString());
         map.put("note", notes.getText().toString());
 
-        if (branding_text.toLowerCase().equals("yes")){
+        if (branding_text.equalsIgnoreCase("yes")){
             map.put("brand", brand.getText().toString());
         }else {
             map.put("brand", "");

@@ -147,7 +147,7 @@ public class AddPrintActivity extends LocalizationActivity {
             paper_weight.setError("This is required field");
             return false;
         }
-        if (colors.length() == 0 && print_type_text.equals("Offset")) {
+        if (colors.length() == 0 && print_type_text.equalsIgnoreCase("Offset")) {
             colors.setError("This is required field");
             return false;
         }

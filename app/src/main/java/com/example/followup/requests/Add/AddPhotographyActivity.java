@@ -160,15 +160,15 @@ public class AddPhotographyActivity extends LocalizationActivity {
             notes.setError("This is required field");
             return false;
         }
-        if (lighting_specify.length() == 0 && lighting_text.equals("Yes")) {
+        if (lighting_specify.length() == 0 && lighting_text.equalsIgnoreCase("Yes")) {
             lighting_specify.setError("This is required field");
             return false;
         }
-        if (chroma_specify.length() == 0 && chroma_text.equals("Yes")) {
+        if (chroma_specify.length() == 0 && chroma_text.equalsIgnoreCase("Yes")) {
             chroma_specify.setError("This is required field");
             return false;
         }
-        if (props_specify.length() == 0 && props.equals("Yes")) {
+        if (props_specify.length() == 0 && props_text.equalsIgnoreCase("Yes")) {
             props_specify.setError("This is required field");
             return false;
         }
@@ -219,19 +219,19 @@ public class AddPhotographyActivity extends LocalizationActivity {
         map.put("description", description.getText().toString());
         map.put("note", notes.getText().toString());
 
-        if (lighting_text.toLowerCase().equals("yes")) {
+        if (lighting_text.equalsIgnoreCase("yes")) {
             map.put("lighting", lighting_specify.getText().toString());
         } else {
             map.put("lighting", "");
         }
 
-        if (chroma_text.toLowerCase().equals("yes")) {
+        if (chroma_text.equalsIgnoreCase("yes")) {
             map.put("chroma", chroma_specify.getText().toString());
         } else {
             map.put("chroma", "");
         }
 
-        if (lighting_text.toLowerCase().equals("yes")) {
+        if (lighting_text.equalsIgnoreCase("yes")) {
             map.put("props", props_specify.getText().toString());
         } else {
             map.put("props", "");
