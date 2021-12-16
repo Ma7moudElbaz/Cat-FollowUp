@@ -1,4 +1,4 @@
-package com.example.followup.supplier_costs;
+package com.example.followup.supplier_costs.add;
 
 import android.os.Bundle;
 

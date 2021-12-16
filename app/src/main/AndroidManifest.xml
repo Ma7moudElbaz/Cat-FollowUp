@@ -30,19 +30,19 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".supplier_costs.AddPhotographySupplierCostActivity"
+            android:name=".supplier_costs.add.AddPhotographySupplierCostActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".supplier_costs.AddProductionSupplierCostActivity"
+            android:name=".supplier_costs.add.AddProductionSupplierCostActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".supplier_costs.AddPurchaseSupplierCostActivity"
+            android:name=".supplier_costs.add.AddPurchaseSupplierCostActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".supplier_costs.AddPrintSupplierCostActivity"
+            android:name=".supplier_costs.add.AddPrintSupplierCostActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

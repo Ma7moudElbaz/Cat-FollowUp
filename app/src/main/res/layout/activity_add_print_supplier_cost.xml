@@ -9,7 +9,7 @@
     android:paddingStart="15dp"
     android:paddingTop="15dp"
     android:paddingEnd="15dp"
-    tools:context=".supplier_costs.AddPrintSupplierCostActivity">
+    tools:context=".supplier_costs.add.AddPrintSupplierCostActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
