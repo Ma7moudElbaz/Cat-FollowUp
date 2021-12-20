@@ -76,7 +76,8 @@ public class LoginActivity extends LocalizationActivity {
                             String accessToken = res.getString("access_token");
                             UserUtils.setAccessToken(getBaseContext(), accessToken);
                             UserUtils.setLoginData(getBaseContext(), emailtxt, passwordtxt);
-                            getMyData(UserUtils.getAccessToken(getBaseContext()));
+                            setMyData(res.getJSONObject("me"));
+                            updateDeviceToken();
 
                         } else {
                             Toast.makeText(LoginActivity.this, response.errorBody().string(), Toast.LENGTH_LONG).show();
@@ -96,47 +97,21 @@ public class LoginActivity extends LocalizationActivity {
         }
     }
 
-    public void getMyData(String accessToken) {
-        Map<String, String> map = new HashMap<>();
-        Webservice.getInstance().getApi().getMyData(accessToken, map).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    if (response.code() == 200) {
-                        JSONObject res = new JSONObject(response.body().string()).getJSONObject("data");
-
-                        int department_id = res.getInt("department_id");
-                        UserUtils.setDepartmentId(getBaseContext(), department_id);
-
-                        UserUtils.setUserId(getBaseContext(), res.getInt("id"));
+    public void setMyData(JSONObject res) {
+        int department_id = 0;
+        try {
+            department_id = res.getInt("department_id");
+            UserUtils.setDepartmentId(getBaseContext(), department_id);
+            UserUtils.setUserId(getBaseContext(), res.getInt("id"));
 //                        UserUtils.setCountryId(getBaseContext(), res.getInt("country_id"));
-                        UserUtils.setUserName(getBaseContext(), res.getString("name"));
-                        UserUtils.setUserEmail(getBaseContext(), res.getString("email"));
-
-                        updateDeviceToken();
-
+            UserUtils.setUserName(getBaseContext(), res.getString("name"));
+            UserUtils.setUserEmail(getBaseContext(), res.getString("email"));
 //                        subscribeToFirebaseTopic(department_id);
 
-
-                        Intent i = new Intent(getBaseContext(), HomeActivity.class);
-                        startActivity(i);
-
-                    } else {
-                        Toast.makeText(LoginActivity.this, response.errorBody().string(), Toast.LENGTH_LONG).show();
-                    }
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
-                }
-
-                dialog.dismiss();
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            }
-        });
+            startActivity(new Intent(getBaseContext(), HomeActivity.class));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -189,7 +164,6 @@ public class LoginActivity extends LocalizationActivity {
     public void updateDeviceToken() {
         Map<String, String> map = new HashMap<>();
         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
-            Log.e("device_token", token);
             device_token = token;
             map.put("device_token", device_token);
             Webservice.getInstance().getApi().updateToken(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
