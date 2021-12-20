@@ -108,7 +108,8 @@ public class Production_requests_fragment extends Fragment {
                 final String status_message = currentObject.getString("status_message");
                 final String item_name = currentObject.getString("item_name");
                 final String description = currentObject.getString("description");
-                final String delivery_address = currentObject.getString("delivery_address");
+//                final String delivery_address = currentObject.getString("delivery_address");
+                final String delivery_date = currentObject.getString("delivery_address");
                 final String note = currentObject.getString("note");
                 final String country = currentObject.getString("country");
                 final String venue = currentObject.getString("venue");
@@ -121,7 +122,7 @@ public class Production_requests_fragment extends Fragment {
                 ArrayList<Attach_item> attach_files = new ArrayList<>();
 
                 production_list.add(new Production_item(id, type_id, created_by_id, status_code, quantity, status_message,
-                        item_name, description, delivery_address, note, country, venue, days, dimensions, screen,
+                        item_name, description, delivery_date, note, country, venue, days, dimensions, screen,
                         designer_name, created_by_name, attach_files));
 
             }

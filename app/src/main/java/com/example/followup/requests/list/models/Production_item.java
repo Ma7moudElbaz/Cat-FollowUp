@@ -7,10 +7,10 @@ import java.util.ArrayList;
 public class Production_item {
 
     private final int id, type_id,created_by_id, status_code,quantity;
-    private final String status_message,item_name,description,delivery_address,note,country,venue,days,dimensions,screen,designer_name,created_by_name;
+    private final String status_message,item_name,description,delivery_date,note,country,venue,days,dimensions,screen,designer_name,created_by_name;
     private final ArrayList<Attach_item> attach_files;
 
-    public Production_item(int id, int type_id, int created_by_id, int status_code, int quantity, String status_message, String item_name, String description, String delivery_address, String note, String country, String venue, String days, String dimensions, String screen, String designer_name, String created_by_name, ArrayList<Attach_item> attach_files) {
+    public Production_item(int id, int type_id, int created_by_id, int status_code, int quantity, String status_message, String item_name, String description, String delivery_date, String note, String country, String venue, String days, String dimensions, String screen, String designer_name, String created_by_name, ArrayList<Attach_item> attach_files) {
         this.id = id;
         this.type_id = type_id;
         this.created_by_id = created_by_id;
@@ -19,7 +19,7 @@ public class Production_item {
         this.status_message = status_message;
         this.item_name = item_name;
         this.description = description;
-        this.delivery_address = delivery_address;
+        this.delivery_date = delivery_date;
         this.note = note;
         this.country = country;
         this.venue = venue;
@@ -63,9 +63,6 @@ public class Production_item {
         return description;
     }
 
-    public String getDelivery_address() {
-        return delivery_address;
-    }
 
     public String getNote() {
         return note;
@@ -101,5 +98,9 @@ public class Production_item {
 
     public ArrayList<Attach_item> getAttach_files() {
         return attach_files;
+    }
+
+    public String getDelivery_date() {
+        return delivery_date;
     }
 }
