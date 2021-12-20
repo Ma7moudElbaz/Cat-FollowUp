@@ -98,10 +98,8 @@ public class LoginActivity extends LocalizationActivity {
     }
 
     public void setMyData(JSONObject res) {
-        int department_id = 0;
         try {
-            department_id = res.getInt("department_id");
-            UserUtils.setDepartmentId(getBaseContext(), department_id);
+            UserUtils.setDepartmentId(getBaseContext(), res.getInt("department_id"));
             UserUtils.setUserId(getBaseContext(), res.getInt("id"));
 //                        UserUtils.setCountryId(getBaseContext(), res.getInt("country_id"));
             UserUtils.setUserName(getBaseContext(), res.getString("name"));
