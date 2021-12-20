@@ -1,4 +1,4 @@
-package com.example.followup.requests.request_details;
+package com.example.followup.requests;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -33,9 +33,10 @@ public class RequestDetailsActivity extends LocalizationActivity {
 
     boolean isDetailsExpanded = false;
     boolean isCostExpanded = false;
-    ImageView expandDetails, expandCost;
+    ImageView back,expandDetails, expandCost;
     FrameLayout request_details_content, request_cost_content;
     ProgressBar loading;
+
 
     int request_id, type_id;
     JSONObject dataObj;
@@ -62,11 +63,11 @@ public class RequestDetailsActivity extends LocalizationActivity {
         setContentView(R.layout.activity_request_details);
         initFields();
 
+        back.setOnClickListener(v -> onBackPressed());
         expandDetails.setOnClickListener(v -> toggleDetails(isDetailsExpanded));
         expandCost.setOnClickListener(v -> toggleCost(isCostExpanded));
 
         getRequests();
-
     }
 
     private void initFields() {
@@ -75,6 +76,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         loading = findViewById(R.id.loading);
         expandDetails = findViewById(R.id.expand_details);
         expandCost = findViewById(R.id.expand_cost);
+        back = findViewById(R.id.back);
         request_details_content = findViewById(R.id.request_details_content);
         request_cost_content = findViewById(R.id.request_cost_content);
     }

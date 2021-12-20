@@ -22,8 +22,9 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:baselineAligned="false"
                     android:text="@string/service_type"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
                 <TextView
@@ -54,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/item_name"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
                 <TextView
@@ -63,7 +64,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
-                    android:hint="@string/item_name"
                     android:importantForAutofill="no"
                     android:padding="5dp"
                     android:textColor="@color/black"
@@ -86,7 +86,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/quantity"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
                 <TextView
@@ -95,7 +95,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
-                    android:hint="@string/quantity"
                     android:importantForAutofill="no"
                     android:padding="5dp"
                     android:textColor="@color/black"
@@ -118,7 +117,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/description"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
                 <TextView
@@ -128,7 +127,6 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
                     android:gravity="top"
-                    android:hint="@string/description"
                     android:importantForAutofill="no"
                     android:padding="5dp"
                     android:textColor="@color/black"
@@ -151,7 +149,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/pages"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
                 <TextView
@@ -160,7 +158,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
-                    android:hint="@string/pages"
                     android:importantForAutofill="no"
                     android:padding="5dp"
                     android:textColor="@color/black"
@@ -183,7 +180,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/paper_weight"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
                 <TextView
@@ -192,7 +189,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
-                    android:hint="@string/paper_weight"
                     android:importantForAutofill="no"
                     android:padding="5dp"
                     android:textColor="@color/black"
@@ -215,7 +211,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/print_type"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
 
@@ -225,7 +221,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
-                    android:hint="@string/print_type"
                     android:importantForAutofill="no"
                     android:padding="5dp"
                     android:textColor="@color/black"
@@ -250,7 +245,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/colors"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
                 <TextView
@@ -259,7 +254,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
-                    android:hint="@string/colors"
                     android:importantForAutofill="no"
                     android:padding="5dp"
                     android:textColor="@color/black"
@@ -282,7 +276,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lamination"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
                 <TextView
@@ -291,7 +285,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
-                    android:hint="@string/lamination"
                     android:importantForAutofill="no"
                     android:padding="5dp"
                     android:textColor="@color/black"
@@ -314,7 +307,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/binding"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
                 <TextView
@@ -323,7 +316,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
-                    android:hint="@string/binding"
                     android:importantForAutofill="no"
                     android:padding="5dp"
                     android:textColor="@color/black"
@@ -346,7 +338,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/di_cut"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
                 <TextView
@@ -355,7 +347,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
-                    android:hint="@string/di_cut"
                     android:importantForAutofill="no"
                     android:padding="5dp"
                     android:textColor="@color/black"
@@ -378,7 +369,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/delivery_address"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
                 <TextView
@@ -387,7 +378,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
-                    android:hint="@string/delivery_address"
                     android:importantForAutofill="no"
                     android:padding="5dp"
                     android:textColor="@color/black"
@@ -410,7 +400,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/notes"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
 
@@ -421,7 +411,6 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
                     android:gravity="top"
-                    android:hint="@string/notes"
                     android:importantForAutofill="no"
                     android:padding="5dp"
                     android:textColor="@color/black"
@@ -444,7 +433,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/attach_file"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
                 <LinearLayout
@@ -457,7 +446,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="@string/no_file_choose"
+                        android:text="@string/no_file_choose"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -481,7 +470,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/designer_in_charge"
-                    android:textColor="@color/black"
+                    android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
                 <TextView
@@ -490,7 +479,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
-                    android:hint="@string/designer_in_charge"
                     android:importantForAutofill="no"
                     android:padding="5dp"
                     android:textColor="@color/black"

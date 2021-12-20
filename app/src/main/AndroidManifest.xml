@@ -26,7 +26,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".requests.request_details.RequestDetailsActivity"
+            android:name=".requests.RequestDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -50,15 +50,15 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".requests.Add.AddPurchaseActivity"
+            android:name=".requests.add.AddPurchaseActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".requests.Add.AddPhotographyActivity"
+            android:name=".requests.add.AddPhotographyActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".requests.Add.AddProductionActivity"
+            android:name=".requests.add.AddProductionActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -66,7 +66,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".requests.Add.AddPrintActivity"
+            android:name=".requests.add.AddPrintActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

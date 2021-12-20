@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.followup.R;
-import com.example.followup.requests.request_details.RequestDetailsActivity;
+import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.list.models.Photography_item;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class Photography_adapter extends RecyclerView.Adapter<Photography_adapte
         holder.parent_layout.setOnClickListener(v -> {
             Intent i =new Intent(mContext, RequestDetailsActivity.class);
             i.putExtra("request_id",items.get(position).getId());
-            i.putExtra("type_ide",items.get(position).getType_id());
+            i.putExtra("type_id",items.get(position).getType_id());
             mContext.startActivity(i);
         });
 

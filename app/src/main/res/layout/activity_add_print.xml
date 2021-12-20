@@ -9,7 +9,7 @@
     android:paddingStart="15dp"
     android:paddingTop="15dp"
     android:paddingEnd="15dp"
-    tools:context=".requests.Add.AddPrintActivity">
+    tools:context=".requests.add.AddPrintActivity">
 
 
     <LinearLayout
