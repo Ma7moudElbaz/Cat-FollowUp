@@ -14,6 +14,7 @@ import com.example.followup.home.profile.ProfileFragment;
 import com.example.followup.home.projects.ProjectsFragment;
 import com.example.followup.home.settings.SettingsFragment;
 import com.example.followup.requests.list.Photography_requests_fragment;
+import com.example.followup.requests.view.Purchase_view;
 import com.shuhart.stepview.StepView;
 
 public class RequestDetailsActivity extends LocalizationActivity {
@@ -44,7 +45,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         initFields();
         step_view.go(1, true);
 
-        setDetailsFragment(new ProfileFragment());
+        setDetailsFragment(new Purchase_view());
         setCostFragment(new ProfileFragment());
 
         expandDetails.setOnClickListener(v -> toggleDetails(isDetailsExpanded));

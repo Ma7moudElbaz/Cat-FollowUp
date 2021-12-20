@@ -23,6 +23,7 @@
         <entry key="app/src/main/res/drawable/calender_yellow.xml" value="0.1328125" />
         <entry key="app/src/main/res/drawable/et_gray.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/et_gray_border.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/drawable/et_gray_line.xml" value="0.22268518518518518" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/ic_approve.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/ic_arrow_down.xml" value="0.25052083333333336" />
@@ -65,11 +66,15 @@
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.10260416666666666" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_photography_requests_fragment.xml" value="0.20833333333333334" />
+        <entry key="app/src/main/res/layout/fragment_photography_view.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/fragment_print_requests_fragment.xml" value="0.19583333333333333" />
+        <entry key="app/src/main/res/layout/fragment_print_view.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_production_requests_fragment.xml" value="0.20833333333333334" />
+        <entry key="app/src/main/res/layout/fragment_production_view.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/fragment_projects.xml" value="1.0" />
         <entry key="app/src/main/res/layout/fragment_purchase_requests_fragment.xml" value="0.20833333333333334" />
+        <entry key="app/src/main/res/layout/fragment_purchase_view.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_purchse_requests_fragment.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/item_notifications.xml" value="0.18256475047378395" />
