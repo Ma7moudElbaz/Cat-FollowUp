@@ -10,6 +10,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface ServiceInterface {
@@ -17,10 +18,6 @@ public interface ServiceInterface {
     @POST("auth/login")
     @FormUrlEncoded
     Call<ResponseBody> login(@FieldMap Map<String, String> map);
-
-    @POST("auth/me")
-    @FormUrlEncoded
-    Call<ResponseBody> getMyData(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
 
     @PUT("token")
     @FormUrlEncoded
@@ -40,6 +37,8 @@ public interface ServiceInterface {
     @FormUrlEncoded
     Call<ResponseBody> addRequest(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
 
+    @GET("requests/{request_id}")
+    Call<ResponseBody> getRequestDetails(@Header("Authorization") String auth, @Path("request_id") int request_id);
 
     @GET("unreadNotificationsNumber")
     Call<ResponseBody> getNotificationsNumber(@Header("Authorization") String auth);

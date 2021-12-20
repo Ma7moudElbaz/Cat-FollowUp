@@ -1,4 +1,4 @@
-package com.example.followup.requests.models;
+package com.example.followup.requests.list.models;
 
 import com.example.followup.home.Attach_item;
 

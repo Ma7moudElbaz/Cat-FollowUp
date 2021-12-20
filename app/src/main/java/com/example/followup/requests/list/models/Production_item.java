@@ -1,16 +1,16 @@
-package com.example.followup.requests.models;
+package com.example.followup.requests.list.models;
 
 import com.example.followup.home.Attach_item;
 
 import java.util.ArrayList;
 
-public class Print_item {
+public class Production_item {
+
     private final int id, type_id,created_by_id, status_code,quantity;
-    private final String status_message,item_name,description,delivery_address,note,pages,paper_weight,print_type,colors, lamination,binding,di_cut,designer_name,created_by_name;
+    private final String status_message,item_name,description,delivery_address,note,country,venue,days,dimensions,screen,designer_name,created_by_name;
     private final ArrayList<Attach_item> attach_files;
 
-
-    public Print_item(int id, int type_id, int created_by_id, int status_code, int quantity, String status_message, String item_name, String description, String delivery_address, String note, String pages, String paper_weight, String print_type, String colors, String lamination, String binding, String di_cut, String designer_name, String created_by_name, ArrayList<Attach_item> attach_files) {
+    public Production_item(int id, int type_id, int created_by_id, int status_code, int quantity, String status_message, String item_name, String description, String delivery_address, String note, String country, String venue, String days, String dimensions, String screen, String designer_name, String created_by_name, ArrayList<Attach_item> attach_files) {
         this.id = id;
         this.type_id = type_id;
         this.created_by_id = created_by_id;
@@ -21,13 +21,11 @@ public class Print_item {
         this.description = description;
         this.delivery_address = delivery_address;
         this.note = note;
-        this.pages = pages;
-        this.paper_weight = paper_weight;
-        this.print_type = print_type;
-        this.colors = colors;
-        this.lamination = lamination;
-        this.binding = binding;
-        this.di_cut = di_cut;
+        this.country = country;
+        this.venue = venue;
+        this.days = days;
+        this.dimensions = dimensions;
+        this.screen = screen;
         this.designer_name = designer_name;
         this.created_by_name = created_by_name;
         this.attach_files = attach_files;
@@ -73,32 +71,24 @@ public class Print_item {
         return note;
     }
 
-    public String getPages() {
-        return pages;
+    public String getCountry() {
+        return country;
     }
 
-    public String getPaper_weight() {
-        return paper_weight;
+    public String getVenue() {
+        return venue;
     }
 
-    public String getPrint_type() {
-        return print_type;
+    public String getDays() {
+        return days;
     }
 
-    public String getColors() {
-        return colors;
+    public String getDimensions() {
+        return dimensions;
     }
 
-    public String getLamination() {
-        return lamination;
-    }
-
-    public String getBinding() {
-        return binding;
-    }
-
-    public String getDi_cut() {
-        return di_cut;
+    public String getScreen() {
+        return screen;
     }
 
     public String getDesigner_name() {
