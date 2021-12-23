@@ -98,7 +98,7 @@ public class ProjectsFragment extends Fragment {
                 final int id = currentObject.getInt("id");
                 final int user_id = currentObject.getInt("user_id");
                 final int status_code = currentObject.getInt("status");
-                final String status_message = currentObject.getString("status");
+                final String status_message = currentObject.getString("status_message");
                 final String client_company = currentObject.getString("client_company");
                 final String project_name = currentObject.getString("project_name");
                 final String client_name = currentObject.getString("client_name");

@@ -9,8 +9,13 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.followup.R;
+import com.example.followup.requests.RequestDetailsActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class Production_supplierCost_view extends Fragment {
     @Override
@@ -20,8 +25,40 @@ public class Production_supplierCost_view extends Fragment {
         return inflater.inflate(R.layout.fragment_production_supplier_cost_view, container, false);
     }
 
+    TextView supplier_name, cost, delivery_date, expiry_date, notes,assembly_dismantling,storage;
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initFields(view);
+    }
+    private void initFields(View view) {
+        supplier_name = view.findViewById(R.id.supplier_name);
+        cost = view.findViewById(R.id.cost);
+        delivery_date = view.findViewById(R.id.delivery_date);
+        expiry_date = view.findViewById(R.id.expiry_date);
+        notes = view.findViewById(R.id.notes);
+        assembly_dismantling = view.findViewById(R.id.assembly_dismantling);
+        storage = view.findViewById(R.id.storage);
+
+        RequestDetailsActivity activity = (RequestDetailsActivity) getActivity();
+
+        try {
+            assert activity != null;
+            setFields(activity.getDataObj());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void setFields(JSONObject dataObj) throws JSONException {
+        JSONObject costObj = dataObj.getJSONObject("cost");
+        supplier_name.setText(costObj.getString("supplier_name"));
+        cost.setText(costObj.getString("cost"));
+        delivery_date.setText(costObj.getString("delivery_date"));
+        expiry_date.setText(costObj.getString("expiry_date"));
+        notes.setText(costObj.getString("note"));
+        assembly_dismantling.setText(costObj.getString("assembly_dimension"));
+        storage.setText(costObj.getString("storage"));
     }
 }
