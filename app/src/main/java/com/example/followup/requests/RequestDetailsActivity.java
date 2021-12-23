@@ -14,11 +14,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
-import com.example.followup.home.profile.ProfileFragment;
 import com.example.followup.requests.view.Photography_view;
 import com.example.followup.requests.view.Print_view;
 import com.example.followup.requests.view.Production_view;
 import com.example.followup.requests.view.Purchase_view;
+import com.example.followup.supplier_costs.view.Photography_supplierCost_view;
+import com.example.followup.supplier_costs.view.Print_supplierCost_view;
+import com.example.followup.supplier_costs.view.Production_supplierCost_view;
+import com.example.followup.supplier_costs.view.Purchase_supplierCost_view;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 
@@ -154,19 +157,19 @@ public class RequestDetailsActivity extends LocalizationActivity {
         switch (type_id) {
             case 1:
                 setDetailsFragment(new Purchase_view());
-                setCostFragment(new ProfileFragment());
+                setCostFragment(new Purchase_supplierCost_view());
                 break;
             case 2:
                 setDetailsFragment(new Print_view());
-                setCostFragment(new ProfileFragment());
+                setCostFragment(new Print_supplierCost_view());
                 break;
             case 3:
                 setDetailsFragment(new Production_view());
-                setCostFragment(new ProfileFragment());
+                setCostFragment(new Production_supplierCost_view());
                 break;
             case 4:
                 setDetailsFragment(new Photography_view());
-                setCostFragment(new ProfileFragment());
+                setCostFragment(new Photography_supplierCost_view());
                 break;
         }
     }

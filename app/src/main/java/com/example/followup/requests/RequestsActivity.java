@@ -14,13 +14,13 @@ import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.job_orders.JobOrdersActivity;
 import com.example.followup.requests.add.AddPhotographyActivity;
-import com.example.followup.requests.list.Photography_requests_fragment;
+import com.example.followup.requests.list.Photography_requests_list;
 import com.example.followup.requests.add.AddPrintActivity;
-import com.example.followup.requests.list.Print_requests_fragment;
+import com.example.followup.requests.list.Print_requests_list;
 import com.example.followup.requests.add.AddProductionActivity;
-import com.example.followup.requests.list.Production_requests_fragment;
+import com.example.followup.requests.list.Production_requests_list;
 import com.example.followup.requests.add.AddPurchaseActivity;
-import com.example.followup.requests.list.Purchase_requests_fragment;
+import com.example.followup.requests.list.Purchase_requests_list;
 import com.github.clans.fab.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
@@ -121,16 +121,16 @@ public class RequestsActivity extends LocalizationActivity {
     private void setRequestsFragment(int selectedTab) {
         switch (selectedTab) {
             case 0:
-                setContentFragment(new Purchase_requests_fragment());
+                setContentFragment(new Purchase_requests_list());
                 break;
             case 1:
-                setContentFragment(new Print_requests_fragment());
+                setContentFragment(new Print_requests_list());
                 break;
             case 2:
-                setContentFragment(new Production_requests_fragment());
+                setContentFragment(new Production_requests_list());
                 break;
             case 3:
-                setContentFragment(new Photography_requests_fragment());
+                setContentFragment(new Photography_requests_list());
                 break;
         }
     }

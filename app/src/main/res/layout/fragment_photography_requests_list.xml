@@ -3,15 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".requests.list.Purchase_requests_fragment">
-
+    tools:context=".requests.list.Photography_requests_list">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/item_request_purchase" />
-
+        tools:listitem="@layout/item_request_print" />
 
 
     <ProgressBar
@@ -19,4 +17,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
+
 </FrameLayout>

@@ -33,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Photography_requests_fragment extends Fragment {
+public class Photography_requests_list extends Fragment {
     RecyclerView recyclerView;
     ProgressBar loading;
 
@@ -50,7 +50,7 @@ public class Photography_requests_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_photography_requests, container, false);
+        return inflater.inflate(R.layout.fragment_photography_requests_list, container, false);
     }
 
     @Override

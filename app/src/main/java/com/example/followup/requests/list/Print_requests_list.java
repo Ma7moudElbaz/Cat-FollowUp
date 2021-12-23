@@ -18,8 +18,8 @@ import android.widget.Toast;
 import com.example.followup.R;
 import com.example.followup.home.Attach_item;
 import com.example.followup.requests.RequestsActivity;
-import com.example.followup.requests.list.adapters.Production_adapter;
-import com.example.followup.requests.list.models.Production_item;
+import com.example.followup.requests.list.adapters.Print_adapter;
+import com.example.followup.requests.list.models.Print_item;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 
@@ -33,25 +33,23 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Production_requests_fragment extends Fragment {
-
+public class Print_requests_list extends Fragment {
     RecyclerView recyclerView;
     ProgressBar loading;
 
-    ArrayList<Production_item> production_list;
-    Production_adapter production_adapter;
+    ArrayList<Print_item> print_list;
+    Print_adapter print_adapter;
 
     int currentPageNum = 1;
     int lastPageNum;
     boolean mHasReachedBottomOnce = false;
 
     int projectId;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_production_requests_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_print_requests_list, container, false);
     }
 
     @Override
@@ -61,10 +59,10 @@ public class Production_requests_fragment extends Fragment {
 
     }
 
-    public void getRequests(int selectedTab, int pageNum) {
+    public void getRequests(int selectedTab,int pageNum) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getRequests(UserUtils.getAccessToken(getContext()), projectId, (selectedTab + 1), pageNum).enqueue(new Callback<ResponseBody>() {
+        Webservice.getInstance().getApi().getRequests(UserUtils.getAccessToken(getContext()),projectId,(selectedTab+1), pageNum).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -99,6 +97,7 @@ public class Production_requests_fragment extends Fragment {
             for (int i = 0; i < list.length(); i++) {
 
 
+
                 JSONObject currentObject = list.getJSONObject(i);
                 final int id = currentObject.getInt("id");
                 final int type_id = currentObject.getInt("type_id");
@@ -108,26 +107,28 @@ public class Production_requests_fragment extends Fragment {
                 final String status_message = currentObject.getString("status_message");
                 final String item_name = currentObject.getString("item_name");
                 final String description = currentObject.getString("description");
-//                final String delivery_address = currentObject.getString("delivery_address");
-                final String delivery_date = currentObject.getString("delivery_address");
+                final String delivery_address = currentObject.getString("delivery_address");
                 final String note = currentObject.getString("note");
-                final String country = currentObject.getString("country");
-                final String venue = currentObject.getString("venue");
-                final String days = currentObject.getString("days");
-                final String dimensions = currentObject.getString("dimension");
-                final String screen = currentObject.getString("screen");
+                final String pages = currentObject.getString("pages");
+                final String paper_weight = currentObject.getString("paper_weight");
+                final String print_type = currentObject.getString("print_type");
+                final String colors = currentObject.getString("color");
+                final String lamination = currentObject.getString("lamination");
+                final String binding = currentObject.getString("binding");
+                final String di_cut = currentObject.getString("di_cut");
                 final String designer_name = currentObject.getString("designer_name");
                 final String created_by_name = currentObject.getString("created_by_name");
 
                 ArrayList<Attach_item> attach_files = new ArrayList<>();
 
-                production_list.add(new Production_item(id, type_id, created_by_id, status_code, quantity, status_message,
-                        item_name, description, delivery_date, note, country, venue, days, dimensions, screen,
-                        designer_name, created_by_name, attach_files));
+
+                print_list.add(new Print_item(id,type_id,created_by_id,status_code,quantity, status_message,
+                        item_name,description,delivery_address,note,pages,paper_weight,print_type,colors,
+                        lamination,binding,di_cut,designer_name,created_by_name,attach_files));
 
             }
 
-            production_adapter.notifyDataSetChanged();
+            print_adapter.notifyDataSetChanged();
             mHasReachedBottomOnce = false;
             currentPageNum++;
 
@@ -138,20 +139,20 @@ public class Production_requests_fragment extends Fragment {
     }
 
     private void initFields(View view) {
-        RequestsActivity activity = (RequestsActivity) getActivity();
+        RequestsActivity activity= (RequestsActivity) getActivity();
         projectId = activity.getProjectId();
 
         loading = view.findViewById(R.id.loading);
         recyclerView = view.findViewById(R.id.recycler_view);
-        production_list = new ArrayList<>();
+        print_list = new ArrayList<>();
         initRecyclerView();
     }
 
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        production_adapter = new Production_adapter(getContext(), production_list);
-        recyclerView.setAdapter(production_adapter);
+        print_adapter = new Print_adapter(getContext(), print_list);
+        recyclerView.setAdapter(print_adapter);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -162,7 +163,7 @@ public class Production_requests_fragment extends Fragment {
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        getRequests(0, currentPageNum);
+                        getRequests(0,currentPageNum);
 
                 }
             }
@@ -172,8 +173,8 @@ public class Production_requests_fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        production_list.clear();
+        print_list.clear();
         currentPageNum = 1;
-        getRequests(2, currentPageNum);
+        getRequests(1,currentPageNum);
     }
 }

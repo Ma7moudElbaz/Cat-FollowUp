@@ -18,8 +18,8 @@ import android.widget.Toast;
 import com.example.followup.R;
 import com.example.followup.home.Attach_item;
 import com.example.followup.requests.RequestsActivity;
-import com.example.followup.requests.list.adapters.Print_adapter;
-import com.example.followup.requests.list.models.Print_item;
+import com.example.followup.requests.list.adapters.Purchase_adapter;
+import com.example.followup.requests.list.models.Purchase_item;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 
@@ -33,12 +33,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Print_requests_fragment extends Fragment {
+public class Purchase_requests_list extends Fragment {
     RecyclerView recyclerView;
     ProgressBar loading;
 
-    ArrayList<Print_item> print_list;
-    Print_adapter print_adapter;
+    ArrayList<Purchase_item> purchase_list;
+    Purchase_adapter purchase_adapter;
 
     int currentPageNum = 1;
     int lastPageNum;
@@ -49,7 +49,7 @@ public class Print_requests_fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_print_requests_fragment, container, false);
+        return inflater.inflate(R.layout.fragment_purchase_requests_list, container, false);
     }
 
     @Override
@@ -69,7 +69,7 @@ public class Print_requests_fragment extends Fragment {
                 try {
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray requestsArray = responseObject.getJSONArray("data");
-                    setPrintList(requestsArray);
+                    setPurchaseList(requestsArray);
                     JSONObject metaObject = responseObject.getJSONObject("meta");
                     lastPageNum = metaObject.getInt("last_page");
 
@@ -92,43 +92,33 @@ public class Print_requests_fragment extends Fragment {
     }
 
 
-    public void setPrintList(JSONArray list) {
+    public void setPurchaseList(JSONArray list) {
         try {
             for (int i = 0; i < list.length(); i++) {
-
-
-
                 JSONObject currentObject = list.getJSONObject(i);
                 final int id = currentObject.getInt("id");
                 final int type_id = currentObject.getInt("type_id");
                 final int created_by_id = currentObject.getInt("created_by_id");
                 final int status_code = currentObject.getInt("status");
                 final int quantity = currentObject.getInt("quantity");
-                final String status_message = currentObject.getString("status_message");
+                final String status_message = currentObject.getString("status");
                 final String item_name = currentObject.getString("item_name");
                 final String description = currentObject.getString("description");
                 final String delivery_address = currentObject.getString("delivery_address");
                 final String note = currentObject.getString("note");
-                final String pages = currentObject.getString("pages");
-                final String paper_weight = currentObject.getString("paper_weight");
-                final String print_type = currentObject.getString("print_type");
-                final String colors = currentObject.getString("color");
-                final String lamination = currentObject.getString("lamination");
-                final String binding = currentObject.getString("binding");
-                final String di_cut = currentObject.getString("di_cut");
-                final String designer_name = currentObject.getString("designer_name");
+                final String color = currentObject.getString("color");
+                final String material = currentObject.getString("material");
+                final String brand = currentObject.getString("brand");
                 final String created_by_name = currentObject.getString("created_by_name");
 
                 ArrayList<Attach_item> attach_files = new ArrayList<>();
 
-
-                print_list.add(new Print_item(id,type_id,created_by_id,status_code,quantity, status_message,
-                        item_name,description,delivery_address,note,pages,paper_weight,print_type,colors,
-                        lamination,binding,di_cut,designer_name,created_by_name,attach_files));
+                purchase_list.add(new Purchase_item(id,type_id,created_by_id,status_code,quantity, status_message,
+                        item_name,description,delivery_address,note,color,material,brand,created_by_name,attach_files));
 
             }
 
-            print_adapter.notifyDataSetChanged();
+            purchase_adapter.notifyDataSetChanged();
             mHasReachedBottomOnce = false;
             currentPageNum++;
 
@@ -144,15 +134,15 @@ public class Print_requests_fragment extends Fragment {
 
         loading = view.findViewById(R.id.loading);
         recyclerView = view.findViewById(R.id.recycler_view);
-        print_list = new ArrayList<>();
+        purchase_list = new ArrayList<>();
         initRecyclerView();
     }
 
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        print_adapter = new Print_adapter(getContext(), print_list);
-        recyclerView.setAdapter(print_adapter);
+        purchase_adapter = new Purchase_adapter(getContext(), purchase_list);
+        recyclerView.setAdapter(purchase_adapter);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -173,8 +163,10 @@ public class Print_requests_fragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        print_list.clear();
+        purchase_list.clear();
         currentPageNum = 1;
-        getRequests(1,currentPageNum);
+        getRequests(0,currentPageNum);
     }
+
+
 }
