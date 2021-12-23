@@ -22,8 +22,9 @@
             android:gravity="center_horizontal">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_toStartOf="@+id/job_orders"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -31,13 +32,17 @@
                     android:id="@+id/back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:contentDescription="@string/description"
                     android:src="@drawable/ic_back"
                     app:tint="@color/black" />
 
                 <TextView
+                    android:id="@+id/project_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:text="@string/project_name"
                     android:textColor="@color/black"
                     android:textSize="24sp"
@@ -90,6 +95,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="5dp"
                 android:background="@drawable/black_curved"
+                android:contentDescription="@string/description"
                 android:padding="10dp"
                 android:src="@drawable/ic_filter" />
         </RelativeLayout>
@@ -132,8 +138,7 @@
             android:id="@+id/contentLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_above="@+id/bottom_nav_container" />
+            android:layout_marginTop="10dp" />
 
     </LinearLayout>
 

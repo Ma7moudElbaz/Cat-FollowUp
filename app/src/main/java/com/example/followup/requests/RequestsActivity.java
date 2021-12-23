@@ -30,8 +30,9 @@ public class RequestsActivity extends LocalizationActivity {
     ImageView back;
     FloatingActionButton addPhotography, addProduction, addPurchasing, addPrinting;
     TabLayout requests_tab;
-    TextView job_orders;
+    TextView job_orders,project_name;
     int projectId;
+    String projectName;
     int tabPosition;
 
     public int getProjectId() {
@@ -51,6 +52,7 @@ public class RequestsActivity extends LocalizationActivity {
         setContentView(R.layout.activity_requests);
         initFields();
 
+        project_name.setText(projectName);
         back.setOnClickListener(v -> onBackPressed());
         job_orders.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), JobOrdersActivity.class)));
 
@@ -101,6 +103,7 @@ public class RequestsActivity extends LocalizationActivity {
 
     private void initFields() {
         projectId = getIntent().getIntExtra("project_id", 0);
+        projectName = getIntent().getStringExtra("project_name");
         addPhotography = findViewById(R.id.photography_btn);
         addProduction = findViewById(R.id.production_btn);
         addPurchasing = findViewById(R.id.purchase_btn);
@@ -108,6 +111,7 @@ public class RequestsActivity extends LocalizationActivity {
         requests_tab = findViewById(R.id.requests_tab);
         back = findViewById(R.id.back);
         job_orders = findViewById(R.id.job_orders);
+        project_name = findViewById(R.id.project_name);
 
     }
 

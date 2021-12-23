@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
-                android:text="@string/project_name"
+                android:text="@string/job_orders"
                 android:textColor="@color/black"
                 android:textSize="24sp"
                 android:textStyle="bold" />

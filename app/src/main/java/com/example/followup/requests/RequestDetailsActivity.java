@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -37,7 +39,9 @@ public class RequestDetailsActivity extends LocalizationActivity {
     boolean isDetailsExpanded = false;
     boolean isCostExpanded = false;
     ImageView back,expandDetails, expandCost;
-    FrameLayout request_details_content, request_cost_content;
+    FrameLayout request_details_content, cost_details_content;
+    RelativeLayout request_cost_container;
+    LinearLayout no_cost_container;
     ProgressBar loading;
 
 
@@ -56,7 +60,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
 
     public void setCostFragment(Fragment fragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.request_cost_content, fragment);
+        fragmentTransaction.replace(R.id.cost_details_content, fragment);
         fragmentTransaction.commit();
     }
 
@@ -70,7 +74,6 @@ public class RequestDetailsActivity extends LocalizationActivity {
         expandDetails.setOnClickListener(v -> toggleDetails(isDetailsExpanded));
         expandCost.setOnClickListener(v -> toggleCost(isCostExpanded));
 
-        getRequests();
     }
 
     private void initFields() {
@@ -81,7 +84,9 @@ public class RequestDetailsActivity extends LocalizationActivity {
         expandCost = findViewById(R.id.expand_cost);
         back = findViewById(R.id.back);
         request_details_content = findViewById(R.id.request_details_content);
-        request_cost_content = findViewById(R.id.request_cost_content);
+        request_cost_container = findViewById(R.id.request_cost_container);
+        cost_details_content = findViewById(R.id.cost_details_content);
+        no_cost_container = findViewById(R.id.no_cost_container);
     }
 
     private void expandDetails() {
@@ -90,13 +95,13 @@ public class RequestDetailsActivity extends LocalizationActivity {
         isDetailsExpanded = true;
 
         expandCost.setImageResource(R.drawable.ic_arrow_down);
-        request_cost_content.setVisibility(View.GONE);
+        request_cost_container.setVisibility(View.GONE);
         isCostExpanded = false;
     }
 
     private void expandCost() {
         expandCost.setImageResource(R.drawable.ic_arrow_up);
-        request_cost_content.setVisibility(View.VISIBLE);
+        request_cost_container.setVisibility(View.VISIBLE);
         isCostExpanded = true;
 
         expandDetails.setImageResource(R.drawable.ic_arrow_down);
@@ -107,7 +112,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
     private void toggleCost(boolean expanded) {
         if (expanded) {
             expandCost.setImageResource(R.drawable.ic_arrow_down);
-            request_cost_content.setVisibility(View.GONE);
+            request_cost_container.setVisibility(View.GONE);
             isCostExpanded = false;
         } else {
             expandCost();
@@ -135,6 +140,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
                     JSONObject responseObject = new JSONObject(response.body().string());
                     dataObj = responseObject.getJSONObject("data");
                     setFragments(type_id);
+                    setCostContainer(!dataObj.getString("cost").equals("null"));
                     loading.setVisibility(View.GONE);
 
                 } catch (Exception e) {
@@ -151,6 +157,16 @@ public class RequestDetailsActivity extends LocalizationActivity {
                 loading.setVisibility(View.GONE);
             }
         });
+    }
+
+    private void setCostContainer(boolean hasCost){
+        if (hasCost){
+            cost_details_content.setVisibility(View.VISIBLE);
+            no_cost_container.setVisibility(View.GONE);
+        }else {
+            cost_details_content.setVisibility(View.GONE);
+            no_cost_container.setVisibility(View.VISIBLE);
+        }
     }
 
     private void setFragments(int type_id) {
@@ -174,4 +190,9 @@ public class RequestDetailsActivity extends LocalizationActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getRequests();
+    }
 }

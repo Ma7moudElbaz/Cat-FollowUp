@@ -51,6 +51,7 @@ public class Projects_adapter extends RecyclerView.Adapter<Projects_adapter.View
         holder.view_requests.setOnClickListener(v -> {
             Intent i = new Intent(mContext, RequestsActivity.class);
             i.putExtra("project_id",items.get(position).getId());
+            i.putExtra("project_name",items.get(position).getProject_name());
             mContext.startActivity(i);
         });
 

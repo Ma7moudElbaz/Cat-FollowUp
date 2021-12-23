@@ -193,54 +193,60 @@
                             android:padding="5dp"
                             android:src="@drawable/ic_arrow_down" />
                     </RelativeLayout>
-
-                    <LinearLayout
-                        android:id="@+id/no_cost_container"
+                    <RelativeLayout
+                        android:id="@+id/request_cost_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="20dp">
+                        android:visibility="gone">
 
-                        <ImageView
+                        <LinearLayout
+                            android:id="@+id/no_cost_container"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_supplier_cost"
-                            android:contentDescription="@string/description" />
+                            android:orientation="vertical"
+                            android:paddingTop="20dp"
+                            android:visibility="gone"
+                            android:paddingBottom="20dp">
 
-                        <TextView
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_supplier_cost"
+                                android:contentDescription="@string/description" />
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:gravity="center"
+                                android:text="@string/no_supplier_cost"
+                                android:textColor="@color/light_gray"
+                                android:textStyle="bold" />
+
+
+                            <Button
+                                android:id="@+id/add_cost"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp"
+                                android:background="@drawable/btn_yellow"
+                                android:baselineAligned="false"
+                                android:text="@string/add_supplier_cost"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black" />
+
+                        </LinearLayout>
+
+                        <FrameLayout
+                            android:id="@+id/cost_details_content"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:gravity="center"
-                            android:text="@string/no_supplier_cost"
-                            android:textColor="@color/light_gray"
-                            android:textStyle="bold" />
-
-
-                        <Button
-                            android:id="@+id/add_cost"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="20dp"
-                            android:background="@drawable/btn_yellow"
-                            android:baselineAligned="false"
-                            android:text="@string/add_supplier_cost"
-                            android:textAllCaps="false"
-                            android:textColor="@color/black" />
-
-                    </LinearLayout>
-
-
-                    <FrameLayout
-                        android:id="@+id/request_cost_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/add_forms_curved"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
-                        android:visibility="gone" />
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/add_forms_curved"
+                            android:paddingTop="10dp"
+                            android:paddingBottom="10dp"
+                            android:visibility="gone" />
+                    </RelativeLayout>
 
                 </LinearLayout>
 
