@@ -25,5 +25,6 @@
     <color name="text_request_gray">#994E4E4E</color>
     <color name="stepper_gray">#F5F5F5</color>
     <color name="line_gray">#F5F5F5</color>
+    <color name="line_gray_cost">#EBEBEB</color>
     <color name="black">#101010</color>
 </resources>

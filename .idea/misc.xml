@@ -8,6 +8,7 @@
         <entry key="app/src/main/res/drawable-xhdpi/btn_blue.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable-xhdpi/btn_red.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable-xhdpi/btn_yellow.xml" value="0.1328125" />
+        <entry key="app/src/main/res/drawable-xhdpi/cost_bg_curved.xml" value="0.21963470319634704" />
         <entry key="app/src/main/res/drawable-xhdpi/et_gray.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable-xhdpi/et_gray_border.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable-xhdpi/job_order_bg.xml" value="0.25052083333333336" />
@@ -21,6 +22,7 @@
         <entry key="app/src/main/res/drawable/btn_red.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/btn_yellow.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/calender_yellow.xml" value="0.1328125" />
+        <entry key="app/src/main/res/drawable/cost_bg_curved.xml" value="0.21963470319634704" />
         <entry key="app/src/main/res/drawable/et_gray.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/et_gray_border.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/et_gray_line.xml" value="0.22268518518518518" />
@@ -66,14 +68,18 @@
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.10260416666666666" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_photography_requests_fragment.xml" value="0.20833333333333334" />
+        <entry key="app/src/main/res/layout/fragment_photography_supplier_cost_view.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/fragment_photography_view.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/fragment_print_requests_fragment.xml" value="0.19583333333333333" />
+        <entry key="app/src/main/res/layout/fragment_print_supplier_cost_view.xml" value="0.2054794520547945" />
         <entry key="app/src/main/res/layout/fragment_print_view.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_production_requests_fragment.xml" value="0.20833333333333334" />
+        <entry key="app/src/main/res/layout/fragment_production_supplier_cost_view.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_production_view.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/fragment_projects.xml" value="1.0" />
         <entry key="app/src/main/res/layout/fragment_purchase_requests_fragment.xml" value="0.20833333333333334" />
+        <entry key="app/src/main/res/layout/fragment_purchase_supplier_cost_view.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/fragment_purchase_view.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_purchse_requests_fragment.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.234375" />

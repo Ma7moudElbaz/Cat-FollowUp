@@ -3,5 +3,5 @@
 
     <solid
         android:color="@color/list_item_bg"/>
-    <corners android:radius="20dp"/>
+    <corners android:radius="15dp"/>
 </shape>

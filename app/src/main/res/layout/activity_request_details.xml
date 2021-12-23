@@ -200,7 +200,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:visibility="gone" />
+                        android:background="@drawable/add_forms_curved"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"/>
 
                 </LinearLayout>
 
