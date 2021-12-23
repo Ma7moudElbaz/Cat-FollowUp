@@ -160,4 +160,5 @@
     <string name="request_cost">Request Cost</string>
     <string name="designer">DESIGNER</string>
     <string name="camera_type">Camera Type</string>
+    <string name="no_supplier_cost">There’s no Supplier Cost added yet</string>
 </resources>
