@@ -16,12 +16,20 @@
         //bottom sheet style
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
 
+        //spinner style
+        <item name="android:spinnerItemStyle">@style/spinnerItemStyle</item>
+
         //font style
 <!--        <item name="android:textViewStyle">@style/PoppinsTextViewStyle</item>-->
 <!--        <item name="android:buttonStyle">@style/PoppinsButtonStyle</item>-->
 <!--        <item name="android:editTextStyle">@style/PoppinsEditTextStyle</item>-->
 
+    </style>
 
+
+
+    <style name="spinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textColor">@color/white</item>
     </style>
 
 

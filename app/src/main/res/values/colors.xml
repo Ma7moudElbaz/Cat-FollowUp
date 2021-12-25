@@ -20,6 +20,7 @@
 
 
     <color name="white">#FEFEFE</color>
+    <color name="transparent">#00FEFEFE</color>
     <color name="gray">#6D6D6D</color>
     <color name="light_gray">#B1B1B1</color>
     <color name="text_request_gray">#994E4E4E</color>

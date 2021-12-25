@@ -40,12 +40,15 @@ public interface ServiceInterface {
     @GET("requests/{request_id}")
     Call<ResponseBody> getRequestDetails(@Header("Authorization") String auth, @Path("request_id") int request_id);
 
+    @POST("costs")
+    @FormUrlEncoded
+    Call<ResponseBody> addCost(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
+
     @GET("unreadNotificationsNumber")
     Call<ResponseBody> getNotificationsNumber(@Header("Authorization") String auth);
 
     @POST("markAsRead")
     @FormUrlEncoded
     Call<ResponseBody> readNotification(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
-
 
 }

@@ -1,5 +1,11 @@
 <resources>
 
+    <string-array name="currency">
+        <item>EGP</item>
+        <item>USD</item>
+        <item>SR</item>
+        <item>AED</item>
+    </string-array>
 
     <string-array name="job_orders_steps">
         <item>Job Order\nCreation</item>

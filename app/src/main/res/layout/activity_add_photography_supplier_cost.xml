@@ -75,6 +75,7 @@
             </LinearLayout>
 
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -88,19 +89,37 @@
                     android:textColor="@color/gray"
                     android:textSize="16sp" />
 
-                <EditText
-                    android:id="@+id/cost"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/et_gray_border"
-                    android:hint="@string/cost"
-                    android:importantForAutofill="no"
-                    android:inputType="number"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:background="@drawable/et_gray_border">
+
+                    <Spinner
+                        android:id="@+id/currency_spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/calender_yellow"
+                        android:entries="@array/currency"
+                        android:padding="5dp" />
+
+                    <EditText
+                        android:id="@+id/cost"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_toStartOf="@+id/currency_spinner"
+                        android:background="@color/transparent"
+                        android:hint="@string/cost"
+                        android:importantForAutofill="no"
+                        android:inputType="numberDecimal"
+                        android:padding="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </RelativeLayout>
             </LinearLayout>
+
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -115,18 +134,37 @@
                     android:textColor="@color/gray"
                     android:textSize="16sp" />
 
-                <EditText
-                    android:id="@+id/delivery_date"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/et_gray_border"
-                    android:hint="@string/delivery_date"
-                    android:importantForAutofill="no"
-                    android:inputType="date"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:background="@drawable/et_gray_border">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/calender_yellow"
+                        android:src="@drawable/ic_date"
+                        android:adjustViewBounds="true"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
+                        android:paddingStart="15dp"
+                        android:paddingEnd="15dp"
+                        app:tint="@color/white"
+                        android:layout_alignParentEnd="true"/>
+
+                    <EditText
+                        android:id="@+id/delivery_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@color/transparent"
+                        android:hint="@string/delivery_date"
+                        android:importantForAutofill="no"
+                        android:inputType="date"
+                        android:padding="10dp"
+                        android:textColor="@color/black"
+                        android:textSize="16sp" />
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -145,16 +183,17 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp">
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/et_gray_border">
 
                     <ImageView
                         android:layout_width="wrap_content"
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:background="@drawable/calender_yellow"
                         android:src="@drawable/ic_date"
                         android:adjustViewBounds="true"
-                        android:paddingTop="7dp"
-                        android:paddingBottom="7dp"
+                        android:paddingTop="8dp"
+                        android:paddingBottom="8dp"
                         android:paddingStart="15dp"
                         android:paddingEnd="15dp"
                         app:tint="@color/white"
@@ -163,8 +202,8 @@
                     <EditText
                         android:id="@+id/expiry_date"
                         android:layout_width="match_parent"
-                        android:layout_height="50dp"
-                        android:background="@drawable/et_gray_border"
+                        android:layout_height="40dp"
+                        android:background="@color/transparent"
                         android:hint="@string/expiry_date"
                         android:importantForAutofill="no"
                         android:inputType="date"
@@ -205,51 +244,8 @@
                     android:textSize="16sp" />
             </LinearLayout>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/attach_file"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_gray_border"
-                    android:padding="5dp">
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/choose_file"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:elevation="0dp"
-                        android:text="@string/choose_file"
-                        android:textAllCaps="false"
-                        android:textColor="@color/black" />
-
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/no_file_choose"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
-
-
-            </LinearLayout>
-
-
             <Button
-                android:id="@+id/btn_send_request"
+                android:id="@+id/btn_add_cost"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"

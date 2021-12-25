@@ -1,8 +1,10 @@
 package com.example.followup.requests;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -20,6 +22,10 @@ import com.example.followup.requests.view.Photography_view;
 import com.example.followup.requests.view.Print_view;
 import com.example.followup.requests.view.Production_view;
 import com.example.followup.requests.view.Purchase_view;
+import com.example.followup.supplier_costs.add.AddPhotographySupplierCostActivity;
+import com.example.followup.supplier_costs.add.AddPrintSupplierCostActivity;
+import com.example.followup.supplier_costs.add.AddProductionSupplierCostActivity;
+import com.example.followup.supplier_costs.add.AddPurchaseSupplierCostActivity;
 import com.example.followup.supplier_costs.view.Photography_supplierCost_view;
 import com.example.followup.supplier_costs.view.Print_supplierCost_view;
 import com.example.followup.supplier_costs.view.Production_supplierCost_view;
@@ -43,6 +49,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
     RelativeLayout request_cost_container;
     LinearLayout no_cost_container;
     ProgressBar loading;
+    Button add_cost;
 
 
     int request_id, type_id;
@@ -73,6 +80,30 @@ public class RequestDetailsActivity extends LocalizationActivity {
         back.setOnClickListener(v -> onBackPressed());
         expandDetails.setOnClickListener(v -> toggleDetails(isDetailsExpanded));
         expandCost.setOnClickListener(v -> toggleCost(isCostExpanded));
+        add_cost.setOnClickListener(v -> gotoAddCost(request_id,type_id));
+
+    }
+
+    private void gotoAddCost(int request_id,int type_id) {
+        Intent i ;
+        switch (type_id) {
+            case 1:
+                i = new Intent(getBaseContext(), AddPurchaseSupplierCostActivity.class);
+                break;
+            case 2:
+                i = new Intent(getBaseContext(), AddPrintSupplierCostActivity.class);
+                break;
+            case 3:
+                i = new Intent(getBaseContext(), AddProductionSupplierCostActivity.class);
+                break;
+            case 4:
+                i = new Intent(getBaseContext(), AddPhotographySupplierCostActivity.class);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + type_id);
+        }
+        i.putExtra("request_id",request_id);
+        startActivity(i);
 
     }
 
@@ -87,6 +118,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         request_cost_container = findViewById(R.id.request_cost_container);
         cost_details_content = findViewById(R.id.cost_details_content);
         no_cost_container = findViewById(R.id.no_cost_container);
+        add_cost = findViewById(R.id.add_cost);
     }
 
     private void expandDetails() {
