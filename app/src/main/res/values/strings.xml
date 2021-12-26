@@ -185,5 +185,4 @@
     <string name="camera_type">Camera Type</string>
     <string name="no_supplier_cost">There’s no Supplier Cost \nadded yet</string>
     <string name="job_order_number">Job Order Number</string>
-    <string name="po_number">PO Number</string>
 </resources>

@@ -3,6 +3,7 @@ package com.example.followup.requests;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,8 +55,12 @@ public class RequestsActivity extends LocalizationActivity {
 
         project_name.setText(projectName);
         back.setOnClickListener(v -> onBackPressed());
-        job_orders.setOnClickListener(v -> startActivity(new Intent(getBaseContext(), JobOrdersActivity.class)));
 
+        job_orders.setOnClickListener(v -> {
+            Intent i =new Intent(getBaseContext(), JobOrdersActivity.class);
+            i.putExtra("project_id",projectId);
+            startActivity(i);
+        });
         requests_tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
