@@ -41,7 +41,6 @@
 
         </LinearLayout>
 
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,8 +57,7 @@
                 android:hint="@string/type_to_search"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
-                android:padding="8dp"
-                android:autofillHints="" />
+                android:padding="8dp" />
 
             <ImageView
                 android:id="@+id/filter_btn"
@@ -71,9 +69,31 @@
                 android:background="@drawable/black_curved"
                 android:padding="10dp"
                 android:src="@drawable/ic_filter" />
+
         </RelativeLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            tools:listitem="@layout/item_job_order" />
+
     </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_add_project"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/content_description"
+        app:backgroundTint="@color/colorAccent"
+        app:elevation="0dp"
+        app:srcCompat="@drawable/ic_add"
+        app:tint="@color/white" />
 
     <ProgressBar
         android:id="@+id/loading"
