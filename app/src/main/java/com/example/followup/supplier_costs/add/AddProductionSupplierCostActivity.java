@@ -43,6 +43,7 @@ public class AddProductionSupplierCostActivity extends LocalizationActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_production_supplier_cost);
+        initFields();
         back.setOnClickListener(v -> onBackPressed());
 
         delivery_date.setOnClickListener(v -> showDatePicker(delivery_date));
