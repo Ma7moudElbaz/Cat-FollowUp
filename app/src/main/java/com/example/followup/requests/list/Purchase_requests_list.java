@@ -109,7 +109,7 @@ public class Purchase_requests_list extends Fragment {
                 final String color = currentObject.getString("color");
                 final String material = currentObject.getString("material");
                 final String brand = currentObject.getString("brand");
-                final String created_by_name = currentObject.getString("created_by_name");
+                final String created_by_name = currentObject.getJSONObject("created_by_name").getString("name");
 
                 ArrayList<Attach_item> attach_files = new ArrayList<>();
 

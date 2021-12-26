@@ -117,7 +117,7 @@ public class Production_requests_list extends Fragment {
                 final String dimensions = currentObject.getString("dimension");
                 final String screen = currentObject.getString("screen");
                 final String designer_name = currentObject.getString("designer_name");
-                final String created_by_name = currentObject.getString("created_by_name");
+                final String created_by_name = currentObject.getJSONObject("created_by_name").getString("name");
 
                 ArrayList<Attach_item> attach_files = new ArrayList<>();
 

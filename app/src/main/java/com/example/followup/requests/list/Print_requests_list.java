@@ -117,7 +117,7 @@ public class Print_requests_list extends Fragment {
                 final String binding = currentObject.getString("binding");
                 final String di_cut = currentObject.getString("di_cut");
                 final String designer_name = currentObject.getString("designer_name");
-                final String created_by_name = currentObject.getString("created_by_name");
+                final String created_by_name = currentObject.getJSONObject("created_by_name").getString("name");
 
                 ArrayList<Attach_item> attach_files = new ArrayList<>();
 

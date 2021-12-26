@@ -116,7 +116,7 @@ public class Photography_requests_list extends Fragment {
                 final String lighting = currentObject.getString("lighting");
                 final String chroma = currentObject.getString("chroma");
                 final String props = currentObject.getString("props");
-                final String created_by_name = currentObject.getString("created_by_name");
+                final String created_by_name = currentObject.getJSONObject("created_by_name").getString("name");
 
                 ArrayList<Attach_item> attach_files = new ArrayList<>();
 

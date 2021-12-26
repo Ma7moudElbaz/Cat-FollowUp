@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -92,7 +93,7 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
         dialog.setMessage("Please, Wait...");
         dialog.setCancelable(false);
 
-        requestId = getIntent().getIntExtra("project_id", 0);
+        requestId = getIntent().getIntExtra("request_id", 0);
         back = findViewById(R.id.back);
         supplier_name = findViewById(R.id.supplier_name);
         cost = findViewById(R.id.cost);
@@ -166,16 +167,16 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
 
 
     private Map<String, String> setCostMap() {
+        Log.e("TAG", String.valueOf(requestId) );
         Map<String, String> map = new HashMap<>();
         map.put("request_id", String.valueOf(requestId));
         map.put("supplier_name", supplier_name.getText().toString());
         map.put("cost", cost.getText().toString());
         map.put("delivery_date", delivery_date.getText().toString());
         map.put("expiry_date", expiry_date.getText().toString());
-        map.put("notes", notes.getText().toString());
-        map.put("currency_id",String.valueOf(currency.getSelectedItemPosition()+1));
-        map.put("purchasing_type",purchasing_type.getText().toString());
         map.put("note", notes.getText().toString());
+        map.put("currency_id",String.valueOf(currency.getSelectedItemPosition()+1));
+        map.put("purchase_type",purchasing_type.getText().toString());
 
         return map;
     }
