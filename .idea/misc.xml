@@ -46,6 +46,7 @@
         <entry key="app/src/main/res/drawable/white_curved_more.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/font-v26/poppins.xml" value="0.26458333333333334" />
         <entry key="app/src/main/res/font/poppins.xml" value="0.26458333333333334" />
+        <entry key="app/src/main/res/layout/activity_add_job_order.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_photography.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_add_photography_supplier_cost.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_add_print.xml" value="0.22" />
@@ -77,6 +78,7 @@
         <entry key="app/src/main/res/layout/fragment_print_supplier_cost_view.xml" value="0.2054794520547945" />
         <entry key="app/src/main/res/layout/fragment_print_view.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_production_requests_fragment.xml" value="0.20833333333333334" />
+        <entry key="app/src/main/res/layout/fragment_production_requests_list.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/fragment_production_supplier_cost_view.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_production_view.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.234375" />
@@ -87,6 +89,7 @@
         <entry key="app/src/main/res/layout/fragment_purchse_requests_fragment.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/item_job_order.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_job_order_request.xml" value="0.41391304347826086" />
         <entry key="app/src/main/res/layout/item_notifications.xml" value="0.18256475047378395" />
         <entry key="app/src/main/res/layout/item_projects.xml" value="0.3209200438116101" />
         <entry key="app/src/main/res/layout/item_request.xml" value="0.18" />

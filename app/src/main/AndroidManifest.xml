@@ -22,6 +22,9 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
+            android:name=".job_orders.AddJobOrderActivity"
+            android:exported="false" />
+        <activity
             android:name=".job_orders.JobOrderDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

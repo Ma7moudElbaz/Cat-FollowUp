@@ -1,5 +1,12 @@
 <resources>
 
+    <string-array name="request_types">
+        <item>Purchasing</item>
+        <item>Printing</item>
+        <item>Production</item>
+        <item>Photography</item>
+    </string-array>
+
     <string-array name="currency">
         <item>EGP</item>
         <item>USD</item>
@@ -185,4 +192,7 @@
     <string name="camera_type">Camera Type</string>
     <string name="no_supplier_cost">There’s no Supplier Cost \nadded yet</string>
     <string name="job_order_number">Job Order Number</string>
+    <string name="new_job_order">New Job Order</string>
+    <string name="request_id">Request Id :</string>
+    <string name="final_cost">Final Cost :</string>
 </resources>

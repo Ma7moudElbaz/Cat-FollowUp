@@ -1,28 +1,22 @@
 package com.example.followup.job_orders;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.akexorcist.localizationactivity.ui.LocalizationActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.Toast;
+
 import com.example.followup.R;
-import com.example.followup.home.Attach_item;
-import com.example.followup.requests.RequestsActivity;
-import com.example.followup.requests.list.adapters.Photography_adapter;
-import com.example.followup.requests.list.models.Photography_item;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -34,15 +28,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class JobOrdersActivity extends LocalizationActivity {
+public class AddJobOrderActivity extends AppCompatActivity {
 
     ImageView back;
     ProgressBar loading;
     RecyclerView recyclerView;
-    FloatingActionButton fab_add_job_order;
+    Spinner request_types_spinner;
 
-    ArrayList<Job_order_item> job_order_list;
-    Job_orders_adapter job_order_adapter;
+    ArrayList<Job_order_request_item> job_order_requests_list;
+    Job_orders_requests_adapter job_order_requests_adapter;
 
     int currentPageNum = 1;
     int lastPageNum;
@@ -53,27 +47,35 @@ public class JobOrdersActivity extends LocalizationActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_job_orders);
+        setContentView(R.layout.activity_add_job_order);
         initFields();
         back.setOnClickListener(v -> onBackPressed());
-        fab_add_job_order.setOnClickListener(v -> {
-            Intent i = new Intent(getBaseContext(),AddJobOrderActivity.class);
-            i.putExtra("project_id",projectId);
-            startActivity(i);
+        request_types_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                job_order_requests_list.clear();
+                currentPageNum = 1;
+                getJobOrderRequests(currentPageNum);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
         });
     }
 
-    public void getJobOrders(int pageNum) {
+    public void getJobOrderRequests(int pageNum) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getJobOrders(UserUtils.getAccessToken(getBaseContext()),projectId, pageNum).enqueue(new Callback<ResponseBody>() {
+        Webservice.getInstance().getApi().getJobOrderRequests(UserUtils.getAccessToken(getBaseContext()),6,projectId,(request_types_spinner.getSelectedItemPosition()+1), pageNum).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray jobOrdersArray = responseObject.getJSONArray("data");
-                    setJobOrdersList(jobOrdersArray);
+                    setJobOrderRequestsList(jobOrdersArray);
                     JSONObject metaObject = responseObject.getJSONObject("meta");
                     lastPageNum = metaObject.getInt("last_page");
 
@@ -95,24 +97,21 @@ public class JobOrdersActivity extends LocalizationActivity {
         });
     }
 
-    public void setJobOrdersList(JSONArray list) {
+    public void setJobOrderRequestsList(JSONArray list) {
         try {
             for (int i = 0; i < list.length(); i++) {
 
                 JSONObject currentObject = list.getJSONObject(i);
                 final int id = currentObject.getInt("id");
-                final int project_id = currentObject.getInt("project_id");
-                final int status_code = currentObject.getInt("status");
-                final String status_message = currentObject.getString("status_message");
-                final String name = currentObject.getString("name");
-                final String po_number = currentObject.getString("po_number");
+                final String request_id = currentObject.getString("item_name");
 
-                job_order_list.add(new Job_order_item(id, project_id, status_code, status_message,
-                        name, po_number));
+
+
+                job_order_requests_list.add(new Job_order_request_item(id, request_id, "", false));
 
             }
 
-            job_order_adapter.notifyDataSetChanged();
+            job_order_requests_adapter.notifyDataSetChanged();
             mHasReachedBottomOnce = false;
             currentPageNum++;
 
@@ -126,18 +125,19 @@ public class JobOrdersActivity extends LocalizationActivity {
         projectId = getIntent().getIntExtra("project_id",0);
 
         back = findViewById(R.id.back);
-        fab_add_job_order = findViewById(R.id.fab_add_job_order);
         loading = findViewById(R.id.loading);
+        request_types_spinner = findViewById(R.id.request_types_spinner);
         recyclerView = findViewById(R.id.recycler_view);
-        job_order_list = new ArrayList<>();
+        job_order_requests_list = new ArrayList<>();
         initRecyclerView();
+
     }
 
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        job_order_adapter = new Job_orders_adapter(getBaseContext(), job_order_list);
-        recyclerView.setAdapter(job_order_adapter);
+        job_order_requests_adapter = new Job_orders_requests_adapter(getBaseContext(), job_order_requests_list);
+        recyclerView.setAdapter(job_order_requests_adapter);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -148,7 +148,7 @@ public class JobOrdersActivity extends LocalizationActivity {
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        getJobOrders( currentPageNum);
+                        getJobOrderRequests( currentPageNum);
 
                 }
             }
@@ -158,8 +158,8 @@ public class JobOrdersActivity extends LocalizationActivity {
     @Override
     public void onResume() {
         super.onResume();
-        job_order_list.clear();
+        job_order_requests_list.clear();
         currentPageNum = 1;
-        getJobOrders(currentPageNum);
+        getJobOrderRequests(currentPageNum);
     }
 }
