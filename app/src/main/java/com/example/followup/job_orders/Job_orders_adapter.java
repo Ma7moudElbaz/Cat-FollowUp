@@ -60,7 +60,7 @@ public class Job_orders_adapter extends RecyclerView.Adapter<Job_orders_adapter.
 
         holder.parent_layout.setOnClickListener(v -> {
             Intent i = new Intent(mContext, JobOrderDetailsActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra("job_order_id",items.get(position).getId());
             mContext.startActivity(i);
         });

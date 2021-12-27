@@ -101,7 +101,7 @@ public class Purchase_requests_list extends Fragment {
                 final int created_by_id = currentObject.getInt("created_by_id");
                 final int status_code = currentObject.getInt("status");
                 final int quantity = currentObject.getInt("quantity");
-                final String status_message = currentObject.getString("status");
+                final String status_message = currentObject.getString("status_message");
                 final String item_name = currentObject.getString("item_name");
                 final String description = currentObject.getString("description");
                 final String delivery_address = currentObject.getString("delivery_address");
@@ -115,7 +115,6 @@ public class Purchase_requests_list extends Fragment {
 
                 purchase_list.add(new Purchase_item(id,type_id,created_by_id,status_code,quantity, status_message,
                         item_name,description,delivery_address,note,color,material,brand,created_by_name,attach_files));
-
             }
 
             purchase_adapter.notifyDataSetChanged();

@@ -67,8 +67,8 @@ public class JobOrdersActivity extends LocalizationActivity {
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray jobOrdersArray = responseObject.getJSONArray("data");
                     setJobOrdersList(jobOrdersArray);
-//                    JSONObject metaObject = responseObject.getJSONObject("meta");
-//                    lastPageNum = metaObject.getInt("last_page");
+                    JSONObject metaObject = responseObject.getJSONObject("meta");
+                    lastPageNum = metaObject.getInt("last_page");
 
                     loading.setVisibility(View.GONE);
 
@@ -93,7 +93,6 @@ public class JobOrdersActivity extends LocalizationActivity {
         try {
             for (int i = 0; i < list.length(); i++) {
 
-
                 JSONObject currentObject = list.getJSONObject(i);
                 final int id = currentObject.getInt("id");
                 final int project_id = currentObject.getInt("project_id");
@@ -101,7 +100,6 @@ public class JobOrdersActivity extends LocalizationActivity {
                 final String status_message = currentObject.getString("status_message");
                 final String name = currentObject.getString("name");
                 final String po_number = currentObject.getString("po_number");
-
 
                 job_order_list.add(new Job_order_item(id, project_id, status_code, status_message,
                         name, po_number));
