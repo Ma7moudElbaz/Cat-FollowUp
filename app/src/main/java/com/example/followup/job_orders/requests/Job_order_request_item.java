@@ -1,9 +1,9 @@
-package com.example.followup.job_orders;
+package com.example.followup.job_orders.requests;
 
 public class Job_order_request_item {
     private final int id;
-    private final String request_id,final_cost;
-    private final boolean checked;
+    private  String request_id,final_cost;
+    private  boolean checked;
 
     public Job_order_request_item(int id, String request_id, String final_cost, boolean checked) {
         this.id = id;
@@ -26,5 +26,17 @@ public class Job_order_request_item {
 
     public boolean isChecked() {
         return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
+    public void setRequest_id(String request_id) {
+        this.request_id = request_id;
+    }
+
+    public void setFinal_cost(String final_cost) {
+        this.final_cost = final_cost;
     }
 }

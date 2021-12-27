@@ -165,4 +165,5 @@
     <string name="new_job_order">New Job Order</string>
     <string name="request_id">Request Id :</string>
     <string name="final_cost">Final Cost :</string>
+    <string name="create_job_order">Create Job Order</string>
 </resources>

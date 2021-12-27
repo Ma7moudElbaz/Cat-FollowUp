@@ -43,6 +43,10 @@ public interface ServiceInterface {
     @FormUrlEncoded
     Call<ResponseBody> addRequest(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
 
+    @POST("job-orders")
+    @FormUrlEncoded
+    Call<ResponseBody> addJobOrder(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
+
     @GET("requests/{request_id}")
     Call<ResponseBody> getRequestDetails(@Header("Authorization") String auth, @Path("request_id") int request_id);
 

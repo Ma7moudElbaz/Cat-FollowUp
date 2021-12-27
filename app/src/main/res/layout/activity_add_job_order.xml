@@ -14,7 +14,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_above="@id/create_job_order">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -68,5 +69,18 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center" />
+
+
+    <Button
+        android:id="@+id/create_job_order"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/btn_yellow"
+        android:baselineAligned="false"
+        android:text="@string/create_job_order"
+        android:textAllCaps="false"
+        android:textColor="@color/black" />
 
 </RelativeLayout>

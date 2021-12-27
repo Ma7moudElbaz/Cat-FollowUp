@@ -5,23 +5,31 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.followup.R;
+import com.example.followup.job_orders.requests.Job_order_request_item;
+import com.example.followup.job_orders.requests.Job_orders_requests_adapter;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -34,6 +42,8 @@ public class AddJobOrderActivity extends AppCompatActivity {
     ProgressBar loading;
     RecyclerView recyclerView;
     Spinner request_types_spinner;
+    private ProgressDialog dialog;
+    Button create_job_order;
 
     ArrayList<Job_order_request_item> job_order_requests_list;
     Job_orders_requests_adapter job_order_requests_adapter;
@@ -50,6 +60,12 @@ public class AddJobOrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_job_order);
         initFields();
         back.setOnClickListener(v -> onBackPressed());
+        create_job_order.setOnClickListener(v -> {
+            if (validateSelectedRequests(job_order_requests_adapter.getSelectedData())) {
+                createJobOrder(job_order_requests_adapter.getSelectedData());
+//                setJobOrderMap(job_order_requests_adapter.getSelectedData());
+            }
+        });
         request_types_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -65,10 +81,25 @@ public class AddJobOrderActivity extends AppCompatActivity {
         });
     }
 
+    private boolean validateSelectedRequests(List<Job_order_request_item> items) {
+        if (items.isEmpty()) {
+            Toast.makeText(getBaseContext(), "No Requests Selected", Toast.LENGTH_SHORT).show();
+            return false;
+        } else {
+            for (int i = 0; i < items.size(); i++) {
+                if (items.get(i).getFinal_cost().length() == 0) {
+                    Toast.makeText(getBaseContext(), "You must add final cost to all selected requests", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public void getJobOrderRequests(int pageNum) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getJobOrderRequests(UserUtils.getAccessToken(getBaseContext()),6,projectId,(request_types_spinner.getSelectedItemPosition()+1), pageNum).enqueue(new Callback<ResponseBody>() {
+        Webservice.getInstance().getApi().getJobOrderRequests(UserUtils.getAccessToken(getBaseContext()), 6, projectId, (request_types_spinner.getSelectedItemPosition() + 1), pageNum).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -106,7 +137,6 @@ public class AddJobOrderActivity extends AppCompatActivity {
                 final String request_id = currentObject.getString("item_name");
 
 
-
                 job_order_requests_list.add(new Job_order_request_item(id, request_id, "", false));
 
             }
@@ -121,11 +151,70 @@ public class AddJobOrderActivity extends AppCompatActivity {
 
     }
 
+    private void createJobOrder(List<Job_order_request_item> items) {
+        Map<String, String> map = setJobOrderMap(items);
+
+        dialog.show();
+        Webservice.getInstance().getApi().addJobOrder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 200 || response.code() == 201) {
+                        Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
+                        onBackPressed();
+
+                    } else {
+                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private Map<String, String> setJobOrderMap(List<Job_order_request_item> items) {
+
+        StringBuilder requestIds = new StringBuilder();
+        StringBuilder actual_costs = new StringBuilder();
+
+        for (int i = 0; i < items.size(); i++) {
+            if (i == 0) {
+                requestIds.append(items.get(i).getId());
+                actual_costs.append(items.get(i).getFinal_cost());
+            } else {
+                requestIds.append(",").append(items.get(i).getId());
+                actual_costs.append(",").append(items.get(i).getId());
+            }
+        }
+
+        Map<String, String> map = new HashMap<>();
+        map.put("job_order_name", "name");
+        map.put("project_id", String.valueOf(projectId));
+        map.put("request_ids", requestIds.toString().toString());
+        map.put("actual_costs", actual_costs.toString().toString());
+
+        Log.e("TAG", map.toString());
+        return map;
+    }
+
     private void initFields() {
-        projectId = getIntent().getIntExtra("project_id",0);
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Please, Wait...");
+        dialog.setCancelable(false);
+
+        projectId = getIntent().getIntExtra("project_id", 0);
 
         back = findViewById(R.id.back);
         loading = findViewById(R.id.loading);
+        create_job_order = findViewById(R.id.create_job_order);
         request_types_spinner = findViewById(R.id.request_types_spinner);
         recyclerView = findViewById(R.id.recycler_view);
         job_order_requests_list = new ArrayList<>();
@@ -148,7 +237,7 @@ public class AddJobOrderActivity extends AppCompatActivity {
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        getJobOrderRequests( currentPageNum);
+                        getJobOrderRequests(currentPageNum);
 
                 }
             }
@@ -158,8 +247,5 @@ public class AddJobOrderActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        job_order_requests_list.clear();
-        currentPageNum = 1;
-        getJobOrderRequests(currentPageNum);
     }
 }
