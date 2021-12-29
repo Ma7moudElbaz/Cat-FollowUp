@@ -166,4 +166,7 @@
     <string name="request_id">Request Id :</string>
     <string name="final_cost">Final Cost :</string>
     <string name="create_job_order">Create Job Order</string>
+    <string name="screen_specs">Screen Specs</string>
+    <string name="job_order">Job Order</string>
+    <string name="download">Download</string>
 </resources>

@@ -4,9 +4,11 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,8 +32,9 @@ import retrofit2.Response;
 
 public class AddProductionActivity extends LocalizationActivity {
 
-    EditText item_name, country, venue, days,delivery_date , quantity, dimensions, designer_in_charge,description,notes;
+    EditText item_name, country, venue, days,delivery_date , quantity, dimensions, designer_in_charge,description,notes,screen_specs;
     Button choose_file, send_request;
+    LinearLayout screen_specs_container;
     RadioGroup screen;
     ImageView back;
     private ProgressDialog dialog;
@@ -57,9 +60,11 @@ public class AddProductionActivity extends LocalizationActivity {
             switch (checkedId) {
                 case R.id.screen_yes:
                     screen_text = "Yes";
+                    screen_specs_container.setVisibility(View.VISIBLE);
                     break;
                 case R.id.screen_no:
                     screen_text = "No";
+                    screen_specs_container.setVisibility(View.GONE);
                     break;
             }
         });
@@ -90,6 +95,8 @@ public class AddProductionActivity extends LocalizationActivity {
         notes = findViewById(R.id.notes);
         designer_in_charge = findViewById(R.id.designer_in_charge);
         screen = findViewById(R.id.screen);
+        screen_specs = findViewById(R.id.screen_specs);
+        screen_specs_container = findViewById(R.id.screen_specs_container);
 
         choose_file = findViewById(R.id.choose_file);
         send_request = findViewById(R.id.btn_send_request);
@@ -130,6 +137,10 @@ public class AddProductionActivity extends LocalizationActivity {
         }
         if (designer_in_charge.length() == 0) {
             designer_in_charge.setError("This is required field");
+            return false;
+        }
+        if (screen_specs.length() == 0&&screen_text.equalsIgnoreCase("yes")) {
+            screen_specs.setError("This is required field");
             return false;
         }
         return true;
@@ -179,7 +190,7 @@ public class AddProductionActivity extends LocalizationActivity {
         map.put("designer_name", designer_in_charge.getText().toString());
         map.put("description", description.getText().toString());
         map.put("note", notes.getText().toString());
-        map.put("screen", screen_text);
+        map.put("screen", screen_specs.getText().toString());
 
         return map;
     }

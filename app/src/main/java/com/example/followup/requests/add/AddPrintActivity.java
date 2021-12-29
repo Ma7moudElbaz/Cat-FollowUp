@@ -1,7 +1,15 @@
 package com.example.followup.requests.add;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,11 +22,25 @@ import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,12 +48,14 @@ import retrofit2.Response;
 
 public class AddPrintActivity extends LocalizationActivity {
 
+    private static final int FILES_REQUEST_CODE = 764546;
     EditText item_name, quantity, description, pages, paper_weight, colors, di_cut, delivery_address, notes, designer_in_charge;
     Button choose_file, send_request;
     RadioGroup print_type, lamination, binding;
     ImageView back;
     private ProgressDialog dialog;
     LinearLayout color_layout;
+    List<String> filesSelected;
 
 
     String print_type_text = "Digital";
@@ -46,6 +70,29 @@ public class AddPrintActivity extends LocalizationActivity {
         setContentView(R.layout.activity_add_print);
         initFields();
         back.setOnClickListener(v -> onBackPressed());
+
+        choose_file.setOnClickListener(v -> {
+
+
+            Dexter.withContext(getBaseContext())
+                    .withPermissions(
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    ).withListener(new MultiplePermissionsListener() {
+                @Override
+                public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                    if (multiplePermissionsReport.areAllPermissionsGranted()) {
+//                        showFileChooser();
+                        pickFromGallery();
+                    }
+                }
+
+                @Override
+                public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+
+                }
+            }).check();
+        });
 
         print_type.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
@@ -89,9 +136,10 @@ public class AddPrintActivity extends LocalizationActivity {
         });
 
         send_request.setOnClickListener(v -> {
-            if (validateFields()) {
-                addPrint();
-            }
+//            if (validateFields()) {
+//                addPrint();
+//            }
+            addRequestAttaches("16");
         });
     }
 
@@ -99,6 +147,8 @@ public class AddPrintActivity extends LocalizationActivity {
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please, Wait...");
         dialog.setCancelable(false);
+
+        filesSelected = new ArrayList<>();
 
         projectId = getIntent().getIntExtra("project_id", 0);
         back = findViewById(R.id.back);
@@ -212,6 +262,127 @@ public class AddPrintActivity extends LocalizationActivity {
         map.put("lamination", lamination_text.toLowerCase());
         map.put("binding", binding_text.toLowerCase());
         return map;
+    }
+
+    private void pickFromGallery() {
+        //Create an Intent with action as ACTION_PICK
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        // Sets the type as image/*. This ensures only components of type image are selected
+        intent.setType("image/*");
+        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        // Launching the Intent
+        startActivityForResult(intent, FILES_REQUEST_CODE);
+    }
+
+
+
+    private void showFileChooser() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+
+        try {
+            startActivityForResult(
+                    Intent.createChooser(intent, "Select a File to Upload"),
+                    FILES_REQUEST_CODE);
+        } catch (android.content.ActivityNotFoundException ex) {
+            // Potentially direct the user to the Market with a Dialog
+            Toast.makeText(this, "Please install a File Manager.",
+                    Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Result code is RESULT_OK only if the user selects an Image
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK)
+            switch (requestCode) {
+                case FILES_REQUEST_CODE:
+                    filesSelected.clear();
+                    //data.getData returns the content URI for the selected files
+                    if (data == null) {
+                        return;
+                    } else if (data.getClipData() != null) {
+                        String tempString = "";
+                        for (int i = 0; i < data.getClipData().getItemCount(); i++) {
+                            Uri uri = data.getClipData().getItemAt(i).getUri();
+                            filesSelected.add(getPath(getBaseContext(), uri));
+                        }
+                        Log.e("multiple", tempString);
+                    } else {
+
+                        Uri uri = data.getData();
+                        filesSelected.add(getPath(getBaseContext(), uri));
+                        Log.e("Single", getPath(getBaseContext(), uri));
+                        Log.e("Single", uri.getPath());
+                    }
+            }
+    }
+
+    public static String getPath(Context context, Uri uri) {
+        String result = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int column_index = cursor.getColumnIndexOrThrow(proj[0]);
+                result = cursor.getString(column_index);
+            }
+            cursor.close();
+        }
+        if (result == null) {
+            result = "Not found";
+        }
+        return result;
+    }
+
+
+    private List<MultipartBody.Part> addAttaches(List<String> files) {
+        List<MultipartBody.Part> list = new ArrayList<>();
+        for (int i = 0; i < files.size(); i++) {
+            File file = new File(files.get(i));
+            RequestBody fileReqBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part part = MultipartBody.Part.createFormData("image", file.getName(), fileReqBody);
+            list.add(part);
+        }
+        return list;
+    }
+
+    public void addRequestAttaches(final String requestId) {
+        dialog.show();
+
+        List<MultipartBody.Part> fileToUpload = addAttaches(filesSelected);
+        RequestBody request_id = RequestBody.create(MediaType.parse("text/plain"), requestId);
+
+        Webservice.getInstance().getApi().addAttach(UserUtils.getAccessToken(getBaseContext()),fileToUpload.get(0), request_id).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 200 || response.code() == 201) {
+                        JSONObject res = new JSONObject(response.body().string());
+                        Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_SHORT).show();
+                    }
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                Log.d("Request failure", call.toString() + " , " + t.getMessage());
+                dialog.dismiss();
+            }
+        });
     }
 
 }

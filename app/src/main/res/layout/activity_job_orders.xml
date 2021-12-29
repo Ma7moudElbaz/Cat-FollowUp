@@ -8,7 +8,7 @@
     android:paddingStart="15dp"
     android:paddingTop="15dp"
     android:paddingEnd="15dp"
-    tools:context=".job_orders.JobOrdersActivity">
+    tools:context=".job_orders.list.JobOrdersActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

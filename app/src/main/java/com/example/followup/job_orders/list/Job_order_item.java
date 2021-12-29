@@ -1,4 +1,4 @@
-package com.example.followup.job_orders;
+package com.example.followup.job_orders.list;
 
 public class Job_order_item {
     private final int id, project_id,status_code;

@@ -1,4 +1,4 @@
-package com.example.followup.job_orders;
+package com.example.followup.job_orders.list;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,14 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
-import com.example.followup.home.Attach_item;
-import com.example.followup.requests.RequestsActivity;
-import com.example.followup.requests.list.adapters.Photography_adapter;
-import com.example.followup.requests.list.models.Photography_item;
+import com.example.followup.job_orders.AddJobOrderActivity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -57,7 +52,7 @@ public class JobOrdersActivity extends LocalizationActivity {
         initFields();
         back.setOnClickListener(v -> onBackPressed());
         fab_add_job_order.setOnClickListener(v -> {
-            Intent i = new Intent(getBaseContext(),AddJobOrderActivity.class);
+            Intent i = new Intent(getBaseContext(), AddJobOrderActivity.class);
             i.putExtra("project_id",projectId);
             startActivity(i);
         });

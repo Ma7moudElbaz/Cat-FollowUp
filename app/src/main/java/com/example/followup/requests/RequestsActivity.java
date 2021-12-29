@@ -3,7 +3,6 @@ package com.example.followup.requests;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,7 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
-import com.example.followup.job_orders.JobOrdersActivity;
+import com.example.followup.job_orders.list.JobOrdersActivity;
 import com.example.followup.requests.add.AddPhotographyActivity;
 import com.example.followup.requests.list.Photography_requests_list;
 import com.example.followup.requests.add.AddPrintActivity;

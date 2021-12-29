@@ -1,4 +1,4 @@
-package com.example.followup.job_orders.requests;
+package com.example.followup.job_orders.job_order_requests;
 
 public class Job_order_request_item {
     private final int id;

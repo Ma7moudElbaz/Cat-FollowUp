@@ -81,5 +81,7 @@ dependencies {
     //stepView
     implementation 'com.params.stepview:stepview:1.0.2'
 
+    //downloader
+    implementation 'com.github.caneryilmaz:ZionFileDownloader:0.1.1'
 
 }

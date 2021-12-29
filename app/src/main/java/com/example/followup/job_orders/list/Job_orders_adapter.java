@@ -1,4 +1,4 @@
-package com.example.followup.job_orders;
+package com.example.followup.job_orders.list;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,12 +9,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.followup.R;
-import com.example.followup.home.projects.Project_item;
-import com.example.followup.requests.RequestsActivity;
+import com.example.followup.job_orders.JobOrderDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
