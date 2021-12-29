@@ -68,6 +68,6 @@ public interface ServiceInterface {
 
     @Multipart
     @POST("requests/attaches")
-    Call<ResponseBody> addAttach(@Header("Authorization") String auth,@Part MultipartBody.Part files, @Part("request_id") RequestBody request_id);
+    Call<ResponseBody> addAttach(@Header("Authorization") String auth,@Part List<MultipartBody.Part> files, @Part("request_id") RequestBody request_id);
 
 }

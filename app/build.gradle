@@ -84,4 +84,7 @@ dependencies {
     //downloader
     implementation 'com.github.caneryilmaz:ZionFileDownloader:0.1.1'
 
+    //filePicker
+    implementation 'com.droidninja:filepicker:2.2.5'
+
 }
