@@ -169,4 +169,6 @@
     <string name="screen_specs">Screen Specs</string>
     <string name="job_order">Job Order</string>
     <string name="download">Download</string>
+    <string name="hold">Hold</string>
+    <string name="ceo_approval">CEO Approval</string>
 </resources>

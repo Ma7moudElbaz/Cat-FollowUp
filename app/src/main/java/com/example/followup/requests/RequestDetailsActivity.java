@@ -251,7 +251,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         Log.e("costStatus", String.valueOf(costStatus) );
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
         Log.e("loggedInUser", loggedInUser);
-        setCostContainer(true);
+        resetData();
         switch (costStatus) {
             case 1: {
                 setCostContainer(false);
@@ -288,6 +288,12 @@ public class RequestDetailsActivity extends LocalizationActivity {
                 steps.setCurrentCount(4);
             }
         }
+    }
+
+    private void resetData(){
+        setCostContainer(true);
+        editCost.setVisibility(View.GONE);
+        sales_approval_layout.setVisibility(View.GONE);
     }
 
     @Override
