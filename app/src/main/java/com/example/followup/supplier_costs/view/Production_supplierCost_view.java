@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.followup.R;
@@ -26,6 +28,10 @@ public class Production_supplierCost_view extends Fragment {
     }
 
     TextView supplier_name, cost, delivery_date, expiry_date, notes,assembly_dismantling,storage;
+    LinearLayout nagat_approval_container;
+    ImageView nagat_approve,nagat_reject;
+    int costStatus;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -40,11 +46,17 @@ public class Production_supplierCost_view extends Fragment {
         assembly_dismantling = view.findViewById(R.id.assembly_dismantling);
         storage = view.findViewById(R.id.storage);
 
+        nagat_approval_container = view.findViewById(R.id.nagat_approval_container);
+        nagat_approve = view.findViewById(R.id.nagat_approve);
+        nagat_reject = view.findViewById(R.id.nagat_reject);
+
         RequestDetailsActivity activity = (RequestDetailsActivity) getActivity();
 
         try {
             assert activity != null;
+            costStatus = activity.getCostStatus();
             setFields(activity.getDataObj());
+            setUserCostPermissions(costStatus);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -60,5 +72,13 @@ public class Production_supplierCost_view extends Fragment {
         notes.setText(costObj.getString("note"));
         assembly_dismantling.setText(costObj.getString("assembly_dimension"));
         storage.setText(costObj.getString("storage"));
+    }
+
+    private void setUserCostPermissions(int costStatus) {
+        if (costStatus == 2){
+            nagat_approval_container.setVisibility(View.VISIBLE);
+        }else {
+            nagat_approval_container.setVisibility(View.GONE);
+        }
     }
 }

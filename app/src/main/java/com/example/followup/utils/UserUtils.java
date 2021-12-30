@@ -47,25 +47,27 @@ public class UserUtils {
     }
 
 
-    public static void setCountryId(Context context, int country_id) {
+
+    public static void setParentId(Context context, int parent_id) {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putInt("country_id", country_id);
+        editor.putInt("parent_id", parent_id);
         editor.apply();
     }
 
-    public static int getCountryId(Context context) {
-        return getSharedPreferences(context).getInt("country_id", 0);
+    public static int getParentId(Context context) {
+        return getSharedPreferences(context).getInt("parent_id", 0);
     }
 
 
-    public static void setDepartmentId(Context context, int department_id) {
+
+    public static void setChildId(Context context, int parent_id) {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putInt("department_id", department_id);
+        editor.putInt("child_id", parent_id);
         editor.apply();
     }
 
-    public static int getDepartmentId(Context context) {
-        return getSharedPreferences(context).getInt("department_id", 0);
+    public static int getChildId(Context context) {
+        return getSharedPreferences(context).getInt("child_id", 0);
     }
 
     public static void setUserName(Context context,String userName){

@@ -99,11 +99,16 @@ public class LoginActivity extends LocalizationActivity {
 
     public void setMyData(JSONObject res) {
         try {
-//            UserUtils.setDepartmentId(getBaseContext(), res.getInt("department_id"));
+            if (res.getString("children_id").equals("null")){
+                UserUtils.setChildId(getBaseContext(), 0);
+            }else {
+                UserUtils.setChildId(getBaseContext(), res.getInt("children_id"));
+            }
+            UserUtils.setParentId(getBaseContext(), res.getInt("parent_id"));
             UserUtils.setUserId(getBaseContext(), res.getInt("id"));
-//                        UserUtils.setCountryId(getBaseContext(), res.getInt("country_id"));
             UserUtils.setUserName(getBaseContext(), res.getString("name"));
             UserUtils.setUserEmail(getBaseContext(), res.getString("email"));
+
 //                        subscribeToFirebaseTopic(department_id);
 
             startActivity(new Intent(getBaseContext(), HomeActivity.class));

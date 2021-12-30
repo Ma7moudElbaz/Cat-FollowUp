@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.followup.R;
@@ -27,6 +29,9 @@ public class Photography_supplierCost_view extends Fragment {
     }
 
     TextView supplier_name, cost, delivery_date, expiry_date, notes;
+    LinearLayout nagat_approval_container;
+    ImageView nagat_approve,nagat_reject;
+    int costStatus;
 
 
     @Override
@@ -34,6 +39,7 @@ public class Photography_supplierCost_view extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initFields(view);
     }
+
     private void initFields(View view) {
         supplier_name = view.findViewById(R.id.supplier_name);
         cost = view.findViewById(R.id.cost);
@@ -41,12 +47,17 @@ public class Photography_supplierCost_view extends Fragment {
         expiry_date = view.findViewById(R.id.expiry_date);
         notes = view.findViewById(R.id.notes);
 
+        nagat_approval_container = view.findViewById(R.id.nagat_approval_container);
+        nagat_approve = view.findViewById(R.id.nagat_approve);
+        nagat_reject = view.findViewById(R.id.nagat_reject);
 
         RequestDetailsActivity activity = (RequestDetailsActivity) getActivity();
 
         try {
             assert activity != null;
+            costStatus = activity.getCostStatus();
             setFields(activity.getDataObj());
+            setUserCostPermissions(costStatus);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -60,5 +71,13 @@ public class Photography_supplierCost_view extends Fragment {
         delivery_date.setText(costObj.getString("delivery_date"));
         expiry_date.setText(costObj.getString("expiry_date"));
         notes.setText(costObj.getString("note"));
+    }
+
+    private void setUserCostPermissions(int costStatus) {
+        if (costStatus == 2){
+            nagat_approval_container.setVisibility(View.VISIBLE);
+        }else {
+            nagat_approval_container.setVisibility(View.GONE);
+        }
     }
 }

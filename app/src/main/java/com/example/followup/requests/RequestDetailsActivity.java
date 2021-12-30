@@ -30,30 +30,39 @@ import com.example.followup.supplier_costs.view.Photography_supplierCost_view;
 import com.example.followup.supplier_costs.view.Print_supplierCost_view;
 import com.example.followup.supplier_costs.view.Production_supplierCost_view;
 import com.example.followup.supplier_costs.view.Purchase_supplierCost_view;
+import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 
 import org.json.JSONObject;
 
 import okhttp3.ResponseBody;
+import params.com.stepview.StatusView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RequestDetailsActivity extends LocalizationActivity {
 
+    public int getCostStatus() {
+        return costStatus;
+    }
+
     boolean isDetailsExpanded = false;
     boolean isCostExpanded = false;
-    ImageView back,expandDetails, expandCost;
+    ImageView back, expandDetails, expandCost,editCost;
     FrameLayout request_details_content, cost_details_content;
     RelativeLayout request_cost_container;
-    LinearLayout no_cost_container;
+    LinearLayout no_cost_container,sales_approval_layout;
+    Button sales_approve,sales_reject;
     ProgressBar loading;
     Button add_cost;
+    int costStatus;
 
 
     int request_id, type_id;
     JSONObject dataObj;
+    StatusView steps;
 
     public JSONObject getDataObj() {
         return dataObj;
@@ -80,12 +89,12 @@ public class RequestDetailsActivity extends LocalizationActivity {
         back.setOnClickListener(v -> onBackPressed());
         expandDetails.setOnClickListener(v -> toggleDetails(isDetailsExpanded));
         expandCost.setOnClickListener(v -> toggleCost(isCostExpanded));
-        add_cost.setOnClickListener(v -> gotoAddCost(request_id,type_id));
+        add_cost.setOnClickListener(v -> gotoAddCost(request_id, type_id));
 
     }
 
-    private void gotoAddCost(int request_id,int type_id) {
-        Intent i ;
+    private void gotoAddCost(int request_id, int type_id) {
+        Intent i;
         switch (type_id) {
             case 1:
                 i = new Intent(getBaseContext(), AddPurchaseSupplierCostActivity.class);
@@ -102,7 +111,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
             default:
                 throw new IllegalStateException("Unexpected value: " + type_id);
         }
-        i.putExtra("request_id",request_id);
+        i.putExtra("request_id", request_id);
         startActivity(i);
 
     }
@@ -119,6 +128,12 @@ public class RequestDetailsActivity extends LocalizationActivity {
         cost_details_content = findViewById(R.id.cost_details_content);
         no_cost_container = findViewById(R.id.no_cost_container);
         add_cost = findViewById(R.id.add_cost);
+        steps = findViewById(R.id.steps);
+        sales_approval_layout = findViewById(R.id.sales_approval_layout);
+        sales_approve = findViewById(R.id.sales_approve);
+        sales_reject = findViewById(R.id.sales_reject);
+        editCost = findViewById(R.id.edit_cost);
+
     }
 
     private void expandDetails() {
@@ -161,7 +176,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         }
     }
 
-    private void getRequests() {
+    private void getRequestDetails() {
         loading.setVisibility(View.VISIBLE);
 
         Webservice.getInstance().getApi().getRequestDetails(UserUtils.getAccessToken(getBaseContext()), request_id).enqueue(new Callback<ResponseBody>() {
@@ -171,8 +186,14 @@ public class RequestDetailsActivity extends LocalizationActivity {
                 try {
                     JSONObject responseObject = new JSONObject(response.body().string());
                     dataObj = responseObject.getJSONObject("data");
-                    setFragments(type_id);
-                    setCostContainer(!dataObj.getString("cost").equals("null"));
+                    if (dataObj.getString("cost").equals("null")) {
+                        costStatus = 1;
+                        setUserCostPermissions(1);
+                    }else {
+                        costStatus = dataObj.getJSONObject("cost").getInt("status");
+                        setUserCostPermissions(costStatus);
+                    }
+                    setFragments(type_id,costStatus);
                     loading.setVisibility(View.GONE);
 
                 } catch (Exception e) {
@@ -191,40 +212,87 @@ public class RequestDetailsActivity extends LocalizationActivity {
         });
     }
 
-    private void setCostContainer(boolean hasCost){
-        if (hasCost){
+    private void setCostContainer(boolean hasCost) {
+        if (hasCost) {
             cost_details_content.setVisibility(View.VISIBLE);
             no_cost_container.setVisibility(View.GONE);
-        }else {
+        } else {
             cost_details_content.setVisibility(View.GONE);
             no_cost_container.setVisibility(View.VISIBLE);
         }
     }
 
-    private void setFragments(int type_id) {
+    private void setFragments(int type_id,int cost_status) {
         switch (type_id) {
             case 1:
                 setDetailsFragment(new Purchase_view());
+                if (cost_status!=0)
                 setCostFragment(new Purchase_supplierCost_view());
                 break;
             case 2:
                 setDetailsFragment(new Print_view());
+                if (cost_status!=0)
                 setCostFragment(new Print_supplierCost_view());
                 break;
             case 3:
                 setDetailsFragment(new Production_view());
+                if (cost_status!=0)
                 setCostFragment(new Production_supplierCost_view());
                 break;
             case 4:
                 setDetailsFragment(new Photography_view());
+                if (cost_status!=0)
                 setCostFragment(new Photography_supplierCost_view());
                 break;
+        }
+    }
+
+    private void setUserCostPermissions(int costStatus) {
+        Log.e("costStatus", String.valueOf(costStatus) );
+        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
+        Log.e("loggedInUser", loggedInUser);
+        setCostContainer(true);
+        switch (costStatus) {
+            case 1: {
+                setCostContainer(false);
+                steps.setCurrentCount(1);
+                if (loggedInUser.equals("nagatTeam") || loggedInUser.equals("nagat")){
+                    add_cost.setVisibility(View.VISIBLE);
+                }else {
+                    add_cost.setVisibility(View.GONE);
+                }
+                break;
+            }
+            case 2:{
+                steps.setCurrentCount(2);
+                //handle buttons in SupplierCost fragments
+            }
+            case 3:
+            case 5:{
+                steps.setCurrentCount(2);
+                if (loggedInUser.equals("nagatTeam") || loggedInUser.equals("nagat")){
+                    editCost.setVisibility(View.VISIBLE);
+                }else {
+                    editCost.setVisibility(View.GONE);
+                }
+            }
+            case 4:{
+                steps.setCurrentCount(3);
+                if (loggedInUser.equals("sales")){
+                    sales_approval_layout.setVisibility(View.VISIBLE);
+                }else {
+                    sales_approval_layout.setVisibility(View.GONE);
+                }
+            }
+            case 6:{
+                steps.setCurrentCount(4);
+            }
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        getRequests();
+        getRequestDetails();
     }
 }
