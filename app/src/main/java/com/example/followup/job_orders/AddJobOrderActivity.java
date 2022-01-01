@@ -17,6 +17,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.followup.R;
+import com.example.followup.bottomsheets.BottomSheet_choose_lang;
+import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.job_orders.job_order_requests.Job_order_request_item;
 import com.example.followup.job_orders.job_order_requests.Job_orders_requests_adapter;
 import com.example.followup.utils.UserUtils;
@@ -29,6 +31,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -36,7 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddJobOrderActivity extends AppCompatActivity {
+public class AddJobOrderActivity extends AppCompatActivity implements BottomSheet_choose_reason.ReasonSubmitListener {
 
     ImageView back;
     ProgressBar loading;
@@ -54,6 +57,12 @@ public class AddJobOrderActivity extends AppCompatActivity {
 
     int projectId;
 
+    public void showPoNumberBottomSheet() {
+        BottomSheet_choose_reason langBottomSheet =
+                new BottomSheet_choose_reason("Request Po Number", "PO Number", "", "po");
+        langBottomSheet.show(getSupportFragmentManager(), "po");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,8 +71,7 @@ public class AddJobOrderActivity extends AppCompatActivity {
         back.setOnClickListener(v -> onBackPressed());
         create_job_order.setOnClickListener(v -> {
             if (validateSelectedRequests(job_order_requests_adapter.getSelectedData())) {
-                createJobOrder(job_order_requests_adapter.getSelectedData());
-//                setJobOrderMap(job_order_requests_adapter.getSelectedData());
+                showPoNumberBottomSheet();
             }
         });
         request_types_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -151,8 +159,8 @@ public class AddJobOrderActivity extends AppCompatActivity {
 
     }
 
-    private void createJobOrder(List<Job_order_request_item> items) {
-        Map<String, String> map = setJobOrderMap(items);
+    private void createJobOrder(List<Job_order_request_item> items,String jobOrderName) {
+        Map<String, String> map = setJobOrderMap(items,jobOrderName);
 
         dialog.show();
         Webservice.getInstance().getApi().addJobOrder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
@@ -180,7 +188,7 @@ public class AddJobOrderActivity extends AppCompatActivity {
         });
     }
 
-    private Map<String, String> setJobOrderMap(List<Job_order_request_item> items) {
+    private Map<String, String> setJobOrderMap(List<Job_order_request_item> items,String jobOrderName) {
 
         StringBuilder requestIds = new StringBuilder();
         StringBuilder actual_costs = new StringBuilder();
@@ -196,7 +204,7 @@ public class AddJobOrderActivity extends AppCompatActivity {
         }
 
         Map<String, String> map = new HashMap<>();
-        map.put("job_order_name", "name");
+        map.put("job_order_name", jobOrderName);
         map.put("project_id", String.valueOf(projectId));
         map.put("request_ids", requestIds.toString().toString());
         map.put("actual_costs", actual_costs.toString().toString());
@@ -247,5 +255,10 @@ public class AddJobOrderActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public void reasonSubmitListener(String reason, String type) {
+        createJobOrder(job_order_requests_adapter.getSelectedData(),reason);
     }
 }

@@ -87,7 +87,7 @@ public class BottomSheet_choose_reason extends BottomSheetDialogFragment {
 
     public void sendBackResult(String reason,String type) {
         // Notice the use of `getTargetFragment` which will be set when the dialog is displayed
-        ReasonSubmitListener listener = (ReasonSubmitListener) getTargetFragment();
+        ReasonSubmitListener listener = (ReasonSubmitListener) getActivity();
         listener.reasonSubmitListener(reason,type);
         dismiss();
     }
