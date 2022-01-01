@@ -42,7 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
-import params.com.stepview.StatusView;
+import params.com.stepview.StatusViewScroller;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -69,7 +69,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
 
     int request_id, type_id;
     JSONObject dataObj;
-    StatusView steps;
+    StatusViewScroller steps;
 
     public JSONObject getDataObj() {
         return dataObj;
@@ -272,7 +272,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         switch (costStatus) {
             case 1: {
                 setCostContainer(false);
-                steps.setCurrentCount(1);
+                steps.scrollToStep(1);
                 if (loggedInUser.equals("nagatTeam") || loggedInUser.equals("nagat")){
                     add_cost.setVisibility(View.VISIBLE);
                 }else {
@@ -281,12 +281,12 @@ public class RequestDetailsActivity extends LocalizationActivity {
                 break;
             }
             case 2:{
-                steps.setCurrentCount(2);
+                steps.scrollToStep(2);
                 //handle buttons in SupplierCost fragments
             }
             case 3:
             case 5:{
-                steps.setCurrentCount(2);
+                steps.scrollToStep(2);
                 if (loggedInUser.equals("nagatTeam") || loggedInUser.equals("nagat")){
                     editCost.setVisibility(View.VISIBLE);
                 }else {
@@ -294,7 +294,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
                 }
             }
             case 4:{
-                steps.setCurrentCount(3);
+                steps.scrollToStep(3);
                 if (loggedInUser.equals("sales")){
                     sales_approval_layout.setVisibility(View.VISIBLE);
                 }else {
@@ -302,7 +302,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
                 }
             }
             case 6:{
-                steps.setCurrentCount(4);
+                steps.scrollToStep(4);
             }
         }
     }

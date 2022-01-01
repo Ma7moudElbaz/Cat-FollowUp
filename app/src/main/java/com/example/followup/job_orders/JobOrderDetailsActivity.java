@@ -28,7 +28,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
-import params.com.stepview.StatusView;
+import params.com.stepview.StatusViewScroller;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -43,7 +43,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
     TextView download;
     int jobOrderId;
     int jobOrderStatus;
-    StatusView steps;
+    StatusViewScroller steps;
     String pdfUrl;
 
     @Override
@@ -102,7 +102,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
         resetData();
         switch (jobOrderStatus) {
             case 1: {
-                steps.setCurrentCount(2);
+                steps.scrollToStep(2);
                 if (loggedInUser.equals("sales")) {
                     sales_approval_layout.setVisibility(View.VISIBLE);
                 } else {
@@ -112,7 +112,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
             }
             case 3:
             case 4: {
-                steps.setCurrentCount(3);
+                steps.scrollToStep(3);
                 if (loggedInUser.equals("magdi")) {
                     magdi_approval_layout.setVisibility(View.VISIBLE);
                 } else {
@@ -121,7 +121,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
             }
             case 5:
             case 10: {
-                steps.setCurrentCount(4);
+                steps.scrollToStep(4);
                 if (loggedInUser.equals("hesham")) {
                     hesham_approval_layout.setVisibility(View.VISIBLE);
                 } else {
@@ -130,10 +130,10 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
             }
             case 6: {
                 //hesham rejected
-                steps.setCurrentCount(4);
+                steps.scrollToStep(4);
             }
             case 7: {
-                steps.setCurrentCount(5);
+                steps.scrollToStep(5);
             }
             case 8: {
                 steps.setVisibility(View.GONE);
@@ -202,12 +202,11 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    loading.setVisibility(View.GONE);
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONObject dataObj = responseObject.getJSONObject("data");
                     pdfUrl = dataObj.getString("pdf_url");
                     jobOrderStatus = dataObj.getInt("status");
-
-                    loading.setVisibility(View.GONE);
 
                 } catch (Exception e) {
                     e.printStackTrace();

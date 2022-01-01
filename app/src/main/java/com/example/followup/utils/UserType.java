@@ -5,6 +5,9 @@ public class UserType {
     public static String getUserType(int parent_id, int child_id) {
         String userType;
         switch (parent_id) {
+            case 1:
+                userType = "admin";
+                break;
             case 2:
                 userType = "sales";
                 break;
@@ -25,7 +28,8 @@ public class UserType {
                 }
                 break;
             default:
-                throw new IllegalStateException("Unexpected value: " + parent_id);
+                userType = "unknows";
+                break;
         }
         return userType;
     }
