@@ -24,14 +24,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProjectsFragment extends Fragment {
+public class ProjectsFragment extends Fragment implements Projects_adapter_callback.AdapterCallback {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,7 +48,7 @@ public class ProjectsFragment extends Fragment {
     ProgressBar loading;
 
     ArrayList<Project_item> projects_list;
-    Projects_adapter projects_adapter;
+    Projects_adapter_callback projects_adapter;
 
     int currentPageNum = 1;
     int lastPageNum;
@@ -106,8 +109,14 @@ public class ProjectsFragment extends Fragment {
                 final String project_timeline = currentObject.getString("project_timeline");
                 final String created_at = currentObject.getString("created_at");
                 final String created_by = currentObject.getJSONObject("user").getString("name");
+                final int created_by_id = currentObject.getJSONObject("user").getInt("id");
+                final String assigned_to = currentObject.getString("assign_to");
+                int assigned_to_id=0;
+                if (!assigned_to.equals("null")){
+                    assigned_to_id = Integer.parseInt(assigned_to);
+                }
 
-                projects_list.add(new Project_item(id,user_id,status_code, status_message, client_company,project_name,client_name,project_country,project_timeline,created_at,created_by));
+                projects_list.add(new Project_item(id,user_id,status_code, created_by_id, assigned_to_id, status_message, client_company,project_name,client_name,project_country,project_timeline,created_at,created_by));
 
             }
 
@@ -132,7 +141,7 @@ public class ProjectsFragment extends Fragment {
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        projects_adapter = new Projects_adapter(getContext(), projects_list);
+        projects_adapter = new Projects_adapter_callback(getContext(),this, projects_list);
         recyclerView.setAdapter(projects_adapter);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -157,5 +166,73 @@ public class ProjectsFragment extends Fragment {
         projects_list.clear();
         currentPageNum = 1;
         getProjects(currentPageNum);
+    }
+
+
+    @Override
+    public void adapterCallback(String action, int project_id) {
+        if (action.equals("cancel")){
+            cancelProject(project_id);
+        }else if (action.equals("done")){
+            doneProject(project_id);
+        }
+    }
+
+    public void cancelProject(int project_id) {
+
+        loading.setVisibility(View.VISIBLE);
+        Webservice.getInstance().getApi().projectCancel(UserUtils.getAccessToken(getContext()), project_id).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 200 || response.code() == 201) {
+                        Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_LONG).show();
+                        projects_list.clear();
+                        currentPageNum = 1;
+                        getProjects(currentPageNum);
+                    } else {
+                        Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                loading.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                loading.setVisibility(View.GONE);
+            }
+        });
+    }
+
+    public void doneProject(int project_id) {
+
+        loading.setVisibility(View.VISIBLE);
+        Webservice.getInstance().getApi().projectDone(UserUtils.getAccessToken(getContext()), project_id).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 200 || response.code() == 201) {
+                        Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_LONG).show();
+                        projects_list.clear();
+                        currentPageNum = 1;
+                        getProjects(currentPageNum);
+                    } else {
+                        Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                loading.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                loading.setVisibility(View.GONE);
+            }
+        });
     }
 }

@@ -81,4 +81,10 @@ public interface ServiceInterface {
     @POST("requests/attaches")
     Call<ResponseBody> addAttach(@Header("Authorization") String auth,@Part List<MultipartBody.Part> files, @Part("request_id") RequestBody request_id);
 
+    @PUT("projects/{project_id}/done")
+    Call<ResponseBody> projectDone(@Header("Authorization") String auth, @Path("project_id") int project_id);
+
+    @PUT("projects/{project_id}/cancel")
+    Call<ResponseBody> projectCancel(@Header("Authorization") String auth, @Path("project_id") int project_id);
+
 }
