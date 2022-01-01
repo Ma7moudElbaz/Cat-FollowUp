@@ -31,13 +31,17 @@ public class Production_supplierCost_view extends Fragment {
     LinearLayout nagat_approval_container;
     ImageView nagat_approve,nagat_reject;
     int costStatus;
+    RequestDetailsActivity activity;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initFields(view);
+        nagat_reject.setOnClickListener(v -> activity.updateStatus(3,""));
+        nagat_approve.setOnClickListener(v -> activity.updateStatus(4,""));
     }
     private void initFields(View view) {
+        activity = (RequestDetailsActivity) getActivity();
         supplier_name = view.findViewById(R.id.supplier_name);
         cost = view.findViewById(R.id.cost);
         delivery_date = view.findViewById(R.id.delivery_date);

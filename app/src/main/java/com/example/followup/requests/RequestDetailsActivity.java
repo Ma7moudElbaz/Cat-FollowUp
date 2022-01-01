@@ -1,5 +1,6 @@
 package com.example.followup.requests;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -36,6 +37,10 @@ import com.example.followup.webservice.Webservice;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
 import okhttp3.ResponseBody;
 import params.com.stepview.StatusView;
 import retrofit2.Call;
@@ -50,6 +55,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
 
     boolean isDetailsExpanded = false;
     boolean isCostExpanded = false;
+    private ProgressDialog dialog;
     ImageView back, expandDetails, expandCost,editCost;
     FrameLayout request_details_content, cost_details_content;
     RelativeLayout request_cost_container;
@@ -58,6 +64,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
     ProgressBar loading;
     Button add_cost;
     int costStatus;
+    int costId;
 
 
     int request_id, type_id;
@@ -91,6 +98,10 @@ public class RequestDetailsActivity extends LocalizationActivity {
         expandCost.setOnClickListener(v -> toggleCost(isCostExpanded));
         add_cost.setOnClickListener(v -> gotoAddCost(request_id, type_id));
 
+        sales_reject.setOnClickListener(v -> updateStatus(5,""));
+        sales_approve.setOnClickListener(v -> updateStatus(6,""));
+
+
     }
 
     private void gotoAddCost(int request_id, int type_id) {
@@ -117,6 +128,11 @@ public class RequestDetailsActivity extends LocalizationActivity {
     }
 
     private void initFields() {
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Please, Wait...");
+        dialog.setCancelable(false);
+
         request_id = getIntent().getIntExtra("request_id", 0);
         type_id = getIntent().getIntExtra("type_id", 0);
         loading = findViewById(R.id.loading);
@@ -191,6 +207,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
                         setUserCostPermissions(1);
                     }else {
                         costStatus = dataObj.getJSONObject("cost").getInt("status");
+                        costId = dataObj.getJSONObject("cost").getInt("id");
                         setUserCostPermissions(costStatus);
                     }
                     setFragments(type_id,costStatus);
@@ -294,6 +311,37 @@ public class RequestDetailsActivity extends LocalizationActivity {
         setCostContainer(true);
         editCost.setVisibility(View.GONE);
         sales_approval_layout.setVisibility(View.GONE);
+    }
+
+    public void updateStatus(int status,String reason) {
+        Map<String, String> map = new HashMap<>();
+        map.put("cost_id", String.valueOf(costId));
+        map.put("status", String.valueOf(status));
+        map.put("reason", reason);
+
+        dialog.show();
+        Webservice.getInstance().getApi().changeCostStatus(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 200 || response.code() == 201) {
+                        Toast.makeText(getBaseContext(), "Updated successfully", Toast.LENGTH_LONG).show();
+                        getRequestDetails();
+                    } else {
+                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
     }
 
     @Override
