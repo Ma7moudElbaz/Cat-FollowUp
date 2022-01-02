@@ -1,4 +1,6 @@
-package com.example.followup.supplier_costs.add;
+package com.example.followup.supplier_costs.edit;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -8,15 +10,12 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
-import com.example.followup.home.projects.AddProjectActivity;
+import com.example.followup.supplier_costs.add.AddPurchaseSupplierCostActivity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 
@@ -32,7 +31,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
+public class EditPurchaseSupplierCostActivity extends AppCompatActivity {
 
     EditText supplier_name, cost, delivery_date, expiry_date, notes,purchasing_type;
     Button add_cost;
@@ -41,11 +40,12 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
     private ProgressDialog dialog;
     DatePickerDialog picker;
 
-    int requestId;
+    int costId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_purchase_supplier_cost);
+        setContentView(R.layout.activity_edit_purchase_supplier_cost);
         initFields();
         back.setOnClickListener(v -> onBackPressed());
 
@@ -65,15 +65,16 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
 
         add_cost.setOnClickListener(v -> {
             if (validateFields()) {
-                addCost();
+                editCost();
             }
         });
     }
 
+
     private void showDatePicker(TextView textview) {
         final Calendar cldr = Calendar.getInstance();
         // date picker dialog
-        picker = new DatePickerDialog(AddPurchaseSupplierCostActivity.this,
+        picker = new DatePickerDialog(EditPurchaseSupplierCostActivity.this,
                 (view, year, monthOfYear, dayOfMonth) -> {
 
                     cldr.set(Calendar.YEAR, year);
@@ -93,7 +94,7 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
         dialog.setMessage("Please, Wait...");
         dialog.setCancelable(false);
 
-        requestId = getIntent().getIntExtra("request_id", 0);
+        costId = getIntent().getIntExtra("cost_id", 0);
         back = findViewById(R.id.back);
         supplier_name = findViewById(R.id.supplier_name);
         cost = findViewById(R.id.cost);
@@ -135,7 +136,7 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
         return true;
     }
 
-    private void addCost() {
+    private void editCost() {
         Map<String, String> map = setCostMap();
 
         dialog.show();
@@ -165,9 +166,7 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
     }
 
     private Map<String, String> setCostMap() {
-        Log.e("TAG", String.valueOf(requestId) );
         Map<String, String> map = new HashMap<>();
-        map.put("request_id", String.valueOf(requestId));
         map.put("supplier_name", supplier_name.getText().toString());
         map.put("cost", cost.getText().toString());
         map.put("delivery_date", delivery_date.getText().toString());

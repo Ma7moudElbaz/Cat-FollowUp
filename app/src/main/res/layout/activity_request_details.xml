@@ -231,17 +231,6 @@
                         android:layout_height="wrap_content"
                         android:visibility="gone">
 
-                        <ImageView
-                            android:id="@+id/edit_cost"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:src="@drawable/ic_edit"
-                            android:padding="5dp"
-                            android:layout_alignParentEnd="true"
-                            android:visibility="gone"/>
-
-
-
                         <LinearLayout
                             android:id="@+id/no_cost_container"
                             android:layout_width="match_parent"
@@ -290,6 +279,15 @@
                             android:paddingTop="10dp"
                             android:paddingBottom="10dp"
                             android:visibility="gone" />
+
+                        <ImageView
+                            android:id="@+id/edit_cost"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_edit"
+                            android:padding="5dp"
+                            android:layout_alignParentEnd="true"
+                            android:visibility="gone"/>
                     </RelativeLayout>
 
                 </LinearLayout>

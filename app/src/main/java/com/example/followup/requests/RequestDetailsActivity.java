@@ -27,6 +27,7 @@ import com.example.followup.supplier_costs.add.AddPhotographySupplierCostActivit
 import com.example.followup.supplier_costs.add.AddPrintSupplierCostActivity;
 import com.example.followup.supplier_costs.add.AddProductionSupplierCostActivity;
 import com.example.followup.supplier_costs.add.AddPurchaseSupplierCostActivity;
+import com.example.followup.supplier_costs.edit.EditPhotographySupplierCostActivity;
 import com.example.followup.supplier_costs.view.Photography_supplierCost_view;
 import com.example.followup.supplier_costs.view.Print_supplierCost_view;
 import com.example.followup.supplier_costs.view.Production_supplierCost_view;
@@ -97,6 +98,11 @@ public class RequestDetailsActivity extends LocalizationActivity {
         expandDetails.setOnClickListener(v -> toggleDetails(isDetailsExpanded));
         expandCost.setOnClickListener(v -> toggleCost(isCostExpanded));
         add_cost.setOnClickListener(v -> gotoAddCost(request_id, type_id));
+        editCost.setOnClickListener(v -> {
+            Intent i = new Intent(getBaseContext(), EditPhotographySupplierCostActivity.class);
+            i.putExtra("cost_id",costId);
+            startActivity(i);
+        });
 
         sales_reject.setOnClickListener(v -> updateStatus(5,""));
         sales_approve.setOnClickListener(v -> updateStatus(6,""));

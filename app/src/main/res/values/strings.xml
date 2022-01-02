@@ -201,4 +201,5 @@
     <string name="download">Download</string>
     <string name="hold">Hold</string>
     <string name="ceo_approval">CEO Approval</string>
+    <string name="edit_supplier_cost">Edit Supplier Cost</string>
 </resources>
