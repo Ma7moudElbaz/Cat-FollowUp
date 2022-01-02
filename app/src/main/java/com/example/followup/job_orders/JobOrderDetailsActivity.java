@@ -205,7 +205,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
                     loading.setVisibility(View.GONE);
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONObject dataObj = responseObject.getJSONObject("data");
-                    pdfUrl = dataObj.getString("pdf_url");
+                    pdfUrl = dataObj.getString("url");
                     jobOrderStatus = dataObj.getInt("status");
 
                 } catch (Exception e) {

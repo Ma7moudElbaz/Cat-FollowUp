@@ -70,6 +70,9 @@ public interface ServiceInterface {
     @FormUrlEncoded
     Call<ResponseBody> addCost(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
 
+    @GET("notifications")
+    Call<ResponseBody> getNotifications(@Header("Authorization") String auth, @Query("page") int pageNo);
+
     @GET("unreadNotificationsNumber")
     Call<ResponseBody> getNotificationsNumber(@Header("Authorization") String auth);
 

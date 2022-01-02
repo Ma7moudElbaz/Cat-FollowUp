@@ -134,7 +134,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         dialog.setCancelable(false);
 
         request_id = getIntent().getIntExtra("request_id", 0);
-        type_id = getIntent().getIntExtra("type_id", 0);
+//        type_id = getIntent().getIntExtra("type_id", 0);
         loading = findViewById(R.id.loading);
         expandDetails = findViewById(R.id.expand_details);
         expandCost = findViewById(R.id.expand_cost);
@@ -202,6 +202,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
                 try {
                     JSONObject responseObject = new JSONObject(response.body().string());
                     dataObj = responseObject.getJSONObject("data");
+                    type_id = dataObj.getInt("type_id");
                     if (dataObj.getString("cost").equals("null")) {
                         costStatus = 1;
                         setUserCostPermissions(1);
