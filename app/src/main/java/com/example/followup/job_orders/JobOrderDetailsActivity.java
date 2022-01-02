@@ -17,6 +17,7 @@ import androidx.annotation.NonNull;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
+import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
@@ -33,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class JobOrderDetailsActivity extends LocalizationActivity {
+public class JobOrderDetailsActivity extends LocalizationActivity implements BottomSheet_choose_reason.ReasonSubmitListener {
 
     private ProgressDialog dialog;
     LinearLayout sales_approval_layout, magdi_approval_layout, hesham_approval_layout, ceo_approval_layout;
@@ -41,10 +42,18 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
     ProgressBar loading;
     ImageView ceoSteps;
     TextView download;
-    int jobOrderId;
+    int jobOrderId, projectId;
     int jobOrderStatus;
+    String poNumber;
     StatusViewScroller steps;
     String pdfUrl;
+
+
+    public void showPoNumberBottomSheet() {
+        BottomSheet_choose_reason langBottomSheet =
+                new BottomSheet_choose_reason("Add your project po number to proceed", "PO Number", "", "po");
+        langBottomSheet.show(getSupportFragmentManager(), "po");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,15 +61,21 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
         setContentView(R.layout.activity_job_order_details);
         initFields();
         download.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl))));
-        sales_reject.setOnClickListener(v -> updateStatus(2,""));
-        sales_approve.setOnClickListener(v -> updateStatus(3,""));
-        magdi_hold.setOnClickListener(v -> updateStatus(4,""));
-        magdi_approve.setOnClickListener(v -> updateStatus(5,""));
-        hesham_reject.setOnClickListener(v -> updateStatus(6,""));
-        hesham_approve.setOnClickListener(v -> updateStatus(7,""));
-        hesham_ceo_approval.setOnClickListener(v -> updateStatus(8,""));
-        ceo_reject.setOnClickListener(v -> updateStatus(9,""));
-        ceo_approve.setOnClickListener(v -> updateStatus(10,""));
+        sales_reject.setOnClickListener(v -> updateStatus(2, ""));
+        sales_approve.setOnClickListener(v -> {
+            if (poNumber.equals("null")) {
+                showPoNumberBottomSheet();
+            } else {
+                updateStatus(3, "");
+            }
+        });
+        magdi_hold.setOnClickListener(v -> updateStatus(4, ""));
+        magdi_approve.setOnClickListener(v -> updateStatus(5, ""));
+        hesham_reject.setOnClickListener(v -> updateStatus(6, ""));
+        hesham_approve.setOnClickListener(v -> updateStatus(7, ""));
+        hesham_ceo_approval.setOnClickListener(v -> updateStatus(8, ""));
+        ceo_reject.setOnClickListener(v -> updateStatus(9, ""));
+        ceo_approve.setOnClickListener(v -> updateStatus(10, ""));
 
     }
 
@@ -77,6 +92,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
         hesham_approval_layout = findViewById(R.id.hesham_approval_layout);
         ceo_approval_layout = findViewById(R.id.ceo_approval_layout);
         ceoSteps = findViewById(R.id.ceo_steps);
+        steps = findViewById(R.id.steps);
         sales_approve = findViewById(R.id.sales_approve);
         sales_reject = findViewById(R.id.sales_reject);
         magdi_approve = findViewById(R.id.magdi_approve);
@@ -87,11 +103,9 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
         ceo_approve = findViewById(R.id.ceo_approve);
         ceo_reject = findViewById(R.id.ceo_reject);
 
-        pdfUrl = "https://saudiblood.org/pdf/Founding-Regulations.pdf";
 
         jobOrderId = getIntent().getIntExtra("job_order_id", 0);
-        jobOrderStatus = getIntent().getIntExtra("job_order_status", 0);
-        setUserJobOrderPermissions(jobOrderStatus);
+        projectId = getIntent().getIntExtra("project_id", 0);
     }
 
 
@@ -102,7 +116,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
         resetData();
         switch (jobOrderStatus) {
             case 1: {
-                steps.scrollToStep(2);
+                steps.getStatusView().setCurrentCount(2);
                 if (loggedInUser.equals("sales")) {
                     sales_approval_layout.setVisibility(View.VISIBLE);
                 } else {
@@ -112,28 +126,32 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
             }
             case 3:
             case 4: {
-                steps.scrollToStep(3);
+                steps.getStatusView().setCurrentCount(3);
                 if (loggedInUser.equals("magdi")) {
                     magdi_approval_layout.setVisibility(View.VISIBLE);
                 } else {
                     magdi_approval_layout.setVisibility(View.GONE);
                 }
+                break;
             }
             case 5:
             case 10: {
-                steps.scrollToStep(4);
+                steps.getStatusView().setCurrentCount(4);
                 if (loggedInUser.equals("hesham")) {
                     hesham_approval_layout.setVisibility(View.VISIBLE);
                 } else {
                     hesham_approval_layout.setVisibility(View.GONE);
                 }
+                break;
             }
             case 6: {
                 //hesham rejected
-                steps.scrollToStep(4);
+                steps.getStatusView().setCurrentCount(4);
+                break;
             }
             case 7: {
-                steps.scrollToStep(5);
+                steps.getStatusView().setCurrentCount(5);
+                break;
             }
             case 8: {
                 steps.setVisibility(View.GONE);
@@ -143,11 +161,13 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
                 } else {
                     ceo_approval_layout.setVisibility(View.GONE);
                 }
+                break;
             }
             case 9: {
                 //ceo rejected
                 steps.setVisibility(View.GONE);
                 ceoSteps.setVisibility(View.VISIBLE);
+                break;
             }
         }
     }
@@ -160,8 +180,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
         ceoSteps.setVisibility(View.GONE);
     }
 
-
-    public void updateStatus(int status,String reason) {
+    public void updateStatus(int status, String reason) {
         Map<String, String> map = new HashMap<>();
         map.put("job_order_id", String.valueOf(jobOrderId));
         map.put("status", String.valueOf(status));
@@ -192,8 +211,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
         });
     }
 
-
-
     private void getJobOrderDetails() {
         loading.setVisibility(View.VISIBLE);
 
@@ -207,6 +224,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
                     JSONObject dataObj = responseObject.getJSONObject("data");
                     pdfUrl = dataObj.getString("url");
                     jobOrderStatus = dataObj.getInt("status");
+                    poNumber = dataObj.getString("po_number");
+                    setUserJobOrderPermissions(jobOrderStatus);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -224,9 +243,45 @@ public class JobOrderDetailsActivity extends LocalizationActivity {
         });
     }
 
+    private void addPoNumber(int projectId, String poNumber) {
+        Map<String, String> map = new HashMap<>();
+        map.put("project_id", String.valueOf(projectId));
+        map.put("number", poNumber);
+
+        dialog.show();
+        Webservice.getInstance().getApi().addPoNumber(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 200 || response.code() == 201) {
+                        Toast.makeText(getBaseContext(), "PO Added successfully", Toast.LENGTH_LONG).show();
+                        getJobOrderDetails();
+                    } else {
+                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         getJobOrderDetails();
+    }
+
+
+    @Override
+    public void reasonSubmitListener(String poNumber, String type) {
+        addPoNumber(projectId, poNumber);
     }
 }

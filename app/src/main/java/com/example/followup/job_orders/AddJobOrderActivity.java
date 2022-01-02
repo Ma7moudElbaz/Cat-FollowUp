@@ -17,7 +17,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.followup.R;
-import com.example.followup.bottomsheets.BottomSheet_choose_lang;
 import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.job_orders.job_order_requests.Job_order_request_item;
 import com.example.followup.job_orders.job_order_requests.Job_orders_requests_adapter;
@@ -31,7 +30,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -57,10 +55,10 @@ public class AddJobOrderActivity extends AppCompatActivity implements BottomShee
 
     int projectId;
 
-    public void showPoNumberBottomSheet() {
+    public void showJONameSheet() {
         BottomSheet_choose_reason langBottomSheet =
-                new BottomSheet_choose_reason("Request Po Number", "PO Number", "", "po");
-        langBottomSheet.show(getSupportFragmentManager(), "po");
+                new BottomSheet_choose_reason("Job Order Name", "Job Order Name", "", "po");
+        langBottomSheet.show(getSupportFragmentManager(), "jo");
     }
 
     @Override
@@ -71,7 +69,7 @@ public class AddJobOrderActivity extends AppCompatActivity implements BottomShee
         back.setOnClickListener(v -> onBackPressed());
         create_job_order.setOnClickListener(v -> {
             if (validateSelectedRequests(job_order_requests_adapter.getSelectedData())) {
-                showPoNumberBottomSheet();
+                showJONameSheet();
             }
         });
         request_types_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

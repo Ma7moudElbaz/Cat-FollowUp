@@ -60,6 +60,7 @@ public class Job_orders_adapter extends RecyclerView.Adapter<Job_orders_adapter.
             Intent i = new Intent(mContext, JobOrderDetailsActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra("job_order_id",items.get(position).getId());
+            i.putExtra("project_id",items.get(position).getProject_id());
             mContext.startActivity(i);
         });
 

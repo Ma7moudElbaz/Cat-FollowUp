@@ -205,12 +205,11 @@ public class RequestDetailsActivity extends LocalizationActivity {
                     type_id = dataObj.getInt("type_id");
                     if (dataObj.getString("cost").equals("null")) {
                         costStatus = 1;
-                        setUserCostPermissions(1);
                     }else {
                         costStatus = dataObj.getJSONObject("cost").getInt("status");
                         costId = dataObj.getJSONObject("cost").getInt("id");
-                        setUserCostPermissions(costStatus);
                     }
+                    setUserCostPermissions(costStatus);
                     setFragments(type_id,costStatus);
                     loading.setVisibility(View.GONE);
 
@@ -244,24 +243,26 @@ public class RequestDetailsActivity extends LocalizationActivity {
         switch (type_id) {
             case 1:
                 setDetailsFragment(new Purchase_view());
-                if (cost_status!=0)
+                if (cost_status>1)
                 setCostFragment(new Purchase_supplierCost_view());
                 break;
             case 2:
                 setDetailsFragment(new Print_view());
-                if (cost_status!=0)
+                if (cost_status>1)
                 setCostFragment(new Print_supplierCost_view());
                 break;
             case 3:
                 setDetailsFragment(new Production_view());
-                if (cost_status!=0)
+                if (cost_status>1)
                 setCostFragment(new Production_supplierCost_view());
                 break;
             case 4:
                 setDetailsFragment(new Photography_view());
-                if (cost_status!=0)
+                if (cost_status>1)
                 setCostFragment(new Photography_supplierCost_view());
                 break;
+            default:
+                Toast.makeText(getBaseContext(), "typeId"+type_id+" cost"+cost_status, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -273,7 +274,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         switch (costStatus) {
             case 1: {
                 setCostContainer(false);
-                steps.scrollToStep(1);
+                steps.getStatusView().setCurrentCount(1);
                 if (loggedInUser.equals("nagatTeam") || loggedInUser.equals("nagat")){
                     add_cost.setVisibility(View.VISIBLE);
                 }else {
@@ -282,28 +283,32 @@ public class RequestDetailsActivity extends LocalizationActivity {
                 break;
             }
             case 2:{
-                steps.scrollToStep(2);
+                steps.getStatusView().setCurrentCount(2);
                 //handle buttons in SupplierCost fragments
+                break;
             }
             case 3:
             case 5:{
-                steps.scrollToStep(2);
+                steps.getStatusView().setCurrentCount(2);
                 if (loggedInUser.equals("nagatTeam") || loggedInUser.equals("nagat")){
                     editCost.setVisibility(View.VISIBLE);
                 }else {
                     editCost.setVisibility(View.GONE);
                 }
+                break;
             }
             case 4:{
-                steps.scrollToStep(3);
+                steps.getStatusView().setCurrentCount(3);
                 if (loggedInUser.equals("sales")){
                     sales_approval_layout.setVisibility(View.VISIBLE);
                 }else {
                     sales_approval_layout.setVisibility(View.GONE);
                 }
+                break;
             }
             case 6:{
-                steps.scrollToStep(4);
+                steps.getStatusView().setCurrentCount(4);
+                break;
             }
         }
     }
