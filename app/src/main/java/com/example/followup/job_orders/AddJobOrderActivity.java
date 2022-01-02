@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.job_orders.job_order_requests.Job_order_request_item;
@@ -37,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddJobOrderActivity extends AppCompatActivity implements BottomSheet_choose_reason.ReasonSubmitListener {
+public class AddJobOrderActivity extends LocalizationActivity implements BottomSheet_choose_reason.ReasonSubmitListener {
 
     ImageView back;
     ProgressBar loading;

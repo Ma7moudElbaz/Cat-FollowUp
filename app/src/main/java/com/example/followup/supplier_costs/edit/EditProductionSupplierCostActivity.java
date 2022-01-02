@@ -14,6 +14,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.supplier_costs.add.AddProductionSupplierCostActivity;
 import com.example.followup.utils.UserUtils;
@@ -34,7 +35,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditProductionSupplierCostActivity extends AppCompatActivity {
+public class EditProductionSupplierCostActivity extends LocalizationActivity {
 
     EditText supplier_name, cost, delivery_date, expiry_date, notes,assembly_dismantling,storage;
     Button add_cost;

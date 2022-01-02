@@ -40,6 +40,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     LinearLayout sales_approval_layout, magdi_approval_layout, hesham_approval_layout, ceo_approval_layout;
     Button sales_approve, sales_reject, magdi_approve, magdi_hold, hesham_approve, hesham_reject, hesham_ceo_approval, ceo_approve, ceo_reject;
     ProgressBar loading;
+    ImageView back;
     ImageView ceoSteps;
     TextView download;
     int jobOrderId, projectId;
@@ -60,6 +61,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_order_details);
         initFields();
+        back.setOnClickListener(v -> onBackPressed());
         download.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl))));
         sales_reject.setOnClickListener(v -> updateStatus(2, ""));
         sales_approve.setOnClickListener(v -> {
@@ -85,6 +87,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         dialog.setMessage("Please, Wait...");
         dialog.setCancelable(false);
 
+        back = findViewById(R.id.back);
         loading = findViewById(R.id.loading);
         download = findViewById(R.id.download);
         sales_approval_layout = findViewById(R.id.sales_approval_layout);
