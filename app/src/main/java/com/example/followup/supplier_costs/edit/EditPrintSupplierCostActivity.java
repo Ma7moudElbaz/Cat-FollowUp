@@ -19,6 +19,9 @@ import com.example.followup.supplier_costs.add.AddPrintSupplierCostActivity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -41,6 +44,7 @@ public class EditPrintSupplierCostActivity extends AppCompatActivity {
     DatePickerDialog picker;
 
     int costId;
+    JSONObject dataObj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,12 +94,24 @@ public class EditPrintSupplierCostActivity extends AppCompatActivity {
         picker.show();
     }
 
+
+    private void setFields(JSONObject dataObj) throws JSONException {
+        JSONObject costObj = dataObj.getJSONObject("cost");
+        String myCost=costObj.getString("cost");
+        String costNum = myCost.substring(0, myCost.indexOf(' '));
+        supplier_name.setText(costObj.getString("supplier_name"));
+        cost.setText(costNum);
+        delivery_date.setText(costObj.getString("delivery_date"));
+        expiry_date.setText(costObj.getString("expiry_date"));
+        notes.setText(costObj.getString("note"));
+        printing_type.setText(costObj.getString("print_type"));
+    }
+
     private void initFields() {
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please, Wait...");
         dialog.setCancelable(false);
 
-        costId = getIntent().getIntExtra("cost_id", 0);
         back = findViewById(R.id.back);
         supplier_name = findViewById(R.id.supplier_name);
         cost = findViewById(R.id.cost);
@@ -107,6 +123,14 @@ public class EditPrintSupplierCostActivity extends AppCompatActivity {
         currency = findViewById(R.id.currency_spinner);
         printing_type = findViewById(R.id.printing_type);
         add_cost = findViewById(R.id.btn_add_cost);
+
+        costId = getIntent().getIntExtra("cost_id", 0);
+        try {
+            dataObj = new JSONObject(getIntent().getStringExtra("dataObj"));
+            setFields(dataObj);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private boolean validateFields() {

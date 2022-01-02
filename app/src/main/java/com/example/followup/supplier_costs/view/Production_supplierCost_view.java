@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.example.followup.R;
 import com.example.followup.requests.RequestDetailsActivity;
+import com.example.followup.utils.UserType;
+import com.example.followup.utils.UserUtils;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,7 +81,8 @@ public class Production_supplierCost_view extends Fragment {
     }
 
     private void setUserCostPermissions(int costStatus) {
-        if (costStatus == 2){
+        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getContext()), UserUtils.getChildId(getContext()));
+        if (costStatus == 2 && loggedInUser.equals("nagatTeam")){
             nagat_approval_container.setVisibility(View.VISIBLE);
         }else {
             nagat_approval_container.setVisibility(View.GONE);

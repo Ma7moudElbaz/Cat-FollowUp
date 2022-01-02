@@ -3,6 +3,7 @@ package com.example.followup.requests;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,9 @@ import com.example.followup.supplier_costs.add.AddPrintSupplierCostActivity;
 import com.example.followup.supplier_costs.add.AddProductionSupplierCostActivity;
 import com.example.followup.supplier_costs.add.AddPurchaseSupplierCostActivity;
 import com.example.followup.supplier_costs.edit.EditPhotographySupplierCostActivity;
+import com.example.followup.supplier_costs.edit.EditPrintSupplierCostActivity;
+import com.example.followup.supplier_costs.edit.EditProductionSupplierCostActivity;
+import com.example.followup.supplier_costs.edit.EditPurchaseSupplierCostActivity;
 import com.example.followup.supplier_costs.view.Photography_supplierCost_view;
 import com.example.followup.supplier_costs.view.Print_supplierCost_view;
 import com.example.followup.supplier_costs.view.Production_supplierCost_view;
@@ -99,14 +103,36 @@ public class RequestDetailsActivity extends LocalizationActivity {
         expandCost.setOnClickListener(v -> toggleCost(isCostExpanded));
         add_cost.setOnClickListener(v -> gotoAddCost(request_id, type_id));
         editCost.setOnClickListener(v -> {
-            Intent i = new Intent(getBaseContext(), EditPhotographySupplierCostActivity.class);
-            i.putExtra("cost_id",costId);
-            startActivity(i);
+            gotoEditCost(costId,type_id);
         });
 
         sales_reject.setOnClickListener(v -> updateStatus(5,""));
         sales_approve.setOnClickListener(v -> updateStatus(6,""));
 
+
+    }
+
+    private void gotoEditCost(int cost_id, int type_id) {
+        Intent i;
+        switch (type_id) {
+            case 1:
+                i = new Intent(getBaseContext(), EditPurchaseSupplierCostActivity.class);
+                break;
+            case 2:
+                i = new Intent(getBaseContext(), EditPrintSupplierCostActivity.class);
+                break;
+            case 3:
+                i = new Intent(getBaseContext(), EditProductionSupplierCostActivity.class);
+                break;
+            case 4:
+                i = new Intent(getBaseContext(), EditPhotographySupplierCostActivity.class);
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + type_id);
+        }
+        i.putExtra("cost_id", cost_id);
+        i.putExtra("dataObj",  dataObj.toString());
+        startActivity(i);
 
     }
 
