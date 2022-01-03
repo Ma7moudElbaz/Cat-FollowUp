@@ -74,7 +74,7 @@ public interface ServiceInterface {
     @FormUrlEncoded
     Call<ResponseBody> addCost(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
 
-    @PUT("costs/{cost_id}")
+    @POST("costs/update/{cost_id}")
     @FormUrlEncoded
     Call<ResponseBody> editCost(@Header("Authorization") String auth, @Path("cost_id") int cost_id,@FieldMap Map<String, String> map);
 

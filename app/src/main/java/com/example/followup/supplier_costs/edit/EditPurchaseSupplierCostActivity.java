@@ -165,7 +165,7 @@ public class EditPurchaseSupplierCostActivity extends LocalizationActivity {
         Map<String, String> map = setCostMap();
 
         dialog.show();
-        Webservice.getInstance().getApi().addCost(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+        Webservice.getInstance().getApi().editCost(UserUtils.getAccessToken(getBaseContext()),costId, map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
