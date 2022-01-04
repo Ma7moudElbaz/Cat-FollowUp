@@ -17,6 +17,7 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryMap;
 
 public interface ServiceInterface {
 
@@ -31,7 +32,7 @@ public interface ServiceInterface {
 
     //projects
     @GET("projects")
-    Call<ResponseBody> getProjects(@Header("Authorization") String auth, @Query("page") int pageNo);
+    Call<ResponseBody> getProjects(@Header("Authorization") String auth, @Query("page") int pageNo,@QueryMap Map<String, String> filters);
 
     @POST("projects")
     @FormUrlEncoded
@@ -48,7 +49,7 @@ public interface ServiceInterface {
 
     //requests
     @GET("requests")
-    Call<ResponseBody> getRequests(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("type_id") int type_id, @Query("page") int pageNo);
+    Call<ResponseBody> getRequests(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("type_id") int type_id, @Query("page") int pageNo,@QueryMap Map<String, String> filters);
 
     @GET("requests")
     Call<ResponseBody> getJobOrderRequests(@Header("Authorization") String auth, @Query("status") int status, @Query("project_id") int project_id, @Query("type_id") int type_id, @Query("page") int pageNo);

@@ -26,6 +26,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -60,10 +62,10 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
 
     }
 
-    public void getProjects(int pageNum) {
+    public void getProjects(int pageNum, Map<String, String> filterMap) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getProjects(UserUtils.getAccessToken(getContext()), pageNum).enqueue(new Callback<ResponseBody>() {
+        Webservice.getInstance().getApi().getProjects(UserUtils.getAccessToken(getContext()), pageNum,filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -128,6 +130,18 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
 
     }
 
+    private Map<String, String> getFilterMap() {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("status", "");
+        map.put("client_name", "");
+        map.put("client_company", "");
+        map.put("country_id", "");
+        map.put("search", "");
+
+        return map;
+    }
+
     private void initFields(View view){
         fab_addProject = view.findViewById(R.id.fab_add_project);
         loading = view.findViewById(R.id.loading);
@@ -151,7 +165,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        getProjects(currentPageNum);
+                        getProjects(currentPageNum, getFilterMap());
 
                 }
             }
@@ -163,7 +177,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         super.onResume();
         projects_list.clear();
         currentPageNum = 1;
-        getProjects(currentPageNum);
+        getProjects(currentPageNum, getFilterMap());
     }
 
 
@@ -187,7 +201,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
                         Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_LONG).show();
                         projects_list.clear();
                         currentPageNum = 1;
-                        getProjects(currentPageNum);
+                        getProjects(currentPageNum, getFilterMap());
                     } else {
                         Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
                     }
@@ -216,7 +230,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
                         Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_LONG).show();
                         projects_list.clear();
                         currentPageNum = 1;
-                        getProjects(currentPageNum);
+                        getProjects(currentPageNum, getFilterMap());
                     } else {
                         Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
                     }

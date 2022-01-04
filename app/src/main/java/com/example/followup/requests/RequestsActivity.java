@@ -35,6 +35,9 @@ import com.google.android.material.tabs.TabLayout;
 
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -217,5 +220,14 @@ public class RequestsActivity extends LocalizationActivity {
                 setContentFragment(new Photography_requests_list());
                 break;
         }
+    }
+
+    public Map<String, String> getFilterMap() {
+        Map<String, String> map = new HashMap<>();
+        map.put("created_by", "");
+        map.put("status", "");
+        map.put("search", "");
+
+        return map;
     }
 }

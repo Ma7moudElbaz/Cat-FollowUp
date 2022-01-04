@@ -27,6 +27,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -45,6 +46,7 @@ public class Purchase_requests_list extends Fragment {
     boolean mHasReachedBottomOnce = false;
 
     int projectId;
+    RequestsActivity activity;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -59,10 +61,10 @@ public class Purchase_requests_list extends Fragment {
 
     }
 
-    public void getRequests(int selectedTab,int pageNum) {
+    public void getRequests(int selectedTab,int pageNum, Map<String, String> filterMap) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getRequests(UserUtils.getAccessToken(getContext()),projectId,(selectedTab+1), pageNum).enqueue(new Callback<ResponseBody>() {
+        Webservice.getInstance().getApi().getRequests(UserUtils.getAccessToken(getContext()),projectId,(selectedTab+1), pageNum,filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -128,7 +130,7 @@ public class Purchase_requests_list extends Fragment {
     }
 
     private void initFields(View view) {
-        RequestsActivity activity= (RequestsActivity) getActivity();
+        activity= (RequestsActivity) getActivity();
         projectId = activity.getProjectId();
 
         loading = view.findViewById(R.id.loading);
@@ -152,7 +154,7 @@ public class Purchase_requests_list extends Fragment {
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        getRequests(0,currentPageNum);
+                        getRequests(0,currentPageNum,activity.getFilterMap());
 
                 }
             }
@@ -164,7 +166,7 @@ public class Purchase_requests_list extends Fragment {
         super.onResume();
         purchase_list.clear();
         currentPageNum = 1;
-        getRequests(0,currentPageNum);
+        getRequests(0,currentPageNum,activity.getFilterMap());
     }
 
 
