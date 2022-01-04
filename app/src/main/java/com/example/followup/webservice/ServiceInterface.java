@@ -20,67 +20,83 @@ import retrofit2.http.Query;
 
 public interface ServiceInterface {
 
+    //Auth
     @POST("auth/login")
     @FormUrlEncoded
     Call<ResponseBody> login(@FieldMap Map<String, String> map);
 
     @PUT("token")
     @FormUrlEncoded
-    Call<ResponseBody> updateToken(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
+    Call<ResponseBody> updateToken(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
+    //projects
     @GET("projects")
     Call<ResponseBody> getProjects(@Header("Authorization") String auth, @Query("page") int pageNo);
 
+    @POST("projects")
+    @FormUrlEncoded
+    Call<ResponseBody> addProject(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
+
+    @GET("projects/{project_id}")
+    Call<ResponseBody> getProjectDetails(@Header("Authorization") String auth, @Path("project_id") int project_id);
+
+    @PUT("projects/{project_id}/done")
+    Call<ResponseBody> projectDone(@Header("Authorization") String auth, @Path("project_id") int project_id);
+
+    @PUT("projects/{project_id}/cancel")
+    Call<ResponseBody> projectCancel(@Header("Authorization") String auth, @Path("project_id") int project_id);
+
+    //requests
     @GET("requests")
     Call<ResponseBody> getRequests(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("type_id") int type_id, @Query("page") int pageNo);
 
     @GET("requests")
     Call<ResponseBody> getJobOrderRequests(@Header("Authorization") String auth, @Query("status") int status, @Query("project_id") int project_id, @Query("type_id") int type_id, @Query("page") int pageNo);
 
-    @GET("job-orders")
-    Call<ResponseBody> getJobOrders(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("page") int pageNo);
-
-    @POST("projects")
-    @FormUrlEncoded
-    Call<ResponseBody> addProject(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
-
     @POST("requests")
     @FormUrlEncoded
-    Call<ResponseBody> addRequest(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
+    Call<ResponseBody> addRequest(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
-    @POST("job-orders")
-    @FormUrlEncoded
-    Call<ResponseBody> addJobOrder(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
-
-    @POST("pos")
-    @FormUrlEncoded
-    Call<ResponseBody> addPoNumber(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
-
-    @POST("job-orders/status")
-    @FormUrlEncoded
-    Call<ResponseBody> changeJobOrderStatus(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
-
-    @POST("costs/status")
-    @FormUrlEncoded
-    Call<ResponseBody> changeCostStatus(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
+    @Multipart
+    @POST("requests/attaches")
+    Call<ResponseBody> addAttach(@Header("Authorization") String auth, @Part List<MultipartBody.Part> files, @Part("request_id") RequestBody request_id);
 
     @GET("requests/{request_id}")
     Call<ResponseBody> getRequestDetails(@Header("Authorization") String auth, @Path("request_id") int request_id);
 
-    @GET("requests/{project_id}")
-    Call<ResponseBody> getProjectDetails(@Header("Authorization") String auth, @Path("project_id") int project_id);
+    //costs
+    @POST("costs")
+    @FormUrlEncoded
+    Call<ResponseBody> addCost(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
+
+    @POST("costs/update/{cost_id}")
+    @FormUrlEncoded
+    Call<ResponseBody> editCost(@Header("Authorization") String auth, @Path("cost_id") int cost_id, @FieldMap Map<String, String> map);
+
+    @POST("costs/status")
+    @FormUrlEncoded
+    Call<ResponseBody> changeCostStatus(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
+
+    //job orders
+    @GET("job-orders")
+    Call<ResponseBody> getJobOrders(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("page") int pageNo);
 
     @GET("job-orders/{job_order_id}")
     Call<ResponseBody> getJobOrderDetails(@Header("Authorization") String auth, @Path("job_order_id") int job_order_id);
 
-    @POST("costs")
+    @POST("job-orders")
     @FormUrlEncoded
-    Call<ResponseBody> addCost(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
+    Call<ResponseBody> addJobOrder(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
-    @POST("costs/update/{cost_id}")
+    @POST("job-orders/status")
     @FormUrlEncoded
-    Call<ResponseBody> editCost(@Header("Authorization") String auth, @Path("cost_id") int cost_id,@FieldMap Map<String, String> map);
+    Call<ResponseBody> changeJobOrderStatus(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
+    @POST("pos")
+    @FormUrlEncoded
+    Call<ResponseBody> addPoNumber(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
+
+    //notifications
     @GET("notifications")
     Call<ResponseBody> getNotifications(@Header("Authorization") String auth, @Query("page") int pageNo);
 
@@ -89,16 +105,5 @@ public interface ServiceInterface {
 
     @POST("markAsRead")
     @FormUrlEncoded
-    Call<ResponseBody> readNotification(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
-
-    @Multipart
-    @POST("requests/attaches")
-    Call<ResponseBody> addAttach(@Header("Authorization") String auth,@Part List<MultipartBody.Part> files, @Part("request_id") RequestBody request_id);
-
-    @PUT("projects/{project_id}/done")
-    Call<ResponseBody> projectDone(@Header("Authorization") String auth, @Path("project_id") int project_id);
-
-    @PUT("projects/{project_id}/cancel")
-    Call<ResponseBody> projectCancel(@Header("Authorization") String auth, @Path("project_id") int project_id);
-
+    Call<ResponseBody> readNotification(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 }
