@@ -3,10 +3,15 @@ package com.example.followup.requests;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -21,8 +26,19 @@ import com.example.followup.requests.add.AddProductionActivity;
 import com.example.followup.requests.list.Production_requests_list;
 import com.example.followup.requests.add.AddPurchaseActivity;
 import com.example.followup.requests.list.Purchase_requests_list;
+import com.example.followup.utils.UserType;
+import com.example.followup.utils.UserUtils;
+import com.example.followup.webservice.Webservice;
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.material.tabs.TabLayout;
+
+import org.json.JSONObject;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class RequestsActivity extends LocalizationActivity {
@@ -30,10 +46,14 @@ public class RequestsActivity extends LocalizationActivity {
     ImageView back;
     FloatingActionButton addPhotography, addProduction, addPurchasing, addPrinting;
     TabLayout requests_tab;
-    TextView job_orders,project_name;
+    TextView job_orders, project_name;
     int projectId;
-    String projectName;
     int tabPosition;
+    ProgressBar loading;
+
+    //    String projectName;
+//    boolean canEditProject;
+    FloatingActionMenu add_menu_btn;
 
     public int getProjectId() {
         return projectId;
@@ -52,12 +72,11 @@ public class RequestsActivity extends LocalizationActivity {
         setContentView(R.layout.activity_requests);
         initFields();
 
-        project_name.setText(projectName);
         back.setOnClickListener(v -> onBackPressed());
 
         job_orders.setOnClickListener(v -> {
-            Intent i =new Intent(getBaseContext(), JobOrdersActivity.class);
-            i.putExtra("project_id",projectId);
+            Intent i = new Intent(getBaseContext(), JobOrdersActivity.class);
+            i.putExtra("project_id", projectId);
             startActivity(i);
         });
         requests_tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -102,12 +121,14 @@ public class RequestsActivity extends LocalizationActivity {
             i.putExtra("project_id", projectId);
             startActivity(i);
         });
+        getProjectDetails();
     }
 
 
     private void initFields() {
         projectId = getIntent().getIntExtra("project_id", 0);
-        projectName = getIntent().getStringExtra("project_name");
+//        projectName = getIntent().getStringExtra("project_name");
+//        canEditProject = getIntent().getBooleanExtra("can_edit_project", false);
         addPhotography = findViewById(R.id.photography_btn);
         addProduction = findViewById(R.id.production_btn);
         addPurchasing = findViewById(R.id.purchase_btn);
@@ -116,7 +137,62 @@ public class RequestsActivity extends LocalizationActivity {
         back = findViewById(R.id.back);
         job_orders = findViewById(R.id.job_orders);
         project_name = findViewById(R.id.project_name);
+        loading = findViewById(R.id.loading);
 
+        add_menu_btn = findViewById(R.id.add_menu_btn);
+//        if (canEditProject) {
+//            add_menu_btn.setVisibility(View.VISIBLE);
+//        } else {
+//            add_menu_btn.setVisibility(View.GONE);
+//        }
+
+    }
+
+    private void setFields(String projectName, boolean canEditProject) {
+        project_name.setText(projectName);
+
+        if (canEditProject) {
+            add_menu_btn.setVisibility(View.VISIBLE);
+        } else {
+            add_menu_btn.setVisibility(View.GONE);
+        }
+    }
+
+    private void getProjectDetails() {
+        loading.setVisibility(View.VISIBLE);
+
+        Webservice.getInstance().getApi().getProjectDetails(UserUtils.getAccessToken(getBaseContext()), projectId).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+
+                try {
+                    JSONObject responseObject = new JSONObject(response.body().string());
+                    JSONObject dataObj = responseObject.getJSONObject("data");
+                    String projectName = dataObj.getString("project_name");
+                    int created_by_id = dataObj.getJSONObject("user").getInt("id");
+                    final String assigned_to = dataObj.getString("assign_to");
+                    int assigned_to_id = 0;
+                    if (!assigned_to.equals("null")) {
+                        assigned_to_id = Integer.parseInt(assigned_to);
+                    }
+                    boolean canEditProject = UserType.canEditProject(getBaseContext(), created_by_id, assigned_to_id);
+                    setFields(projectName, canEditProject);
+                    loading.setVisibility(View.GONE);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Log.d("Error Throw", t.toString());
+                Log.d("commit Test Throw", t.toString());
+                Log.d("Call", t.toString());
+                Toast.makeText(getBaseContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+                loading.setVisibility(View.GONE);
+            }
+        });
     }
 
 

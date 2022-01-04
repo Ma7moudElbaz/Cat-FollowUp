@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
@@ -52,21 +53,20 @@ import retrofit2.Response;
 
 public class AddPrintActivity extends LocalizationActivity {
 
-    private static final int FILES_REQUEST_CODE = 764546;
     EditText item_name, quantity, description, pages, paper_weight, colors, di_cut, delivery_address, notes, designer_in_charge;
     Button choose_file, send_request;
     RadioGroup print_type, lamination, binding;
     ImageView back;
     private ProgressDialog dialog;
     LinearLayout color_layout;
-    List<String> filesSelected;
-
-
     String print_type_text = "Digital";
     String lamination_text = "Matte";
     String binding_text = "Wire";
-
     int projectId;
+
+    List<String> filesSelected;
+    private static final int FILES_REQUEST_CODE = 764546;
+    TextView filesChosen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,7 @@ public class AddPrintActivity extends LocalizationActivity {
                 public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                     if (multiplePermissionsReport.areAllPermissionsGranted()) {
 //                        showFileChooser();
-//                        pickFromGallery();
+                        pickFromGallery();
                     }
                 }
 
@@ -152,6 +152,7 @@ public class AddPrintActivity extends LocalizationActivity {
         dialog.setCancelable(false);
 
         filesSelected = new ArrayList<>();
+        filesChosen = findViewById(R.id.files_chosen);
 
         projectId = getIntent().getIntExtra("project_id", 0);
         back = findViewById(R.id.back);
@@ -226,16 +227,22 @@ public class AddPrintActivity extends LocalizationActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.code() == 200 || response.code() == 201) {
-                        Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
-                        onBackPressed();
+                        JSONObject responseObject = new JSONObject(response.body().string());
+                        if (filesSelected.size()!=0){
+                            addRequestAttaches(responseObject.getJSONObject("data").getString("id"));
+                        }
+                        else {
+                            Toast.makeText(getBaseContext(), "Request Added Successfully", Toast.LENGTH_LONG).show();
+                            onBackPressed();
+                        }
 
                     } else {
                         Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                        dialog.dismiss();
                     }
-                } catch (IOException e) {
+                } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
-                dialog.dismiss();
             }
 
             @Override
@@ -267,6 +274,40 @@ public class AddPrintActivity extends LocalizationActivity {
         return map;
     }
 
+    public void addRequestAttaches(final String requestId) {
+        dialog.show();
+
+        List<MultipartBody.Part> fileToUpload = addAttaches(filesSelected);
+        RequestBody request_id = RequestBody.create(MediaType.parse("text/plain"), requestId);
+
+        Webservice.getInstance().getApi().addAttach(UserUtils.getAccessToken(getBaseContext()),fileToUpload, request_id).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 200 || response.code() == 201) {
+                        JSONObject res = new JSONObject(response.body().string());
+                        Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Request Added successfully but attachment failed", Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+                onBackPressed();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                Log.d("Request failure", call.toString() + " , " + t.getMessage());
+                dialog.dismiss();
+                onBackPressed();
+            }
+        });
+    }
+
     private void pickFromGallery() {
         //Create an Intent with action as ACTION_PICK
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -280,8 +321,6 @@ public class AddPrintActivity extends LocalizationActivity {
         // Launching the Intent
         startActivityForResult(intent, FILES_REQUEST_CODE);
     }
-
-
 
     private void showFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -298,31 +337,6 @@ public class AddPrintActivity extends LocalizationActivity {
             Toast.makeText(this, "Please install a File Manager.",
                     Toast.LENGTH_SHORT).show();
         }
-    }
-
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Result code is RESULT_OK only if the user selects an Image
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK)
-            switch (requestCode) {
-                case FILES_REQUEST_CODE:
-                    filesSelected.clear();
-                    //data.getData returns the content URI for the selected files
-                    if (data == null) {
-                        return;
-                    } else if (data.getClipData() != null) {
-                        for (int i = 0; i < data.getClipData().getItemCount(); i++) {
-                            Uri uri = data.getClipData().getItemAt(i).getUri();
-                            filesSelected.add(getPath(getBaseContext(), uri));
-                        }
-                    } else {
-
-                        Uri uri = data.getData();
-//                        filesSelected.add(getPath(getBaseContext(), uri));
-                        filesSelected.add(getRealPath(getBaseContext(),uri));
-                        Log.e("Single", getRealPath(getBaseContext(),uri));
-                    }
-            }
     }
 
     public static String getPath(Context context, Uri uri) {
@@ -351,38 +365,6 @@ public class AddPrintActivity extends LocalizationActivity {
             list.add(part);
         }
         return list;
-    }
-
-    public void addRequestAttaches(final String requestId) {
-        dialog.show();
-
-        List<MultipartBody.Part> fileToUpload = addAttaches(filesSelected);
-        RequestBody request_id = RequestBody.create(MediaType.parse("text/plain"), requestId);
-
-        Webservice.getInstance().getApi().addAttach(UserUtils.getAccessToken(getBaseContext()),fileToUpload, request_id).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    if (response.code() == 200 || response.code() == 201) {
-                        JSONObject res = new JSONObject(response.body().string());
-                        Toast.makeText(getBaseContext(), "Success", Toast.LENGTH_SHORT).show();
-
-                    } else {
-                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_SHORT).show();
-                    }
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
-                }
-                dialog.dismiss();
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
-                Log.d("Request failure", call.toString() + " , " + t.getMessage());
-                dialog.dismiss();
-            }
-        });
     }
 
     public static String getRealPath(Context context, Uri uri) {
@@ -483,6 +465,34 @@ public class AddPrintActivity extends LocalizationActivity {
      */
     public static boolean isGooglePhotosUri(Uri uri) {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Result code is RESULT_OK only if the user selects an Image
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK)
+            switch (requestCode) {
+                case FILES_REQUEST_CODE:
+                    filesSelected.clear();
+                    //data.getData returns the content URI for the selected files
+                    if (data == null) {
+                        return;
+                    } else if (data.getClipData() != null) {
+                        for (int i = 0; i < data.getClipData().getItemCount(); i++) {
+                            Uri uri = data.getClipData().getItemAt(i).getUri();
+                            filesSelected.add(getPath(getBaseContext(), uri));
+                        }
+                    } else {
+
+                        Uri uri = data.getData();
+//                        filesSelected.add(getPath(getBaseContext(), uri));
+                        filesSelected.add(getRealPath(getBaseContext(),uri));
+                        Log.e("Single", getRealPath(getBaseContext(),uri));
+                    }
+                    filesChosen.setText(filesSelected.size()+" Files Selected");
+
+                    Log.e("Data selected", filesSelected.toString() );
+            }
     }
 
 }

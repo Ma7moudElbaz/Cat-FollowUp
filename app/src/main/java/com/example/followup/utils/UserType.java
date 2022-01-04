@@ -1,5 +1,7 @@
 package com.example.followup.utils;
 
+import android.content.Context;
+
 public class UserType {
 
     public static String getUserType(int parent_id, int child_id) {
@@ -32,5 +34,14 @@ public class UserType {
                 break;
         }
         return userType;
+    }
+
+    public static boolean canEditProject( Context mContext,int projectOwnerId, int assignedToId) {
+        if (projectOwnerId == UserUtils.getUserId(mContext) ||
+                assignedToId == UserUtils.getUserId(mContext)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

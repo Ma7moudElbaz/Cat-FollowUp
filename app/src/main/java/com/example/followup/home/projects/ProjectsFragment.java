@@ -26,15 +26,13 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProjectsFragment extends Fragment implements Projects_adapter_callback.AdapterCallback {
+public class ProjectsFragment extends Fragment implements Projects_adapter_with_callback.AdapterCallback {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,7 +46,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_callb
     ProgressBar loading;
 
     ArrayList<Project_item> projects_list;
-    Projects_adapter_callback projects_adapter;
+    Projects_adapter_with_callback projects_adapter;
 
     int currentPageNum = 1;
     int lastPageNum;
@@ -141,7 +139,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_callb
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        projects_adapter = new Projects_adapter_callback(getContext(),this, projects_list);
+        projects_adapter = new Projects_adapter_with_callback(getContext(),this, projects_list);
         recyclerView.setAdapter(projects_adapter);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

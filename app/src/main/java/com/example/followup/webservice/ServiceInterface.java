@@ -67,6 +67,9 @@ public interface ServiceInterface {
     @GET("requests/{request_id}")
     Call<ResponseBody> getRequestDetails(@Header("Authorization") String auth, @Path("request_id") int request_id);
 
+    @GET("requests/{project_id}")
+    Call<ResponseBody> getProjectDetails(@Header("Authorization") String auth, @Path("project_id") int project_id);
+
     @GET("job-orders/{job_order_id}")
     Call<ResponseBody> getJobOrderDetails(@Header("Authorization") String auth, @Path("job_order_id") int job_order_id);
 

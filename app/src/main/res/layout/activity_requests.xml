@@ -145,6 +145,7 @@
 
 
     <com.github.clans.fab.FloatingActionMenu
+        android:id="@+id/add_menu_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -202,5 +203,10 @@
 
     </com.github.clans.fab.FloatingActionMenu>
 
-
+    <ProgressBar
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center" />
 </RelativeLayout>

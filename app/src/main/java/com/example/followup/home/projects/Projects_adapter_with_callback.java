@@ -9,43 +9,50 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
-
 
 import com.example.followup.R;
 import com.example.followup.requests.RequestsActivity;
+import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Projects_adapter extends RecyclerView.Adapter<Projects_adapter.ViewHolder> {
+public class Projects_adapter_with_callback extends RecyclerView.Adapter<Projects_adapter_with_callback.ViewHolder> {
 
     private final List<Project_item> items;
 
     private final Context mContext;
+    private AdapterCallback mAdapterCallback;
 
-    public Projects_adapter(Context context, ArrayList<Project_item> items) {
+    public Projects_adapter_with_callback(Context context, Fragment fragment, ArrayList<Project_item> items) {
+        try {
+            this.mAdapterCallback = ((AdapterCallback) fragment);
+        } catch (ClassCastException e) {
+            throw new ClassCastException("Fragment must implement AdapterCallback.");
+        }
         this.mContext = context;
         this.items = items;
     }
 
     @NonNull
     @Override
-    public Projects_adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public Projects_adapter_with_callback.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_projects, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Projects_adapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull Projects_adapter_with_callback.ViewHolder holder, final int position) {
 
-        if (items.get(position).getCreated_by_id() == UserUtils.getUserId(mContext) ||
-                items.get(position).getAssigned_to() == UserUtils.getUserId(mContext)){
+        if (UserType.canEditProject(mContext, items.get(position).getCreated_by_id(), items.get(position).getAssigned_to())
+                && items.get(position).getStatus_code() == 1) {
             holder.cancel.setVisibility(View.VISIBLE);
             holder.done.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             holder.cancel.setVisibility(View.GONE);
             holder.done.setVisibility(View.GONE);
         }
@@ -60,10 +67,14 @@ public class Projects_adapter extends RecyclerView.Adapter<Projects_adapter.View
 
         holder.view_requests.setOnClickListener(v -> {
             Intent i = new Intent(mContext, RequestsActivity.class);
-            i.putExtra("project_id",items.get(position).getId());
-            i.putExtra("project_name",items.get(position).getProject_name());
+            i.putExtra("project_id", items.get(position).getId());
+            i.putExtra("project_name", items.get(position).getProject_name());
+            i.putExtra("can_edit_project", UserType.canEditProject(mContext, items.get(position).getCreated_by_id(), items.get(position).getAssigned_to()));
             mContext.startActivity(i);
         });
+
+        holder.done.setOnClickListener(v -> mAdapterCallback.adapterCallback("done", items.get(position).getId()));
+        holder.cancel.setOnClickListener(v -> mAdapterCallback.adapterCallback("cancel", items.get(position).getId()));
 
     }
 
@@ -75,7 +86,7 @@ public class Projects_adapter extends RecyclerView.Adapter<Projects_adapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         final TextView client_company, project_name, client_name, country, timeline, status, created_by;
-        final AppCompatButton done,cancel,view_requests;
+        final AppCompatButton done, cancel, view_requests;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -91,5 +102,9 @@ public class Projects_adapter extends RecyclerView.Adapter<Projects_adapter.View
             cancel = itemView.findViewById(R.id.cancel);
             view_requests = itemView.findViewById(R.id.view_requests);
         }
+    }
+
+    public interface AdapterCallback {
+        void adapterCallback(String action, int project_id);
     }
 }

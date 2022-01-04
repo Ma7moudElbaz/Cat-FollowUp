@@ -473,6 +473,7 @@
 
 
                     <TextView
+                        android:id="@+id/files_chosen"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:hint="@string/no_file_choose"
