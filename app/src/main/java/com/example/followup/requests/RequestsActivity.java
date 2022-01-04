@@ -151,10 +151,10 @@ public class RequestsActivity extends LocalizationActivity {
 
     }
 
-    private void setFields(String projectName, boolean canEditProject) {
+    private void setFields(String projectName, boolean canEditProject, int projectStatus) {
         project_name.setText(projectName);
 
-        if (canEditProject) {
+        if (canEditProject && projectStatus == 1) {
             add_menu_btn.setVisibility(View.VISIBLE);
         } else {
             add_menu_btn.setVisibility(View.GONE);
@@ -171,6 +171,7 @@ public class RequestsActivity extends LocalizationActivity {
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONObject dataObj = responseObject.getJSONObject("data");
                     String projectName = dataObj.getString("project_name");
+                    int projectStatus = dataObj.getInt("status");
                     int created_by_id = dataObj.getJSONObject("user").getInt("id");
                     final String assigned_to = dataObj.getString("assign_to");
                     int assigned_to_id = 0;
@@ -178,7 +179,7 @@ public class RequestsActivity extends LocalizationActivity {
                         assigned_to_id = Integer.parseInt(assigned_to);
                     }
                     boolean canEditProject = UserType.canEditProject(getBaseContext(), created_by_id, assigned_to_id);
-                    setFields(projectName, canEditProject);
+                    setFields(projectName, canEditProject,projectStatus);
 
                 } catch (Exception e) {
                     e.printStackTrace();
