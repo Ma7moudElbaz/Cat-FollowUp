@@ -23,6 +23,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -58,10 +60,10 @@ public class JobOrdersActivity extends LocalizationActivity {
         });
     }
 
-    public void getJobOrders(int pageNum) {
+    public void getJobOrders(int pageNum, Map<String, String> filterMap) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getJobOrders(UserUtils.getAccessToken(getBaseContext()),projectId, pageNum).enqueue(new Callback<ResponseBody>() {
+        Webservice.getInstance().getApi().getJobOrders(UserUtils.getAccessToken(getBaseContext()),projectId, pageNum,filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -143,7 +145,7 @@ public class JobOrdersActivity extends LocalizationActivity {
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        getJobOrders( currentPageNum);
+                        getJobOrders( currentPageNum,getFilterMap());
 
                 }
             }
@@ -155,6 +157,14 @@ public class JobOrdersActivity extends LocalizationActivity {
         super.onResume();
         job_order_list.clear();
         currentPageNum = 1;
-        getJobOrders(currentPageNum);
+        getJobOrders(currentPageNum,getFilterMap());
+    }
+
+    public Map<String, String> getFilterMap() {
+        Map<String, String> map = new HashMap<>();
+        map.put("status", "");
+        map.put("search", "");
+
+        return map;
     }
 }

@@ -162,7 +162,6 @@ public class RequestsActivity extends LocalizationActivity {
     }
 
     private void getProjectDetails() {
-        loading.setVisibility(View.VISIBLE);
 
         Webservice.getInstance().getApi().getProjectDetails(UserUtils.getAccessToken(getBaseContext()), projectId).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -180,7 +179,6 @@ public class RequestsActivity extends LocalizationActivity {
                     }
                     boolean canEditProject = UserType.canEditProject(getBaseContext(), created_by_id, assigned_to_id);
                     setFields(projectName, canEditProject);
-                    loading.setVisibility(View.GONE);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -193,7 +191,6 @@ public class RequestsActivity extends LocalizationActivity {
                 Log.d("commit Test Throw", t.toString());
                 Log.d("Call", t.toString());
                 Toast.makeText(getBaseContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-                loading.setVisibility(View.GONE);
             }
         });
     }

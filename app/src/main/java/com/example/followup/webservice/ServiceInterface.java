@@ -80,7 +80,7 @@ public interface ServiceInterface {
 
     //job orders
     @GET("job-orders")
-    Call<ResponseBody> getJobOrders(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("page") int pageNo);
+    Call<ResponseBody> getJobOrders(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("page") int pageNo,@QueryMap Map<String, String> filters);
 
     @GET("job-orders/{job_order_id}")
     Call<ResponseBody> getJobOrderDetails(@Header("Authorization") String auth, @Path("job_order_id") int job_order_id);
