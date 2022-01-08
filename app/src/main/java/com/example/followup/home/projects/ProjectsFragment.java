@@ -1,5 +1,7 @@
 package com.example.followup.home.projects;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,10 +12,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.followup.R;
@@ -43,9 +50,27 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         return inflater.inflate(R.layout.fragment_projects, container, false);
     }
 
+    public static void hideKeyboardFragment(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static void hideKeyboardActivity(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
     FloatingActionButton fab_addProject;
     RecyclerView recyclerView;
     ProgressBar loading;
+    TextView search;
+    ImageView filterBtn;
 
     ArrayList<Project_item> projects_list;
     Projects_adapter_with_callback projects_adapter;
@@ -60,6 +85,17 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         initFields(view);
         fab_addProject.setOnClickListener(v -> startActivity(new Intent(getActivity(), AddProjectActivity.class)));
 
+        search.setOnEditorActionListener((v, actionId, event) -> {
+
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                projects_list.clear();
+                currentPageNum = 1;
+                getProjects(currentPageNum, getFilterMap());
+                hideKeyboardFragment(getContext(),view);
+                return true;
+            }
+            return false;
+        });
     }
 
     public void getProjects(int pageNum, Map<String, String> filterMap) {
@@ -137,7 +173,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         map.put("client_name", "");
         map.put("client_company", "");
         map.put("country_id", "");
-        map.put("search", "");
+        map.put("search", search.getText().toString());
 
         return map;
     }
@@ -145,6 +181,8 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     private void initFields(View view){
         fab_addProject = view.findViewById(R.id.fab_add_project);
         loading = view.findViewById(R.id.loading);
+        search = view.findViewById(R.id.search);
+        filterBtn = view.findViewById(R.id.filter_btn);
         recyclerView = view.findViewById(R.id.recycler_view);
         projects_list = new ArrayList<>();
         initRecyclerView();

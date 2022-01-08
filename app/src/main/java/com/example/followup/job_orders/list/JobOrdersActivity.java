@@ -1,11 +1,16 @@
 package com.example.followup.job_orders.list;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -33,9 +38,27 @@ import retrofit2.Response;
 
 public class JobOrdersActivity extends LocalizationActivity {
 
+    public static void hideKeyboardFragment(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static void hideKeyboardActivity(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
     ImageView back;
     ProgressBar loading;
     RecyclerView recyclerView;
+    TextView search;
+    ImageView filterBtn;
     FloatingActionButton fab_add_job_order;
 
     ArrayList<Job_order_item> job_order_list;
@@ -53,9 +76,20 @@ public class JobOrdersActivity extends LocalizationActivity {
         setContentView(R.layout.activity_job_orders);
         initFields();
         back.setOnClickListener(v -> onBackPressed());
+        search.setOnEditorActionListener((v, actionId, event) -> {
+
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                job_order_list.clear();
+                currentPageNum = 1;
+                getJobOrders(currentPageNum, getFilterMap());
+                hideKeyboardActivity(JobOrdersActivity.this);
+                return true;
+            }
+            return false;
+        });
         fab_add_job_order.setOnClickListener(v -> {
             Intent i = new Intent(getBaseContext(), AddJobOrderActivity.class);
-            i.putExtra("project_id",projectId);
+            i.putExtra("project_id", projectId);
             startActivity(i);
         });
     }
@@ -63,7 +97,7 @@ public class JobOrdersActivity extends LocalizationActivity {
     public void getJobOrders(int pageNum, Map<String, String> filterMap) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getJobOrders(UserUtils.getAccessToken(getBaseContext()),projectId, pageNum,filterMap).enqueue(new Callback<ResponseBody>() {
+        Webservice.getInstance().getApi().getJobOrders(UserUtils.getAccessToken(getBaseContext()), projectId, pageNum, filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -120,11 +154,13 @@ public class JobOrdersActivity extends LocalizationActivity {
     }
 
     private void initFields() {
-        projectId = getIntent().getIntExtra("project_id",0);
+        projectId = getIntent().getIntExtra("project_id", 0);
 
         back = findViewById(R.id.back);
         fab_add_job_order = findViewById(R.id.fab_add_job_order);
         loading = findViewById(R.id.loading);
+        search = findViewById(R.id.search);
+        filterBtn = findViewById(R.id.filter_btn);
         recyclerView = findViewById(R.id.recycler_view);
         job_order_list = new ArrayList<>();
         initRecyclerView();
@@ -145,7 +181,7 @@ public class JobOrdersActivity extends LocalizationActivity {
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        getJobOrders( currentPageNum,getFilterMap());
+                        getJobOrders(currentPageNum, getFilterMap());
 
                 }
             }
@@ -157,13 +193,13 @@ public class JobOrdersActivity extends LocalizationActivity {
         super.onResume();
         job_order_list.clear();
         currentPageNum = 1;
-        getJobOrders(currentPageNum,getFilterMap());
+        getJobOrders(currentPageNum, getFilterMap());
     }
 
     public Map<String, String> getFilterMap() {
         Map<String, String> map = new HashMap<>();
         map.put("status", "");
-        map.put("search", "");
+        map.put("search", search.getText().toString());
 
         return map;
     }

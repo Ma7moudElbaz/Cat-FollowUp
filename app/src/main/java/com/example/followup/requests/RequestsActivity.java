@@ -1,10 +1,14 @@
 package com.example.followup.requests;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -46,6 +50,22 @@ import retrofit2.Response;
 
 public class RequestsActivity extends LocalizationActivity {
 
+    public static void hideKeyboardFragment(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
+    public static void hideKeyboardActivity(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
     ImageView back;
     FloatingActionButton addPhotography, addProduction, addPurchasing, addPrinting;
     TabLayout requests_tab;
@@ -53,6 +73,8 @@ public class RequestsActivity extends LocalizationActivity {
     int projectId;
     int tabPosition;
     ProgressBar loading;
+    TextView search;
+    ImageView filterBtn;
 
     //    String projectName;
 //    boolean canEditProject;
@@ -76,6 +98,15 @@ public class RequestsActivity extends LocalizationActivity {
         initFields();
 
         back.setOnClickListener(v -> onBackPressed());
+        search.setOnEditorActionListener((v, actionId, event) -> {
+
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                setRequestsFragment(tabPosition);
+                hideKeyboardActivity(RequestsActivity.this);
+                return true;
+            }
+            return false;
+        });
 
         job_orders.setOnClickListener(v -> {
             Intent i = new Intent(getBaseContext(), JobOrdersActivity.class);
@@ -141,6 +172,8 @@ public class RequestsActivity extends LocalizationActivity {
         job_orders = findViewById(R.id.job_orders);
         project_name = findViewById(R.id.project_name);
         loading = findViewById(R.id.loading);
+        search = findViewById(R.id.search);
+        filterBtn = findViewById(R.id.filter_btn);
 
         add_menu_btn = findViewById(R.id.add_menu_btn);
 //        if (canEditProject) {
@@ -224,7 +257,7 @@ public class RequestsActivity extends LocalizationActivity {
         Map<String, String> map = new HashMap<>();
         map.put("created_by", "");
         map.put("status", "");
-        map.put("search", "");
+        map.put("search", search.getText().toString());
 
         return map;
     }
