@@ -202,4 +202,5 @@
     <string name="hold">Hold</string>
     <string name="ceo_approval">CEO Approval</string>
     <string name="edit_supplier_cost">Edit Supplier Cost</string>
+    <string name="no_attachments">No Attachments</string>
 </resources>

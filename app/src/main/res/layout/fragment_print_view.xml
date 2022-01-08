@@ -44,7 +44,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/line_gray"/>
+                android:background="@color/line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,7 +75,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/line_gray"/>
+                android:background="@color/line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -106,7 +106,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/line_gray"/>
+                android:background="@color/line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -138,7 +138,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/line_gray"/>
+                android:background="@color/line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -169,7 +169,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/line_gray"/>
+                android:background="@color/line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -200,7 +200,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/line_gray"/>
+                android:background="@color/line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -233,7 +233,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/line_gray"/>
+                android:background="@color/line_gray" />
 
             <LinearLayout
                 android:id="@+id/color_layout"
@@ -265,7 +265,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/line_gray"/>
+                android:background="@color/line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -296,7 +296,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/line_gray"/>
+                android:background="@color/line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -327,7 +327,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/line_gray"/>
+                android:background="@color/line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -358,7 +358,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/line_gray"/>
+                android:background="@color/line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -389,7 +389,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/line_gray"/>
+                android:background="@color/line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -422,7 +422,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/line_gray"/>
+                android:background="@color/line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -436,20 +436,13 @@
                     android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
-                <LinearLayout
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/attaches_recycler"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/et_white"
-                    android:padding="5dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/no_file_choose"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
+                    android:orientation="horizontal" />
 
 
             </LinearLayout>
@@ -459,7 +452,7 @@
                 android:layout_height="1dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:background="@color/line_gray"/>
+                android:background="@color/line_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
