@@ -98,8 +98,7 @@
                 android:background="@drawable/black_curved"
                 android:contentDescription="@string/description"
                 android:padding="10dp"
-                android:src="@drawable/ic_filter"
-                android:visibility="gone"/>
+                android:src="@drawable/ic_filter"/>
         </RelativeLayout>
 
         <com.google.android.material.tabs.TabLayout

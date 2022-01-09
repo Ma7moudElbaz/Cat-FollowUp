@@ -71,6 +71,7 @@
         <entry key="app/src/main/res/layout/activity_requests.xml" value="0.19360730593607306" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.18" />
         <entry key="app/src/main/res/layout/bottom_sheet_choose_lang.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/bottom_sheet_filter.xml" value="0.33" />
         <entry key="app/src/main/res/layout/bottom_sheet_po_number.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/bottom_sheet_reason.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/bottom_sheet_successfully_added.xml" value="0.18" />

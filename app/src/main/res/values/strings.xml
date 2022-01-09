@@ -203,4 +203,6 @@
     <string name="ceo_approval">CEO Approval</string>
     <string name="edit_supplier_cost">Edit Supplier Cost</string>
     <string name="no_attachments">No Attachments</string>
+    <string name="apply">Apply</string>
+    <string name="reset">Reset</string>
 </resources>

@@ -81,5 +81,8 @@ dependencies {
     //stepView
     implementation 'com.params.stepview:stepview:1.0.2'
 
+    //tag view
+    implementation 'com.github.adroitandroid:ChipCloud:2.2.1'
+
 
 }

@@ -21,6 +21,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
+import com.example.followup.bottomsheets.BottomSheet_choose_filter_requests;
+import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.job_orders.list.JobOrdersActivity;
 import com.example.followup.requests.add.AddPhotographyActivity;
 import com.example.followup.requests.list.Photography_requests_list;
@@ -48,11 +50,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class RequestsActivity extends LocalizationActivity {
+public class RequestsActivity extends LocalizationActivity implements BottomSheet_choose_filter_requests.FilterListener{
 
-    public static void hideKeyboardFragment(Context context, View view) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    public void showFilterSheet() {
+        BottomSheet_choose_filter_requests langBottomSheet =
+                new BottomSheet_choose_filter_requests(selectedStatusIndex);
+        langBottomSheet.show(getSupportFragmentManager(), "requests_filter");
     }
 
     public static void hideKeyboardActivity(Activity activity) {
@@ -75,6 +78,10 @@ public class RequestsActivity extends LocalizationActivity {
     ProgressBar loading;
     TextView search;
     ImageView filterBtn;
+
+    int selectedStatusIndex = -1;
+    String selectedStatus = "";
+    String[] chipsStatus = new String[]{"1", "2", "4", "5", "3","6"};
 
     //    String projectName;
 //    boolean canEditProject;
@@ -107,6 +114,8 @@ public class RequestsActivity extends LocalizationActivity {
             }
             return false;
         });
+
+        filterBtn.setOnClickListener(v -> showFilterSheet());
 
         job_orders.setOnClickListener(v -> {
             Intent i = new Intent(getBaseContext(), JobOrdersActivity.class);
@@ -161,8 +170,6 @@ public class RequestsActivity extends LocalizationActivity {
 
     private void initFields() {
         projectId = getIntent().getIntExtra("project_id", 0);
-//        projectName = getIntent().getStringExtra("project_name");
-//        canEditProject = getIntent().getBooleanExtra("can_edit_project", false);
         addPhotography = findViewById(R.id.photography_btn);
         addProduction = findViewById(R.id.production_btn);
         addPurchasing = findViewById(R.id.purchase_btn);
@@ -176,16 +183,12 @@ public class RequestsActivity extends LocalizationActivity {
         filterBtn = findViewById(R.id.filter_btn);
 
         add_menu_btn = findViewById(R.id.add_menu_btn);
-//        if (canEditProject) {
-//            add_menu_btn.setVisibility(View.VISIBLE);
-//        } else {
-//            add_menu_btn.setVisibility(View.GONE);
-//        }
 
     }
 
     private void setFields(String projectName, boolean canEditProject, int projectStatus) {
         project_name.setText(projectName);
+        Log.e("project status", ""+projectStatus );
 
         if (canEditProject && projectStatus == 1) {
             add_menu_btn.setVisibility(View.VISIBLE);
@@ -195,7 +198,6 @@ public class RequestsActivity extends LocalizationActivity {
     }
 
     private void getProjectDetails() {
-
         Webservice.getInstance().getApi().getProjectDetails(UserUtils.getAccessToken(getBaseContext()), projectId).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -256,9 +258,21 @@ public class RequestsActivity extends LocalizationActivity {
     public Map<String, String> getFilterMap() {
         Map<String, String> map = new HashMap<>();
         map.put("created_by", "");
-        map.put("status", "");
+        map.put("status", selectedStatus);
         map.put("search", search.getText().toString());
 
         return map;
+    }
+
+    @Override
+    public void applyFilterListener(int returenedSelectedStatusIndex) {
+        if (returenedSelectedStatusIndex == -1){
+            selectedStatus = "";
+        }else {
+            selectedStatus = chipsStatus[returenedSelectedStatusIndex];
+        }
+
+        selectedStatusIndex = returenedSelectedStatusIndex;
+        setRequestsFragment(tabPosition);
     }
 }

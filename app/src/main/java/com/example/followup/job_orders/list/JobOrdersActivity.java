@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
+import com.example.followup.bottomsheets.BottomSheet_choose_filter_job_orders;
 import com.example.followup.job_orders.AddJobOrderActivity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
@@ -36,7 +37,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class JobOrdersActivity extends LocalizationActivity {
+public class JobOrdersActivity extends LocalizationActivity implements BottomSheet_choose_filter_job_orders.FilterListener{
+
+
+
+    public void showFilterSheet() {
+        BottomSheet_choose_filter_job_orders langBottomSheet =
+                new BottomSheet_choose_filter_job_orders(selectedStatusIndex);
+        langBottomSheet.show(getSupportFragmentManager(), "jo_filter");
+    }
 
     public static void hideKeyboardFragment(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
@@ -70,12 +79,19 @@ public class JobOrdersActivity extends LocalizationActivity {
 
     int projectId;
 
+
+
+    int selectedStatusIndex = -1;
+    String selectedStatus = "";
+    String[] chipsStatus = new String[]{"1", "3", "5", "8","7"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_orders);
         initFields();
         back.setOnClickListener(v -> onBackPressed());
+        filterBtn.setOnClickListener(v -> showFilterSheet());
         search.setOnEditorActionListener((v, actionId, event) -> {
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -198,9 +214,24 @@ public class JobOrdersActivity extends LocalizationActivity {
 
     public Map<String, String> getFilterMap() {
         Map<String, String> map = new HashMap<>();
-        map.put("status", "");
+        map.put("status", selectedStatus);
         map.put("search", search.getText().toString());
 
         return map;
+    }
+
+    @Override
+    public void applyFilterListener(int returnedSelectedStatusIndex) {
+        if (returnedSelectedStatusIndex == -1){
+            selectedStatus = "";
+        }else {
+            selectedStatus = chipsStatus[returnedSelectedStatusIndex];
+        }
+
+        selectedStatusIndex = returnedSelectedStatusIndex;
+
+        job_order_list.clear();
+        currentPageNum = 1;
+        getJobOrders(currentPageNum, getFilterMap());
     }
 }

@@ -24,6 +24,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.followup.R;
+import com.example.followup.bottomsheets.BottomSheet_choose_filter_projects;
+import com.example.followup.bottomsheets.BottomSheet_choose_filter_requests;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -41,7 +43,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProjectsFragment extends Fragment implements Projects_adapter_with_callback.AdapterCallback {
+public class ProjectsFragment extends Fragment implements Projects_adapter_with_callback.AdapterCallback, BottomSheet_choose_filter_projects.FilterListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -50,21 +52,17 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         return inflater.inflate(R.layout.fragment_projects, container, false);
     }
 
+    public void showFilterSheet() {
+        BottomSheet_choose_filter_projects langBottomSheet =
+                new BottomSheet_choose_filter_projects(ProjectsFragment.this,selectedStatusIndex);
+        langBottomSheet.show(getParentFragmentManager(), "requests_filter");
+    }
+
     public static void hideKeyboardFragment(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public static void hideKeyboardActivity(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
 
     FloatingActionButton fab_addProject;
     RecyclerView recyclerView;
@@ -79,12 +77,16 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     int lastPageNum;
     boolean mHasReachedBottomOnce = false;
 
+    int selectedStatusIndex = -1;
+    String selectedStatus = "";
+    String[] chipsStatus = new String[]{"1", "0", "2"};;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initFields(view);
         fab_addProject.setOnClickListener(v -> startActivity(new Intent(getActivity(), AddProjectActivity.class)));
-
+        filterBtn.setOnClickListener(v -> showFilterSheet());
         search.setOnEditorActionListener((v, actionId, event) -> {
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -169,7 +171,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     private Map<String, String> getFilterMap() {
 
         Map<String, String> map = new HashMap<>();
-        map.put("status", "");
+        map.put("status", selectedStatus);
         map.put("client_name", "");
         map.put("client_company", "");
         map.put("country_id", "");
@@ -284,5 +286,20 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
                 loading.setVisibility(View.GONE);
             }
         });
+    }
+
+    @Override
+    public void applyFilterListener(int returenedSelectedStatusIndex) {
+        if (returenedSelectedStatusIndex == -1){
+            selectedStatus = "";
+        }else {
+            selectedStatus = chipsStatus[returenedSelectedStatusIndex];
+        }
+
+        selectedStatusIndex = returenedSelectedStatusIndex;
+
+        projects_list.clear();
+        currentPageNum = 1;
+        getProjects(currentPageNum, getFilterMap());
     }
 }
