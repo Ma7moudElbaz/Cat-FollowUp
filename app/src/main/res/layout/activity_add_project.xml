@@ -195,18 +195,13 @@
                     android:textColor="@color/gray"
                     android:textSize="16sp" />
 
-                <EditText
+                <Spinner
                     android:id="@+id/sales_contact"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/et_gray_border"
                     android:hint="@string/sales_contact"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:theme="@style/spinnerItemStyle_black"/>
             </LinearLayout>
 
             <CheckBox

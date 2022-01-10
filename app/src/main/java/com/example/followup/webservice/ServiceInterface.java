@@ -30,6 +30,9 @@ public interface ServiceInterface {
     @FormUrlEncoded
     Call<ResponseBody> updateToken(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
+    @POST("auth/myteam")
+    Call<ResponseBody> getMyTeam(@Header("Authorization") String auth);
+
     //projects
     @GET("projects")
     Call<ResponseBody> getProjects(@Header("Authorization") String auth, @Query("page") int pageNo,@QueryMap Map<String, String> filters);

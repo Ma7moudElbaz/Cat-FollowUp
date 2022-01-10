@@ -6,11 +6,13 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,12 +21,17 @@ import com.example.followup.R;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -36,13 +43,16 @@ import retrofit2.Response;
 public class AddProjectActivity extends LocalizationActivity {
 
     ImageView back;
-    EditText client_company, project_name, client_name, country, project_timeLine, sales_contact;
+    EditText client_company, project_name, client_name, country, project_timeLine;
+    Spinner sales_contact;
     LinearLayout sales_contact_layout;
     CheckBox manage_myself;
     Button add;
 
     private ProgressDialog dialog;
     DatePickerDialog picker;
+    List<String> sales_names = new ArrayList<>();
+    List<String> sales_Ids = new ArrayList<>();
 
 
     @Override
@@ -50,6 +60,7 @@ public class AddProjectActivity extends LocalizationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_project);
         initFields();
+
         setSalesContactVisibility(manage_myself.isChecked());
         manage_myself.setOnCheckedChangeListener((buttonView, isChecked) -> setSalesContactVisibility(isChecked));
         back.setOnClickListener(v -> onBackPressed());
@@ -66,7 +77,46 @@ public class AddProjectActivity extends LocalizationActivity {
                 addProject();
             }
         });
+        getMyTeam();
 
+    }
+
+    private void getMyTeam() {
+
+        dialog.show();
+        Webservice.getInstance().getApi().getMyTeam(UserUtils.getAccessToken(getBaseContext())).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 200 || response.code() == 201) {
+                        JSONObject responseObject = new JSONObject(response.body().string());
+                        JSONArray dataArr = responseObject.getJSONArray("data");
+                        JSONObject dataObj = dataArr.getJSONObject(0);
+                        JSONArray teamArray = dataObj.getJSONArray("team_users");
+                        sales_names.add("Select Sales");
+                        sales_Ids.add("0");
+                        for (int i = 0; i < teamArray.length(); i++) {
+                            JSONObject currentObject = teamArray.getJSONObject(i);
+                            sales_names.add(currentObject.getJSONObject("user").getString("name"));
+                            sales_Ids.add(currentObject.getJSONObject("user").getString("id"));
+                        }
+                        setSalesSpinner();
+
+                    } else {
+                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
     }
 
     private void addProject() {
@@ -108,7 +158,7 @@ public class AddProjectActivity extends LocalizationActivity {
         if (manage_myself.isChecked()) {
             map.put("assign_to", "");
         } else {
-            map.put("assign_to", sales_contact.getText().toString());
+            map.put("assign_to", sales_Ids.get(sales_contact.getSelectedItemPosition()));
         }
         return map;
     }
@@ -132,6 +182,12 @@ public class AddProjectActivity extends LocalizationActivity {
         add = findViewById(R.id.add);
     }
 
+    private void setSalesSpinner() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, sales_names);
+        sales_contact.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
+    }
+
     private boolean validateFields() {
         if (client_company.length() == 0) {
             client_company.setError("This is required field");
@@ -153,8 +209,8 @@ public class AddProjectActivity extends LocalizationActivity {
             project_timeLine.setError("This is required field");
             return false;
         }
-        if (sales_contact.length() == 0 && !manage_myself.isChecked()) {
-            sales_contact.setError("This is required field");
+        if (sales_contact.getSelectedItemPosition() == 0 && !manage_myself.isChecked()) {
+            Toast.makeText(getBaseContext(), "Select sales contact", Toast.LENGTH_SHORT).show();
             return false;
         }
         return true;
