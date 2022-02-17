@@ -21,6 +21,7 @@ import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_job_orders;
 import com.example.followup.job_orders.AddJobOrderActivity;
+import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -90,6 +91,8 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_orders);
         initFields();
+
+
         back.setOnClickListener(v -> onBackPressed());
         filterBtn.setOnClickListener(v -> showFilterSheet());
         search.setOnEditorActionListener((v, actionId, event) -> {
@@ -108,6 +111,15 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
             i.putExtra("project_id", projectId);
             startActivity(i);
         });
+    }
+
+    private void setUserPermissions(){
+        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
+        if (loggedInUser.equals("nagat")) {
+            fab_add_job_order.setVisibility(View.VISIBLE);
+        } else {
+            fab_add_job_order.setVisibility(View.GONE);
+        }
     }
 
     public void getJobOrders(int pageNum, Map<String, String> filterMap) {
@@ -180,6 +192,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
         recyclerView = findViewById(R.id.recycler_view);
         job_order_list = new ArrayList<>();
         initRecyclerView();
+        setUserPermissions();
     }
 
     private void initRecyclerView() {

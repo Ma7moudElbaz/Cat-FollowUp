@@ -58,7 +58,7 @@ import retrofit2.Response;
 
 public class AddProductionActivity extends LocalizationActivity {
 
-    EditText item_name, country, venue, days,delivery_date , quantity, dimensions, designer_in_charge,description,notes,screen_specs;
+    EditText item_name, country, venue, days, delivery_date, quantity, dimensions, designer_in_charge, description, notes, screen_specs;
     Button choose_file, send_request;
     LinearLayout screen_specs_container;
     RadioGroup screen;
@@ -193,7 +193,7 @@ public class AddProductionActivity extends LocalizationActivity {
             designer_in_charge.setError("This is required field");
             return false;
         }
-        if (screen_specs.length() == 0&&screen_text.equalsIgnoreCase("yes")) {
+        if (screen_specs.length() == 0 && screen_text.equalsIgnoreCase("yes")) {
             screen_specs.setError("This is required field");
             return false;
         }
@@ -210,10 +210,10 @@ public class AddProductionActivity extends LocalizationActivity {
                 try {
                     if (response.code() == 200 || response.code() == 201) {
                         JSONObject responseObject = new JSONObject(response.body().string());
-                        if (filesSelected.size()!=0){
+                        if (filesSelected.size() != 0) {
                             addRequestAttaches(responseObject.getJSONObject("data").getString("id"));
-                        }
-                        else {
+                        } else {
+                            dialog.dismiss();
                             Toast.makeText(getBaseContext(), "Request Added Successfully", Toast.LENGTH_LONG).show();
                             onBackPressed();
                         }
@@ -281,7 +281,7 @@ public class AddProductionActivity extends LocalizationActivity {
         List<MultipartBody.Part> fileToUpload = addAttaches(filesSelected);
         RequestBody request_id = RequestBody.create(MediaType.parse("text/plain"), requestId);
 
-        Webservice.getInstance().getApi().addAttach(UserUtils.getAccessToken(getBaseContext()),fileToUpload, request_id).enqueue(new Callback<ResponseBody>() {
+        Webservice.getInstance().getApi().addAttach(UserUtils.getAccessToken(getBaseContext()), fileToUpload, request_id).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -487,12 +487,12 @@ public class AddProductionActivity extends LocalizationActivity {
 
                         Uri uri = data.getData();
 //                        filesSelected.add(getPath(getBaseContext(), uri));
-                        filesSelected.add(getRealPath(getBaseContext(),uri));
-                        Log.e("Single", getRealPath(getBaseContext(),uri));
+                        filesSelected.add(getRealPath(getBaseContext(), uri));
+                        Log.e("Single", getRealPath(getBaseContext(), uri));
                     }
-                    filesChosen.setText(filesSelected.size()+" Files Selected");
+                    filesChosen.setText(filesSelected.size() + " Files Selected");
 
-                    Log.e("Data selected", filesSelected.toString() );
+                    Log.e("Data selected", filesSelected.toString());
             }
     }
 }

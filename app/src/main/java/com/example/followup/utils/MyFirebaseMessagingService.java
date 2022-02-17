@@ -35,7 +35,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private void sendNotification(RemoteMessage remoteMessage) {
         Intent intent = new Intent(this, HomeActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                1915, intent, PendingIntent.FLAG_ONE_SHOT);
+                1915, intent, PendingIntent.FLAG_IMMUTABLE);
+
         String channelId = "High";
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder;

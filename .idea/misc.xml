@@ -78,6 +78,7 @@
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.10260416666666666" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_photography_requests_fragment.xml" value="0.20833333333333334" />
+        <entry key="app/src/main/res/layout/fragment_photography_requests_list.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/fragment_photography_supplier_cost_view.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/fragment_photography_view.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/fragment_print_requests_fragment.xml" value="0.19583333333333333" />
@@ -90,6 +91,7 @@
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/fragment_projects.xml" value="0.2054794520547945" />
         <entry key="app/src/main/res/layout/fragment_purchase_requests_fragment.xml" value="0.20833333333333334" />
+        <entry key="app/src/main/res/layout/fragment_purchase_requests_list.xml" value="0.2054794520547945" />
         <entry key="app/src/main/res/layout/fragment_purchase_supplier_cost_view.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/fragment_purchase_view.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_purchse_requests_fragment.xml" value="0.20833333333333334" />
