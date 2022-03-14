@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public class Purchase_item {
 
-    private final int id, type_id,created_by_id, status_code, quantity;
-    private final String status_message,item_name, description, delivery_address, note, color, material, brand, created_by_name;
+    private final int id, type_id,created_by_id, status_code;
+    private final String quantity,status_message,item_name, description, delivery_address, note, color, material, brand, created_by_name;
     private final ArrayList<Attach_item> attach_files;
 
-    public Purchase_item(int id, int type_id, int created_by_id, int status_code, int quantity, String status_message, String item_name, String description, String delivery_address, String note, String color, String material, String brand, String created_by_name, ArrayList<Attach_item> attach_files) {
+    public Purchase_item(int id, int type_id, int created_by_id, int status_code, String quantity, String status_message, String item_name, String description, String delivery_address, String note, String color, String material, String brand, String created_by_name, ArrayList<Attach_item> attach_files) {
         this.id = id;
         this.type_id = type_id;
         this.created_by_id = created_by_id;
@@ -44,7 +44,7 @@ public class Purchase_item {
         return status_code;
     }
 
-    public int getQuantity() {
+    public String getQuantity() {
         return quantity;
     }
 

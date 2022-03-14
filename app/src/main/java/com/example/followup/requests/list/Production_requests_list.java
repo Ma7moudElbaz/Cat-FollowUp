@@ -106,7 +106,7 @@ public class Production_requests_list extends Fragment {
                 final int type_id = currentObject.getInt("type_id");
                 final int created_by_id = currentObject.getInt("created_by_id");
                 final int status_code = currentObject.getInt("status");
-                final int quantity = currentObject.getInt("quantity");
+                final String quantity = currentObject.getString("quantity");
                 final String status_message = currentObject.getString("status_message");
                 final String item_name = currentObject.getString("item_name");
                 final String description = currentObject.getString("description");
