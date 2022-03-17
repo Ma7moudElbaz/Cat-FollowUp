@@ -181,6 +181,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         hesham_approval_layout.setVisibility(View.GONE);
         ceo_approval_layout.setVisibility(View.GONE);
         ceoSteps.setVisibility(View.GONE);
+        steps.setVisibility(View.VISIBLE);
     }
 
     public void updateStatus(int status, String reason) {
