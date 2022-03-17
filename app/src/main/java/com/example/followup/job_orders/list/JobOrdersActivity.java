@@ -130,11 +130,12 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    if (response.isSuccessful()){
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray jobOrdersArray = responseObject.getJSONArray("data");
                     setJobOrdersList(jobOrdersArray);
                     JSONObject metaObject = responseObject.getJSONObject("meta");
-                    lastPageNum = metaObject.getInt("last_page");
+                    lastPageNum = metaObject.getInt("last_page");}
 
                     loading.setVisibility(View.GONE);
 
