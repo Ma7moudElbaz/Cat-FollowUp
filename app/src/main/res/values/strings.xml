@@ -43,7 +43,7 @@
     </string-array>
 
 
-    <string name="app_name" translatable="false">Follow Up</string>
+    <string name="app_name" translatable="false">Catalyst</string>
     <string name="sign_in">Sign In</string>
     <string name="or_sign_up_if_you_are_new">Or sign up if you are new !</string>
     <string name="sign_up">Sign Up</string>
