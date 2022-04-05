@@ -69,12 +69,13 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        android:id="@+id/forgot_password"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
+        android:layout_marginTop="5dp"
         android:text="@string/forgot_password"
-        android:textColor="@color/text_dark_blue"
-        android:visibility="gone" />
+        android:textColor="@color/text_dark_blue" />
 
 
     <Button

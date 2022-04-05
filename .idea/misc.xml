@@ -73,6 +73,7 @@
         <entry key="app/src/main/res/layout/bottom_sheet_change_password.xml" value="0.18255664814023087" />
         <entry key="app/src/main/res/layout/bottom_sheet_choose_lang.xml" value="0.25" />
         <entry key="app/src/main/res/layout/bottom_sheet_filter.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/bottom_sheet_forget_password.xml" value="0.12" />
         <entry key="app/src/main/res/layout/bottom_sheet_po_number.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/bottom_sheet_reason.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/bottom_sheet_successfully_added.xml" value="0.18" />

@@ -26,10 +26,13 @@ public interface ServiceInterface {
     @FormUrlEncoded
     Call<ResponseBody> login(@FieldMap Map<String, String> map);
 
-
     @POST("password/change")
     @FormUrlEncoded
     Call<ResponseBody> changePassword(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
+
+    @POST("forget-password/create")
+    @FormUrlEncoded
+    Call<ResponseBody> forgetPassword(@FieldMap Map<String, String> map);
 
     @PUT("token")
     @FormUrlEncoded

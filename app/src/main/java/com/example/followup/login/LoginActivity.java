@@ -4,12 +4,17 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
+import com.example.followup.bottomsheets.BottomSheet_choose_change_password;
+import com.example.followup.bottomsheets.BottomSheet_forget_password;
 import com.example.followup.home.HomeActivity;
+import com.example.followup.home.profile.ProfileFragment;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 import com.google.android.material.textfield.TextInputEditText;
@@ -27,14 +32,22 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends LocalizationActivity {
+public class LoginActivity extends LocalizationActivity implements BottomSheet_forget_password.ForgetPassListener {
 
     Button signIn;
     TextInputEditText email, password;
+    TextView forgot_password;
 
     private ProgressDialog dialog;
 
     String device_token = "";
+
+
+    public void showForgetPassSheet() {
+        BottomSheet_forget_password langBottomSheet =
+                new BottomSheet_forget_password(LoginActivity.this);
+        langBottomSheet.show(getSupportFragmentManager(), "requests_filter");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +56,12 @@ public class LoginActivity extends LocalizationActivity {
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
+        forgot_password = findViewById(R.id.forgot_password);
 
         email.setText(UserUtils.getLoginName(getBaseContext()));
         password.setText(UserUtils.getLoginPassword(getBaseContext()));
 
+        forgot_password.setOnClickListener(v -> showForgetPassSheet());
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please, Wait...");
@@ -99,9 +114,9 @@ public class LoginActivity extends LocalizationActivity {
 
     public void setMyData(JSONObject res) {
         try {
-            if (res.getString("children_id").equals("null")){
+            if (res.getString("children_id").equals("null")) {
                 UserUtils.setChildId(getBaseContext(), 0);
-            }else {
+            } else {
                 UserUtils.setChildId(getBaseContext(), res.getInt("children_id"));
             }
             UserUtils.setParentId(getBaseContext(), res.getInt("parent_id"));
@@ -193,5 +208,35 @@ public class LoginActivity extends LocalizationActivity {
         });
     }
 
+    @Override
+    public void forgetPassword(String email) {
+        Map<String, String> map = new HashMap<>();
+        map.put("email", email);
+        dialog.show();
+        Webservice.getInstance().getApi().forgetPassword(map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
 
+                        JSONObject res = new JSONObject(response.body().string());
+                        Toast.makeText(getBaseContext(), res.getString("message"), Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        JSONObject res = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getBaseContext(), res.getString("message"), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
 }
