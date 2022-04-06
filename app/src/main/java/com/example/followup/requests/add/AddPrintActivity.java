@@ -480,7 +480,7 @@ public class AddPrintActivity extends LocalizationActivity {
                     } else if (data.getClipData() != null) {
                         for (int i = 0; i < data.getClipData().getItemCount(); i++) {
                             Uri uri = data.getClipData().getItemAt(i).getUri();
-                            filesSelected.add(getPath(getBaseContext(), uri));
+                            filesSelected.add(getRealPath(getBaseContext(), uri));
                         }
                     } else {
 

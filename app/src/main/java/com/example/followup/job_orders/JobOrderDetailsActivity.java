@@ -1,5 +1,6 @@
 package com.example.followup.job_orders;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -63,21 +64,21 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         initFields();
         back.setOnClickListener(v -> onBackPressed());
         download.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl))));
-        sales_reject.setOnClickListener(v -> updateStatus(2, ""));
+        sales_reject.setOnClickListener(v -> updateStatusDialog(2, ""));
         sales_approve.setOnClickListener(v -> {
             if (poNumber.equals("null")) {
                 showPoNumberBottomSheet();
             } else {
-                updateStatus(3, "");
+                updateStatusDialog(3, "");
             }
         });
-        magdi_hold.setOnClickListener(v -> updateStatus(4, ""));
-        magdi_approve.setOnClickListener(v -> updateStatus(5, ""));
-        hesham_reject.setOnClickListener(v -> updateStatus(6, ""));
-        hesham_approve.setOnClickListener(v -> updateStatus(7, ""));
-        hesham_ceo_approval.setOnClickListener(v -> updateStatus(8, ""));
-        ceo_reject.setOnClickListener(v -> updateStatus(9, ""));
-        ceo_approve.setOnClickListener(v -> updateStatus(10, ""));
+        magdi_hold.setOnClickListener(v -> updateStatusDialog(4, ""));
+        magdi_approve.setOnClickListener(v -> updateStatusDialog(5, ""));
+        hesham_reject.setOnClickListener(v -> updateStatusDialog(6, ""));
+        hesham_approve.setOnClickListener(v -> updateStatusDialog(7, ""));
+        hesham_ceo_approval.setOnClickListener(v -> updateStatusDialog(8, ""));
+        ceo_reject.setOnClickListener(v -> updateStatusDialog(9, ""));
+        ceo_approve.setOnClickListener(v -> updateStatusDialog(10, ""));
 
     }
 
@@ -183,6 +184,17 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         ceoSteps.setVisibility(View.GONE);
         steps.setVisibility(View.VISIBLE);
     }
+
+    public void updateStatusDialog(int status, String reason) {
+        new AlertDialog.Builder(JobOrderDetailsActivity.this)
+                .setTitle("Are you sure? ")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    updateStatus(status, reason);
+                })
+                .setNegativeButton("Dismiss", null)
+                .show();
+    }
+
 
     public void updateStatus(int status, String reason) {
         Map<String, String> map = new HashMap<>();

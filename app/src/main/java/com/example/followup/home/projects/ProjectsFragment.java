@@ -1,6 +1,7 @@
 package com.example.followup.home.projects;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -54,7 +55,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
 
     public void showFilterSheet() {
         BottomSheet_choose_filter_projects langBottomSheet =
-                new BottomSheet_choose_filter_projects(ProjectsFragment.this,selectedStatusIndex);
+                new BottomSheet_choose_filter_projects(ProjectsFragment.this, selectedStatusIndex);
         langBottomSheet.show(getParentFragmentManager(), "requests_filter");
     }
 
@@ -79,7 +80,8 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
 
     int selectedStatusIndex = -1;
     String selectedStatus = "";
-    String[] chipsStatus = new String[]{"1", "0", "2"};;
+    String[] chipsStatus = new String[]{"1", "0", "2"};
+    ;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -93,7 +95,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
                 projects_list.clear();
                 currentPageNum = 1;
                 getProjects(currentPageNum, getFilterMap());
-                hideKeyboardFragment(getContext(),view);
+                hideKeyboardFragment(getContext(), view);
                 return true;
             }
             return false;
@@ -103,7 +105,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     public void getProjects(int pageNum, Map<String, String> filterMap) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getProjects(UserUtils.getAccessToken(getContext()), pageNum,filterMap).enqueue(new Callback<ResponseBody>() {
+        Webservice.getInstance().getApi().getProjects(UserUtils.getAccessToken(getContext()), pageNum, filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -149,12 +151,12 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
                 final String created_by = currentObject.getJSONObject("user").getString("name");
                 final int created_by_id = currentObject.getJSONObject("user").getInt("id");
                 final String assigned_to = currentObject.getString("assign_to");
-                int assigned_to_id=0;
-                if (!assigned_to.equals("null")){
+                int assigned_to_id = 0;
+                if (!assigned_to.equals("null")) {
                     assigned_to_id = Integer.parseInt(assigned_to);
                 }
 
-                projects_list.add(new Project_item(id,user_id,status_code, created_by_id, assigned_to_id, status_message, client_company,project_name,client_name,project_country,project_timeline,created_at,created_by));
+                projects_list.add(new Project_item(id, user_id, status_code, created_by_id, assigned_to_id, status_message, client_company, project_name, client_name, project_country, project_timeline, created_at, created_by));
 
             }
 
@@ -180,7 +182,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         return map;
     }
 
-    private void initFields(View view){
+    private void initFields(View view) {
         fab_addProject = view.findViewById(R.id.fab_add_project);
         loading = view.findViewById(R.id.loading);
         search = view.findViewById(R.id.search);
@@ -193,7 +195,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        projects_adapter = new Projects_adapter_with_callback(getContext(),this, projects_list);
+        projects_adapter = new Projects_adapter_with_callback(getContext(), this, projects_list);
         recyclerView.setAdapter(projects_adapter);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -223,10 +225,23 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
 
     @Override
     public void adapterCallback(String action, int project_id) {
-        if (action.equals("cancel")){
-            cancelProject(project_id);
-        }else if (action.equals("done")){
-            doneProject(project_id);
+        if (action.equals("cancel")) {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Are you sure? ")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        cancelProject(project_id);
+                    })
+                    .setNegativeButton("Dismiss", null)
+                    .show();
+
+        } else if (action.equals("done")) {
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Are you sure? ")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        doneProject(project_id);
+                    })
+                    .setNegativeButton("Dismiss", null)
+                    .show();
         }
     }
 
@@ -290,9 +305,9 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
 
     @Override
     public void applyFilterListener(int returenedSelectedStatusIndex) {
-        if (returenedSelectedStatusIndex == -1){
+        if (returenedSelectedStatusIndex == -1) {
             selectedStatus = "";
-        }else {
+        } else {
             selectedStatus = chipsStatus[returenedSelectedStatusIndex];
         }
 
