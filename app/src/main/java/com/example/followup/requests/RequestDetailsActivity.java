@@ -62,7 +62,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
     boolean isDetailsExpanded = false;
     boolean isCostExpanded = false;
     private ProgressDialog dialog;
-    ImageView back, expandDetails, expandCost, editCost;
+    ImageView back, expandDetails, expandCost, editCost,cancel_request;
     FrameLayout request_details_content, cost_details_content;
     RelativeLayout request_cost_container;
     LinearLayout no_cost_container, sales_approval_layout;
@@ -109,6 +109,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
 
         sales_reject.setOnClickListener(v -> updateStatusDialog(5, ""));
         sales_approve.setOnClickListener(v -> updateStatusDialog(6, ""));
+        cancel_request.setOnClickListener(v -> updateStatusDialog(0, ""));
     }
 
     private void gotoEditCost(int cost_id, int type_id) {
@@ -180,6 +181,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         sales_approve = findViewById(R.id.sales_approve);
         sales_reject = findViewById(R.id.sales_reject);
         editCost = findViewById(R.id.edit_cost);
+        cancel_request = findViewById(R.id.cancel_request);
 
     }
 
@@ -240,7 +242,10 @@ public class RequestDetailsActivity extends LocalizationActivity {
                         costStatus = dataObj.getJSONObject("cost").getInt("status");
                         costId = dataObj.getJSONObject("cost").getInt("id");
                     }
-                    setUserCostPermissions(costStatus);
+                    int created_by_id = dataObj.getInt("created_by_id");
+                    boolean canEditProject = UserType.canEditProject(getBaseContext(), created_by_id, created_by_id);
+
+                    setUserCostPermissions(costStatus,canEditProject);
                     setFragments(type_id, costStatus);
                     loading.setVisibility(View.GONE);
 
@@ -297,7 +302,10 @@ public class RequestDetailsActivity extends LocalizationActivity {
         }
     }
 
-    private void setUserCostPermissions(int costStatus) {
+    private void setUserCostPermissions(int costStatus,Boolean canEditProject) {
+//        if (canEditProject){
+//            cancel_request.setVisibility(View.VISIBLE);
+//        }
         Log.e("costStatus", String.valueOf(costStatus));
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
         Log.e("loggedInUser", loggedInUser);
