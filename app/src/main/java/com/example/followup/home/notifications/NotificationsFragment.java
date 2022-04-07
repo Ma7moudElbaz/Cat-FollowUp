@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,10 +52,17 @@ public class NotificationsFragment extends Fragment {
     boolean mHasReachedBottomOnce = false;
     HomeActivity activity;
 
+    SwipeRefreshLayout swipe_refresh;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initFields(view);
+
+        swipe_refresh.setOnRefreshListener(() -> {
+            swipe_refresh.setRefreshing(false);
+            onResume();
+        });
     }
 
     private void initFields(View view) {
@@ -63,6 +71,7 @@ public class NotificationsFragment extends Fragment {
         activity.resetBadge();
 
         loading = view.findViewById(R.id.loading);
+        swipe_refresh = view.findViewById(R.id.swipe_refresh);
 
         notifications_recycler = view.findViewById(R.id.notifications_recycler);
         notifications_list = new ArrayList<>();
@@ -74,6 +83,8 @@ public class NotificationsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        notifications_list.clear();
+        currentPageNum = 1;
         loadNotificationsData(currentPageNum);
     }
 

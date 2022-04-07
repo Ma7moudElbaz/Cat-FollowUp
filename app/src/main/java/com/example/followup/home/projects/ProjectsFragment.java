@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.KeyEvent;
@@ -81,7 +82,8 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     int selectedStatusIndex = -1;
     String selectedStatus = "";
     String[] chipsStatus = new String[]{"1", "0", "2"};
-    ;
+
+    SwipeRefreshLayout swipe_refresh;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -99,6 +101,11 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
                 return true;
             }
             return false;
+        });
+
+        swipe_refresh.setOnRefreshListener(() -> {
+            swipe_refresh.setRefreshing(false);
+            onResume();
         });
     }
 
@@ -188,6 +195,8 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         search = view.findViewById(R.id.search);
         filterBtn = view.findViewById(R.id.filter_btn);
         recyclerView = view.findViewById(R.id.recycler_view);
+
+        swipe_refresh = view.findViewById(R.id.swipe_refresh);
         projects_list = new ArrayList<>();
         initRecyclerView();
     }

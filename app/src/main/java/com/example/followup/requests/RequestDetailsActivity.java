@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
@@ -77,6 +78,8 @@ public class RequestDetailsActivity extends LocalizationActivity {
     JSONObject dataObj;
     StatusViewScroller steps;
 
+    SwipeRefreshLayout swipe_refresh;
+
     public JSONObject getDataObj() {
         return dataObj;
     }
@@ -110,6 +113,11 @@ public class RequestDetailsActivity extends LocalizationActivity {
         sales_reject.setOnClickListener(v -> updateStatusDialog(5, ""));
         sales_approve.setOnClickListener(v -> updateStatusDialog(6, ""));
         cancel_request.setOnClickListener(v -> updateStatusDialog(0, ""));
+
+        swipe_refresh.setOnRefreshListener(() -> {
+            swipe_refresh.setRefreshing(false);
+            onResume();
+        });
     }
 
     private void gotoEditCost(int cost_id, int type_id) {
@@ -182,6 +190,8 @@ public class RequestDetailsActivity extends LocalizationActivity {
         sales_reject = findViewById(R.id.sales_reject);
         editCost = findViewById(R.id.edit_cost);
         cancel_request = findViewById(R.id.cancel_request);
+
+        swipe_refresh = findViewById(R.id.swipe_refresh);
 
     }
 

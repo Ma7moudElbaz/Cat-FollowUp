@@ -16,6 +16,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
@@ -86,12 +87,14 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
     String selectedStatus = "";
     String[] chipsStatus = new String[]{"1", "3", "5", "8","7"};
 
+
+    SwipeRefreshLayout swipe_refresh;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_job_orders);
         initFields();
-
 
         back.setOnClickListener(v -> onBackPressed());
         filterBtn.setOnClickListener(v -> showFilterSheet());
@@ -110,6 +113,11 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
             Intent i = new Intent(getBaseContext(), AddJobOrderActivity.class);
             i.putExtra("project_id", projectId);
             startActivity(i);
+        });
+
+        swipe_refresh.setOnRefreshListener(() -> {
+            swipe_refresh.setRefreshing(false);
+            onResume();
         });
     }
 
@@ -191,6 +199,8 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
         search = findViewById(R.id.search);
         filterBtn = findViewById(R.id.filter_btn);
         recyclerView = findViewById(R.id.recycler_view);
+
+        swipe_refresh = findViewById(R.id.swipe_refresh);
         job_order_list = new ArrayList<>();
         initRecyclerView();
         setUserPermissions();

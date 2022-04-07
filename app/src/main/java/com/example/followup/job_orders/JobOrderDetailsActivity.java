@@ -15,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
@@ -50,6 +51,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     StatusViewScroller steps;
     String pdfUrl;
 
+    SwipeRefreshLayout swipe_refresh;
 
     public void showPoNumberBottomSheet() {
         BottomSheet_choose_reason langBottomSheet =
@@ -80,6 +82,11 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         ceo_reject.setOnClickListener(v -> updateStatusDialog(9, ""));
         ceo_approve.setOnClickListener(v -> updateStatusDialog(10, ""));
 
+        swipe_refresh.setOnRefreshListener(() -> {
+            swipe_refresh.setRefreshing(false);
+            onResume();
+        });
+
     }
 
     private void initFields() {
@@ -106,6 +113,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         hesham_ceo_approval = findViewById(R.id.hesham_ceo_approval);
         ceo_approve = findViewById(R.id.ceo_approve);
         ceo_reject = findViewById(R.id.ceo_reject);
+
+        swipe_refresh = findViewById(R.id.swipe_refresh);
 
 
         jobOrderId = getIntent().getIntExtra("job_order_id", 0);

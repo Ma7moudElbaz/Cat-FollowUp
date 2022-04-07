@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
@@ -86,6 +87,8 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     //    String projectName;
 //    boolean canEditProject;
     FloatingActionMenu add_menu_btn;
+
+    SwipeRefreshLayout swipe_refresh;
 
     public int getProjectId() {
         return projectId;
@@ -164,6 +167,11 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
             i.putExtra("project_id", projectId);
             startActivity(i);
         });
+
+        swipe_refresh.setOnRefreshListener(() -> {
+            swipe_refresh.setRefreshing(false);
+            setRequestsFragment(tabPosition);
+        });
         getProjectDetails();
     }
 
@@ -181,6 +189,8 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
         loading = findViewById(R.id.loading);
         search = findViewById(R.id.search);
         filterBtn = findViewById(R.id.filter_btn);
+
+        swipe_refresh = findViewById(R.id.swipe_refresh);
 
         add_menu_btn = findViewById(R.id.add_menu_btn);
 

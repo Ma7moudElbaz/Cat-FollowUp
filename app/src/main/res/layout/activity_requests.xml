@@ -98,7 +98,7 @@
                 android:background="@drawable/black_curved"
                 android:contentDescription="@string/description"
                 android:padding="10dp"
-                android:src="@drawable/ic_filter"/>
+                android:src="@drawable/ic_filter" />
         </RelativeLayout>
 
         <com.google.android.material.tabs.TabLayout
@@ -135,11 +135,17 @@
 
         </com.google.android.material.tabs.TabLayout>
 
-        <FrameLayout
-            android:id="@+id/contentLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="10dp" />
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/contentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </LinearLayout>
 
@@ -209,5 +215,5 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </RelativeLayout>
