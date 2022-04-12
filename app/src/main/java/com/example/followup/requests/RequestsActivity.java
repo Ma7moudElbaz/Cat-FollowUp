@@ -2,7 +2,6 @@ package com.example.followup.requests;
 
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,7 +22,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_requests;
-import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.job_orders.list.JobOrdersActivity;
 import com.example.followup.requests.add.AddPhotographyActivity;
 import com.example.followup.requests.list.Photography_requests_list;
@@ -35,7 +33,7 @@ import com.example.followup.requests.add.AddPurchaseActivity;
 import com.example.followup.requests.list.Purchase_requests_list;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
-import com.example.followup.webservice.Webservice;
+import com.example.followup.webservice.WebserviceContext;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.material.tabs.TabLayout;
@@ -89,6 +87,8 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     FloatingActionMenu add_menu_btn;
 
     SwipeRefreshLayout swipe_refresh;
+
+    WebserviceContext ws;
 
     public int getProjectId() {
         return projectId;
@@ -177,6 +177,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
 
 
     private void initFields() {
+        ws = new WebserviceContext(this);
         projectId = getIntent().getIntExtra("project_id", 0);
         addPhotography = findViewById(R.id.photography_btn);
         addProduction = findViewById(R.id.production_btn);
@@ -208,7 +209,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     }
 
     private void getProjectDetails() {
-        Webservice.getInstance().getApi().getProjectDetails(UserUtils.getAccessToken(getBaseContext()), projectId).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().getProjectDetails(UserUtils.getAccessToken(getBaseContext()), projectId).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 

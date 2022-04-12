@@ -26,7 +26,7 @@ import android.widget.Toast;
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.utils.UserUtils;
-import com.example.followup.webservice.Webservice;
+import com.example.followup.webservice.WebserviceContext;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -67,6 +67,8 @@ public class AddPrintActivity extends LocalizationActivity {
     List<String> filesSelected;
     private static final int FILES_REQUEST_CODE = 764546;
     TextView filesChosen;
+
+    WebserviceContext ws;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +149,7 @@ public class AddPrintActivity extends LocalizationActivity {
     }
 
     private void initFields() {
+        ws = new WebserviceContext(this);
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please, Wait...");
         dialog.setCancelable(false);
@@ -222,7 +225,7 @@ public class AddPrintActivity extends LocalizationActivity {
         Map<String, String> map = setPrintMap();
 
         dialog.show();
-        Webservice.getInstance().getApi().addRequest(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().addRequest(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -280,7 +283,7 @@ public class AddPrintActivity extends LocalizationActivity {
         List<MultipartBody.Part> fileToUpload = addAttaches(filesSelected);
         RequestBody request_id = RequestBody.create(MediaType.parse("text/plain"), requestId);
 
-        Webservice.getInstance().getApi().addAttach(UserUtils.getAccessToken(getBaseContext()),fileToUpload, request_id).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().addAttach(UserUtils.getAccessToken(getBaseContext()),fileToUpload, request_id).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {

@@ -22,7 +22,7 @@ import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
-import com.example.followup.webservice.Webservice;
+import com.example.followup.webservice.WebserviceContext;
 
 import org.json.JSONObject;
 
@@ -52,6 +52,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     String pdfUrl;
 
     SwipeRefreshLayout swipe_refresh;
+
+    WebserviceContext ws;
 
     public void showPoNumberBottomSheet() {
         BottomSheet_choose_reason langBottomSheet =
@@ -90,6 +92,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     }
 
     private void initFields() {
+
+        ws = new WebserviceContext(this);
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please, Wait...");
@@ -212,7 +216,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 //        map.put("reason", reason);
 
         dialog.show();
-        Webservice.getInstance().getApi().changeJobOrderStatus(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+       ws.getApi().changeJobOrderStatus(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -239,7 +243,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     private void getJobOrderDetails() {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getJobOrderDetails(UserUtils.getAccessToken(getBaseContext()), jobOrderId).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().getJobOrderDetails(UserUtils.getAccessToken(getBaseContext()), jobOrderId).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -274,7 +278,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         map.put("number", poNumber);
 
         dialog.show();
-        Webservice.getInstance().getApi().addPoNumber(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().addPoNumber(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {

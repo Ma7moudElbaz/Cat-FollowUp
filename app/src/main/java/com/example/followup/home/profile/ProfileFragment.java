@@ -15,11 +15,8 @@ import androidx.fragment.app.Fragment;
 
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_change_password;
-import com.example.followup.bottomsheets.BottomSheet_choose_filter_projects;
-import com.example.followup.home.projects.ProjectsFragment;
-import com.example.followup.login.LoginActivity;
 import com.example.followup.utils.UserUtils;
-import com.example.followup.webservice.Webservice;
+import com.example.followup.webservice.WebserviceContext;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,10 +48,21 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
     TextView name, email;
     Button changePassword;
     private ProgressDialog dialog;
+    WebserviceContext ws;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        initFields(view);
+
+        changePassword.setOnClickListener(v -> showChangePassSheet());
+        name.setText(UserUtils.getUserName(getContext()));
+        email.setText(UserUtils.getUserEmail(getContext()));
+    }
+
+    private void initFields(View view) {
+        ws = new WebserviceContext(getActivity());
+
         name = view.findViewById(R.id.name);
         email = view.findViewById(R.id.email);
         changePassword = view.findViewById(R.id.btn_change_pass);
@@ -63,10 +71,6 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
         dialog = new ProgressDialog(getContext());
         dialog.setMessage("Please, Wait...");
         dialog.setCancelable(false);
-
-        changePassword.setOnClickListener(v -> showChangePassSheet());
-        name.setText(UserUtils.getUserName(getContext()));
-        email.setText(UserUtils.getUserEmail(getContext()));
     }
 
     @Override
@@ -76,7 +80,7 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
         map.put("old_password", oldPass);
         map.put("new_password", newPass);
         dialog.show();
-        Webservice.getInstance().getApi().changePassword(UserUtils.getAccessToken(getContext()),map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().changePassword(UserUtils.getAccessToken(getContext()),map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {

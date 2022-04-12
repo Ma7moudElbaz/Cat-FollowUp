@@ -21,7 +21,7 @@ import com.example.followup.requests.RequestsActivity;
 import com.example.followup.requests.list.adapters.Purchase_adapter;
 import com.example.followup.requests.list.models.Purchase_item;
 import com.example.followup.utils.UserUtils;
-import com.example.followup.webservice.Webservice;
+import com.example.followup.webservice.WebserviceContext;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -47,6 +47,8 @@ public class Purchase_requests_list extends Fragment {
 
     int projectId;
     RequestsActivity activity;
+
+    WebserviceContext ws;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class Purchase_requests_list extends Fragment {
     public void getRequests(int selectedTab,int pageNum, Map<String, String> filterMap) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getRequests(UserUtils.getAccessToken(getContext()),projectId,(selectedTab+1), pageNum,filterMap).enqueue(new Callback<ResponseBody>() {
+       ws.getApi().getRequests(UserUtils.getAccessToken(getContext()),projectId,(selectedTab+1), pageNum,filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -130,6 +132,7 @@ public class Purchase_requests_list extends Fragment {
     }
 
     private void initFields(View view) {
+        ws = new WebserviceContext(getActivity());
         activity= (RequestsActivity) getActivity();
         projectId = activity.getProjectId();
 

@@ -3,20 +3,16 @@ package com.example.followup.login;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
-import com.example.followup.bottomsheets.BottomSheet_choose_change_password;
 import com.example.followup.bottomsheets.BottomSheet_forget_password;
 import com.example.followup.home.HomeActivity;
-import com.example.followup.home.profile.ProfileFragment;
 import com.example.followup.utils.UserUtils;
-import com.example.followup.webservice.Webservice;
+import com.example.followup.webservice.WebserviceContext;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -42,6 +38,8 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
 
     String device_token = "";
 
+    WebserviceContext ws;
+
 
     public void showForgetPassSheet() {
         BottomSheet_forget_password langBottomSheet =
@@ -54,21 +52,27 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        email = findViewById(R.id.email);
-        password = findViewById(R.id.password);
-        forgot_password = findViewById(R.id.forgot_password);
+        initFields();
 
         email.setText(UserUtils.getLoginName(getBaseContext()));
         password.setText(UserUtils.getLoginPassword(getBaseContext()));
 
         forgot_password.setOnClickListener(v -> showForgetPassSheet());
+        signIn.setOnClickListener(v -> login());
+    }
+
+    private void initFields() {
+        ws = new WebserviceContext(this);
+
+        email = findViewById(R.id.email);
+        password = findViewById(R.id.password);
+        forgot_password = findViewById(R.id.forgot_password);
+        signIn = findViewById(R.id.btn_sign_in);
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please, Wait...");
         dialog.setCancelable(false);
 
-        signIn = findViewById(R.id.btn_sign_in);
-        signIn.setOnClickListener(v -> login());
     }
 
     public void login() {
@@ -82,7 +86,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
             map.put("email", emailtxt);
             map.put("password", passwordtxt);
             dialog.show();
-            Webservice.getInstance().getApi().login(map).enqueue(new Callback<ResponseBody>() {
+            ws.getApi().login(map).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     try {
@@ -184,7 +188,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
             device_token = token;
             map.put("device_token", device_token);
-            Webservice.getInstance().getApi().updateToken(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+            ws.getApi().updateToken(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                     try {
@@ -213,7 +217,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
         Map<String, String> map = new HashMap<>();
         map.put("email", email);
         dialog.show();
-        Webservice.getInstance().getApi().forgetPassword(map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().forgetPassword(map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {

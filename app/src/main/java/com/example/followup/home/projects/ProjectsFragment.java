@@ -27,7 +27,7 @@ import android.widget.Toast;
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_projects;
 import com.example.followup.utils.UserUtils;
-import com.example.followup.webservice.Webservice;
+import com.example.followup.webservice.WebserviceContext;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -83,6 +83,9 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
 
     SwipeRefreshLayout swipe_refresh;
 
+
+    WebserviceContext ws;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -110,7 +113,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     public void getProjects(int pageNum, Map<String, String> filterMap) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getProjects(UserUtils.getAccessToken(getContext()), pageNum, filterMap).enqueue(new Callback<ResponseBody>() {
+        ws.getInstance().getApi().getProjects(UserUtils.getAccessToken(getContext()), pageNum, filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -189,6 +192,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     }
 
     private void initFields(View view) {
+        ws = new WebserviceContext(getActivity());
         fab_addProject = view.findViewById(R.id.fab_add_project);
         loading = view.findViewById(R.id.loading);
         search = view.findViewById(R.id.search);
@@ -256,7 +260,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     public void cancelProject(int project_id) {
 
         loading.setVisibility(View.VISIBLE);
-        Webservice.getInstance().getApi().projectCancel(UserUtils.getAccessToken(getContext()), project_id).enqueue(new Callback<ResponseBody>() {
+        ws.getInstance().getApi().projectCancel(UserUtils.getAccessToken(getContext()), project_id).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -285,7 +289,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     public void doneProject(int project_id) {
 
         loading.setVisibility(View.VISIBLE);
-        Webservice.getInstance().getApi().projectDone(UserUtils.getAccessToken(getContext()), project_id).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().projectDone(UserUtils.getAccessToken(getContext()), project_id).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {

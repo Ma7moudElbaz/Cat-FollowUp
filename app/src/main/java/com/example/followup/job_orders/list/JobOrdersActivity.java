@@ -24,7 +24,7 @@ import com.example.followup.bottomsheets.BottomSheet_choose_filter_job_orders;
 import com.example.followup.job_orders.AddJobOrderActivity;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
-import com.example.followup.webservice.Webservice;
+import com.example.followup.webservice.WebserviceContext;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -39,8 +39,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class JobOrdersActivity extends LocalizationActivity implements BottomSheet_choose_filter_job_orders.FilterListener{
-
+public class JobOrdersActivity extends LocalizationActivity implements BottomSheet_choose_filter_job_orders.FilterListener {
 
 
     public void showFilterSheet() {
@@ -82,13 +81,14 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
     int projectId;
 
 
-
     int selectedStatusIndex = -1;
     String selectedStatus = "";
-    String[] chipsStatus = new String[]{"1", "3", "5", "8","7"};
+    String[] chipsStatus = new String[]{"1", "3", "5", "8", "7"};
 
 
     SwipeRefreshLayout swipe_refresh;
+
+    WebserviceContext ws;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +121,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
         });
     }
 
-    private void setUserPermissions(){
+    private void setUserPermissions() {
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
         if (loggedInUser.equals("nagat")) {
             fab_add_job_order.setVisibility(View.VISIBLE);
@@ -133,17 +133,18 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
     public void getJobOrders(int pageNum, Map<String, String> filterMap) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getJobOrders(UserUtils.getAccessToken(getBaseContext()), projectId, pageNum, filterMap).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().getJobOrders(UserUtils.getAccessToken(getBaseContext()), projectId, pageNum, filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
-                    if (response.isSuccessful()){
-                    JSONObject responseObject = new JSONObject(response.body().string());
-                    JSONArray jobOrdersArray = responseObject.getJSONArray("data");
-                    setJobOrdersList(jobOrdersArray);
-                    JSONObject metaObject = responseObject.getJSONObject("meta");
-                    lastPageNum = metaObject.getInt("last_page");}
+                    if (response.isSuccessful()) {
+                        JSONObject responseObject = new JSONObject(response.body().string());
+                        JSONArray jobOrdersArray = responseObject.getJSONArray("data");
+                        setJobOrdersList(jobOrdersArray);
+                        JSONObject metaObject = responseObject.getJSONObject("meta");
+                        lastPageNum = metaObject.getInt("last_page");
+                    }
 
                     loading.setVisibility(View.GONE);
 
@@ -191,6 +192,8 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
     }
 
     private void initFields() {
+
+        ws = new WebserviceContext(this);
         projectId = getIntent().getIntExtra("project_id", 0);
 
         back = findViewById(R.id.back);
@@ -246,9 +249,9 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
 
     @Override
     public void applyFilterListener(int returnedSelectedStatusIndex) {
-        if (returnedSelectedStatusIndex == -1){
+        if (returnedSelectedStatusIndex == -1) {
             selectedStatus = "";
-        }else {
+        } else {
             selectedStatus = chipsStatus[returnedSelectedStatusIndex];
         }
 

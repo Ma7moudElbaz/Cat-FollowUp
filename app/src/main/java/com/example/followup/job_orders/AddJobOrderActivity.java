@@ -22,7 +22,7 @@ import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.job_orders.job_order_requests.Job_order_request_item;
 import com.example.followup.job_orders.job_order_requests.Job_orders_requests_adapter;
 import com.example.followup.utils.UserUtils;
-import com.example.followup.webservice.Webservice;
+import com.example.followup.webservice.WebserviceContext;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -56,6 +56,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
 
     int projectId;
 
+    WebserviceContext ws;
     public void showJONameSheet() {
         BottomSheet_choose_reason langBottomSheet =
                 new BottomSheet_choose_reason("Job Order Name", "Job Order Name", "", "po");
@@ -106,7 +107,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
     public void getJobOrderRequests(int pageNum) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getJobOrderRequests(UserUtils.getAccessToken(getBaseContext()), 6, projectId, (request_types_spinner.getSelectedItemPosition() + 1), pageNum).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().getJobOrderRequests(UserUtils.getAccessToken(getBaseContext()), 6, projectId, (request_types_spinner.getSelectedItemPosition() + 1), pageNum).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -162,7 +163,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         Map<String, String> map = setJobOrderMap(items,jobOrderName);
 
         dialog.show();
-        Webservice.getInstance().getApi().addJobOrder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().addJobOrder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -213,6 +214,8 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
     }
 
     private void initFields() {
+
+        ws = new WebserviceContext(this);
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please, Wait...");
         dialog.setCancelable(false);

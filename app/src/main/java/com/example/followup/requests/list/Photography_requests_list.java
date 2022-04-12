@@ -21,7 +21,7 @@ import com.example.followup.requests.RequestsActivity;
 import com.example.followup.requests.list.adapters.Photography_adapter;
 import com.example.followup.requests.list.models.Photography_item;
 import com.example.followup.utils.UserUtils;
-import com.example.followup.webservice.Webservice;
+import com.example.followup.webservice.WebserviceContext;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -47,6 +47,7 @@ public class Photography_requests_list extends Fragment {
 
     int projectId;
     RequestsActivity activity;
+    WebserviceContext ws;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,7 +65,7 @@ public class Photography_requests_list extends Fragment {
     public void getRequests(int selectedTab, int pageNum, Map<String, String> filterMap) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getRequests(UserUtils.getAccessToken(getContext()), projectId, (selectedTab + 1), pageNum,filterMap).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().getRequests(UserUtils.getAccessToken(getContext()), projectId, (selectedTab + 1), pageNum, filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -139,7 +140,8 @@ public class Photography_requests_list extends Fragment {
     }
 
     private void initFields(View view) {
-         activity = (RequestsActivity) getActivity();
+        ws = new WebserviceContext(getActivity());
+        activity = (RequestsActivity) getActivity();
         projectId = activity.getProjectId();
 
         loading = view.findViewById(R.id.loading);
@@ -163,7 +165,7 @@ public class Photography_requests_list extends Fragment {
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        getRequests(0, currentPageNum,activity.getFilterMap());
+                        getRequests(0, currentPageNum, activity.getFilterMap());
 
                 }
             }
@@ -175,6 +177,6 @@ public class Photography_requests_list extends Fragment {
         super.onResume();
         photography_list.clear();
         currentPageNum = 1;
-        getRequests(3, currentPageNum,activity.getFilterMap());
+        getRequests(3, currentPageNum, activity.getFilterMap());
     }
 }

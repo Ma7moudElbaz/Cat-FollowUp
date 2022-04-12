@@ -19,12 +19,11 @@ import android.widget.Toast;
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.utils.UserUtils;
-import com.example.followup.webservice.Webservice;
+import com.example.followup.webservice.WebserviceContext;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -54,6 +53,7 @@ public class AddProjectActivity extends LocalizationActivity {
     List<String> sales_names = new ArrayList<>();
     List<String> sales_Ids = new ArrayList<>();
 
+    WebserviceContext ws;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +84,7 @@ public class AddProjectActivity extends LocalizationActivity {
     private void getMyTeam() {
 
         dialog.show();
-        Webservice.getInstance().getApi().getMyTeam(UserUtils.getAccessToken(getBaseContext())).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().getMyTeam(UserUtils.getAccessToken(getBaseContext())).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -123,7 +123,7 @@ public class AddProjectActivity extends LocalizationActivity {
         Map<String, String> map = setProjectMap();
 
         dialog.show();
-        Webservice.getInstance().getApi().addProject(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().addProject(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -164,6 +164,7 @@ public class AddProjectActivity extends LocalizationActivity {
     }
 
     private void initFields() {
+        ws = new WebserviceContext(this);
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please, Wait...");
         dialog.setCancelable(false);

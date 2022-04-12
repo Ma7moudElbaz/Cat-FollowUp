@@ -1,12 +1,10 @@
 package com.example.followup.supplier_costs.edit;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -16,9 +14,8 @@ import android.widget.Toast;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
-import com.example.followup.supplier_costs.add.AddPurchaseSupplierCostActivity;
 import com.example.followup.utils.UserUtils;
-import com.example.followup.webservice.Webservice;
+import com.example.followup.webservice.WebserviceContext;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -46,6 +43,7 @@ public class EditPurchaseSupplierCostActivity extends LocalizationActivity {
 
     int costId;
     JSONObject dataObj;
+    WebserviceContext ws;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +106,7 @@ public class EditPurchaseSupplierCostActivity extends LocalizationActivity {
     }
 
     private void initFields() {
+        ws = new WebserviceContext(this);
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please, Wait...");
         dialog.setCancelable(false);
@@ -165,7 +164,7 @@ public class EditPurchaseSupplierCostActivity extends LocalizationActivity {
         Map<String, String> map = setCostMap();
 
         dialog.show();
-        Webservice.getInstance().getApi().editCost(UserUtils.getAccessToken(getBaseContext()),costId, map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().editCost(UserUtils.getAccessToken(getBaseContext()),costId, map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {

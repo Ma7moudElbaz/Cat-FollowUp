@@ -15,7 +15,7 @@ import com.example.followup.home.profile.ProfileFragment;
 import com.example.followup.home.projects.ProjectsFragment;
 import com.example.followup.home.settings.SettingsFragment;
 import com.example.followup.utils.UserUtils;
-import com.example.followup.webservice.Webservice;
+import com.example.followup.webservice.WebserviceContext;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -59,18 +59,25 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
     BottomNavigationView bottomNavigationView;
     BadgeDrawable badge;
 
+    WebserviceContext ws;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        bottomNavigationView = findViewById(R.id.btm_nav);
-        bottomNavigationView.setOnItemSelectedListener(this);
+        initFields();
 
         badge = bottomNavigationView.getOrCreateBadge(R.id.navigation_notifications);
         getNotificationNumber();
 
         setContentFragment(new ProjectsFragment());
+
+    }
+
+    private void initFields() {
+        ws = new WebserviceContext(this);
+        bottomNavigationView = findViewById(R.id.btm_nav);
+        bottomNavigationView.setOnItemSelectedListener(this);
 
     }
 
@@ -92,7 +99,7 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
     }
 
     public void getNotificationNumber() {
-        Webservice.getInstance().getApi().getNotificationsNumber(UserUtils.getAccessToken(getBaseContext())).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().getNotificationsNumber(UserUtils.getAccessToken(getBaseContext())).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {

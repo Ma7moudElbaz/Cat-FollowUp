@@ -49,6 +49,12 @@ public class WebserviceContext {
             Response response = chain.proceed(request);
             Log.e("Response", "Code : " + response.code());
 
+//            mActivity.runOnUiThread(() -> new AlertDialog.Builder(mActivity)
+//                    .setTitle("test Done")
+//                    .setPositiveButton("Done", (dialog, which) -> {
+//                        dialog.dismiss();
+//                    })
+//                    .show());
 
             if (response.code() == 401) {
                 mActivity.runOnUiThread(() -> new AlertDialog.Builder(mActivity)

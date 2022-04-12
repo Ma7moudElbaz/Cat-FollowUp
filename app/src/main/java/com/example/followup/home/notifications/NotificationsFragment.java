@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.example.followup.R;
 import com.example.followup.home.HomeActivity;
 import com.example.followup.utils.UserUtils;
-import com.example.followup.webservice.Webservice;
+import com.example.followup.webservice.WebserviceContext;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -54,6 +54,9 @@ public class NotificationsFragment extends Fragment {
 
     SwipeRefreshLayout swipe_refresh;
 
+
+    WebserviceContext ws;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -66,6 +69,8 @@ public class NotificationsFragment extends Fragment {
     }
 
     private void initFields(View view) {
+
+        ws = new WebserviceContext(getActivity());
         activity = (HomeActivity) getActivity();
 
         activity.resetBadge();
@@ -91,7 +96,7 @@ public class NotificationsFragment extends Fragment {
     public void loadNotificationsData(int pageNum) {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getNotifications(UserUtils.getAccessToken(getContext()), pageNum).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().getNotifications(UserUtils.getAccessToken(getContext()), pageNum).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -175,16 +180,10 @@ public class NotificationsFragment extends Fragment {
 
     public void readNotification() {
         Map<String, String> map = new HashMap<>();
-        Webservice.getInstance().getApi().readNotification(UserUtils.getAccessToken(getContext()), map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().readNotification(UserUtils.getAccessToken(getContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
-                try {
-                    JSONObject responseObject = new JSONObject(response.body().string());
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
 
             @Override

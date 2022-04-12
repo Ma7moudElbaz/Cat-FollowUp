@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +39,7 @@ import com.example.followup.supplier_costs.view.Production_supplierCost_view;
 import com.example.followup.supplier_costs.view.Purchase_supplierCost_view;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
-import com.example.followup.webservice.Webservice;
+import com.example.followup.webservice.WebserviceContext;
 
 import org.json.JSONObject;
 
@@ -79,6 +78,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
     StatusViewScroller steps;
 
     SwipeRefreshLayout swipe_refresh;
+    WebserviceContext ws;
 
     public JSONObject getDataObj() {
         return dataObj;
@@ -168,6 +168,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
     }
 
     private void initFields() {
+        ws = new WebserviceContext(this);
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please, Wait...");
@@ -238,7 +239,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
     private void getRequestDetails() {
         loading.setVisibility(View.VISIBLE);
 
-        Webservice.getInstance().getApi().getRequestDetails(UserUtils.getAccessToken(getBaseContext()), request_id).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().getRequestDetails(UserUtils.getAccessToken(getBaseContext()), request_id).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -386,7 +387,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         map.put("reason", reason);
 
         dialog.show();
-        Webservice.getInstance().getApi().changeCostStatus(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().changeCostStatus(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
