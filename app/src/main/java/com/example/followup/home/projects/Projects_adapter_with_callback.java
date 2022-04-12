@@ -57,6 +57,12 @@ public class Projects_adapter_with_callback extends RecyclerView.Adapter<Project
             holder.done.setVisibility(View.GONE);
         }
 
+        if (items.get(position).isHave_action()){
+            holder.have_action.setVisibility(View.VISIBLE);
+        }else {
+            holder.have_action.setVisibility(View.GONE);
+        }
+
         holder.client_company.setText(items.get(position).getClient_company());
         holder.project_name.setText(items.get(position).getProject_name());
         holder.client_name.setText(items.get(position).getClient_name());
@@ -85,7 +91,7 @@ public class Projects_adapter_with_callback extends RecyclerView.Adapter<Project
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView client_company, project_name, client_name, country, timeline, status, created_by;
+        final TextView client_company, project_name, client_name, country, timeline, status, created_by,have_action;
         final AppCompatButton done, cancel, view_requests;
 
         public ViewHolder(@NonNull View itemView) {
@@ -97,6 +103,7 @@ public class Projects_adapter_with_callback extends RecyclerView.Adapter<Project
             timeline = itemView.findViewById(R.id.timeline);
             status = itemView.findViewById(R.id.status);
             created_by = itemView.findViewById(R.id.created_by);
+            have_action = itemView.findViewById(R.id.have_action);
 
             done = itemView.findViewById(R.id.done);
             cancel = itemView.findViewById(R.id.cancel);

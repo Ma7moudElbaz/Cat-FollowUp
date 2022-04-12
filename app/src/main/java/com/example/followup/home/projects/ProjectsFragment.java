@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +26,6 @@ import android.widget.Toast;
 
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_projects;
-import com.example.followup.bottomsheets.BottomSheet_choose_filter_requests;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -158,12 +156,13 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
                 final String created_by = currentObject.getJSONObject("user").getString("name");
                 final int created_by_id = currentObject.getJSONObject("user").getInt("id");
                 final String assigned_to = currentObject.getString("assign_to");
+                final boolean have_action = currentObject.getBoolean("have_action");
                 int assigned_to_id = 0;
                 if (!assigned_to.equals("null")) {
                     assigned_to_id = Integer.parseInt(assigned_to);
                 }
 
-                projects_list.add(new Project_item(id, user_id, status_code, created_by_id, assigned_to_id, status_message, client_company, project_name, client_name, project_country, project_timeline, created_at, created_by));
+                projects_list.add(new Project_item(id, user_id, status_code, created_by_id, assigned_to_id, status_message, client_company, project_name, client_name, project_country, project_timeline, created_at, created_by, have_action));
 
             }
 
