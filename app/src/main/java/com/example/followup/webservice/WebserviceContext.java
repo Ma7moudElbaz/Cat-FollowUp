@@ -1,16 +1,16 @@
 package com.example.followup.webservice;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 
-import com.example.followup.utils.UserUtils;
+import com.example.followup.login.LoginActivity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -18,13 +18,15 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class Webservice {
+public class WebserviceContext {
 
     private static final String MAIN_URL = "https://cpadmin.cat.com.eg/api/";
-    private static Webservice instance;
+    private static WebserviceContext instance;
     private final ServiceInterface api;
+    private static Activity mActivity;
 
-    public Webservice() {
+    public WebserviceContext(Activity mActivity) {
+        WebserviceContext.mActivity = mActivity;
         // OkHttpClient okHttpClient = new OkHttpClient.Builder().build();
         Gson gson = new GsonBuilder()
                 .setLenient()
@@ -44,10 +46,20 @@ public class Webservice {
                     .method(original.method(), original.body())
                     .build();
 
-            Response response =  chain.proceed(request);
-            Log.e("Response", "Code : "+response.code());
-            if (response.code() == 401){
-                // Magic is here ( Handle the error as your way )
+            Response response = chain.proceed(request);
+            Log.e("Response", "Code : " + response.code());
+
+
+            if (response.code() == 401) {
+                mActivity.runOnUiThread(() -> new AlertDialog.Builder(mActivity)
+                        .setTitle("Session Expired")
+                        .setPositiveButton("Log Out", (dialog, which) -> {
+                            Intent i = new Intent(mActivity, LoginActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            mActivity.startActivity(i);
+                        })
+                        .setCancelable(false)
+                        .show());
                 return response;
             }
             return response;
@@ -63,9 +75,9 @@ public class Webservice {
         Log.i("Api", "" + api.toString());
     }
 
-    public static Webservice getInstance() {
+    public static WebserviceContext getInstance() {
         if (instance == null) {
-            instance = new Webservice();
+            instance = new WebserviceContext(mActivity);
         }
         return instance;
     }
