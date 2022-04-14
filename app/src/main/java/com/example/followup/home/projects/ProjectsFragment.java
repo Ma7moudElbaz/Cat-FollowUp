@@ -79,7 +79,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
 
     int selectedStatusIndex = -1;
     String selectedStatus = "";
-    String[] chipsStatus = new String[]{"1", "0", "2"};
+    String[] chipsStatus = new String[]{"","1", "0", "2"};
 
     SwipeRefreshLayout swipe_refresh;
 

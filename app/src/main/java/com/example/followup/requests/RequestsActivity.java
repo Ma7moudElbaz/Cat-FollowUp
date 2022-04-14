@@ -80,7 +80,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
 
     int selectedStatusIndex = -1;
     String selectedStatus = "";
-    String[] chipsStatus = new String[]{"1", "2", "4", "5", "3","6"};
+    String[] chipsStatus = new String[]{"","1", "2", "4", "5", "3","6"};
 
     //    String projectName;
 //    boolean canEditProject;

@@ -40,7 +40,7 @@ public class BottomSheet_choose_filter_projects extends BottomSheetDialogFragmen
     ImageView closeButton;
     Button applyButton, resetButton;
     ChipCloud statusChip;
-    String[] chipsText = new String[]{"In Progress", "Canceled", "Done"};
+    String[] chipsText = new String[]{"All","In Progress", "Canceled", "Done"};
 
 
     @Override

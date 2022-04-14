@@ -12,6 +12,7 @@ import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_forget_password;
 import com.example.followup.home.HomeActivity;
 import com.example.followup.utils.UserUtils;
+import com.example.followup.webservice.Webservice;
 import com.example.followup.webservice.WebserviceContext;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -38,7 +39,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
 
     String device_token = "";
 
-    WebserviceContext ws;
+    Webservice ws;
 
 
     public void showForgetPassSheet() {
@@ -62,7 +63,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
     }
 
     private void initFields() {
-        ws = new WebserviceContext(this);
+        ws = new Webservice();
 
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
@@ -99,7 +100,9 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
                             updateDeviceToken();
 
                         } else {
-                            Toast.makeText(LoginActivity.this, response.errorBody().string(), Toast.LENGTH_LONG).show();
+
+                            JSONObject res = new JSONObject(response.errorBody().string());
+                            Toast.makeText(LoginActivity.this, res.getString("error"), Toast.LENGTH_LONG).show();
                         }
                     } catch (IOException | JSONException e) {
                         e.printStackTrace();
