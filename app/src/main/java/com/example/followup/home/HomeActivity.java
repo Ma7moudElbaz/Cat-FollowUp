@@ -114,7 +114,8 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
 
 
                     } else {
-                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                        JSONObject res = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();

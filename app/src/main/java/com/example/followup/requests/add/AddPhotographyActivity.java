@@ -15,6 +15,9 @@ import com.example.followup.R;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -189,9 +192,10 @@ public class AddPhotographyActivity extends LocalizationActivity {
                         onBackPressed();
 
                     } else {
-                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                        JSONObject res = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
-                } catch (IOException e) {
+                } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
                 dialog.dismiss();

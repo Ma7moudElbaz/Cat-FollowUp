@@ -41,6 +41,7 @@ import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -395,9 +396,10 @@ public class RequestDetailsActivity extends LocalizationActivity {
                         Toast.makeText(getBaseContext(), "Updated successfully", Toast.LENGTH_LONG).show();
                         getRequestDetails();
                     } else {
-                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                        JSONObject res = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
-                } catch (IOException e) {
+                } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
                 dialog.dismiss();

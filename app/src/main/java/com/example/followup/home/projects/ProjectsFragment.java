@@ -31,6 +31,7 @@ import com.example.followup.webservice.WebserviceContext;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -270,9 +271,10 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
                         currentPageNum = 1;
                         getProjects(currentPageNum, getFilterMap());
                     } else {
-                        Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                        JSONObject res = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
-                } catch (IOException e) {
+                } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
                 loading.setVisibility(View.GONE);

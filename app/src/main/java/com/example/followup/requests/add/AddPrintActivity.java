@@ -240,7 +240,8 @@ public class AddPrintActivity extends LocalizationActivity {
                         }
 
                     } else {
-                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                        JSONObject res = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
                 } catch (IOException | JSONException e) {
@@ -291,7 +292,6 @@ public class AddPrintActivity extends LocalizationActivity {
                         JSONObject res = new JSONObject(response.body().string());
                         Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_SHORT).show();
                         Toast.makeText(getBaseContext(), "Request Added successfully but attachment failed", Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException | JSONException e) {
