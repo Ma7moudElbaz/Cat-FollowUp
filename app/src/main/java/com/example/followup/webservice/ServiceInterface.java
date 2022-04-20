@@ -41,6 +41,9 @@ public interface ServiceInterface {
     @POST("auth/myteam")
     Call<ResponseBody> getMyTeam(@Header("Authorization") String auth);
 
+    @GET("companies")
+    Call<ResponseBody> getCompanies(@Header("Authorization") String auth);
+
     //projects
     @GET("projects")
     Call<ResponseBody> getProjects(@Header("Authorization") String auth, @Query("page") int pageNo,@QueryMap Map<String, String> filters);
