@@ -61,17 +61,27 @@
                 android:src="@drawable/ic_filter"/>
         </RelativeLayout>
 
+        <Spinner
+            android:id="@+id/client_company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:hint="@string/client_company"
+            android:theme="@style/spinnerItemStyle_black"
+            />
+
+
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             tools:listitem="@layout/item_projects" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

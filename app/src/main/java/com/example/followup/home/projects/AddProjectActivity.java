@@ -148,13 +148,11 @@ public class AddProjectActivity extends LocalizationActivity {
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
-                dialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
             }
         });
     }

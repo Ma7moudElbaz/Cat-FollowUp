@@ -65,21 +65,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:hint="@string/sales_contact"
+                    android:hint="@string/client_company"
                     android:theme="@style/spinnerItemStyle_black"/>
 
-<!--                <EditText-->
-<!--                    android:id="@+id/client_company"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginTop="5dp"-->
-<!--                    android:background="@drawable/et_gray_border"-->
-<!--                    android:hint="@string/client_company"-->
-<!--                    android:importantForAutofill="no"-->
-<!--                    android:inputType="text"-->
-<!--                    android:padding="10dp"-->
-<!--                    android:textColor="@color/black"-->
-<!--                    android:textSize="16sp" />-->
             </LinearLayout>
 
             <LinearLayout
