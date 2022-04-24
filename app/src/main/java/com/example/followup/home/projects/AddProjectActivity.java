@@ -129,21 +129,18 @@ public class AddProjectActivity extends LocalizationActivity {
                 try {
                     if (response.isSuccessful()) {
                         JSONObject responseObject = new JSONObject(response.body().string());
-                        JSONArray dataArr = responseObject.getJSONArray("data");
-                        JSONObject dataObj = dataArr.getJSONObject(0);
-                        JSONArray teamArray = dataObj.getJSONArray("team_users");
-                        sales_names.add("Select Sales");
-                        sales_Ids.add("0");
+                        JSONArray teamArray = responseObject.getJSONArray("data");
                         for (int i = 0; i < teamArray.length(); i++) {
                             JSONObject currentObject = teamArray.getJSONObject(i);
-                            sales_names.add(currentObject.getJSONObject("user").getString("name"));
-                            sales_Ids.add(currentObject.getJSONObject("user").getString("id"));
+                            sales_names.add(currentObject.getString("name"));
+                            sales_Ids.add(currentObject.getString("id"));
                         }
                         setSalesSpinner();
 
                     } else {
-                        JSONObject res = new JSONObject(response.errorBody().string());
-                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
+                        setSalesSpinner();
+//                        JSONObject res = new JSONObject(response.errorBody().string());
+//                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
@@ -220,6 +217,9 @@ public class AddProjectActivity extends LocalizationActivity {
         sales_contact_layout = findViewById(R.id.sales_contact_layout);
         manage_myself = findViewById(R.id.manage_myself);
         add = findViewById(R.id.add);
+
+        sales_names.add("Select Sales");
+        sales_Ids.add("0");
     }
 
     private void setSalesSpinner() {
