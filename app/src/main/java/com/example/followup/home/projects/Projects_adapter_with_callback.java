@@ -3,8 +3,13 @@ package com.example.followup.home.projects;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -21,7 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Projects_adapter_with_callback extends RecyclerView.Adapter<Projects_adapter_with_callback.ViewHolder> {
+public class Projects_adapter_with_callback extends RecyclerView.Adapter<Projects_adapter_with_callback.ViewHolder>{
 
     private final List<Project_item> items;
 
@@ -52,9 +57,11 @@ public class Projects_adapter_with_callback extends RecyclerView.Adapter<Project
                 && items.get(position).getStatus_code() == 1) {
             holder.cancel.setVisibility(View.VISIBLE);
             holder.done.setVisibility(View.VISIBLE);
+            holder.show_actions.setVisibility(View.VISIBLE);
         } else {
             holder.cancel.setVisibility(View.GONE);
             holder.done.setVisibility(View.GONE);
+            holder.show_actions.setVisibility(View.GONE);
         }
 
         if (items.get(position).isHave_action()){
@@ -82,6 +89,14 @@ public class Projects_adapter_with_callback extends RecyclerView.Adapter<Project
         holder.done.setOnClickListener(v -> mAdapterCallback.adapterCallback("done", items.get(position).getId()));
         holder.cancel.setOnClickListener(v -> mAdapterCallback.adapterCallback("cancel", items.get(position).getId()));
 
+        holder.show_actions.setOnClickListener(v -> showPopup(v,position));
+        holder.parent_layout.setOnClickListener(v -> {
+            Intent i = new Intent(mContext, RequestsActivity.class);
+            i.putExtra("project_id", items.get(position).getId());
+            i.putExtra("project_name", items.get(position).getProject_name());
+            i.putExtra("can_edit_project", UserType.canEditProject(mContext, items.get(position).getCreated_by_id(), items.get(position).getAssigned_to()));
+            mContext.startActivity(i);
+        });
     }
 
     @Override
@@ -89,10 +104,13 @@ public class Projects_adapter_with_callback extends RecyclerView.Adapter<Project
         return items.size();
     }
 
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         final TextView client_company, project_name, client_name, country, timeline, status, created_by,have_action;
         final AppCompatButton done, cancel, view_requests;
+        final ImageView show_actions;
+        final LinearLayout parent_layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -104,6 +122,8 @@ public class Projects_adapter_with_callback extends RecyclerView.Adapter<Project
             status = itemView.findViewById(R.id.status);
             created_by = itemView.findViewById(R.id.created_by);
             have_action = itemView.findViewById(R.id.have_action);
+            show_actions = itemView.findViewById(R.id.show_actions);
+            parent_layout = itemView.findViewById(R.id.parent_layout);
 
             done = itemView.findViewById(R.id.done);
             cancel = itemView.findViewById(R.id.cancel);
@@ -113,5 +133,25 @@ public class Projects_adapter_with_callback extends RecyclerView.Adapter<Project
 
     public interface AdapterCallback {
         void adapterCallback(String action, int project_id);
+    }
+
+    public void showPopup(View v,int position) {
+        PopupMenu popup = new PopupMenu(mContext, v);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.project_actions, popup.getMenu());
+        popup.show();
+
+        popup.setOnMenuItemClickListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.project_done:
+                    mAdapterCallback.adapterCallback("done", items.get(position).getId());
+                    return true;
+                case R.id.project_cancel:
+                    mAdapterCallback.adapterCallback("cancel", items.get(position).getId());
+                    return true;
+                default:
+                    return false;
+            }
+        });
     }
 }
