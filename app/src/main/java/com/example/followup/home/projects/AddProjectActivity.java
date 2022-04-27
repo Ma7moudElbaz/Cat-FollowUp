@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
+import com.example.followup.bottomsheets.BottomSheet_companies;
+import com.example.followup.bottomsheets.BottomSheet_companies_from_activity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 
@@ -39,11 +41,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddProjectActivity extends LocalizationActivity {
+public class AddProjectActivity extends LocalizationActivity implements BottomSheet_companies_from_activity.SelectedCompanyListener {
 
     ImageView back;
     EditText project_name, client_name, country, project_timeLine;
-    Spinner sales_contact, client_company;
+    Spinner sales_contact;
+    TextView client_company;
     LinearLayout sales_contact_layout;
     CheckBox manage_myself;
     Button add;
@@ -53,10 +56,16 @@ public class AddProjectActivity extends LocalizationActivity {
     List<String> sales_names = new ArrayList<>();
     List<String> sales_Ids = new ArrayList<>();
 
-    List<String> companies_names = new ArrayList<>();
-    List<String> companies_Ids = new ArrayList<>();
+
+    String selectedCompanyId = "0";
 
     WebserviceContext ws;
+
+    public void showCompaniesBottomSheet() {
+        BottomSheet_companies_from_activity companiesBottomSheet =
+                new BottomSheet_companies_from_activity(AddProjectActivity.this);
+        companiesBottomSheet.show(getSupportFragmentManager(), "companies");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +83,7 @@ public class AddProjectActivity extends LocalizationActivity {
             }
         });
 
+        client_company.setOnClickListener(v -> showCompaniesBottomSheet());
 
         add.setOnClickListener(v -> {
             if (validateFields()) {
@@ -81,43 +91,6 @@ public class AddProjectActivity extends LocalizationActivity {
             }
         });
         getMyTeam();
-        getCompanies();
-
-    }
-
-    private void getCompanies() {
-        ws.getApi().getCompanies(UserUtils.getAccessToken(getBaseContext())).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    if (response.isSuccessful()) {
-                        JSONObject responseObject = new JSONObject(response.body().string());
-                        JSONArray dataArr = responseObject.getJSONArray("data");
-                        companies_names.add("Select Company");
-                        companies_Ids.add("0");
-                        for (int i = 0; i < dataArr.length(); i++) {
-                            JSONObject currentObject = dataArr.getJSONObject(i);
-                            companies_names.add(currentObject.getString("name"));
-                            companies_Ids.add(currentObject.getString("id"));
-                        }
-                        setCompaniesSpinner();
-
-                    } else {
-                        JSONObject res = new JSONObject(response.errorBody().string());
-                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
-                    }
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
-                }
-                dialog.dismiss();
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-            }
-        });
     }
 
     private void getMyTeam() {
@@ -135,21 +108,19 @@ public class AddProjectActivity extends LocalizationActivity {
                             sales_names.add(currentObject.getString("name"));
                             sales_Ids.add(currentObject.getString("id"));
                         }
-                        setSalesSpinner();
 
-                    } else {
-                        setSalesSpinner();
-//                        JSONObject res = new JSONObject(response.errorBody().string());
-//                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
+                    setSalesSpinner();
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
                 }
+                dialog.dismiss();
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
             }
         });
     }
@@ -186,7 +157,7 @@ public class AddProjectActivity extends LocalizationActivity {
 
     private Map<String, String> setProjectMap() {
         Map<String, String> map = new HashMap<>();
-        map.put("company_id", companies_Ids.get(client_company.getSelectedItemPosition()));
+        map.put("company_id", selectedCompanyId);
         map.put("project_name", project_name.getText().toString());
         map.put("client_name", client_name.getText().toString());
         map.put("project_country", country.getText().toString());
@@ -228,14 +199,8 @@ public class AddProjectActivity extends LocalizationActivity {
         adapter.notifyDataSetChanged();
     }
 
-    private void setCompaniesSpinner() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, companies_names);
-        client_company.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }
-
     private boolean validateFields() {
-        if (client_company.getSelectedItemPosition() == 0) {
+        if (client_company.getText().toString().equals("0")) {
             Toast.makeText(getBaseContext(), "Select client contact", Toast.LENGTH_SHORT).show();
             return false;
         }
@@ -287,5 +252,11 @@ public class AddProjectActivity extends LocalizationActivity {
                 }, cldr.get(Calendar.YEAR), cldr.get(Calendar.MONTH),
                 cldr.get(Calendar.DAY_OF_MONTH));
         picker.show();
+    }
+
+    @Override
+    public void selectedCompany(String companyName, String companyId) {
+        client_company.setText(companyName);
+        selectedCompanyId = companyId;
     }
 }
