@@ -42,7 +42,7 @@ public interface ServiceInterface {
     Call<ResponseBody> getMyTeam(@Header("Authorization") String auth);
 
     @GET("companies")
-    Call<ResponseBody> getCompanies(@Header("Authorization") String auth);
+    Call<ResponseBody> getCompanies(@Header("Authorization") String auth, @Query("page") int pageNo,@QueryMap Map<String, String> filters);
 
     //projects
     @GET("projects")

@@ -21,16 +21,15 @@
 
 
         //font style
-<!--        <item name="android:textViewStyle">@style/PoppinsTextViewStyle</item>-->
-<!--        <item name="android:buttonStyle">@style/PoppinsButtonStyle</item>-->
-<!--        <item name="android:editTextStyle">@style/PoppinsEditTextStyle</item>-->
+        <!--        <item name="android:textViewStyle">@style/PoppinsTextViewStyle</item>-->
+        <!--        <item name="android:buttonStyle">@style/PoppinsButtonStyle</item>-->
+        <!--        <item name="android:editTextStyle">@style/PoppinsEditTextStyle</item>-->
 
     </style>
 
     <style name="blackSpinnerTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:spinnerItemStyle">@style/spinnerItemStyle_black</item>
     </style>
-
 
 
     <style name="spinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
@@ -50,6 +49,11 @@
         <item name="android:background">@drawable/bottomsheet_bg</item>
     </style>
 
+    <style name="DialogStyle" parent="Theme.Design.Light.BottomSheetDialog">
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+    </style>
 
     <style name="PoppinsTextViewStyle" parent="android:Widget.TextView">
         <item name="android:fontFamily">@font/poppins_regular</item>

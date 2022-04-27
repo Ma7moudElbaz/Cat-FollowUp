@@ -61,14 +61,16 @@
                 android:src="@drawable/ic_filter"/>
         </RelativeLayout>
 
-        <Spinner
+        <TextView
             android:id="@+id/client_company"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:hint="@string/client_company"
-            android:theme="@style/spinnerItemStyle_black"
-            />
+            android:text="@string/all_companies"
+            android:textSize="16sp"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            app:drawableEndCompat="@drawable/ic_arrow_down" />
 
 
 

@@ -19,16 +19,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_projects;
+import com.example.followup.bottomsheets.BottomSheet_companies;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -41,6 +39,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -48,7 +47,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProjectsFragment extends Fragment implements Projects_adapter_with_callback.AdapterCallback, BottomSheet_choose_filter_projects.FilterListener {
+public class ProjectsFragment extends Fragment implements Projects_adapter_with_callback.AdapterCallback, BottomSheet_choose_filter_projects.FilterListener, BottomSheet_companies.SelectedCompanyListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,9 +57,16 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     }
 
     public void showFilterSheet() {
-        BottomSheet_choose_filter_projects langBottomSheet =
+        BottomSheet_choose_filter_projects filterBottomSheet =
                 new BottomSheet_choose_filter_projects(ProjectsFragment.this, selectedStatusIndex);
-        langBottomSheet.show(getParentFragmentManager(), "requests_filter");
+        filterBottomSheet.show(getParentFragmentManager(), "requests_filter");
+    }
+
+
+    public void showCompaniesBottomSheet() {
+        BottomSheet_companies companiesBottomSheet =
+                new BottomSheet_companies(ProjectsFragment.this);
+        companiesBottomSheet.show(getParentFragmentManager(), "companies");
     }
 
     public static void hideKeyboardFragment(Context context, View view) {
@@ -72,9 +78,8 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     FloatingActionButton fab_addProject;
     RecyclerView recyclerView;
     ProgressBar loading;
-    TextView search;
+    TextView search,client_company;
     ImageView filterBtn;
-    Spinner  client_company;
 
     ArrayList<Project_item> projects_list;
     Projects_adapter_with_callback projects_adapter;
@@ -86,16 +91,14 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     int selectedStatusIndex = -1;
     String selectedStatus = "";
     String selectedCompanyId = "";
-    String[] chipsStatus = new String[]{"","1", "0", "2"};
+    String[] chipsStatus = new String[]{"", "1", "0", "2"};
 
     SwipeRefreshLayout swipe_refresh;
 
-    List<String> companies_names = new ArrayList<>();
-    List<String> companies_Ids = new ArrayList<>();
 
     WebserviceContext ws;
 
-    boolean firstLoad = true;
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -104,23 +107,8 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         fab_addProject.setOnClickListener(v -> startActivity(new Intent(getActivity(), AddProjectActivity.class)));
         filterBtn.setOnClickListener(v -> showFilterSheet());
 
-        client_company.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-               if (!firstLoad){
-                   selectedCompanyId = companies_Ids.get(position);
+        client_company.setOnClickListener(v -> showCompaniesBottomSheet());
 
-                   projects_list.clear();
-                   currentPageNum = 1;
-                   getProjects(currentPageNum, getFilterMap());
-               }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
         search.setOnEditorActionListener((v, actionId, event) -> {
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -138,55 +126,13 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
             onResume();
         });
 
-
-        getCompanies();
     }
 
-
-    private void getCompanies() {
-        ws.getApi().getCompanies(UserUtils.getAccessToken(getContext())).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    if (response.isSuccessful()) {
-                        JSONObject responseObject = new JSONObject(response.body().string());
-                        JSONArray dataArr = responseObject.getJSONArray("data");
-                        companies_names.add("All Companies");
-                        companies_Ids.add("");
-                        for (int i = 0; i < dataArr.length(); i++) {
-                            JSONObject currentObject = dataArr.getJSONObject(i);
-                            companies_names.add(currentObject.getString("name"));
-                            companies_Ids.add(currentObject.getString("id"));
-                        }
-                        setCompaniesSpinner();
-
-                    } else {
-                        JSONObject res = new JSONObject(response.errorBody().string());
-                        Toast.makeText(getContext(), res.getString("error"), Toast.LENGTH_LONG).show();
-                    }
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-
-    private void setCompaniesSpinner() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, companies_names);
-        client_company.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
-    }
 
     public void getProjects(int pageNum, Map<String, String> filterMap) {
         loading.setVisibility(View.VISIBLE);
 
-        ws.getInstance().getApi().getProjects(UserUtils.getAccessToken(getContext()), pageNum, filterMap).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().getProjects(UserUtils.getAccessToken(getContext()), pageNum, filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -196,7 +142,6 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
                     setProjectsList(projectsArray);
                     JSONObject metaObject = responseObject.getJSONObject("meta");
                     lastPageNum = metaObject.getInt("last_page");
-                    firstLoad = false;
 
                     loading.setVisibility(View.GONE);
 
@@ -405,5 +350,12 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         projects_list.clear();
         currentPageNum = 1;
         getProjects(currentPageNum, getFilterMap());
+    }
+
+    @Override
+    public void selectedCompany(String companyName, String companyId) {
+        client_company.setText(companyName);
+        selectedCompanyId = companyId;
+        onResume();
     }
 }
