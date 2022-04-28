@@ -1,5 +1,6 @@
 package com.example.followup.bottomsheets;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -9,15 +10,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -43,7 +45,7 @@ import retrofit2.Response;
 public class BottomSheet_companies_from_activity extends BottomSheetDialogFragment implements Companies_adapter_with_callback.AdapterCallback {
 
 
-    private BottomSheet_companies_from_activity.SelectedCompanyListener selectedCompanyListener;
+    private final BottomSheet_companies_from_activity.SelectedCompanyListener selectedCompanyListener;
 
     public BottomSheet_companies_from_activity(Activity activity) {
         this.selectedCompanyListener = ((BottomSheet_companies_from_activity.SelectedCompanyListener) activity);
@@ -79,21 +81,30 @@ public class BottomSheet_companies_from_activity extends BottomSheetDialogFragme
     RecyclerView recyclerView;
     ProgressBar loading;
     WebserviceContext ws;
-    EditText search;
+    EditText search, company_name;
+    Button add_company, add_new_company;
+    RelativeLayout add_company_layout;
 
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        closeButton = view.findViewById(R.id.img_close);
-        loading = view.findViewById(R.id.loading);
-        recyclerView = view.findViewById(R.id.recycler);
-        search = view.findViewById(R.id.search);
-        ws = new WebserviceContext(getActivity());
+        initFields(view);
+
+        add_new_company.setOnClickListener(v -> {
+            add_company_layout.setVisibility(View.VISIBLE);
+            add_new_company.setVisibility(View.GONE);
+        });
+
         closeButton.setOnClickListener(v -> dismiss());
-        companies_list = new ArrayList<>();
-        initRecyclerView();
-        getCompanies(currentPageNum);
+
+        add_company.setOnClickListener(v -> {
+            if (company_name.length() != 0) {
+                addCompany();
+            } else {
+                company_name.setError("This is required field");
+            }
+        });
 
         search.setOnEditorActionListener((v, actionId, event) -> {
 
@@ -109,6 +120,21 @@ public class BottomSheet_companies_from_activity extends BottomSheetDialogFragme
 
     }
 
+    private void initFields(View view) {
+        closeButton = view.findViewById(R.id.img_close);
+        loading = view.findViewById(R.id.loading);
+        recyclerView = view.findViewById(R.id.recycler);
+        search = view.findViewById(R.id.search);
+        company_name = view.findViewById(R.id.company_name);
+        add_company = view.findViewById(R.id.add_company);
+        add_new_company = view.findViewById(R.id.add_new_company);
+        add_company_layout = view.findViewById(R.id.add_company_layout);
+        companies_list = new ArrayList<>();
+        ws = new WebserviceContext(getActivity());
+        initRecyclerView();
+        getCompanies(currentPageNum);
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -122,8 +148,8 @@ public class BottomSheet_companies_from_activity extends BottomSheetDialogFragme
 
 
     @Override
-    public void adapterCallback(String companyName,String companyId) {
-        sendBackResult(companyName,companyId);
+    public void adapterCallback(String companyName, String companyId) {
+        sendBackResult(companyName, companyId);
         dismiss();
     }
 
@@ -143,7 +169,7 @@ public class BottomSheet_companies_from_activity extends BottomSheetDialogFragme
         Map<String, String> map = new HashMap<>();
         map.put("search", search.getText().toString());
 
-        ws.getApi().getCompanies(UserUtils.getAccessToken(getContext()),pageNum,map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().getCompanies(UserUtils.getAccessToken(getContext()), pageNum, map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -171,8 +197,48 @@ public class BottomSheet_companies_from_activity extends BottomSheetDialogFragme
             }
         });
     }
+
+    public void addCompany() {
+        loading.setVisibility(View.VISIBLE);
+        Map<String, String> map = new HashMap<>();
+        map.put("name", company_name.getText().toString());
+
+        ws.getApi().AddCompany(UserUtils.getAccessToken(getContext()), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+
+                try {
+                    if (response.isSuccessful()) {
+                        company_name.setText("");
+                        Toast.makeText(getContext(), "Company Added Successfully and waiting admin approval", Toast.LENGTH_SHORT).show();
+                    } else {
+                        JSONObject responseObject = new JSONObject(response.body().string());
+                        Toast.makeText(getContext(), responseObject.getString("error"), Toast.LENGTH_SHORT).show();
+                    }
+
+                    loading.setVisibility(View.GONE);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Log.d("Error Throw", t.toString());
+                Log.d("commit Test Throw", t.toString());
+                Log.d("Call", t.toString());
+                Toast.makeText(getContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+                loading.setVisibility(View.GONE);
+            }
+        });
+    }
+
+
+    @SuppressLint("NotifyDataSetChanged")
     public void setCompaniesList(JSONArray list) {
         try {
+            companies_list.add(new Company_item("", "All Companies"));
             for (int i = 0; i < list.length(); i++) {
                 JSONObject currentObject = list.getJSONObject(i);
                 final String id = currentObject.getString("id");
@@ -206,12 +272,11 @@ public class BottomSheet_companies_from_activity extends BottomSheetDialogFragme
                 if (!recyclerView.canScrollVertically(1) && !mHasReachedBottomOnce) {
                     mHasReachedBottomOnce = true;
 
-//                    if (currentPageNum <= lastPageNum)
-//                        getCompanies(currentPageNum, getFilterMap());
+                    if (currentPageNum <= lastPageNum)
+                        getCompanies(currentPageNum);
 
                 }
             }
         });
     }
 }
-
