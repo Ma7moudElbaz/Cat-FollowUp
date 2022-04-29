@@ -238,7 +238,6 @@ public class BottomSheet_companies_from_activity extends BottomSheetDialogFragme
     @SuppressLint("NotifyDataSetChanged")
     public void setCompaniesList(JSONArray list) {
         try {
-            companies_list.add(new Company_item("", "All Companies"));
             for (int i = 0; i < list.length(); i++) {
                 JSONObject currentObject = list.getJSONObject(i);
                 final String id = currentObject.getString("id");
