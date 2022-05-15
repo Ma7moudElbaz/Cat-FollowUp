@@ -3,6 +3,7 @@ package com.example.followup.login;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -190,6 +191,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
         Map<String, String> map = new HashMap<>();
         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
             device_token = token;
+            Log.e("Fire Base Device Token", device_token );
             map.put("device_token", device_token);
             ws.getApi().updateToken(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
                 @Override
