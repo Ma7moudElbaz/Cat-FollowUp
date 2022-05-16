@@ -41,6 +41,7 @@ public class Job_orders_requests_adapter extends RecyclerView.Adapter<Job_orders
     @Override
     public void onBindViewHolder(@NonNull Job_orders_requests_adapter.ViewHolder holder, final int position) {
         holder.request_id.setText(items.get(position).getRequest_id());
+        holder.final_cost.setText(items.get(position).getFinal_cost());
         holder.final_cost.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

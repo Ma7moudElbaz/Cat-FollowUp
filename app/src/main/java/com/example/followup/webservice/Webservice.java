@@ -20,7 +20,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Webservice {
 
-    private static final String MAIN_URL = "https://cpadmin.cat.com.eg/api/";
+//    private static final String MAIN_URL = "https://cpadmin.cat.com.eg/api/";
+    //dev
+    private static final String MAIN_URL = "https://cat-purchasing-app.cat-sw.com/api/";
     private static Webservice instance;
     private final ServiceInterface api;
 
