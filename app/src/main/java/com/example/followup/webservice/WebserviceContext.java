@@ -61,7 +61,7 @@ public class WebserviceContext {
             if (response.code() == 401) {
                 mActivity.runOnUiThread(() -> new AlertDialog.Builder(mActivity)
                         .setTitle("Session Expired")
-                        .setPositiveButton("Log Out", (dialog, which) -> {
+                        .setPositiveButton("Log In", (dialog, which) -> {
                             Intent i = new Intent(mActivity, LoginActivity.class);
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             mActivity.startActivity(i);

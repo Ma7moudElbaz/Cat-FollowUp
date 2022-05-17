@@ -1,14 +1,18 @@
 package com.example.followup.login;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
+import com.example.followup.BuildConfig;
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_forget_password;
 import com.example.followup.home.HomeActivity;
@@ -31,6 +35,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends LocalizationActivity implements BottomSheet_forget_password.ForgetPassListener {
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Toast.makeText(this, "called", Toast.LENGTH_SHORT).show();
+    }
 
     Button signIn;
     TextInputEditText email, password;
@@ -41,6 +50,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
     String device_token = "";
 
     Webservice ws;
+    private final String app_link = "https://drive.google.com/file/d/1l0vA7GfGBwAfcTxSVHm8XCLWDTUysi8y/view?usp=sharing";
 
 
     public void showForgetPassSheet() {
@@ -49,10 +59,18 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
         langBottomSheet.show(getSupportFragmentManager(), "requests_filter");
     }
 
+    String fromActivity = "login";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        if (getIntent().getStringExtra("extra") != null) {
+            fromActivity = getIntent().getStringExtra("extra");
+        }
+
+//        Toast.makeText(this, fromActivity, Toast.LENGTH_SHORT).show();
 
         initFields();
 
@@ -61,6 +79,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
 
         forgot_password.setOnClickListener(v -> showForgetPassSheet());
         signIn.setOnClickListener(v -> login());
+        checkAppVersion();
     }
 
     private void initFields() {
@@ -74,6 +93,37 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please, Wait...");
         dialog.setCancelable(false);
+
+    }
+
+    public void checkAppVersion() {
+        String versionName = BuildConfig.VERSION_NAME;
+
+        ws.getApi().checkAppVersion(versionName).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (!response.isSuccessful()) {
+                    showUpdateDialog();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void showUpdateDialog() {
+        AlertDialog dialog = new AlertDialog.Builder(LoginActivity.this)
+                .setTitle("Update Required")
+                .setPositiveButton("Update", null)
+                .setCancelable(false)
+                .show();
+
+        Button updateButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
+        updateButton.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(app_link))));
+
 
     }
 
@@ -191,7 +241,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
         Map<String, String> map = new HashMap<>();
         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
             device_token = token;
-            Log.e("Fire Base Device Token", device_token );
+            Log.e("Fire Base Device Token", device_token);
             map.put("device_token", device_token);
             ws.getApi().updateToken(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
                 @Override

@@ -21,6 +21,10 @@ import retrofit2.http.QueryMap;
 
 public interface ServiceInterface {
 
+
+    @GET("android_version")
+    Call<ResponseBody> checkAppVersion(@Header("app-version") String version);
+
     //Auth
     @POST("auth/login")
     @FormUrlEncoded
@@ -28,7 +32,7 @@ public interface ServiceInterface {
 
     @POST("password/change")
     @FormUrlEncoded
-    Call<ResponseBody> changePassword(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
+    Call<ResponseBody> changePassword(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
     @POST("forget-password/create")
     @FormUrlEncoded
@@ -42,15 +46,15 @@ public interface ServiceInterface {
     Call<ResponseBody> getMyTeam(@Header("Authorization") String auth);
 
     @GET("companies")
-    Call<ResponseBody> getCompanies(@Header("Authorization") String auth, @Query("page") int pageNo,@QueryMap Map<String, String> filters);
+    Call<ResponseBody> getCompanies(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
 
     @POST("companies")
     @FormUrlEncoded
-    Call<ResponseBody> AddCompany(@Header("Authorization") String auth,@FieldMap Map<String, String> map);
+    Call<ResponseBody> AddCompany(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
     //projects
     @GET("projects")
-    Call<ResponseBody> getProjects(@Header("Authorization") String auth, @Query("page") int pageNo,@QueryMap Map<String, String> filters);
+    Call<ResponseBody> getProjects(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
 
     @POST("projects")
     @FormUrlEncoded
@@ -67,7 +71,7 @@ public interface ServiceInterface {
 
     //requests
     @GET("requests")
-    Call<ResponseBody> getRequests(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("type_id") int type_id, @Query("page") int pageNo,@QueryMap Map<String, String> filters);
+    Call<ResponseBody> getRequests(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("type_id") int type_id, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
 
     @GET("requests")
     Call<ResponseBody> getJobOrderRequests(@Header("Authorization") String auth, @Query("status") int status, @Query("project_id") int project_id, @Query("type_id") int type_id, @Query("page") int pageNo);
@@ -98,7 +102,7 @@ public interface ServiceInterface {
 
     //job orders
     @GET("job-orders")
-    Call<ResponseBody> getJobOrders(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("page") int pageNo,@QueryMap Map<String, String> filters);
+    Call<ResponseBody> getJobOrders(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
 
     @GET("job-orders/{job_order_id}")
     Call<ResponseBody> getJobOrderDetails(@Header("Authorization") String auth, @Path("job_order_id") int job_order_id);

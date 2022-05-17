@@ -71,7 +71,8 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         back.setOnClickListener(v -> onBackPressed());
         create_job_order.setOnClickListener(v -> {
             if (validateSelectedRequests(job_order_requests_adapter.getSelectedData())) {
-                showJONameSheet();
+//                showJONameSheet();
+                createJobOrder(job_order_requests_adapter.getSelectedData(),"");
             }
         });
         request_types_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
