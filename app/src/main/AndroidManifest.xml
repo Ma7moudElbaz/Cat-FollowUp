@@ -21,7 +21,12 @@
         tools:targetApi="n">
         <activity
             android:name=".ResultActivity"
-            android:exported="true"/>
+            android:exported="true">
+            <intent-filter>
+                <action android:name="RESULTACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".supplier_costs.edit.EditProductionSupplierCostActivity"
             android:exported="false"

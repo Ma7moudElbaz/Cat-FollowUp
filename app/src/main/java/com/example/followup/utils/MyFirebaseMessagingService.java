@@ -3,7 +3,6 @@ package com.example.followup.utils;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
@@ -13,14 +12,15 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
 import com.example.followup.R;
 import com.example.followup.ResultActivity;
-import com.example.followup.login.LoginActivity;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
@@ -28,48 +28,44 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         super.onNewToken(token);
         FirebaseMessaging.getInstance().subscribeToTopic("android");
         Log.e("TAG", "onNewToken: " + token);
+
     }
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
-        sendNotification(remoteMessage);
+
+        if (remoteMessage.getData().size() > 0) {
+            Log.d("Push notification", "Message data payload: " + remoteMessage.getData());
+            try {
+                JSONObject data = new JSONObject(remoteMessage.getData());
+                String title = data.getString("title");
+                String body = data.getString("body");
+                Log.e("Push notification", "onMessageReceived: \n" +
+                        "Extra Information: " + data.toString());
+
+                sendNotification(title, body);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        };
     }
 
-    private void sendNotification(RemoteMessage remoteMessage) {
+    private void sendNotification(String title, String body) {
 
-        Intent notifyIntent = new Intent(this, LoginActivity.class);
+        Intent notifyIntent = new Intent(this, ResultActivity.class);
 // Set the Activity to start in a new, empty task
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-        notifyIntent.putExtra("extra","notification");
+        notifyIntent.putExtra("extra", "notification");
 
 // Create the PendingIntent
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 this, 0, notifyIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
         );
-
-//        // Create an Intent for the activity you want to start
-//        Intent resultIntent = new Intent(this, LoginActivity.class);
-//        resultIntent.putExtra("extra","notification");
-//// Create the TaskStackBuilder and add the intent, which inflates the back stack
-//        TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-//        stackBuilder.addNextIntentWithParentStack(resultIntent);
-//// Get the PendingIntent containing the entire back stack
-//        PendingIntent pendingIntent =
-//                stackBuilder.getPendingIntent(0,
-//                        PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_ONE_SHOT);
-
-
-//        Intent intent = new Intent(this, HomeActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
-//                | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        // Create the PendingIntent
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-//                0, intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
         String channelId = "High";
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -78,8 +74,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
                         .setSmallIcon(R.drawable.ic_notifications)
-                        .setContentTitle(remoteMessage.getNotification().getTitle())
-                        .setContentText(remoteMessage.getNotification().getBody())
+                        .setContentTitle(title)
+                        .setContentText(body)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);

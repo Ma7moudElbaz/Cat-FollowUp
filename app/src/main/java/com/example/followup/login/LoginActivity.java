@@ -59,18 +59,10 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
         langBottomSheet.show(getSupportFragmentManager(), "requests_filter");
     }
 
-    String fromActivity = "login";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        if (getIntent().getStringExtra("extra") != null) {
-            fromActivity = getIntent().getStringExtra("extra");
-        }
-
-//        Toast.makeText(this, fromActivity, Toast.LENGTH_SHORT).show();
 
         initFields();
 
