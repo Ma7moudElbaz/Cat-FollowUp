@@ -22,6 +22,8 @@ import com.google.firebase.messaging.RemoteMessage;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Arrays;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onNewToken(@NonNull String token) {
@@ -35,8 +37,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
 
-        if (remoteMessage.getData().size() > 0) {
-            Log.d("Push notification", "Message data payload: " + remoteMessage.getData());
+        if (remoteMessage.getNotification() != null) {
+            String title = remoteMessage.getNotification().getTitle();
+            String body = remoteMessage.getNotification().getBody();
+            String click_action = remoteMessage.getNotification().getClickAction();
+            sendNotification(title, body,click_action);
+        } else if (remoteMessage.getData().size() > 0) {
+            Log.e("Push notification", "Message data payload: " + remoteMessage.getData());
             try {
                 JSONObject data = new JSONObject(remoteMessage.getData());
                 String title = data.getString("title");
@@ -44,27 +51,33 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Log.e("Push notification", "onMessageReceived: \n" +
                         "Extra Information: " + data.toString());
 
-                sendNotification(title, body);
+                sendNotification(title, body,"");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        };
+        }
     }
 
-    private void sendNotification(String title, String body) {
+    private void sendNotification(String title, String body,String click_action) {
+        Intent notifyIntent;
+        Log.e("Click action", click_action );
+        if (click_action .equals("RESULT")){
+            notifyIntent = new Intent(this, ResultActivity.class);
+        }else {
+            notifyIntent = new Intent(this, ResultActivity.class);
+        }
 
-        Intent notifyIntent = new Intent(this, ResultActivity.class);
 // Set the Activity to start in a new, empty task
         notifyIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-        notifyIntent.putExtra("extra", "notification");
+//        notifyIntent.putExtra("extra", "notification");
 
 // Create the PendingIntent
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 this, 0, notifyIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE |PendingIntent.FLAG_ONE_SHOT
         );
 
         String channelId = "High";
