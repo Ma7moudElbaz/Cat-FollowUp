@@ -176,7 +176,10 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
 
 //                        subscribeToFirebaseTopic(department_id);
 
-            startActivity(new Intent(getBaseContext(), HomeActivity.class));
+            Intent i = new Intent(getBaseContext(), HomeActivity.class);
+            i.putExtra("fromActivity", "login");
+            startActivity(i);
+            finish();
         } catch (JSONException e) {
             e.printStackTrace();
         }

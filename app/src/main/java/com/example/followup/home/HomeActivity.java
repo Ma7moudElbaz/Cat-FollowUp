@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -70,7 +71,15 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
         badge = bottomNavigationView.getOrCreateBadge(R.id.navigation_notifications);
         getNotificationNumber();
 
-        setContentFragment(new ProjectsFragment());
+        String fromActivity = getIntent().getStringExtra("fromActivity");
+        if (fromActivity.equals("notification")) {
+            setContentFragment(new NotificationsFragment());
+            if (bottomNavigationView.getSelectedItemId() != R.id.navigation_notifications) {
+                bottomNavigationView.setSelectedItemId(R.id.navigation_notifications);
+            }
+        } else {
+            setContentFragment(new ProjectsFragment());
+        }
 
     }
 
@@ -130,4 +139,14 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
 
     }
 
+    @Override
+    public void onBackPressed() {
+            new AlertDialog.Builder(HomeActivity.this)
+                    .setTitle("Are you sure you want to exit ? ")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        finish();
+                    })
+                    .setNegativeButton("Dismiss", null)
+                    .show();
+    }
 }

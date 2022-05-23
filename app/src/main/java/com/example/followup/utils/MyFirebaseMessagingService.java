@@ -15,6 +15,7 @@ import androidx.core.app.NotificationCompat;
 
 import com.example.followup.R;
 import com.example.followup.ResultActivity;
+import com.example.followup.login.LoginActivity;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -41,7 +42,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String title = remoteMessage.getNotification().getTitle();
             String body = remoteMessage.getNotification().getBody();
             String click_action = remoteMessage.getNotification().getClickAction();
-            sendNotification(title, body,click_action);
+            sendNotification(title, body, click_action);
         } else if (remoteMessage.getData().size() > 0) {
             Log.e("Push notification", "Message data payload: " + remoteMessage.getData());
             try {
@@ -50,21 +51,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 String body = data.getString("body");
                 Log.e("Push notification", "onMessageReceived: \n" +
                         "Extra Information: " + data.toString());
-
-                sendNotification(title, body,"");
+                sendNotification(title, body, "");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void sendNotification(String title, String body,String click_action) {
+    private void sendNotification(String title, String body, String click_action) {
         Intent notifyIntent;
-        Log.e("Click action", click_action );
-        if (click_action .equals("RESULT")){
+        Log.e("Click action", click_action);
+        if (click_action.equals("RESULT")) {
             notifyIntent = new Intent(this, ResultActivity.class);
-        }else {
-            notifyIntent = new Intent(this, ResultActivity.class);
+        } else {
+            notifyIntent = new Intent(this, LoginActivity.class);
         }
 
 // Set the Activity to start in a new, empty task
@@ -72,12 +72,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 | Intent.FLAG_ACTIVITY_CLEAR_TASK |
                 Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
-//        notifyIntent.putExtra("extra", "notification");
+//        notifyIntent.putExtra("result", "notification");
 
 // Create the PendingIntent
         PendingIntent pendingIntent = PendingIntent.getActivity(
                 this, 0, notifyIntent,
-                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE |PendingIntent.FLAG_ONE_SHOT
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_ONE_SHOT
         );
 
         String channelId = "High";
