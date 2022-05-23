@@ -227,6 +227,12 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
                     boolean canEditProject = UserType.canEditProject(getBaseContext(), created_by_id, assigned_to_id);
                     setFields(projectName, canEditProject,projectStatus);
 
+                    int purchase_no =dataObj.getInt("requests_purchasing");
+                    int printing_no =dataObj.getInt("requests_printing");
+                    int production_no = dataObj.getInt("requests_production");
+                    int photo_no =dataObj.getInt("requests_photography");
+                    setBadges(purchase_no,printing_no,production_no,photo_no);
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -240,6 +246,14 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
                 Toast.makeText(getBaseContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void setBadges(int purchase_no,int printing_no,int production_no,int photo_no){
+
+        requests_tab.getTabAt(0).getOrCreateBadge().setNumber(purchase_no);
+        requests_tab.getTabAt(1).getOrCreateBadge().setNumber(printing_no);
+        requests_tab.getTabAt(2).getOrCreateBadge().setNumber(production_no);
+        requests_tab.getTabAt(3).getOrCreateBadge().setNumber(photo_no);
     }
 
 
