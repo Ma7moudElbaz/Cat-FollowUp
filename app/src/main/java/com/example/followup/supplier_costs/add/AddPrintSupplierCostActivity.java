@@ -115,7 +115,6 @@ public class AddPrintSupplierCostActivity extends LocalizationActivity {
 
         add_cost.setOnClickListener(v -> {
             if (validateFields()) {
-//                addCost();
                 addCostData();
             }
         });
