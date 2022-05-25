@@ -3,16 +3,9 @@ package com.example.followup.requests.add;
 import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.DocumentsContract;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -88,7 +81,6 @@ public class AddPrintActivity extends LocalizationActivity {
                 @Override
                 public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                     if (multiplePermissionsReport.areAllPermissionsGranted()) {
-//                        showFileChooser();
                         pickFromGallery();
                     }
                 }
