@@ -85,7 +85,7 @@ public class EditPhotographySupplierCostActivity extends LocalizationActivity {
                     cldr.set(Calendar.MONTH, monthOfYear);
                     cldr.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                    String myFormat = "yy-MM-dd"; //In which you need put here
+                    String myFormat = "yyyy-MM-dd"; //In which you need put here
                     SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
                     textview.setText(sdf.format(cldr.getTime()));
                 }, cldr.get(Calendar.YEAR), cldr.get(Calendar.MONTH),
