@@ -200,8 +200,8 @@ public class AddProjectActivity extends LocalizationActivity implements BottomSh
     }
 
     private boolean validateFields() {
-        if (client_company.getText().toString().equals("0")) {
-            Toast.makeText(getBaseContext(), "Select client contact", Toast.LENGTH_SHORT).show();
+        if (client_company.getText().toString().equals("Select Company")) {
+            Toast.makeText(getBaseContext(), "Select Company", Toast.LENGTH_SHORT).show();
             return false;
         }
         if (project_name.length() == 0) {
