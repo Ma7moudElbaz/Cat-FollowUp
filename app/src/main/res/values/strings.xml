@@ -213,4 +213,5 @@
     <string name="all_companies">All Companies</string>
     <string name="select_company">Select Company</string>
     <string name="add_company">Add Company</string>
+    <string name="log_out">Log Out</string>
 </resources>

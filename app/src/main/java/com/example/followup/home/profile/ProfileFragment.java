@@ -1,6 +1,7 @@
 package com.example.followup.home.profile;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_change_password;
+import com.example.followup.login.LoginActivity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 
@@ -46,7 +48,7 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
     }
 
     TextView name, email;
-    Button changePassword;
+    Button changePassword,logOut;
     private ProgressDialog dialog;
     WebserviceContext ws;
 
@@ -58,6 +60,10 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
         changePassword.setOnClickListener(v -> showChangePassSheet());
         name.setText(UserUtils.getUserName(getContext()));
         email.setText(UserUtils.getUserEmail(getContext()));
+        logOut.setOnClickListener(v -> {
+            startActivity(new Intent(getContext(), LoginActivity.class));
+            getActivity().finish();
+        });
     }
 
     private void initFields(View view) {
@@ -66,6 +72,7 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
         name = view.findViewById(R.id.name);
         email = view.findViewById(R.id.email);
         changePassword = view.findViewById(R.id.btn_change_pass);
+        logOut = view.findViewById(R.id.btn_log_out);
 
 
         dialog = new ProgressDialog(getContext());
