@@ -156,14 +156,14 @@ public class AddPhotographyActivity extends LocalizationActivity {
             number_of_cameras.setError("This is required field");
             return false;
         }
-        if (description.length() == 0) {
-            description.setError("This is required field");
-            return false;
-        }
-        if (notes.length() == 0) {
-            notes.setError("This is required field");
-            return false;
-        }
+//        if (description.length() == 0) {
+//            description.setError("This is required field");
+//            return false;
+//        }
+//        if (notes.length() == 0) {
+//            notes.setError("This is required field");
+//            return false;
+//        }
         if (lighting_specify.length() == 0 && lighting_text.equalsIgnoreCase("Yes")) {
             lighting_specify.setError("This is required field");
             return false;

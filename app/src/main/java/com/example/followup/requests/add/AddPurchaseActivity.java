@@ -163,10 +163,6 @@ public class AddPurchaseActivity extends LocalizationActivity {
             material.setError("This is required field");
             return false;
         }
-        if (description.length() == 0) {
-            description.setError("This is required field");
-            return false;
-        }
         if (brand.length() == 0 && branding_text.equalsIgnoreCase("Yes")) {
             brand.setError("This is required field");
             return false;
@@ -175,10 +171,14 @@ public class AddPurchaseActivity extends LocalizationActivity {
             delivery_address.setError("This is required field");
             return false;
         }
-        if (notes.length() == 0) {
-            notes.setError("This is required field");
-            return false;
-        }
+//        if (description.length() == 0) {
+//            description.setError("This is required field");
+//            return false;
+//        }
+//        if (notes.length() == 0) {
+//            notes.setError("This is required field");
+//            return false;
+//        }
         return true;
     }
 

@@ -173,10 +173,10 @@ public class AddPhotographySupplierCostActivity extends LocalizationActivity {
             expiry_date.setError("This is required field");
             return false;
         }
-        if (notes.length() == 0) {
-            notes.setError("This is required field");
-            return false;
-        }
+//        if (notes.length() == 0) {
+//            notes.setError("This is required field");
+//            return false;
+//        }
         return true;
     }
 

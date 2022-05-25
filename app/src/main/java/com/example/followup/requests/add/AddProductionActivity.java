@@ -185,14 +185,14 @@ public class AddProductionActivity extends LocalizationActivity {
             quantity.setError("This is required field");
             return false;
         }
-        if (description.length() == 0) {
-            description.setError("This is required field");
-            return false;
-        }
-        if (notes.length() == 0) {
-            notes.setError("This is required field");
-            return false;
-        }
+//        if (description.length() == 0) {
+//            description.setError("This is required field");
+//            return false;
+//        }
+//        if (notes.length() == 0) {
+//            notes.setError("This is required field");
+//            return false;
+//        }
         if (designer_in_charge.length() == 0) {
             designer_in_charge.setError("This is required field");
             return false;

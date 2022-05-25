@@ -188,10 +188,7 @@ public class AddPrintActivity extends LocalizationActivity {
             quantity.setError("This is required field");
             return false;
         }
-        if (description.length() == 0) {
-            description.setError("This is required field");
-            return false;
-        }
+
         if (pages.length() == 0) {
             pages.setError("This is required field");
             return false;
@@ -212,10 +209,14 @@ public class AddPrintActivity extends LocalizationActivity {
             colors.setError("This is required field");
             return false;
         }
-        if (notes.length() == 0) {
-            colors.setError("This is required field");
-            return false;
-        }
+//        if (description.length() == 0) {
+//            description.setError("This is required field");
+//            return false;
+//        }
+//        if (notes.length() == 0) {
+//            colors.setError("This is required field");
+//            return false;
+//        }
         if (designer_in_charge.length() == 0) {
             colors.setError("This is required field");
             return false;
