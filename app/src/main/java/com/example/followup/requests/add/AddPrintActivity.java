@@ -291,7 +291,7 @@ public class AddPrintActivity extends LocalizationActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         JSONObject res = new JSONObject(response.body().string());
                         Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
                     } else {
