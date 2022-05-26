@@ -52,7 +52,7 @@ import retrofit2.Response;
 
 public class AddProductionActivity extends LocalizationActivity {
 
-    EditText item_name, country, venue, days, delivery_date, quantity, dimensions, designer_in_charge, description, notes, screen_specs;
+    EditText item_name, country, city, venue, days, delivery_date, quantity, dimensions, designer_in_charge, description, notes, screen_specs;
     Button choose_file, send_request;
     LinearLayout screen_specs_container;
     RadioGroup screen;
@@ -135,6 +135,7 @@ public class AddProductionActivity extends LocalizationActivity {
         back = findViewById(R.id.back);
         item_name = findViewById(R.id.item_name);
         country = findViewById(R.id.country);
+        city = findViewById(R.id.city);
         venue = findViewById(R.id.venue);
         days = findViewById(R.id.days);
         delivery_date = findViewById(R.id.delivery_date);
@@ -158,6 +159,10 @@ public class AddProductionActivity extends LocalizationActivity {
             return false;
         }
         if (country.length() == 0) {
+            country.setError("This is required field");
+            return false;
+        }
+        if (city.length() == 0) {
             country.setError("This is required field");
             return false;
         }
@@ -239,6 +244,7 @@ public class AddProductionActivity extends LocalizationActivity {
         map.put("project_id", String.valueOf(projectId));
         map.put("item_name", item_name.getText().toString());
         map.put("country", country.getText().toString());
+        map.put("city", city.getText().toString());
         map.put("venue", venue.getText().toString());
         map.put("days", days.getText().toString());
         map.put("delivery_date", delivery_date.getText().toString());

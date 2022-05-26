@@ -88,6 +88,7 @@
     <string name="sound">اصوات</string>
     <string name="request_details">تفاصيل الطلب</string>
     <string name="country">الدولة</string>
+    <string name="city">City</string>
     <string name="new_quotation">New Quotation</string>
     <string name="supplier_name">اسم المورد</string>
     <string name="cost">التكلفه</string>

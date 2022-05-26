@@ -223,6 +223,7 @@ public class AddPhotographyActivity extends LocalizationActivity {
         map.put("number_camera", number_of_cameras.getText().toString());
         map.put("description", description.getText().toString());
         map.put("note", notes.getText().toString());
+        map.put("quantity", "1");
 
         if (lighting_text.equalsIgnoreCase("yes")) {
             map.put("lighting", lighting_specify.getText().toString());

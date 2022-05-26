@@ -39,12 +39,13 @@ public class Production_view extends Fragment {
         return inflater.inflate(R.layout.fragment_production_view, container, false);
     }
 
-    TextView item_name, country, venue, days,delivery_date , quantity, dimensions, designer_in_charge,description,notes,screen;
+    TextView item_name, country, city, venue, days, delivery_date, quantity, dimensions, designer_in_charge, description, notes, screen;
 
 
     RecyclerView attach_recycler;
     ArrayList<Attach_item> attaches_list;
     Attaches_adapter attaches_adapter;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -56,6 +57,7 @@ public class Production_view extends Fragment {
         quantity = view.findViewById(R.id.quantity);
         description = view.findViewById(R.id.description);
         country = view.findViewById(R.id.country);
+        city = view.findViewById(R.id.city);
         venue = view.findViewById(R.id.venue);
         days = view.findViewById(R.id.days);
         delivery_date = view.findViewById(R.id.delivery_date);
@@ -91,6 +93,7 @@ public class Production_view extends Fragment {
         quantity.setText(dataObj.getString("quantity"));
         description.setText(dataObj.getString("description"));
         country.setText(dataObj.getString("country"));
+        city.setText(dataObj.getString("city"));
         venue.setText(dataObj.getString("venue"));
         days.setText(dataObj.getString("days"));
         delivery_date.setText(dataObj.getString("delivery_address"));
