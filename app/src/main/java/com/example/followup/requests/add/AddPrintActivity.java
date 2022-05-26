@@ -69,6 +69,7 @@ public class AddPrintActivity extends LocalizationActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_print);
         initFields();
+
         back.setOnClickListener(v -> onBackPressed());
 
         choose_file.setOnClickListener(v -> {
@@ -134,10 +135,8 @@ public class AddPrintActivity extends LocalizationActivity {
         });
 
         send_request.setOnClickListener(v -> {
-            addRequestAttaches("151");
             if (validateFields()) {
                 addPrint();
-                addRequestAttaches("151");
             }
         });
     }
