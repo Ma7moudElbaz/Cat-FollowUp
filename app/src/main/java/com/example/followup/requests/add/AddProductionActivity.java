@@ -273,7 +273,7 @@ public class AddProductionActivity extends LocalizationActivity {
 
 
     public void addRequestAttaches(final String requestId) {
-        dialog.show();
+//        dialog.show();
 
         List<MultipartBody.Part> fileToUpload = addAttaches(filesSelected);
         RequestBody request_id = RequestBody.create(MediaType.parse("text/plain"), requestId);

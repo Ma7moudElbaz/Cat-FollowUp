@@ -172,7 +172,6 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
             swipe_refresh.setRefreshing(false);
             setRequestsFragment(tabPosition);
         });
-        getProjectDetails();
     }
 
 
@@ -261,6 +260,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     protected void onResume() {
         super.onResume();
         setRequestsFragment(tabPosition);
+        getProjectDetails();
     }
 
     private void setRequestsFragment(int selectedTab) {
