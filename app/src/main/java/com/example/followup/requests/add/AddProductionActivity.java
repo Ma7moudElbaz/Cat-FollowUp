@@ -85,7 +85,7 @@ public class AddProductionActivity extends LocalizationActivity {
                 @Override
                 public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                     if (multiplePermissionsReport.areAllPermissionsGranted()) {
-                        pickFromGallery();
+                        pickFromFiles();
                     }
                 }
 
@@ -319,6 +319,21 @@ public class AddProductionActivity extends LocalizationActivity {
         //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
         String[] mimeTypes = {"image/jpeg", "image/png"};
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        // Launching the Intent
+        startActivityForResult(intent, FILES_REQUEST_CODE);
+    }
+
+    private void pickFromFiles() {
+
+        //Create an Intent with action as ACTION_PICK
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        // Sets the type as image/*. This ensures only components of type image are selected
+        intent.setType("*/*");
+        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
+//        String[] mimeTypes = {"image/jpeg", "image/png"};
+//        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
 
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         // Launching the Intent
