@@ -220,7 +220,7 @@ public class AddPhotographySupplierCostActivity extends LocalizationActivity {
         map.put("expiry_date", RequestBody.create(MediaType.parse("text/plain"),expiry_date.getText().toString()));
         map.put("note", RequestBody.create(MediaType.parse("text/plain"),notes.getText().toString()));
         map.put("currency_id",RequestBody.create(MediaType.parse("text/plain"),String.valueOf(currency.getSelectedItemPosition()+1)));
-
+        map.put("cost_per_id",RequestBody.create(MediaType.parse("text/plain"),"2"));
         return map;
     }
 

@@ -37,7 +37,7 @@ public class Print_supplierCost_view extends Fragment {
         return inflater.inflate(R.layout.fragment_print_supplier_cost_view, container, false);
     }
 
-    TextView supplier_name, cost, delivery_date, expiry_date, notes, print_type;
+    TextView supplier_name, cost, delivery_date, expiry_date, notes, print_type,cost_type;
     LinearLayout nagat_approval_container;
     ImageView nagat_approve, nagat_reject;
     int costStatus;
@@ -67,6 +67,7 @@ public class Print_supplierCost_view extends Fragment {
         expiry_date = view.findViewById(R.id.expiry_date);
         notes = view.findViewById(R.id.notes);
         print_type = view.findViewById(R.id.printing_type);
+        cost_type = view.findViewById(R.id.cost_type);
 
         nagat_approval_container = view.findViewById(R.id.nagat_approval_container);
         nagat_approve = view.findViewById(R.id.nagat_approve);
@@ -100,6 +101,9 @@ public class Print_supplierCost_view extends Fragment {
         expiry_date.setText(costObj.getString("expiry_date"));
         notes.setText(costObj.getString("note"));
         print_type.setText(costObj.getString("print_type"));
+
+        String costType_text = "(" + costObj.getString("cost_per_type") +" Cost)";
+        cost_type.setText(costType_text);
 
         if (!costObj.getString("reference").equals("null")) {
             setAttachesList(costObj.getString("reference"));

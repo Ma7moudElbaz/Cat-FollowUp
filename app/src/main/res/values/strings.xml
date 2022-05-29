@@ -215,4 +215,6 @@
     <string name="select_company">Select Company</string>
     <string name="add_company">Add Company</string>
     <string name="log_out">Log Out</string>
+    <string name="total">Total</string>
+    <string name="per_unit">Per Unit</string>
 </resources>

@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
+import com.example.followup.job_orders.list.JobOrdersActivity;
 import com.example.followup.requests.view.Photography_view;
 import com.example.followup.requests.view.Print_view;
 import com.example.followup.requests.view.Production_view;
@@ -73,6 +75,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
     int costStatus;
     int costId;
 
+    TextView job_orders;
 
     int request_id, type_id;
     JSONObject dataObj;
@@ -80,6 +83,8 @@ public class RequestDetailsActivity extends LocalizationActivity {
 
     SwipeRefreshLayout swipe_refresh;
     WebserviceContext ws;
+
+    int projectId;
 
     public JSONObject getDataObj() {
         return dataObj;
@@ -118,6 +123,12 @@ public class RequestDetailsActivity extends LocalizationActivity {
         swipe_refresh.setOnRefreshListener(() -> {
             swipe_refresh.setRefreshing(false);
             onResume();
+        });
+
+        job_orders.setOnClickListener(v -> {
+            Intent i = new Intent(getBaseContext(), JobOrdersActivity.class);
+            i.putExtra("project_id", projectId);
+            startActivity(i);
         });
     }
 
@@ -192,6 +203,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         sales_reject = findViewById(R.id.sales_reject);
         editCost = findViewById(R.id.edit_cost);
         cancel_request = findViewById(R.id.cancel_request);
+        job_orders = findViewById(R.id.job_orders);
 
         swipe_refresh = findViewById(R.id.swipe_refresh);
 
@@ -248,6 +260,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
                     JSONObject responseObject = new JSONObject(response.body().string());
                     dataObj = responseObject.getJSONObject("data");
                     type_id = dataObj.getInt("type_id");
+                    projectId = dataObj.getInt("project_id");
                     if (dataObj.getString("cost").equals("null")) {
                         costStatus = 1;
                     } else {

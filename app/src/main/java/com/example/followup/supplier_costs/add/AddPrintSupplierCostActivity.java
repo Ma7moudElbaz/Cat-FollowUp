@@ -16,9 +16,11 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -71,12 +73,26 @@ public class AddPrintSupplierCostActivity extends LocalizationActivity {
     private static final int FILES_REQUEST_CODE = 764546;
     Button choose_file;
     TextView filesChosen;
+
+    RadioGroup cost_per;
+    String cost_per_id = "1";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_print_supplier_cost);
         initFields();
         back.setOnClickListener(v -> onBackPressed());
+
+        cost_per.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.unit:
+                    cost_per_id = "1";
+                    break;
+                case R.id.total:
+                    cost_per_id = "2";
+                    break;
+            }
+        });
 
         delivery_date.setOnClickListener(v -> showDatePicker(delivery_date));
         delivery_date.setOnFocusChangeListener((v, hasFocus) -> {
@@ -139,6 +155,8 @@ public class AddPrintSupplierCostActivity extends LocalizationActivity {
     }
 
     private void initFields() {
+
+        cost_per = findViewById(R.id.cost_per);
 
         filesSelected = new ArrayList<>();
         filesChosen = findViewById(R.id.files_chosen);
@@ -232,6 +250,7 @@ public class AddPrintSupplierCostActivity extends LocalizationActivity {
         map.put("note", RequestBody.create(MediaType.parse("text/plain"),notes.getText().toString()));
         map.put("currency_id",RequestBody.create(MediaType.parse("text/plain"),String.valueOf(currency.getSelectedItemPosition()+1)));
         map.put("print_type",RequestBody.create(MediaType.parse("text/plain"),printing_type.getText().toString()));
+        map.put("cost_per_id",RequestBody.create(MediaType.parse("text/plain"),cost_per_id));
 
         return map;
     }

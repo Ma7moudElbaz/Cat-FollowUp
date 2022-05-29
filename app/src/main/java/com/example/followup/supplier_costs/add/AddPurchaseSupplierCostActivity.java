@@ -67,12 +67,27 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
     Button choose_file;
     TextView filesChosen;
 
+    RadioGroup cost_per;
+    String cost_per_id = "1";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_purchase_supplier_cost);
         initFields();
         back.setOnClickListener(v -> onBackPressed());
+
+
+        cost_per.setOnCheckedChangeListener((group, checkedId) -> {
+            switch (checkedId) {
+                case R.id.unit:
+                    cost_per_id = "1";
+                    break;
+                case R.id.total:
+                    cost_per_id = "2";
+                    break;
+            }
+        });
 
         delivery_date.setOnClickListener(v -> showDatePicker(delivery_date));
         delivery_date.setOnFocusChangeListener((v, hasFocus) -> {
@@ -135,6 +150,8 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
     }
 
     private void initFields() {
+
+        cost_per = findViewById(R.id.cost_per);
 
         filesSelected = new ArrayList<>();
         filesChosen = findViewById(R.id.files_chosen);
@@ -229,6 +246,7 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
         map.put("note", RequestBody.create(MediaType.parse("text/plain"), notes.getText().toString()));
         map.put("currency_id", RequestBody.create(MediaType.parse("text/plain"), String.valueOf(currency.getSelectedItemPosition() + 1)));
         map.put("purchase_type", RequestBody.create(MediaType.parse("text/plain"), purchasing_type.getText().toString()));
+        map.put("cost_per_id",RequestBody.create(MediaType.parse("text/plain"),cost_per_id));
 
         return map;
     }

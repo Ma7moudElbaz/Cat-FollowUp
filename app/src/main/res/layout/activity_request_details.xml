@@ -56,6 +56,22 @@
                     android:src="@drawable/ic_delete"
                     app:tint="@color/red"
                     android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/job_orders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:background="@drawable/job_order_bg"
+                    android:gravity="center"
+                    android:paddingStart="15dp"
+                    android:paddingTop="5dp"
+                    android:paddingEnd="15dp"
+                    android:paddingBottom="5dp"
+                    android:text="@string/job_orders"
+                    android:textColor="@color/white"
+                    app:drawableStartCompat="@drawable/ic_job_orders" />
+
             </RelativeLayout>
 
             <com.shuhart.stepview.StepView
