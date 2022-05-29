@@ -1,4 +1,9 @@
 <resources>
+    //production
+<!--    <string name="app_name" translatable="false">CATalyst</string>-->
+
+    //Development
+    <string name="app_name" translatable="false">CATalyst-dev</string>
 
     <string-array name="request_types">
         <item>Purchasing</item>
@@ -42,8 +47,6 @@
         <item>Bank Transfer</item>
     </string-array>
 
-
-    <string name="app_name" translatable="false">CATalyst</string>
     <string name="sign_in">Sign In</string>
     <string name="or_sign_up_if_you_are_new">Or sign up if you are new !</string>
     <string name="sign_up">Sign Up</string>

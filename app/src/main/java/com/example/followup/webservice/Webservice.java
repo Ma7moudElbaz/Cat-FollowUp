@@ -3,6 +3,7 @@ package com.example.followup.webservice;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.followup.utils.Constants;
 import com.example.followup.utils.UserUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -20,11 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Webservice {
 
-    //production
-//    private static final String MAIN_URL = "https://cpadmin.cat.com.eg/api/";
-
-    //dev
-    private static final String MAIN_URL = "https://cat-purchasing-app.cat-sw.com/api/";
+    private static final String MAIN_URL = Constants.MAIN_URL;
 
     private static Webservice instance;
     private final ServiceInterface api;

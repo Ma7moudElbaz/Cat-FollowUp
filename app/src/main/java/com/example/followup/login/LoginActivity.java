@@ -16,6 +16,7 @@ import com.example.followup.BuildConfig;
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_forget_password;
 import com.example.followup.home.HomeActivity;
+import com.example.followup.utils.Constants;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
 import com.example.followup.webservice.WebserviceContext;
@@ -50,8 +51,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
     String device_token = "";
 
     Webservice ws;
-    private final String app_link = "https://drive.google.com/file/d/1l0vA7GfGBwAfcTxSVHm8XCLWDTUysi8y/view?usp=sharing";
-
+     final String app_link = Constants.APP_LINK;
 
     public void showForgetPassSheet() {
         BottomSheet_forget_password langBottomSheet =
@@ -63,7 +63,6 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         initFields();
 
         email.setText(UserUtils.getLoginName(getBaseContext()));
