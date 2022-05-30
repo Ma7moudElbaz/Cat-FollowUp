@@ -97,7 +97,7 @@ public class Purchase_supplierCost_view extends Fragment {
     private void setFields(JSONObject dataObj) throws JSONException {
         JSONObject costObj = dataObj.getJSONObject("cost");
         supplier_name.setText(costObj.getString("supplier_name"));
-        String cost_text = costObj.getString("unit_cost_per_type")+"/" + costObj.getString("total_cost_per_type") + " "+ costObj.getString("currency_name") ;
+        String cost_text = costObj.getString("unit_cost_per_type")+"/" + costObj.getString("total_cost_per_type") + " - "+ costObj.getString("currency_name") ;
         cost.setText(cost_text);
         delivery_date.setText(costObj.getString("delivery_date"));
         expiry_date.setText(costObj.getString("expiry_date"));
