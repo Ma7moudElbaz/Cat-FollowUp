@@ -113,7 +113,7 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
                         @Override
                         public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                             if (multiplePermissionsReport.areAllPermissionsGranted()) {
-                                pickFromFiles();
+                                pickFromGallery();
                             }
                         }
 

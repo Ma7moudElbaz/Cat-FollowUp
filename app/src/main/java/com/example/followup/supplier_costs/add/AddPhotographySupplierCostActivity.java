@@ -96,7 +96,7 @@ public class AddPhotographySupplierCostActivity extends LocalizationActivity {
                         @Override
                         public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
                             if (multiplePermissionsReport.areAllPermissionsGranted()) {
-                                pickFromFiles();
+                                pickFromGallery();
                             }
                         }
 
