@@ -65,7 +65,7 @@
                     android:layout_marginTop="10dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:visibility="gone">
+                    android:visibility="visible">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
 
 
                     <androidx.cardview.widget.CardView
-                        android:layout_width="150dp"
+                        android:layout_width="100dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
@@ -104,6 +104,20 @@
                                 android:textSize="16sp" />
                         </RelativeLayout>
                     </androidx.cardview.widget.CardView>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/qtyy"
+                        android:textSize="16sp"
+                        android:layout_marginStart="5dp"/>
+
+                    <TextView
+                        android:id="@+id/quantity"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:layout_marginStart="5dp"/>
 
                 </LinearLayout>
 

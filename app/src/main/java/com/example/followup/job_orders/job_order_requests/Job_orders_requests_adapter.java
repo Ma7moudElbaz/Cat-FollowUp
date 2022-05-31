@@ -41,6 +41,7 @@ public class Job_orders_requests_adapter extends RecyclerView.Adapter<Job_orders
     @Override
     public void onBindViewHolder(@NonNull Job_orders_requests_adapter.ViewHolder holder, final int position) {
         holder.request_id.setText(items.get(position).getRequest_id());
+        holder.quantity.setText(items.get(position).getQuantity());
         holder.final_cost.setText(items.get(position).getFinal_cost());
         holder.final_cost.addTextChangedListener(new TextWatcher() {
             @Override
@@ -95,7 +96,7 @@ public class Job_orders_requests_adapter extends RecyclerView.Adapter<Job_orders
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         final CheckBox checkBox;
-        final TextView request_id;
+        final TextView request_id,quantity;
         final EditText final_cost;
         final LinearLayout final_cost_container;
 
@@ -103,6 +104,7 @@ public class Job_orders_requests_adapter extends RecyclerView.Adapter<Job_orders
             super(itemView);
             checkBox = itemView.findViewById(R.id.checkbox);
             request_id = itemView.findViewById(R.id.request_id);
+            quantity = itemView.findViewById(R.id.quantity);
             final_cost = itemView.findViewById(R.id.final_cost);
             final_cost_container = itemView.findViewById(R.id.final_cost_container);
         }
