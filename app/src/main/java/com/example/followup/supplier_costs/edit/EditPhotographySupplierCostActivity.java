@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,6 +45,7 @@ public class EditPhotographySupplierCostActivity extends LocalizationActivity {
 
     int costId;
     JSONObject dataObj;
+    String cost_per_id;
 
     WebserviceContext ws;
 
@@ -103,6 +106,7 @@ public class EditPhotographySupplierCostActivity extends LocalizationActivity {
         delivery_date.setText(costObj.getString("delivery_date"));
         expiry_date.setText(costObj.getString("expiry_date"));
         notes.setText(costObj.getString("note"));
+        cost_per_id = costObj.getString("cost_per_id");
     }
 
     private void initFields() {
@@ -193,6 +197,7 @@ public class EditPhotographySupplierCostActivity extends LocalizationActivity {
         map.put("expiry_date", expiry_date.getText().toString());
         map.put("note", notes.getText().toString());
         map.put("currency_id",String.valueOf(currency.getSelectedItemPosition()+1));
+        map.put("cost_per_id", cost_per_id);
 
         return map;
     }

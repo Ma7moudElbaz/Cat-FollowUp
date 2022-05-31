@@ -43,6 +43,7 @@ public class EditProductionSupplierCostActivity extends LocalizationActivity {
 
     int costId;
     JSONObject dataObj;
+    String cost_per_id;
 
     WebserviceContext ws;
     @Override
@@ -102,6 +103,7 @@ public class EditProductionSupplierCostActivity extends LocalizationActivity {
         notes.setText(costObj.getString("note"));
         assembly_dismantling.setText(costObj.getString("assembly_dimension"));
         storage.setText(costObj.getString("storage"));
+        cost_per_id = costObj.getString("cost_per_id");
     }
 
     private void initFields() {
@@ -204,6 +206,7 @@ public class EditProductionSupplierCostActivity extends LocalizationActivity {
         map.put("currency_id",String.valueOf(currency.getSelectedItemPosition()+1));
         map.put("assembly_dimension",assembly_dismantling.getText().toString());
         map.put("storage",storage.getText().toString());
+        map.put("cost_per_id", cost_per_id);
 
         return map;
     }

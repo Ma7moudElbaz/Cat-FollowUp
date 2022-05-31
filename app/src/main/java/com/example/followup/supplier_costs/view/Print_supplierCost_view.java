@@ -37,7 +37,7 @@ public class Print_supplierCost_view extends Fragment {
         return inflater.inflate(R.layout.fragment_print_supplier_cost_view, container, false);
     }
 
-    TextView supplier_name, cost, delivery_date, expiry_date, notes, print_type,cost_type;
+    TextView supplier_name, delivery_date, expiry_date, notes, print_type, quantity, cost_unit, cost_Total;
     LinearLayout nagat_approval_container;
     ImageView nagat_approve, nagat_reject;
     int costStatus;
@@ -62,12 +62,13 @@ public class Print_supplierCost_view extends Fragment {
 
         activity = (RequestDetailsActivity) getActivity();
         supplier_name = view.findViewById(R.id.supplier_name);
-        cost = view.findViewById(R.id.cost);
         delivery_date = view.findViewById(R.id.delivery_date);
         expiry_date = view.findViewById(R.id.expiry_date);
         notes = view.findViewById(R.id.notes);
         print_type = view.findViewById(R.id.printing_type);
-        cost_type = view.findViewById(R.id.cost_type);
+        quantity = view.findViewById(R.id.quantity);
+        cost_unit = view.findViewById(R.id.cost_unit);
+        cost_Total = view.findViewById(R.id.cost_Total);
 
         nagat_approval_container = view.findViewById(R.id.nagat_approval_container);
         nagat_approve = view.findViewById(R.id.nagat_approve);
@@ -96,8 +97,12 @@ public class Print_supplierCost_view extends Fragment {
     private void setFields(JSONObject dataObj) throws JSONException {
         JSONObject costObj = dataObj.getJSONObject("cost");
         supplier_name.setText(costObj.getString("supplier_name"));
-        String cost_text = costObj.getString("unit_cost_per_type")+"/" + costObj.getString("total_cost_per_type") + " - "+ costObj.getString("currency_name") ;
-        cost.setText(cost_text);
+        String quantity_text = "Qty : " + costObj.getString("quantity_request");
+        quantity.setText(quantity_text);
+        String cost_unit_text = "Unit : " + costObj.getString("unit_cost_per_type") + "  " + costObj.getString("currency_name");
+        cost_unit.setText(cost_unit_text);
+        String cost_total_text = "Total : " + costObj.getString("total_cost_per_type") + "  " + costObj.getString("currency_name");
+        cost_Total.setText(cost_total_text);
         delivery_date.setText(costObj.getString("delivery_date"));
         expiry_date.setText(costObj.getString("expiry_date"));
         notes.setText(costObj.getString("note"));
