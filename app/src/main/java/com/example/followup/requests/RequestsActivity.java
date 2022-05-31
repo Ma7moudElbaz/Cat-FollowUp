@@ -49,7 +49,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class RequestsActivity extends LocalizationActivity implements BottomSheet_choose_filter_requests.FilterListener{
+public class RequestsActivity extends LocalizationActivity implements BottomSheet_choose_filter_requests.FilterListener {
 
     public void showFilterSheet() {
         BottomSheet_choose_filter_requests langBottomSheet =
@@ -74,19 +74,22 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     TextView job_orders, project_name;
     int projectId;
     int tabPosition;
+    boolean firstCall = true;
     ProgressBar loading;
     TextView search;
     ImageView filterBtn;
 
     int selectedStatusIndex = -1;
     String selectedStatus = "";
-    String[] chipsStatus = new String[]{"","1", "2", "4", "5", "3","6"};
+    String[] chipsStatus = new String[]{"", "1", "2", "4", "5", "3", "6"};
 
     //    String projectName;
 //    boolean canEditProject;
     FloatingActionMenu add_menu_btn;
 
     SwipeRefreshLayout swipe_refresh;
+    int children_id;
+    int purchase_no, printing_no, production_no, photo_no;
 
     WebserviceContext ws;
 
@@ -130,7 +133,6 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
             public void onTabSelected(TabLayout.Tab tab) {
                 tabPosition = tab.getPosition();
                 setRequestsFragment(tabPosition);
-
             }
 
             @Override
@@ -143,6 +145,8 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
 
             }
         });
+
+        setSelectedUserTab(children_id);
 
         addPrinting.setOnClickListener(v -> {
             Intent i = new Intent(getBaseContext(), AddPrintActivity.class);
@@ -172,6 +176,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
             swipe_refresh.setRefreshing(false);
             setRequestsFragment(tabPosition);
         });
+
     }
 
 
@@ -194,11 +199,13 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
 
         add_menu_btn = findViewById(R.id.add_menu_btn);
 
+        children_id = UserUtils.getChildId(getBaseContext());
+
     }
 
     private void setFields(String projectName, boolean canEditProject, int projectStatus) {
         project_name.setText(projectName);
-        Log.e("project status", ""+projectStatus );
+        Log.e("project status", "" + projectStatus);
 
         if (canEditProject && projectStatus == 1) {
             add_menu_btn.setVisibility(View.VISIBLE);
@@ -224,13 +231,13 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
                         assigned_to_id = Integer.parseInt(assigned_to);
                     }
                     boolean canEditProject = UserType.canEditProject(getBaseContext(), created_by_id, assigned_to_id);
-                    setFields(projectName, canEditProject,projectStatus);
+                    setFields(projectName, canEditProject, projectStatus);
 
-                    int purchase_no =dataObj.getInt("requests_purchasing");
-                    int printing_no =dataObj.getInt("requests_printing");
-                    int production_no = dataObj.getInt("requests_production");
-                    int photo_no =dataObj.getInt("requests_photography");
-                    setBadges(purchase_no,printing_no,production_no,photo_no);
+                    purchase_no = dataObj.getInt("requests_purchasing");
+                    printing_no = dataObj.getInt("requests_printing");
+                    production_no = dataObj.getInt("requests_production");
+                    photo_no = dataObj.getInt("requests_photography");
+                    setUserBadges();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -247,20 +254,45 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
         });
     }
 
-    private void setBadges(int purchase_no,int printing_no,int production_no,int photo_no){
+    private void setUserBadges() {
+        switch (children_id) {
+            case 5:
+                setBadges(printing_no);
+                break;
+            case 6:
+                setBadges(photo_no);
+                break;
+            case 7:
+                setBadges(purchase_no);
+                break;
+            case 8:
+                setBadges(production_no);
+                break;
+            default:
+                setBadges(purchase_no, printing_no, production_no, photo_no);
+                break;
+        }
+    }
 
+    private void setBadges(int purchase_no, int printing_no, int production_no, int photo_no) {
         requests_tab.getTabAt(0).getOrCreateBadge().setNumber(purchase_no);
         requests_tab.getTabAt(1).getOrCreateBadge().setNumber(printing_no);
         requests_tab.getTabAt(2).getOrCreateBadge().setNumber(production_no);
         requests_tab.getTabAt(3).getOrCreateBadge().setNumber(photo_no);
     }
 
+    private void setBadges(int currentNo) {
+        requests_tab.getTabAt(0).getOrCreateBadge().setNumber(currentNo);
+    }
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        setRequestsFragment(tabPosition);
         getProjectDetails();
+        if (!firstCall) {
+            setRequestsFragment(tabPosition);
+        }
     }
 
     private void setRequestsFragment(int selectedTab) {
@@ -280,6 +312,45 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
         }
     }
 
+    private void setSelectedUserTab(int children_id) {
+        switch (children_id) {
+            case 5:
+                requests_tab.getTabAt(1).select();
+                removeTabs(1);
+                break;
+            case 6:
+                requests_tab.getTabAt(3).select();
+                removeTabs(3);
+                break;
+            case 7:
+                requests_tab.getTabAt(0).select();
+                removeTabs(0);
+                break;
+            case 8:
+                requests_tab.getTabAt(2).select();
+                removeTabs(2);
+                break;
+            default:
+                requests_tab.getTabAt(0).select();
+                break;
+        }
+        firstCall = false;
+    }
+
+    private void removeTabs(int keepTab) {
+        int tab_to_keep = keepTab;
+        int tab_to_delete = 0;
+        for (int i = 0; i < 3; i++) {
+            if (tab_to_keep != 0) {
+                requests_tab.removeTabAt(tab_to_delete);
+                tab_to_keep--;
+            } else {
+                tab_to_delete = 1;
+                requests_tab.removeTabAt(tab_to_delete);
+            }
+        }
+    }
+
     public Map<String, String> getFilterMap() {
         Map<String, String> map = new HashMap<>();
         map.put("created_by", "");
@@ -291,9 +362,9 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
 
     @Override
     public void applyFilterListener(int returenedSelectedStatusIndex) {
-        if (returenedSelectedStatusIndex == -1){
+        if (returenedSelectedStatusIndex == -1) {
             selectedStatus = "";
-        }else {
+        } else {
             selectedStatus = chipsStatus[returenedSelectedStatusIndex];
         }
 
