@@ -28,6 +28,7 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.zires.switchsegmentedcontrol.ZiresSwitchSegmentedControl;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,7 +68,7 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
     Button choose_file;
     TextView filesChosen;
 
-    RadioGroup cost_per;
+    ZiresSwitchSegmentedControl cost_per_switch;
     String cost_per_id = "1";
 
     @Override
@@ -77,15 +78,11 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
         initFields();
         back.setOnClickListener(v -> onBackPressed());
 
-
-        cost_per.setOnCheckedChangeListener((group, checkedId) -> {
-            switch (checkedId) {
-                case R.id.unit:
-                    cost_per_id = "1";
-                    break;
-                case R.id.total:
-                    cost_per_id = "2";
-                    break;
+        cost_per_switch.setOnToggleSwitchChangeListener(b -> {
+            if (b) {
+                cost_per_id = "1";
+            } else {
+                cost_per_id = "2";
             }
         });
 
@@ -151,7 +148,7 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
 
     private void initFields() {
 
-        cost_per = findViewById(R.id.cost_per);
+        cost_per_switch = findViewById(R.id.cost_per_switch);
 
         filesSelected = new ArrayList<>();
         filesChosen = findViewById(R.id.files_chosen);

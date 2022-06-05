@@ -27,6 +27,7 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.zires.switchsegmentedcontrol.ZiresSwitchSegmentedControl;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,7 +52,7 @@ import retrofit2.Response;
 
 public class AddProductionSupplierCostActivity extends LocalizationActivity {
 
-    EditText supplier_name, cost, delivery_date, expiry_date, notes,assembly_dismantling,storage;
+    EditText supplier_name, cost, delivery_date, expiry_date, notes, assembly_dismantling, storage;
     Button add_cost;
     Spinner currency;
     ImageView back;
@@ -66,8 +67,9 @@ public class AddProductionSupplierCostActivity extends LocalizationActivity {
     Button choose_file;
     TextView filesChosen;
 
-    RadioGroup cost_per;
+    ZiresSwitchSegmentedControl cost_per_switch;
     String cost_per_id = "1";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,14 +77,11 @@ public class AddProductionSupplierCostActivity extends LocalizationActivity {
         initFields();
         back.setOnClickListener(v -> onBackPressed());
 
-        cost_per.setOnCheckedChangeListener((group, checkedId) -> {
-            switch (checkedId) {
-                case R.id.unit:
-                    cost_per_id = "1";
-                    break;
-                case R.id.total:
-                    cost_per_id = "2";
-                    break;
+        cost_per_switch.setOnToggleSwitchChangeListener(b -> {
+            if (b) {
+                cost_per_id = "1";
+            } else {
+                cost_per_id = "2";
             }
         });
 
@@ -149,7 +148,7 @@ public class AddProductionSupplierCostActivity extends LocalizationActivity {
 
     private void initFields() {
 
-        cost_per = findViewById(R.id.cost_per);
+        cost_per_switch = findViewById(R.id.cost_per_switch);
 
         filesSelected = new ArrayList<>();
         filesChosen = findViewById(R.id.files_chosen);
@@ -211,7 +210,7 @@ public class AddProductionSupplierCostActivity extends LocalizationActivity {
         Map<String, RequestBody> map = setCostMapRequestBody();
         List<MultipartBody.Part> fileToUpload = addAttaches(filesSelected);
         dialog.show();
-        ws.getApi().addCostData(UserUtils.getAccessToken(getBaseContext()),fileToUpload, map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().addCostData(UserUtils.getAccessToken(getBaseContext()), fileToUpload, map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -221,7 +220,8 @@ public class AddProductionSupplierCostActivity extends LocalizationActivity {
 
                     } else {
                         JSONObject res = new JSONObject(response.errorBody().string());
-                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();
@@ -238,18 +238,18 @@ public class AddProductionSupplierCostActivity extends LocalizationActivity {
     }
 
     private Map<String, RequestBody> setCostMapRequestBody() {
-        Log.e("TAG", String.valueOf(requestId) );
+        Log.e("TAG", String.valueOf(requestId));
         Map<String, RequestBody> map = new HashMap<>();
-        map.put("request_id", RequestBody.create(MediaType.parse("text/plain"),String.valueOf(requestId)));
-        map.put("supplier_name", RequestBody.create(MediaType.parse("text/plain"),supplier_name.getText().toString()));
-        map.put("cost", RequestBody.create(MediaType.parse("text/plain"),cost.getText().toString()));
-        map.put("delivery_date", RequestBody.create(MediaType.parse("text/plain"),delivery_date.getText().toString()));
-        map.put("expiry_date", RequestBody.create(MediaType.parse("text/plain"),expiry_date.getText().toString()));
-        map.put("note", RequestBody.create(MediaType.parse("text/plain"),notes.getText().toString()));
-        map.put("currency_id",RequestBody.create(MediaType.parse("text/plain"),String.valueOf(currency.getSelectedItemPosition()+1)));
-        map.put("assembly_dimension",RequestBody.create(MediaType.parse("text/plain"),assembly_dismantling.getText().toString()));
-        map.put("storage",RequestBody.create(MediaType.parse("text/plain"),storage.getText().toString()));
-        map.put("cost_per_id",RequestBody.create(MediaType.parse("text/plain"),cost_per_id));
+        map.put("request_id", RequestBody.create(MediaType.parse("text/plain"), String.valueOf(requestId)));
+        map.put("supplier_name", RequestBody.create(MediaType.parse("text/plain"), supplier_name.getText().toString()));
+        map.put("cost", RequestBody.create(MediaType.parse("text/plain"), cost.getText().toString()));
+        map.put("delivery_date", RequestBody.create(MediaType.parse("text/plain"), delivery_date.getText().toString()));
+        map.put("expiry_date", RequestBody.create(MediaType.parse("text/plain"), expiry_date.getText().toString()));
+        map.put("note", RequestBody.create(MediaType.parse("text/plain"), notes.getText().toString()));
+        map.put("currency_id", RequestBody.create(MediaType.parse("text/plain"), String.valueOf(currency.getSelectedItemPosition() + 1)));
+        map.put("assembly_dimension", RequestBody.create(MediaType.parse("text/plain"), assembly_dismantling.getText().toString()));
+        map.put("storage", RequestBody.create(MediaType.parse("text/plain"), storage.getText().toString()));
+        map.put("cost_per_id", RequestBody.create(MediaType.parse("text/plain"), cost_per_id));
         return map;
     }
 
@@ -312,11 +312,11 @@ public class AddProductionSupplierCostActivity extends LocalizationActivity {
                         }
                     } else {
                         Uri uri = data.getData();
-                        filesSelected.add(RealPathUtil.getRealPath(getBaseContext(),uri));
+                        filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
                     }
-                    filesChosen.setText(filesSelected.size()+" Files Selected");
+                    filesChosen.setText(filesSelected.size() + " Files Selected");
 
-                    Log.e("Data selected", filesSelected.toString() );
+                    Log.e("Data selected", filesSelected.toString());
             }
     }
 }

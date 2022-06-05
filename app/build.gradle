@@ -93,15 +93,7 @@ dependencies {
     //tag view
     implementation 'com.github.adroitandroid:ChipCloud:2.2.1'
 
-    /*Doc picker */
-    implementation 'com.greentoad.turtlebody.docpicker:doc-picker:1.0.1'
-
-
-    //Anko
-    implementation "org.jetbrains.anko:anko:0.10.8"
-
-    /*for rxjava support*/
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    //switch toggle
+    implementation 'com.github.classiczires:Android-Switch-Segmented-Control:1.0.5'
 
 }

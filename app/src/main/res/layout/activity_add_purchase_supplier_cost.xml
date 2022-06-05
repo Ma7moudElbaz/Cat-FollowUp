@@ -115,57 +115,57 @@
                     android:textColor="@color/gray"
                     android:textSize="16sp" />
 
-                <RadioGroup
-                android:id="@+id/cost_per"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/unit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/per_unit" />
-
-                <RadioButton
-                    android:id="@+id/total"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:text="@string/total" />
-            </RadioGroup>
-
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_gray_border">
+                    android:layout_marginTop="5dp">
 
-                    <Spinner
-                        android:id="@+id/currency_spinner"
+                    <com.zires.switchsegmentedcontrol.ZiresSwitchSegmentedControl
+                        android:id="@+id/cost_per_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:layout_alignParentEnd="true"
-                        android:background="@drawable/calender_yellow"
-                        android:entries="@array/currency"
-                        android:padding="5dp" />
+                        android:layout_marginStart="5dp"
+                        android:gravity="center"
+                        app:activeBgColor="@color/colorAccent"
+                        app:activeTextColor="@color/white"
+                        app:backgroundColor="@color/white"
+                        app:borderColor="@color/et_border_color"
+                        app:inactiveTextColor="@color/light_gray"
+                        app:textToggleLeft="Unit"
+                        app:textToggleRight="@string/total" />
 
-                    <EditText
-                        android:id="@+id/cost"
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
-                        android:layout_toStartOf="@+id/currency_spinner"
-                        android:background="@color/transparent"
-                        android:hint="@string/cost"
-                        android:importantForAutofill="no"
-                        android:inputType="numberDecimal"
-                        android:padding="10dp"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@+id/cost_per_switch"
+                        android:background="@drawable/et_gray_border">
+
+                        <Spinner
+                            android:id="@+id/currency_spinner"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:layout_alignParentEnd="true"
+                            android:background="@drawable/calender_yellow"
+                            android:entries="@array/currency"
+                            android:padding="5dp" />
+
+                        <EditText
+                            android:id="@+id/cost"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_toStartOf="@+id/currency_spinner"
+                            android:background="@color/transparent"
+                            android:hint="@string/cost"
+                            android:importantForAutofill="no"
+                            android:inputType="numberDecimal"
+                            android:padding="10dp"
+                            android:textColor="@color/black"
+                            android:textSize="16sp" />
+                    </RelativeLayout>
+
                 </RelativeLayout>
             </LinearLayout>
-
 
 
             <LinearLayout
@@ -190,15 +190,15 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:background="@drawable/calender_yellow"
-                        android:src="@drawable/ic_date"
+                        android:layout_alignParentEnd="true"
                         android:adjustViewBounds="true"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
+                        android:background="@drawable/calender_yellow"
                         android:paddingStart="15dp"
+                        android:paddingTop="8dp"
                         android:paddingEnd="15dp"
-                        app:tint="@color/white"
-                        android:layout_alignParentEnd="true"/>
+                        android:paddingBottom="8dp"
+                        android:src="@drawable/ic_date"
+                        app:tint="@color/white" />
 
                     <EditText
                         android:id="@+id/delivery_date"
@@ -236,15 +236,15 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:background="@drawable/calender_yellow"
-                        android:src="@drawable/ic_date"
+                        android:layout_alignParentEnd="true"
                         android:adjustViewBounds="true"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
+                        android:background="@drawable/calender_yellow"
                         android:paddingStart="15dp"
+                        android:paddingTop="8dp"
                         android:paddingEnd="15dp"
-                        app:tint="@color/white"
-                        android:layout_alignParentEnd="true"/>
+                        android:paddingBottom="8dp"
+                        android:src="@drawable/ic_date"
+                        app:tint="@color/white" />
 
                     <EditText
                         android:id="@+id/expiry_date"
