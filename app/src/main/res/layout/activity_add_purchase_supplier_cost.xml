@@ -120,20 +120,22 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp">
 
-                    <com.zires.switchsegmentedcontrol.ZiresSwitchSegmentedControl
+                    <com.jem.fliptabs.FlipTab
                         android:id="@+id/cost_per_switch"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:layout_alignParentEnd="true"
+                        android:layout_width="130dp"
+                        android:layout_height="wrap_content"
+                        app:leftTabText="Unit"
+                        app:rightTabText="@string/total"
+                        app:startingTab="left"
+                        android:layout_centerVertical="true"
                         android:layout_marginStart="5dp"
-                        android:gravity="center"
-                        app:activeBgColor="@color/colorAccent"
-                        app:activeTextColor="@color/white"
-                        app:backgroundColor="@color/white"
-                        app:borderColor="@color/et_border_color"
-                        app:inactiveTextColor="@color/light_gray"
-                        app:textToggleLeft="Unit"
-                        app:textToggleRight="@string/total" />
+                        android:layout_alignParentEnd="true"
+                        app:removeDefaultPadding="true"
+                        app:overallColor="@color/colorAccent"
+                        app:flipAnimationDuration="0"
+                        app:wobbleAngle="0"
+                        app:wobbleReturnAnimationDuration="0"
+                        app:borderWidth="1dp"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"

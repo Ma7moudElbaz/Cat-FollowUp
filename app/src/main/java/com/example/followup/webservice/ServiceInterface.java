@@ -100,7 +100,7 @@ public interface ServiceInterface {
 
     @POST("costs/update/{cost_id}")
     @FormUrlEncoded
-    Call<ResponseBody> editCost(@Header("Authorization") String auth, @Path("cost_id") int cost_id, @FieldMap Map<String, String> map);
+    Call<ResponseBody> editCost(@Header("Authorization") String auth, @Path("cost_id") int cost_id, @Part List<MultipartBody.Part> files, @PartMap Map<String, RequestBody> map);
 
     @POST("costs/status")
     @FormUrlEncoded

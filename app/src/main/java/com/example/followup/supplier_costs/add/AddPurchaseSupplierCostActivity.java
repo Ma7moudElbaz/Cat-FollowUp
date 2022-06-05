@@ -12,23 +12,23 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.utils.RealPathUtil;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.jem.fliptabs.FlipTab;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
-import com.zires.switchsegmentedcontrol.ZiresSwitchSegmentedControl;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -68,7 +68,7 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
     Button choose_file;
     TextView filesChosen;
 
-    ZiresSwitchSegmentedControl cost_per_switch;
+    FlipTab cost_per_switch;
     String cost_per_id = "1";
 
     @Override
@@ -78,11 +78,19 @@ public class AddPurchaseSupplierCostActivity extends LocalizationActivity {
         initFields();
         back.setOnClickListener(v -> onBackPressed());
 
-        cost_per_switch.setOnToggleSwitchChangeListener(b -> {
-            if (b) {
-                cost_per_id = "1";
-            } else {
-                cost_per_id = "2";
+        cost_per_switch.setTabSelectedListener(new FlipTab.TabSelectedListener() {
+            @Override
+            public void onTabSelected(boolean isLeftTab, @NonNull String s) {
+                if (isLeftTab){
+                    cost_per_id = "1";
+                }else {
+                    cost_per_id = "2";
+                }
+            }
+
+            @Override
+            public void onTabReselected(boolean isLeftTab, @NonNull String s) {
+
             }
         });
 

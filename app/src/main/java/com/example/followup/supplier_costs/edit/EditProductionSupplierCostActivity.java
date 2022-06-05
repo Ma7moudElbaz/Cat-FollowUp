@@ -1,10 +1,15 @@
 package com.example.followup.supplier_costs.edit;
 
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -12,21 +17,36 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
+import com.example.followup.utils.RealPathUtil;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.jem.fliptabs.FlipTab;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,9 +63,16 @@ public class EditProductionSupplierCostActivity extends LocalizationActivity {
 
     int costId;
     JSONObject dataObj;
-    String cost_per_id;
 
     WebserviceContext ws;
+
+    List<String> filesSelected;
+    private static final int FILES_REQUEST_CODE = 764546;
+    Button choose_file;
+    TextView filesChosen;
+
+    FlipTab cost_per_switch;
+    String cost_per_id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,6 +98,42 @@ public class EditProductionSupplierCostActivity extends LocalizationActivity {
             if (validateFields()) {
                 editCost();
             }
+        });
+        cost_per_switch.setTabSelectedListener(new FlipTab.TabSelectedListener() {
+            @Override
+            public void onTabSelected(boolean isLeftTab, @NonNull String s) {
+                if (isLeftTab){
+                    cost_per_id = "1";
+                }else {
+                    cost_per_id = "2";
+                }
+            }
+
+            @Override
+            public void onTabReselected(boolean isLeftTab, @NonNull String s) {
+
+            }
+        });
+
+        choose_file.setOnClickListener(v -> {
+
+            Dexter.withContext(getBaseContext())
+                    .withPermissions(
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    ).withListener(new MultiplePermissionsListener() {
+                        @Override
+                        public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                            if (multiplePermissionsReport.areAllPermissionsGranted()) {
+                                pickFromGallery();
+                            }
+                        }
+
+                        @Override
+                        public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+
+                        }
+                    }).check();
         });
     }
 
@@ -103,10 +166,23 @@ public class EditProductionSupplierCostActivity extends LocalizationActivity {
         notes.setText(costObj.getString("note"));
         assembly_dismantling.setText(costObj.getString("assembly_dimension"));
         storage.setText(costObj.getString("storage"));
+
         cost_per_id = costObj.getString("cost_per_id");
+        if (cost_per_id.equals("1")) {
+            cost_per_switch.selectLeftTab(false);
+        } else {
+            cost_per_switch.selectRightTab(false);
+        }
     }
 
     private void initFields() {
+
+        cost_per_switch = findViewById(R.id.cost_per_switch);
+
+        filesSelected = new ArrayList<>();
+        filesChosen = findViewById(R.id.files_chosen);
+        choose_file = findViewById(R.id.choose_file);
+
         ws = new WebserviceContext(this);
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please, Wait...");
@@ -167,10 +243,12 @@ public class EditProductionSupplierCostActivity extends LocalizationActivity {
     }
 
     private void editCost() {
-        Map<String, String> map = setCostMap();
+
+        Map<String, RequestBody> map = setCostMapRequestBody();
+        List<MultipartBody.Part> fileToUpload = addAttaches(filesSelected);
 
         dialog.show();
-        ws.getApi().editCost(UserUtils.getAccessToken(getBaseContext()),costId, map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().editCost(UserUtils.getAccessToken(getBaseContext()),costId,fileToUpload, map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -196,18 +274,85 @@ public class EditProductionSupplierCostActivity extends LocalizationActivity {
         });
     }
 
-    private Map<String, String> setCostMap() {
-        Map<String, String> map = new HashMap<>();
-        map.put("supplier_name", supplier_name.getText().toString());
-        map.put("cost", cost.getText().toString());
-        map.put("delivery_date", delivery_date.getText().toString());
-        map.put("expiry_date", expiry_date.getText().toString());
-        map.put("note", notes.getText().toString());
-        map.put("currency_id",String.valueOf(currency.getSelectedItemPosition()+1));
-        map.put("assembly_dimension",assembly_dismantling.getText().toString());
-        map.put("storage",storage.getText().toString());
-        map.put("cost_per_id", cost_per_id);
-
+    private Map<String, RequestBody> setCostMapRequestBody() {
+        Map<String, RequestBody> map = new HashMap<>();
+        map.put("supplier_name", RequestBody.create(MediaType.parse("text/plain"), supplier_name.getText().toString()));
+        map.put("cost", RequestBody.create(MediaType.parse("text/plain"), cost.getText().toString()));
+        map.put("delivery_date", RequestBody.create(MediaType.parse("text/plain"), delivery_date.getText().toString()));
+        map.put("expiry_date", RequestBody.create(MediaType.parse("text/plain"), expiry_date.getText().toString()));
+        map.put("note", RequestBody.create(MediaType.parse("text/plain"), notes.getText().toString()));
+        map.put("currency_id", RequestBody.create(MediaType.parse("text/plain"), String.valueOf(currency.getSelectedItemPosition() + 1)));
+        map.put("assembly_dimension", RequestBody.create(MediaType.parse("text/plain"), assembly_dismantling.getText().toString()));
+        map.put("storage", RequestBody.create(MediaType.parse("text/plain"), storage.getText().toString()));
+        map.put("cost_per_id", RequestBody.create(MediaType.parse("text/plain"), cost_per_id));
         return map;
+    }
+
+
+    private void pickFromGallery() {
+        //Create an Intent with action as ACTION_PICK
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        // Sets the type as image/*. This ensures only components of type image are selected
+        intent.setType("image/*");
+        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+
+//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        // Launching the Intent
+        startActivityForResult(intent, FILES_REQUEST_CODE);
+    }
+
+
+    private void pickFromFiles() {
+
+        //Create an Intent with action as ACTION_PICK
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        // Sets the type as image/*. This ensures only components of type image are selected
+        intent.setType("*/*");
+        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
+//        String[] mimeTypes = {"image/jpeg", "image/png"};
+//        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        // Launching the Intent
+        startActivityForResult(intent, FILES_REQUEST_CODE);
+    }
+
+    private List<MultipartBody.Part> addAttaches(List<String> files) {
+        List<MultipartBody.Part> list = new ArrayList<>();
+        for (int i = 0; i < files.size(); i++) {
+            File file = new File(files.get(i));
+            RequestBody fileReqBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part part = MultipartBody.Part.createFormData("reference", file.getName(), fileReqBody);
+            list.add(part);
+        }
+        return list;
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Result code is RESULT_OK only if the user selects an Image
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK)
+            switch (requestCode) {
+                case FILES_REQUEST_CODE:
+                    filesSelected.clear();
+                    //data.getData returns the content URI for the selected files
+                    if (data == null) {
+                        return;
+                    } else if (data.getClipData() != null) {
+                        for (int i = 0; i < data.getClipData().getItemCount(); i++) {
+                            Uri uri = data.getClipData().getItemAt(i).getUri();
+                            filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
+                        }
+                    } else {
+                        Uri uri = data.getData();
+                        filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
+                    }
+                    filesChosen.setText(filesSelected.size() + " Files Selected");
+
+                    Log.e("Data selected", filesSelected.toString());
+            }
     }
 }

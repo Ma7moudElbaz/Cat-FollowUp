@@ -94,6 +94,6 @@ dependencies {
     implementation 'com.github.adroitandroid:ChipCloud:2.2.1'
 
     //switch toggle
-    implementation 'com.github.classiczires:Android-Switch-Segmented-Control:1.0.5'
+    implementation 'com.github.Chrisvin:FlipTabs:v1.5'
 
 }
