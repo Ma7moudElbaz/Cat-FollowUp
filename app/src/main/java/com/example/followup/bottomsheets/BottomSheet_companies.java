@@ -213,7 +213,7 @@ public class BottomSheet_companies extends BottomSheetDialogFragment implements 
                         company_name.setText("");
                         Toast.makeText(getContext(), "Company Added Successfully and waiting admin approval", Toast.LENGTH_SHORT).show();
                     } else {
-                        JSONObject responseObject = new JSONObject(response.body().string());
+                        JSONObject responseObject = new JSONObject(response.errorBody().string());
                         Toast.makeText(getContext(), responseObject.getString("error"), Toast.LENGTH_SHORT).show();
                     }
 
