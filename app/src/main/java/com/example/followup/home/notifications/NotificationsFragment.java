@@ -106,8 +106,7 @@ public class NotificationsFragment extends Fragment {
                     setNotifications(notificationsArray);
                     JSONObject metaObject = responseObject.getJSONObject("meta");
                     lastPageNum = metaObject.getInt("last_page");
-                    readNotification();
-
+//                    readNotification();
                     loading.setVisibility(View.GONE);
 
                 } catch (Exception e) {

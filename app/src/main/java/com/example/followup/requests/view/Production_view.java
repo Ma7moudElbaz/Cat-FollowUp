@@ -96,7 +96,7 @@ public class Production_view extends Fragment {
         city.setText(dataObj.getString("city"));
         venue.setText(dataObj.getString("venue"));
         days.setText(dataObj.getString("days"));
-        delivery_date.setText(dataObj.getString("delivery_address"));
+        delivery_date.setText(dataObj.getString("delivery_date"));
         dimensions.setText(dataObj.getString("dimension"));
         notes.setText(dataObj.getString("note"));
         designer_in_charge.setText(dataObj.getString("designer_name"));

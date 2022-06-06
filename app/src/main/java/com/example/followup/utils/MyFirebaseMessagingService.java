@@ -44,13 +44,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             String click_action = remoteMessage.getNotification().getClickAction();
             sendNotification(title, body, click_action);
         } else if (remoteMessage.getData().size() > 0) {
-            Log.e("Push notification", "Message data payload: " + remoteMessage.getData());
             try {
                 JSONObject data = new JSONObject(remoteMessage.getData());
                 String title = data.getString("title");
                 String body = data.getString("body");
-                Log.e("Push notification", "onMessageReceived: \n" +
-                        "Extra Information: " + data.toString());
                 sendNotification(title, body, "");
             } catch (JSONException e) {
                 e.printStackTrace();
