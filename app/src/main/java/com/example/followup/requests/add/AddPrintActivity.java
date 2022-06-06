@@ -314,7 +314,7 @@ public class AddPrintActivity extends LocalizationActivity {
         String[] mimeTypes = {"image/jpeg", "image/png"};
         intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
 
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         // Launching the Intent
         startActivityForResult(intent, FILES_REQUEST_CODE);
     }

@@ -222,4 +222,5 @@
     <string name="per_unit">Per Unit</string>
     <string name="cost_unit_total">Cost unit/total</string>
     <string name="qtyy">Qty :</string>
+    <string name="unit_cost">Unit Cost</string>
 </resources>
