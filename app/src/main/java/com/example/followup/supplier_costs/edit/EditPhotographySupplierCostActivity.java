@@ -139,11 +139,8 @@ public class EditPhotographySupplierCostActivity extends LocalizationActivity {
 
     private void setFields(JSONObject dataObj) throws JSONException {
         JSONObject costObj = dataObj.getJSONObject("cost");
-        String myCost=costObj.getString("cost");
-        String costNum = myCost.substring(0, myCost.indexOf(' '));
-
         supplier_name.setText(costObj.getString("supplier_name"));
-        cost.setText(costNum);
+        cost.setText(costObj.getString("cost_name"));
         delivery_date.setText(costObj.getString("delivery_date"));
         expiry_date.setText(costObj.getString("expiry_date"));
         notes.setText(costObj.getString("note"));

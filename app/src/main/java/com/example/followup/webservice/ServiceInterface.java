@@ -97,9 +97,8 @@ public interface ServiceInterface {
     @POST("costs")
     Call<ResponseBody> addCostData(@Header("Authorization") String auth, @Part List<MultipartBody.Part> files, @PartMap Map<String, RequestBody> map);
 
-
+    @Multipart
     @POST("costs/update/{cost_id}")
-    @FormUrlEncoded
     Call<ResponseBody> editCost(@Header("Authorization") String auth, @Path("cost_id") int cost_id, @Part List<MultipartBody.Part> files, @PartMap Map<String, RequestBody> map);
 
     @POST("costs/status")
