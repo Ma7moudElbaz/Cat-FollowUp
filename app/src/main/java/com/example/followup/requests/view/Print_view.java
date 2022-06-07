@@ -19,6 +19,7 @@ import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.list.adapters.Print_adapter;
 import com.example.followup.requests.list.models.Print_item;
 import com.example.followup.requests.view.attaches.Attaches_adapter;
+import com.example.followup.utils.NullString;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -86,19 +87,19 @@ public class Print_view extends Fragment {
     }
 
     private void setFields(JSONObject dataObj) throws JSONException {
-        item_name.setText(dataObj.getString("item_name"));
-        quantity.setText(dataObj.getString("quantity"));
-        description.setText(dataObj.getString("description"));
-        pages.setText(dataObj.getString("pages"));
-        paper_weight.setText(dataObj.getString("paper_weight"));
-        colors.setText(dataObj.getString("color"));
-        di_cut.setText(dataObj.getString("di_cut"));
-        delivery_address.setText(dataObj.getString("delivery_address"));
-        notes.setText(dataObj.getString("note"));
-        designer_in_charge.setText(dataObj.getString("designer_name"));
-        print_type.setText(dataObj.getString("print_type"));
-        lamination.setText(dataObj.getString("lamination"));
-        binding.setText(dataObj.getString("binding"));
+        item_name.setText(NullString.returnText(dataObj.getString("item_name")));
+        quantity.setText(NullString.returnText(dataObj.getString("quantity")));
+        description.setText(NullString.returnText(dataObj.getString("description")));
+        pages.setText(NullString.returnText(dataObj.getString("pages")));
+        paper_weight.setText(NullString.returnText(dataObj.getString("paper_weight")));
+        colors.setText(NullString.returnText(dataObj.getString("color")));
+        di_cut.setText(NullString.returnText(dataObj.getString("di_cut")));
+        delivery_address.setText(NullString.returnText(dataObj.getString("delivery_address")));
+        notes.setText(NullString.returnText(dataObj.getString("note")));
+        designer_in_charge.setText(NullString.returnText(dataObj.getString("designer_name")));
+        print_type.setText(NullString.returnText(dataObj.getString("print_type")));
+        lamination.setText(NullString.returnText(dataObj.getString("lamination")));
+        binding.setText(NullString.returnText(dataObj.getString("binding")));
 
         setAttachesList(dataObj.getJSONArray("attach_files"));
     }

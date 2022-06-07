@@ -17,6 +17,7 @@ import com.example.followup.R;
 import com.example.followup.home.Attach_item;
 import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.view.attaches.Attaches_adapter;
+import com.example.followup.utils.NullString;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -78,14 +79,14 @@ public class Purchase_view extends Fragment {
     }
 
     private void setFields(JSONObject dataObj) throws JSONException {
-        item_name.setText(dataObj.getString("item_name"));
-        quantity.setText(dataObj.getString("quantity"));
-        description.setText(dataObj.getString("description"));
-        color.setText(dataObj.getString("color"));
-        material.setText(dataObj.getString("material"));
-        brand.setText(dataObj.getString("brand"));
-        delivery_address.setText(dataObj.getString("delivery_address"));
-        notes.setText(dataObj.getString("note"));
+        item_name.setText(NullString.returnText(dataObj.getString("item_name")));
+        quantity.setText(NullString.returnText(dataObj.getString("quantity")));
+        description.setText(NullString.returnText(dataObj.getString("description")));
+        color.setText(NullString.returnText(dataObj.getString("color")));
+        material.setText(NullString.returnText(dataObj.getString("material")));
+        brand.setText(NullString.returnText(dataObj.getString("brand")));
+        delivery_address.setText(NullString.returnText(dataObj.getString("delivery_address")));
+        notes.setText(NullString.returnText(dataObj.getString("note")));
 
         setAttachesList(dataObj.getJSONArray("attach_files"));
 

@@ -23,6 +23,7 @@ import com.example.followup.R;
 import com.example.followup.home.Attach_item;
 import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.view.attaches.Attaches_adapter;
+import com.example.followup.utils.NullString;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -89,18 +90,18 @@ public class Production_view extends Fragment {
     }
 
     private void setFields(JSONObject dataObj) throws JSONException {
-        item_name.setText(dataObj.getString("item_name"));
-        quantity.setText(dataObj.getString("quantity"));
-        description.setText(dataObj.getString("description"));
-        country.setText(dataObj.getString("country"));
-        city.setText(dataObj.getString("city"));
-        venue.setText(dataObj.getString("venue"));
-        days.setText(dataObj.getString("days"));
-        delivery_date.setText(dataObj.getString("delivery_date"));
-        dimensions.setText(dataObj.getString("dimension"));
-        notes.setText(dataObj.getString("note"));
-        designer_in_charge.setText(dataObj.getString("designer_name"));
-        screen.setText(dataObj.getString("screen"));
+        item_name.setText(NullString.returnText(dataObj.getString("item_name")));
+        quantity.setText(NullString.returnText(dataObj.getString("quantity")));
+        description.setText(NullString.returnText(dataObj.getString("description")));
+        country.setText(NullString.returnText(dataObj.getString("country")));
+        city.setText(NullString.returnText(dataObj.getString("city")));
+        venue.setText(NullString.returnText(dataObj.getString("venue")));
+        days.setText(NullString.returnText(dataObj.getString("days")));
+        delivery_date.setText(NullString.returnText(dataObj.getString("delivery_date")));
+        dimensions.setText(NullString.returnText(dataObj.getString("dimension")));
+        notes.setText(NullString.returnText(dataObj.getString("note")));
+        designer_in_charge.setText(NullString.returnText(dataObj.getString("designer_name")));
+        screen.setText(NullString.returnText(dataObj.getString("screen")));
 
         setAttachesList(dataObj.getJSONArray("attach_files"));
     }

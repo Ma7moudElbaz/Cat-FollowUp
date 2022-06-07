@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.followup.R;
 import com.example.followup.requests.RequestDetailsActivity;
+import com.example.followup.utils.NullString;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -66,17 +67,17 @@ public class Photography_view extends Fragment {
     }
 
     private void setFields(JSONObject dataObj) throws JSONException {
-        item_name.setText(dataObj.getString("item_name"));
-        country.setText(dataObj.getString("country"));
-        location.setText(dataObj.getString("location"));
-        days.setText(dataObj.getString("days"));
-        project_type.setText(dataObj.getString("project_type"));
-        camera_type.setText(dataObj.getString("camera_type"));
-        number_of_cameras.setText(dataObj.getString("number_camera"));
-        lighting.setText(dataObj.getString("lighting"));
-        chroma.setText(dataObj.getString("chroma"));
-        props.setText(dataObj.getString("props"));
-        description.setText(dataObj.getString("description"));
-        notes.setText(dataObj.getString("note"));
+        item_name.setText(NullString.returnText(dataObj.getString("item_name")));
+        country.setText(NullString.returnText(dataObj.getString("country")));
+        location.setText(NullString.returnText(dataObj.getString("location")));
+        days.setText(NullString.returnText(dataObj.getString("days")));
+        project_type.setText(NullString.returnText(dataObj.getString("project_type")));
+        camera_type.setText(NullString.returnText(dataObj.getString("camera_type")));
+        number_of_cameras.setText(NullString.returnText(dataObj.getString("number_camera")));
+        lighting.setText(NullString.returnText(dataObj.getString("lighting")));
+        chroma.setText(NullString.returnText(dataObj.getString("chroma")));
+        props.setText(NullString.returnText(dataObj.getString("props")));
+        description.setText(NullString.returnText(dataObj.getString("description")));
+        notes.setText(NullString.returnText(dataObj.getString("note")));
     }
 }

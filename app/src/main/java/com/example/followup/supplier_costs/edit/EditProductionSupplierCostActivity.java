@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
+import com.example.followup.utils.NullString;
 import com.example.followup.utils.RealPathUtil;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -156,13 +157,13 @@ public class EditProductionSupplierCostActivity extends LocalizationActivity {
     }
     private void setFields(JSONObject dataObj) throws JSONException {
         JSONObject costObj = dataObj.getJSONObject("cost");
-        supplier_name.setText(costObj.getString("supplier_name"));
-        cost.setText(costObj.getString("cost_name"));
-        delivery_date.setText(costObj.getString("delivery_date"));
-        expiry_date.setText(costObj.getString("expiry_date"));
-        notes.setText(costObj.getString("note"));
-        assembly_dismantling.setText(costObj.getString("assembly_dimension"));
-        storage.setText(costObj.getString("storage"));
+        supplier_name.setText(NullString.returnEmpty(costObj.getString("supplier_name")));
+        cost.setText(NullString.returnEmpty(costObj.getString("cost_name")));
+        delivery_date.setText(NullString.returnEmpty(costObj.getString("delivery_date")));
+        expiry_date.setText(NullString.returnEmpty(costObj.getString("expiry_date")));
+        notes.setText(NullString.returnEmpty(costObj.getString("note")));
+        assembly_dismantling.setText(NullString.returnEmpty(costObj.getString("assembly_dimension")));
+        storage.setText(NullString.returnEmpty(costObj.getString("storage")));
 
         cost_per_id = costObj.getString("cost_per_id");
         if (cost_per_id.equals("1")) {
