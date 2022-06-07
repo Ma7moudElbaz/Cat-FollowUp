@@ -20,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_reason;
+import com.example.followup.bottomsheets.BottomSheet_po_number;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -56,8 +57,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     WebserviceContext ws;
 
     public void showPoNumberBottomSheet() {
-        BottomSheet_choose_reason langBottomSheet =
-                new BottomSheet_choose_reason("Add your project po number to proceed", "PO Number", "", "po");
+        BottomSheet_po_number langBottomSheet =
+                new BottomSheet_po_number("Add your project po number to proceed", "PO Number", "", "po");
         langBottomSheet.show(getSupportFragmentManager(), "po");
     }
 
