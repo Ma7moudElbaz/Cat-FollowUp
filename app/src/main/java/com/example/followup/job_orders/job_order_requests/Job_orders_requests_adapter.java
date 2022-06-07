@@ -1,6 +1,7 @@
 package com.example.followup.job_orders.job_order_requests;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.followup.R;
+import com.example.followup.requests.RequestDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +42,7 @@ public class Job_orders_requests_adapter extends RecyclerView.Adapter<Job_orders
 
     @Override
     public void onBindViewHolder(@NonNull Job_orders_requests_adapter.ViewHolder holder, final int position) {
-        holder.request_id.setText(items.get(position).getRequest_id());
+        holder.request_name.setText(items.get(position).getRequest_name());
         holder.quantity.setText(items.get(position).getQuantity());
         holder.final_cost.setText(items.get(position).getFinal_cost());
         String cost_type_text = items.get(position).getCost_type() + " Cost";
@@ -75,6 +77,14 @@ public class Job_orders_requests_adapter extends RecyclerView.Adapter<Job_orders
             notifyDataSetChanged();
         });
 
+        holder.request_name.setOnClickListener(view -> {
+            Intent i  = new Intent(mContext, RequestDetailsActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.putExtra("request_id",items.get(position).getId());
+            i.putExtra("type_id",items.get(position).getType_id());
+            mContext.startActivity(i);
+        });
+
     }
 
     public List<Job_order_request_item> getSelectedData() {
@@ -98,14 +108,14 @@ public class Job_orders_requests_adapter extends RecyclerView.Adapter<Job_orders
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         final CheckBox checkBox;
-        final TextView request_id,quantity,cost_type;
+        final TextView request_name,quantity,cost_type;
         final EditText final_cost;
         final LinearLayout final_cost_container;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             checkBox = itemView.findViewById(R.id.checkbox);
-            request_id = itemView.findViewById(R.id.request_id);
+            request_name = itemView.findViewById(R.id.request_name);
             quantity = itemView.findViewById(R.id.quantity);
             final_cost = itemView.findViewById(R.id.final_cost);
             cost_type = itemView.findViewById(R.id.cost_type);

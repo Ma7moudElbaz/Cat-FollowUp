@@ -143,12 +143,13 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
                 JSONObject currentObject = list.getJSONObject(i);
                 final int id = currentObject.getInt("id");
                 final String request_id = currentObject.getString("item_name");
+                final int type_id = currentObject.getInt("type_id");
                 final String final_cost = currentObject.getJSONObject("cost").getString("cost_name");
                 final String quantity = currentObject.getJSONObject("cost").getString("quantity_request");
                 final String cost_type = currentObject.getJSONObject("cost").getString("cost_per_type");
 
 
-                job_order_requests_list.add(new Job_order_request_item(id, request_id, final_cost, quantity, cost_type, false));
+                job_order_requests_list.add(new Job_order_request_item(id, type_id, request_id, final_cost, quantity, cost_type, false));
 
             }
 

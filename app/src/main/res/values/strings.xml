@@ -224,4 +224,5 @@
     <string name="cost_unit_total">Cost unit/total</string>
     <string name="qtyy">Qty :</string>
     <string name="unit_cost">Unit Cost</string>
+    <string name="request_name">Request Name</string>
 </resources>

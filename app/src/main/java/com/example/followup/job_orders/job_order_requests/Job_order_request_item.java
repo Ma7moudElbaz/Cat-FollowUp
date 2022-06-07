@@ -1,15 +1,16 @@
 package com.example.followup.job_orders.job_order_requests;
 
 public class Job_order_request_item {
-    private final int id;
-    private final String request_id;
+    private final int id ,type_id;
+    private final String request_name;
     private String final_cost;
     private final String quantity,cost_type;
     private  boolean checked;
 
-    public Job_order_request_item(int id, String request_id, String final_cost, String quantity, String cost_type, boolean checked) {
+    public Job_order_request_item(int id, int type_id, String request_name, String final_cost, String quantity, String cost_type, boolean checked) {
         this.id = id;
-        this.request_id = request_id;
+        this.type_id = type_id;
+        this.request_name = request_name;
         this.final_cost = final_cost;
         this.quantity = quantity;
         this.cost_type = cost_type;
@@ -20,8 +21,8 @@ public class Job_order_request_item {
         return id;
     }
 
-    public String getRequest_id() {
-        return request_id;
+    public String getRequest_name() {
+        return request_name;
     }
 
     public String getFinal_cost() {
@@ -47,5 +48,9 @@ public class Job_order_request_item {
 
     public String getCost_type() {
         return cost_type;
+    }
+
+    public int getType_id() {
+        return type_id;
     }
 }
