@@ -57,6 +57,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
     int projectId;
 
     WebserviceContext ws;
+
     public void showJONameSheet() {
         BottomSheet_choose_reason langBottomSheet =
                 new BottomSheet_choose_reason("Job Order Name", "Job Order Name", "", "po");
@@ -170,8 +171,8 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
 
     }
 
-    private void createJobOrder(List<Job_order_request_item> items,String supplierName) {
-        Map<String, String> map = setJobOrderMap(items,supplierName);
+    private void createJobOrder(List<Job_order_request_item> items, String supplierName) {
+        Map<String, String> map = setJobOrderMap(items, supplierName);
 
         dialog.show();
         ws.getApi().addJobOrder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
@@ -199,7 +200,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         });
     }
 
-    private Map<String, String> setJobOrderMap(List<Job_order_request_item> items,String supplierName) {
+    private Map<String, String> setJobOrderMap(List<Job_order_request_item> items, String supplierName) {
 
         StringBuilder requestIds = new StringBuilder();
         StringBuilder actual_costs = new StringBuilder();
@@ -218,6 +219,8 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         map.put("job_order_name", "");
         map.put("supplier_name", supplierName);
         map.put("project_id", String.valueOf(projectId));
+        int type_id_data = request_types_spinner.getSelectedItemPosition() + 1;
+        map.put("type_id", String.valueOf(type_id_data));
         map.put("request_ids", requestIds.toString().toString());
         map.put("actual_costs", actual_costs.toString().toString());
 
@@ -273,6 +276,6 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
 
     @Override
     public void selectedSupplier(String selectedSupplierName, String selectedSupplierId) {
-        createJobOrder(job_order_requests_adapter.getSelectedData(),selectedSupplierName);
+        createJobOrder(job_order_requests_adapter.getSelectedData(), selectedSupplierName);
     }
 }

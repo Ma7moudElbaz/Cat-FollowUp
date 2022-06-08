@@ -6,5 +6,9 @@
         <domain includeSubdomains="true">cat-sw.com</domain>
     </domain-config>
 
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">cpadmin.cat.com.eg</domain>
+    </domain-config>
+
 
 </network-security-config>

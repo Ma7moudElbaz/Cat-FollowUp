@@ -68,7 +68,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         setContentView(R.layout.activity_job_order_details);
         initFields();
         back.setOnClickListener(v -> onBackPressed());
-        download.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl))));
+        download.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl)), null));
         sales_reject.setOnClickListener(v -> updateStatusDialog(2, ""));
         sales_approve.setOnClickListener(v -> {
             if (poNumber.equals("null")) {
@@ -216,7 +216,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 //        map.put("reason", reason);
 
         dialog.show();
-       ws.getApi().changeJobOrderStatus(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().changeJobOrderStatus(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -251,7 +251,9 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                     loading.setVisibility(View.GONE);
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONObject dataObj = responseObject.getJSONObject("data");
-                    pdfUrl = dataObj.getString("url");
+                    String pdfLinkUrl = dataObj.getString("url");
+                    pdfUrl = "https://docs.google.com/viewerng/viewer?url=" + pdfLinkUrl;
+
                     jobOrderStatus = dataObj.getInt("status");
                     poNumber = dataObj.getString("po_number");
                     projectId = dataObj.getInt("project_id");
