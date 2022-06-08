@@ -192,4 +192,5 @@
     <string name="qtyy">Qty :</string>
     <string name="unit_cost">Unit Cost</string>
     <string name="request_name">Request Name</string>
+    <string name="select_supplier">Select Supplier</string>
 </resources>

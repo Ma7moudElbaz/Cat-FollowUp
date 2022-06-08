@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_reason;
+import com.example.followup.bottomsheets.BottomSheet_suppliers;
 import com.example.followup.job_orders.job_order_requests.Job_order_request_item;
 import com.example.followup.job_orders.job_order_requests.Job_orders_requests_adapter;
 import com.example.followup.utils.UserUtils;
@@ -37,7 +38,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddJobOrderActivity extends LocalizationActivity implements BottomSheet_choose_reason.ReasonSubmitListener {
+public class AddJobOrderActivity extends LocalizationActivity implements BottomSheet_suppliers.SelectedSupplierListener {
 
     ImageView back;
     ProgressBar loading;
@@ -62,6 +63,12 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         langBottomSheet.show(getSupportFragmentManager(), "jo");
     }
 
+    public void showSuppliersSheet() {
+        BottomSheet_suppliers suppliersBottomSheet =
+                new BottomSheet_suppliers(AddJobOrderActivity.this, projectId);
+        suppliersBottomSheet.show(getSupportFragmentManager(), "suppliers");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +78,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         create_job_order.setOnClickListener(v -> {
             if (validateSelectedRequests(job_order_requests_adapter.getSelectedData())) {
 //                showJONameSheet();
-                createJobOrder(job_order_requests_adapter.getSelectedData(),"");
+                showSuppliersSheet();
             }
         });
         request_types_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -163,8 +170,8 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
 
     }
 
-    private void createJobOrder(List<Job_order_request_item> items,String jobOrderName) {
-        Map<String, String> map = setJobOrderMap(items,jobOrderName);
+    private void createJobOrder(List<Job_order_request_item> items,String supplierName) {
+        Map<String, String> map = setJobOrderMap(items,supplierName);
 
         dialog.show();
         ws.getApi().addJobOrder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
@@ -192,7 +199,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         });
     }
 
-    private Map<String, String> setJobOrderMap(List<Job_order_request_item> items,String jobOrderName) {
+    private Map<String, String> setJobOrderMap(List<Job_order_request_item> items,String supplierName) {
 
         StringBuilder requestIds = new StringBuilder();
         StringBuilder actual_costs = new StringBuilder();
@@ -208,7 +215,8 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         }
 
         Map<String, String> map = new HashMap<>();
-        map.put("job_order_name", jobOrderName);
+        map.put("job_order_name", "");
+        map.put("supplier_name", supplierName);
         map.put("project_id", String.valueOf(projectId));
         map.put("request_ids", requestIds.toString().toString());
         map.put("actual_costs", actual_costs.toString().toString());
@@ -264,7 +272,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
     }
 
     @Override
-    public void reasonSubmitListener(String reason, String type) {
-        createJobOrder(job_order_requests_adapter.getSelectedData(),reason);
+    public void selectedSupplier(String selectedSupplierName, String selectedSupplierId) {
+        createJobOrder(job_order_requests_adapter.getSelectedData(),selectedSupplierName);
     }
 }

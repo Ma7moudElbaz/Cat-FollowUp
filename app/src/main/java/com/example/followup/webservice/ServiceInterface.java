@@ -49,6 +49,10 @@ public interface ServiceInterface {
     @GET("companies")
     Call<ResponseBody> getCompanies(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
 
+
+    @GET("projects/suppliers/{project_id}")
+    Call<ResponseBody> getSuppliers(@Header("Authorization") String auth, @Path("project_id") int project_id);
+
     @POST("companies")
     @FormUrlEncoded
     Call<ResponseBody> AddCompany(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
