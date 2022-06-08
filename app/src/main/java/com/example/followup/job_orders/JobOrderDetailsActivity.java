@@ -37,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class JobOrderDetailsActivity extends LocalizationActivity implements BottomSheet_choose_reason.ReasonSubmitListener {
+public class JobOrderDetailsActivity extends LocalizationActivity implements BottomSheet_po_number.ReasonSubmitListener {
 
     private ProgressDialog dialog;
     LinearLayout sales_approval_layout, magdi_approval_layout, hesham_approval_layout, ceo_approval_layout;
@@ -123,7 +123,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
 
         jobOrderId = getIntent().getIntExtra("job_order_id", 0);
-        projectId = getIntent().getIntExtra("project_id", 0);
     }
 
 
@@ -255,6 +254,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                     pdfUrl = dataObj.getString("url");
                     jobOrderStatus = dataObj.getInt("status");
                     poNumber = dataObj.getString("po_number");
+                    projectId = dataObj.getInt("project_id");
                     setUserJobOrderPermissions(jobOrderStatus);
 
                 } catch (Exception e) {

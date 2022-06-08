@@ -193,4 +193,5 @@
     <string name="unit_cost">Unit Cost</string>
     <string name="request_name">Request Name</string>
     <string name="select_supplier">Select Supplier</string>
+    <string name="preview">Preview</string>
 </resources>

@@ -1,6 +1,6 @@
 <resources>
     //production
-    <!--    <string name="app_name" translatable="false">CATalyst</string>-->
+<!--        <string name="app_name" translatable="false">CATalyst</string>-->
 
     //Development
     <string name="app_name" translatable="false">CATalyst-dev</string>
@@ -226,4 +226,5 @@
     <string name="unit_cost">Unit Cost</string>
     <string name="request_name">Request Name</string>
     <string name="select_supplier">Select Supplier</string>
+    <string name="preview">Preview</string>
 </resources>
