@@ -56,14 +56,11 @@ public class BottomSheet_po_number extends BottomSheetDialogFragment {
 
 
         closeButton.setOnClickListener(v -> dismiss());
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (reasonEt.length()==0){
-                    reasonEt.setError("This is required field");
-                }else {
-                    sendBackResult(reasonEt.getText().toString(),type);
-                }
+        submitButton.setOnClickListener(v -> {
+            if (reasonEt.length()==0){
+                reasonEt.setError("This is required field");
+            }else {
+                sendBackResult(reasonEt.getText().toString(),type);
             }
         });
 
