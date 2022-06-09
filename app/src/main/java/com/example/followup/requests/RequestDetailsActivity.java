@@ -65,7 +65,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
     boolean isDetailsExpanded = false;
     boolean isCostExpanded = false;
     private ProgressDialog dialog;
-    ImageView back, expandDetails, expandCost, editCost,cancel_request;
+    ImageView back, expandDetails, expandCost, editCost, cancel_request;
     FrameLayout request_details_content, cost_details_content;
     RelativeLayout request_cost_container;
     LinearLayout no_cost_container, sales_approval_layout;
@@ -267,10 +267,15 @@ public class RequestDetailsActivity extends LocalizationActivity {
                         costStatus = dataObj.getJSONObject("cost").getInt("status");
                         costId = dataObj.getJSONObject("cost").getInt("id");
                     }
-                    int created_by_id = dataObj.getInt("created_by_id");
-                    boolean canEditProject = UserType.canEditProject(getBaseContext(), created_by_id, created_by_id);
+                    int project_creator_id = dataObj.getInt("project_creator_id");
+                    final String assigned_to = dataObj.getString("project_assign_id");
+                    int assigned_to_id = 0;
+                    if (!assigned_to.equals("null")) {
+                        assigned_to_id = Integer.parseInt(assigned_to);
+                    }
+                    boolean canEditProject = UserType.canEditProject(getBaseContext(), project_creator_id, assigned_to_id);
 
-                    setUserCostPermissions(costStatus,canEditProject);
+                    setUserCostPermissions(costStatus, canEditProject);
                     setFragments(type_id, costStatus);
                     loading.setVisibility(View.GONE);
 
@@ -327,7 +332,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         }
     }
 
-    private void setUserCostPermissions(int costStatus,Boolean canEditProject) {
+    private void setUserCostPermissions(int costStatus, Boolean canEditProject) {
 //        if (canEditProject){
 //            cancel_request.setVisibility(View.VISIBLE);
 //        }
@@ -363,7 +368,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
             }
             case 4: {
                 steps.getStatusView().setCurrentCount(3);
-                if (loggedInUser.equals("sales")) {
+                if (canEditProject) {
                     sales_approval_layout.setVisibility(View.VISIBLE);
                 } else {
                     sales_approval_layout.setVisibility(View.GONE);
@@ -387,7 +392,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         new AlertDialog.Builder(RequestDetailsActivity.this)
                 .setTitle("Are you sure? ")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    updateStatus(status,reason);
+                    updateStatus(status, reason);
                 })
                 .setNegativeButton("Dismiss", null)
                 .show();

@@ -194,4 +194,5 @@
     <string name="request_name">Request Name</string>
     <string name="select_supplier">Select Supplier</string>
     <string name="preview">Preview</string>
+    <string name="company">Company</string>
 </resources>

@@ -54,16 +54,12 @@ public class BottomSheet_choose_reason extends BottomSheetDialogFragment {
         subTitleTv.setText(subtitle);
 
 
-
         closeButton.setOnClickListener(v -> dismiss());
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (reasonEt.length()==0){
-                    reasonEt.setError("This is required field");
-                }else {
-                    sendBackResult(reasonEt.getText().toString(),type);
-                }
+        submitButton.setOnClickListener(v -> {
+            if (reasonEt.length()==0){
+                reasonEt.setError("This is required field");
+            }else {
+                sendBackResult(reasonEt.getText().toString(),type);
             }
         });
 

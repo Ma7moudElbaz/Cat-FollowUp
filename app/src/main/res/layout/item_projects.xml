@@ -123,7 +123,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/client_company"
+                            android:text="@string/company"
                             android:textColor="@color/text_request_gray"
                             android:textSize="12sp"
                             android:textStyle="bold" />

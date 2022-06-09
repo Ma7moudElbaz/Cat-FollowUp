@@ -37,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class JobOrderDetailsActivity extends LocalizationActivity implements BottomSheet_po_number.ReasonSubmitListener {
+public class JobOrderDetailsActivity extends LocalizationActivity implements BottomSheet_po_number.ReasonSubmitListener,BottomSheet_choose_reason.ReasonSubmitListener {
 
     private ProgressDialog dialog;
     LinearLayout sales_approval_layout, magdi_approval_layout, hesham_approval_layout, ceo_approval_layout;
@@ -62,6 +62,12 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         langBottomSheet.show(getSupportFragmentManager(), "po");
     }
 
+    public void showReasonSheet(String type) {
+        BottomSheet_choose_reason langBottomSheet =
+                new BottomSheet_choose_reason("Rejection reason", "", "", type);
+        langBottomSheet.show(getSupportFragmentManager(), type);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,21 +75,21 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         initFields();
         back.setOnClickListener(v -> onBackPressed());
         download.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl)), null));
-        sales_reject.setOnClickListener(v -> updateStatusDialog(2, ""));
+        sales_reject.setOnClickListener(v -> updateStatusDialog(2, "",""));
         sales_approve.setOnClickListener(v -> {
             if (poNumber.equals("null")) {
                 showPoNumberBottomSheet();
             } else {
-                updateStatusDialog(3, "");
+                updateStatusDialog(3, "","");
             }
         });
-        magdi_hold.setOnClickListener(v -> updateStatusDialog(4, ""));
-        magdi_approve.setOnClickListener(v -> updateStatusDialog(5, ""));
-        hesham_reject.setOnClickListener(v -> updateStatusDialog(6, ""));
-        hesham_approve.setOnClickListener(v -> updateStatusDialog(7, ""));
-        hesham_ceo_approval.setOnClickListener(v -> updateStatusDialog(8, ""));
-        ceo_reject.setOnClickListener(v -> updateStatusDialog(9, ""));
-        ceo_approve.setOnClickListener(v -> updateStatusDialog(10, ""));
+        magdi_hold.setOnClickListener(v -> updateStatusDialog(4, "",""));
+        magdi_approve.setOnClickListener(v -> updateStatusDialog(5, "",""));
+        hesham_reject.setOnClickListener(v -> showReasonSheet("hesham"));
+        hesham_approve.setOnClickListener(v -> updateStatusDialog(7, "",""));
+        hesham_ceo_approval.setOnClickListener(v -> updateStatusDialog(8, "",""));
+        ceo_reject.setOnClickListener(v -> showReasonSheet("ceo"));
+        ceo_approve.setOnClickListener(v -> updateStatusDialog(10, "",""));
 
         swipe_refresh.setOnRefreshListener(() -> {
             swipe_refresh.setRefreshing(false);
@@ -126,15 +132,13 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     }
 
 
-    private void setUserJobOrderPermissions(int jobOrderStatus) {
-        Log.e("jobOrderStatus", String.valueOf(jobOrderStatus));
+    private void setUserJobOrderPermissions(int jobOrderStatus, boolean canEditProject) {
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
-        Log.e("loggedInUser", loggedInUser);
         resetData();
         switch (jobOrderStatus) {
             case 1: {
                 steps.getStatusView().setCurrentCount(2);
-                if (loggedInUser.equals("sales")) {
+                if (canEditProject) {
                     sales_approval_layout.setVisibility(View.VISIBLE);
                 } else {
                     sales_approval_layout.setVisibility(View.GONE);
@@ -198,22 +202,23 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         steps.setVisibility(View.VISIBLE);
     }
 
-    public void updateStatusDialog(int status, String reason) {
+    public void updateStatusDialog(int status, String ceo_reasons,String financial_reasons) {
         new AlertDialog.Builder(JobOrderDetailsActivity.this)
                 .setTitle("Are you sure? ")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    updateStatus(status, reason);
+                    updateStatus(status, ceo_reasons,financial_reasons);
                 })
                 .setNegativeButton("Dismiss", null)
                 .show();
     }
 
 
-    public void updateStatus(int status, String reason) {
+    public void updateStatus(int status, String ceo_reasons,String financial_reasons) {
         Map<String, String> map = new HashMap<>();
         map.put("job_order_id", String.valueOf(jobOrderId));
         map.put("status", String.valueOf(status));
-//        map.put("reason", reason);
+        map.put("ceo_reasons", ceo_reasons);
+        map.put("financial_reasons", financial_reasons);
 
         dialog.show();
         ws.getApi().changeJobOrderStatus(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
@@ -257,7 +262,16 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                     jobOrderStatus = dataObj.getInt("status");
                     poNumber = dataObj.getString("po_number");
                     projectId = dataObj.getInt("project_id");
-                    setUserJobOrderPermissions(jobOrderStatus);
+
+                    int project_creator_id = dataObj.getInt("project_creator_id");
+                    final String assigned_to = dataObj.getString("project_assign_id");
+                    int assigned_to_id = 0;
+                    if (!assigned_to.equals("null")) {
+                        assigned_to_id = Integer.parseInt(assigned_to);
+                    }
+                    boolean canEditProject = UserType.canEditProject(getBaseContext(), project_creator_id, assigned_to_id);
+
+                    setUserJobOrderPermissions(jobOrderStatus,canEditProject);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -313,7 +327,19 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
 
     @Override
-    public void reasonSubmitListener(String poNumber, String type) {
-        addPoNumber(projectId, poNumber);
+    public void reasonSubmitListener(String reason, String type) {
+        switch(type){
+            case "po":
+                //reason is Po Number
+                addPoNumber(projectId, reason);
+                break;
+            case "ceo":
+                updateStatusDialog(9, reason,"");
+                break;
+            case "hesham":
+                updateStatusDialog(6, "",reason);
+                break;
+
+        }
     }
 }
