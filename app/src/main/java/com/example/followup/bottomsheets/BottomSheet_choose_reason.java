@@ -19,12 +19,12 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 public class BottomSheet_choose_reason extends BottomSheetDialogFragment {
 
 
-   final String title,subtitle,reason,type;
+   final String title,subtitle,reasonHint,type;
 
-    public BottomSheet_choose_reason(String title, String subtitle, String reason, String type) {
+    public BottomSheet_choose_reason(String title, String subtitle, String reasonHint, String type) {
         this.title = title;
         this.subtitle = subtitle;
-        this.reason = reason;
+        this.reasonHint = reasonHint;
         this.type = type;
     }
 
@@ -52,6 +52,7 @@ public class BottomSheet_choose_reason extends BottomSheetDialogFragment {
 
         titleTv.setText(title);
         subTitleTv.setText(subtitle);
+        reasonEt.setHint(reasonHint);
 
 
         closeButton.setOnClickListener(v -> dismiss());

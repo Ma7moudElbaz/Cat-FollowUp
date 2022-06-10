@@ -20,7 +20,6 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_reason;
-import com.example.followup.bottomsheets.BottomSheet_po_number;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -37,7 +36,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class JobOrderDetailsActivity extends LocalizationActivity implements BottomSheet_po_number.ReasonSubmitListener,BottomSheet_choose_reason.ReasonSubmitListener {
+public class JobOrderDetailsActivity extends LocalizationActivity implements BottomSheet_choose_reason.ReasonSubmitListener {
 
     private ProgressDialog dialog;
     LinearLayout sales_approval_layout, magdi_approval_layout, hesham_approval_layout, ceo_approval_layout;
@@ -45,7 +44,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     ProgressBar loading;
     ImageView back;
     ImageView ceoSteps;
-    TextView download;
+    TextView download, financial_reasons, ceo_reasons;
     int jobOrderId, projectId;
     int jobOrderStatus;
     String poNumber;
@@ -56,15 +55,9 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
     WebserviceContext ws;
 
-    public void showPoNumberBottomSheet() {
-        BottomSheet_po_number langBottomSheet =
-                new BottomSheet_po_number("Add your project po number to proceed", "PO Number", "", "po");
-        langBottomSheet.show(getSupportFragmentManager(), "po");
-    }
-
-    public void showReasonSheet(String type) {
+    public void showReasonSheet(String title, String subtitle, String reasonHint, String type) {
         BottomSheet_choose_reason langBottomSheet =
-                new BottomSheet_choose_reason("Rejection reason", "", "", type);
+                new BottomSheet_choose_reason(title, subtitle, reasonHint, type);
         langBottomSheet.show(getSupportFragmentManager(), type);
     }
 
@@ -75,21 +68,21 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         initFields();
         back.setOnClickListener(v -> onBackPressed());
         download.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl)), null));
-        sales_reject.setOnClickListener(v -> updateStatusDialog(2, "",""));
+        sales_reject.setOnClickListener(v -> updateStatusDialog(2, "", ""));
         sales_approve.setOnClickListener(v -> {
             if (poNumber.equals("null")) {
-                showPoNumberBottomSheet();
+                showReasonSheet("Add your project po number to proceed", "PO Number", getString(R.string.po_number_text), "po");
             } else {
-                updateStatusDialog(3, "","");
+                updateStatusDialog(3, "", "");
             }
         });
-        magdi_hold.setOnClickListener(v -> updateStatusDialog(4, "",""));
-        magdi_approve.setOnClickListener(v -> updateStatusDialog(5, "",""));
-        hesham_reject.setOnClickListener(v -> showReasonSheet("hesham"));
-        hesham_approve.setOnClickListener(v -> updateStatusDialog(7, "",""));
-        hesham_ceo_approval.setOnClickListener(v -> updateStatusDialog(8, "",""));
-        ceo_reject.setOnClickListener(v -> showReasonSheet("ceo"));
-        ceo_approve.setOnClickListener(v -> updateStatusDialog(10, "",""));
+        magdi_hold.setOnClickListener(v -> updateStatusDialog(4, "", ""));
+        magdi_approve.setOnClickListener(v -> updateStatusDialog(5, "", ""));
+        hesham_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "hesham"));
+        hesham_approve.setOnClickListener(v -> updateStatusDialog(7, "", ""));
+        hesham_ceo_approval.setOnClickListener(v -> updateStatusDialog(8, "", ""));
+        ceo_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "ceo"));
+        ceo_approve.setOnClickListener(v -> updateStatusDialog(10, "", ""));
 
         swipe_refresh.setOnRefreshListener(() -> {
             swipe_refresh.setRefreshing(false);
@@ -124,6 +117,14 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         hesham_ceo_approval = findViewById(R.id.hesham_ceo_approval);
         ceo_approve = findViewById(R.id.ceo_approve);
         ceo_reject = findViewById(R.id.ceo_reject);
+
+        financial_reasons = findViewById(R.id.financial_reasons);
+        ceo_reasons = findViewById(R.id.ceo_reasons);
+
+        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
+        if (loggedInUser.equals("hesham")) {
+            ceo_reasons.setVisibility(View.VISIBLE);
+        }
 
         swipe_refresh = findViewById(R.id.swipe_refresh);
 
@@ -202,18 +203,18 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         steps.setVisibility(View.VISIBLE);
     }
 
-    public void updateStatusDialog(int status, String ceo_reasons,String financial_reasons) {
+    public void updateStatusDialog(int status, String ceo_reasons, String financial_reasons) {
         new AlertDialog.Builder(JobOrderDetailsActivity.this)
                 .setTitle("Are you sure? ")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    updateStatus(status, ceo_reasons,financial_reasons);
+                    updateStatus(status, ceo_reasons, financial_reasons);
                 })
                 .setNegativeButton("Dismiss", null)
                 .show();
     }
 
 
-    public void updateStatus(int status, String ceo_reasons,String financial_reasons) {
+    public void updateStatus(int status, String ceo_reasons, String financial_reasons) {
         Map<String, String> map = new HashMap<>();
         map.put("job_order_id", String.valueOf(jobOrderId));
         map.put("status", String.valueOf(status));
@@ -263,6 +264,16 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                     poNumber = dataObj.getString("po_number");
                     projectId = dataObj.getInt("project_id");
 
+                    String ceo_reasons_text = dataObj.getString("ceo_reasons");
+                    String financial_reasons_text = dataObj.getString("financial_reasons");
+
+                    if (!ceo_reasons_text.equals("null")) {
+                        ceo_reasons.setText("CEO Rejection Reasons : " + ceo_reasons_text);
+                    }
+                    if (!financial_reasons_text.equals("null")) {
+                        financial_reasons.setText("Hisham Rejection Reasons : " + financial_reasons_text);
+                    }
+
                     int project_creator_id = dataObj.getInt("project_creator_id");
                     final String assigned_to = dataObj.getString("project_assign_id");
                     int assigned_to_id = 0;
@@ -271,7 +282,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                     }
                     boolean canEditProject = UserType.canEditProject(getBaseContext(), project_creator_id, assigned_to_id);
 
-                    setUserJobOrderPermissions(jobOrderStatus,canEditProject);
+                    setUserJobOrderPermissions(jobOrderStatus, canEditProject);
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -328,16 +340,16 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
     @Override
     public void reasonSubmitListener(String reason, String type) {
-        switch(type){
+        switch (type) {
             case "po":
                 //reason is Po Number
                 addPoNumber(projectId, reason);
                 break;
             case "ceo":
-                updateStatusDialog(9, reason,"");
+                updateStatusDialog(9, reason, "");
                 break;
             case "hesham":
-                updateStatusDialog(6, "",reason);
+                updateStatusDialog(6, "", reason);
                 break;
 
         }

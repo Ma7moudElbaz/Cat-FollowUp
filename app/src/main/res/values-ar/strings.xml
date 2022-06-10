@@ -107,7 +107,7 @@
     <string name="created_by">انشأ من قبل</string>
     <string name="company_name">اسم الشركه</string>
     <string name="po_number">PO Number</string>
-    <string name="po_number_text">PO Number(if Quotation approved ,please mention below)</string>
+    <string name="po_number_text">if Quotation approved ,please mention below</string>
     <string name="submit">Submit</string>
     <string name="rejection_reason">Rejection Reason</string>
     <string name="po_attach">PO Attach</string>

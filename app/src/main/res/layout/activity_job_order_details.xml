@@ -320,6 +320,27 @@
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:id="@+id/financial_reasons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/red"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/ceo_reasons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/red"
+            android:visibility="gone"
+            android:textSize="18sp" />
+
     </LinearLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
