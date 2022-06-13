@@ -354,7 +354,20 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     public Map<String, String> getFilterMap() {
         Map<String, String> map = new HashMap<>();
         map.put("created_by", "");
-        map.put("status", selectedStatus);
+        switch (selectedStatus){
+            case "1":
+            case "6":
+            case"7":
+                map.put("status", selectedStatus);
+                map.put("cost_status", "");
+                break;
+
+            default:
+                map.put("status", "");
+                map.put("cost_status", selectedStatus);
+                break;
+        }
+
         map.put("search", search.getText().toString());
 
         return map;
