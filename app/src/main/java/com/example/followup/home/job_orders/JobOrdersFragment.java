@@ -95,7 +95,7 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
 
     int selectedStatusIndex = -1;
     String selectedStatus = "";
-    String[] chipsStatus = new String[]{"","1", "3", "5", "8", "7"};
+    String[] chipsStatus = new String[]{"","1","2", "3", "5","6", "8","9", "7"};
 
 
     SwipeRefreshLayout swipe_refresh;

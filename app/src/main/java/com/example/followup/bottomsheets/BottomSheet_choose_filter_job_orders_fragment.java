@@ -23,7 +23,7 @@ public class BottomSheet_choose_filter_job_orders_fragment extends BottomSheetDi
     int chipSelectedIndex;
     private final BottomSheet_choose_filter_job_orders_fragment.FilterListener filterListener;
 
-    public BottomSheet_choose_filter_job_orders_fragment(Fragment fragment,int chipSelectedIndex) {
+    public BottomSheet_choose_filter_job_orders_fragment(Fragment fragment, int chipSelectedIndex) {
         this.filterListener = ((BottomSheet_choose_filter_job_orders_fragment.FilterListener) fragment);
         this.chipSelectedIndex = chipSelectedIndex;
     }
@@ -39,7 +39,7 @@ public class BottomSheet_choose_filter_job_orders_fragment extends BottomSheetDi
     ImageView closeButton;
     Button applyButton, resetButton;
     ChipCloud statusChip;
-    String[] chipsText = new String[]{"All","Waiting Sales", "Waiting Magdi", "Waiting Hesham", "Waiting CEO","Approved"};
+    String[] chipsText = new String[]{"All", "Waiting Sales", "Sales Rejected", "Waiting Magdi", "Waiting Hisham","Hisham Rejected", "Waiting CEO", "CEO Rejected", "Approved"};
 
 
     @Override
