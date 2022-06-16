@@ -110,6 +110,9 @@ public interface ServiceInterface {
     Call<ResponseBody> changeCostStatus(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
     //job orders
+    @GET("job-order/all")
+    Call<ResponseBody> getAllJobOrders(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
+
     @GET("job-orders")
     Call<ResponseBody> getJobOrders(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
 

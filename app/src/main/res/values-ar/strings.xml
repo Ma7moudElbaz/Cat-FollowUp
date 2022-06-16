@@ -199,4 +199,5 @@
     <string name="sample_nrequest">Sample\nRequest</string>
     <string name="po_nnumber">PO\nNumber</string>
     <string name="edit_po_number">Edit PO Number</string>
+    <string name="all_job_orders">All Job Orders</string>
 </resources>

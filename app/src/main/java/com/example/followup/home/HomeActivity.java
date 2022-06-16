@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
+import com.example.followup.home.job_orders.JobOrdersFragment;
 import com.example.followup.home.notifications.NotificationsFragment;
 import com.example.followup.home.profile.ProfileFragment;
 import com.example.followup.home.projects.ProjectsFragment;
@@ -97,7 +98,9 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
 
         if (id == R.id.navigation_projects) {
             setContentFragment(new ProjectsFragment());
-        } else if (id == R.id.navigation_profile) {
+        } else if (id == R.id.navigation_job_orders) {
+            setContentFragment(new JobOrdersFragment());
+        }  else if (id == R.id.navigation_profile) {
             setContentFragment(new ProfileFragment());
         } else if (id == R.id.navigation_notifications) {
             setContentFragment(new NotificationsFragment());

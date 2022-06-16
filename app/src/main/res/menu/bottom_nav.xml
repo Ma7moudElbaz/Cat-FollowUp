@@ -5,6 +5,10 @@
         android:id="@+id/navigation_projects"
         android:icon="@drawable/ic_projects"
         android:title="@string/projects" />
+    <item
+        android:id="@+id/navigation_job_orders"
+        android:icon="@drawable/ic_job_orders"
+        android:title="@string/job_orders" />
 
     <item
         android:id="@+id/navigation_profile"
