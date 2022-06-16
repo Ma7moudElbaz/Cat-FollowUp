@@ -195,4 +195,8 @@
     <string name="select_supplier">Select Supplier</string>
     <string name="preview">Preview</string>
     <string name="company">Company</string>
+    <string name="quotation_napproved">Quotation\nApproved</string>
+    <string name="sample_nrequest">Sample\nRequest</string>
+    <string name="po_nnumber">PO\nNumber</string>
+    <string name="edit_po_number">Edit PO Number</string>
 </resources>

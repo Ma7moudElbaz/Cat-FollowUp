@@ -3,13 +3,15 @@
 
 
     <item
+        android:id="@+id/project_po_number"
+        android:title="@string/edit_po_number" />
+
+    <item
         android:id="@+id/project_done"
-        android:icon="@drawable/ic_done"
         android:title="@string/done" />
 
     <item
         android:id="@+id/project_cancel"
-        android:icon="@drawable/ic_cancel"
         android:title="@string/cancel" />
 
 </menu>

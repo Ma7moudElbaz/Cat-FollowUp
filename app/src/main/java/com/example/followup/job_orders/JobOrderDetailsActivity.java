@@ -20,6 +20,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_reason;
+import com.example.followup.bottomsheets.BottomSheet_po_number;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -36,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class JobOrderDetailsActivity extends LocalizationActivity implements BottomSheet_choose_reason.ReasonSubmitListener {
+public class JobOrderDetailsActivity extends LocalizationActivity implements BottomSheet_choose_reason.ReasonSubmitListener, BottomSheet_po_number.PoNumberSubmitListener {
 
     private ProgressDialog dialog;
     LinearLayout sales_approval_layout, magdi_approval_layout, hesham_approval_layout, ceo_approval_layout;
@@ -61,6 +62,12 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         langBottomSheet.show(getSupportFragmentManager(), type);
     }
 
+    public void showPoNumberSheet() {
+        BottomSheet_po_number langBottomSheet =
+                new BottomSheet_po_number("po_number");
+        langBottomSheet.show(getSupportFragmentManager(), "po_number");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,7 +78,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         sales_reject.setOnClickListener(v -> updateStatusDialog(2, "", ""));
         sales_approve.setOnClickListener(v -> {
             if (poNumber.equals("null")) {
-                showReasonSheet("Add your project po number to proceed", "PO Number", getString(R.string.po_number_text), "po");
+                showPoNumberSheet();
             } else {
                 updateStatusDialog(3, "", "");
             }
@@ -341,17 +348,17 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     @Override
     public void reasonSubmitListener(String reason, String type) {
         switch (type) {
-            case "po":
-                //reason is Po Number
-                addPoNumber(projectId, reason);
-                break;
             case "ceo":
                 updateStatusDialog(9, reason, "");
                 break;
             case "hesham":
                 updateStatusDialog(6, "", reason);
                 break;
-
         }
+    }
+
+    @Override
+    public void poNumberSubmitListener(String po_number, String type) {
+        addPoNumber(projectId, po_number);
     }
 }

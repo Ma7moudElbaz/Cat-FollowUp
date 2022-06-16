@@ -26,7 +26,10 @@ import android.widget.Toast;
 
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_projects;
+import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.bottomsheets.BottomSheet_companies;
+import com.example.followup.bottomsheets.BottomSheet_po_number;
+import com.example.followup.bottomsheets.BottomSheet_po_number_from_fragment;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -47,7 +50,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ProjectsFragment extends Fragment implements Projects_adapter_with_callback.AdapterCallback, BottomSheet_choose_filter_projects.FilterListener, BottomSheet_companies.SelectedCompanyListener {
+public class ProjectsFragment extends Fragment implements Projects_adapter_with_callback.AdapterCallback, BottomSheet_choose_filter_projects.FilterListener, BottomSheet_companies.SelectedCompanyListener, BottomSheet_po_number_from_fragment.PoNumberSubmitListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,6 +72,12 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         companiesBottomSheet.show(getParentFragmentManager(), "companies");
     }
 
+    public void showPoNumberSheet(int projectId) {
+        BottomSheet_po_number_from_fragment langBottomSheet =
+                new BottomSheet_po_number_from_fragment(ProjectsFragment.this,projectId,"po_number");
+        langBottomSheet.show(getParentFragmentManager(), "po_number");
+    }
+
     public static void hideKeyboardFragment(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -78,7 +87,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     FloatingActionButton fab_addProject;
     RecyclerView recyclerView;
     ProgressBar loading;
-    TextView search,client_company;
+    TextView search, client_company;
     ImageView filterBtn;
 
     ArrayList<Project_item> projects_list;
@@ -97,7 +106,6 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
 
 
     WebserviceContext ws;
-
 
 
     @Override
@@ -275,6 +283,8 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
                     })
                     .setNegativeButton("Dismiss", null)
                     .show();
+        } else if (action.equals("po_number")) {
+            showPoNumberSheet(project_id);
         }
     }
 
@@ -337,6 +347,35 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         });
     }
 
+    private void addPoNumber(int projectId, String poNumber) {
+        Map<String, String> map = new HashMap<>();
+        map.put("project_id", String.valueOf(projectId));
+        map.put("number", poNumber);
+
+        loading.setVisibility(View.VISIBLE);
+        ws.getApi().addPoNumber(UserUtils.getAccessToken(getContext()), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 200 || response.code() == 201) {
+                        Toast.makeText(getContext(), "PO Added successfully", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                loading.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                loading.setVisibility(View.GONE);
+            }
+        });
+    }
+
     @Override
     public void applyFilterListener(int returenedSelectedStatusIndex) {
         if (returenedSelectedStatusIndex == -1) {
@@ -357,5 +396,10 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         client_company.setText(companyName);
         selectedCompanyId = companyId;
         onResume();
+    }
+
+    @Override
+    public void poNumberSubmitListener(String po_number_text,int projectId, String type) {
+        addPoNumber(projectId,po_number_text);
     }
 }

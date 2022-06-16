@@ -143,6 +143,9 @@ public class Projects_adapter_with_callback extends RecyclerView.Adapter<Project
 
         popup.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
+                case R.id.project_po_number:
+                    mAdapterCallback.adapterCallback("po_number", items.get(position).getId());
+                    return true;
                 case R.id.project_done:
                     mAdapterCallback.adapterCallback("done", items.get(position).getId());
                     return true;

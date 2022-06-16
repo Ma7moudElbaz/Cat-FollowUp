@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable-ldpi/black_curved.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/drawable-ldpi/circle_green.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable-xhdpi/add_forms_curved.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable-xhdpi/btn_blue.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable-xhdpi/btn_red.xml" value="0.25052083333333336" />
@@ -22,6 +23,7 @@
         <entry key="app/src/main/res/drawable/btn_red.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/btn_yellow.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/calender_yellow.xml" value="0.1328125" />
+        <entry key="app/src/main/res/drawable/circle_green.xml" value="0.1515" />
         <entry key="app/src/main/res/drawable/cost_bg_curved.xml" value="0.21963470319634704" />
         <entry key="app/src/main/res/drawable/et_gray.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/et_gray_border.xml" value="0.25052083333333336" />
@@ -65,7 +67,7 @@
         <entry key="app/src/main/res/layout/activity_edit_purchase_supplier_cost.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/activity_file_viewer.xml" value="0.17015818725951262" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.234375" />
-        <entry key="app/src/main/res/layout/activity_job_order_details.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_job_order_details.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_job_orders.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.18255664814023087" />
         <entry key="app/src/main/res/layout/activity_projects.xml" value="0.25" />
@@ -78,7 +80,7 @@
         <entry key="app/src/main/res/layout/bottom_sheet_companies.xml" value="0.25" />
         <entry key="app/src/main/res/layout/bottom_sheet_filter.xml" value="0.33" />
         <entry key="app/src/main/res/layout/bottom_sheet_forget_password.xml" value="0.12" />
-        <entry key="app/src/main/res/layout/bottom_sheet_po_number.xml" value="0.234375" />
+        <entry key="app/src/main/res/layout/bottom_sheet_po_number.xml" value="0.33" />
         <entry key="app/src/main/res/layout/bottom_sheet_reason.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/bottom_sheet_successfully_added.xml" value="0.18" />
         <entry key="app/src/main/res/layout/bottom_sheet_suppliers.xml" value="0.18170158187259514" />
