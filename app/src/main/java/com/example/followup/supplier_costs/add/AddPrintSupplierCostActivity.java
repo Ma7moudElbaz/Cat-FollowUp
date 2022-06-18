@@ -21,6 +21,7 @@ import androidx.annotation.NonNull;
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.utils.RealPathUtil;
+import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 import com.jem.fliptabs.FlipTab;
@@ -245,7 +246,7 @@ public class AddPrintSupplierCostActivity extends LocalizationActivity {
         Map<String, RequestBody> map = new HashMap<>();
         map.put("request_id", RequestBody.create(MediaType.parse("text/plain"), String.valueOf(requestId)));
         map.put("supplier_name", RequestBody.create(MediaType.parse("text/plain"), supplier_name.getText().toString()));
-        map.put("cost", RequestBody.create(MediaType.parse("text/plain"), cost.getText().toString()));
+        map.put("cost", RequestBody.create(MediaType.parse("text/plain"), StringCheck.arabicToDecimal(cost.getText().toString())));
         map.put("delivery_date", RequestBody.create(MediaType.parse("text/plain"), delivery_date.getText().toString()));
         map.put("expiry_date", RequestBody.create(MediaType.parse("text/plain"), expiry_date.getText().toString()));
         map.put("note", RequestBody.create(MediaType.parse("text/plain"), notes.getText().toString()));

@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.utils.RealPathUtil;
+import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 import com.karumi.dexter.Dexter;
@@ -215,8 +216,8 @@ public class AddPurchaseActivity extends LocalizationActivity {
         map.put("type_id", "1");
         map.put("project_id", String.valueOf(projectId));
         map.put("item_name", item_name.getText().toString());
-        map.put("quantity", quantity.getText().toString());
-        map.put("color", color.getText().toString());
+        map.put("quantity", StringCheck.arabicToDecimal(quantity.getText().toString()));
+        map.put("color", StringCheck.arabicToDecimal(color.getText().toString()));
         map.put("material", material.getText().toString());
         map.put("description", description.getText().toString());
         map.put("delivery_address", delivery_address.getText().toString());

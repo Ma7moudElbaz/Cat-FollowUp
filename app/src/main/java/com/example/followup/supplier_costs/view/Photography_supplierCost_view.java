@@ -19,7 +19,7 @@ import com.example.followup.R;
 import com.example.followup.home.Attach_item;
 import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.view.attaches.Attaches_adapter;
-import com.example.followup.utils.NullString;
+import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 
@@ -98,9 +98,9 @@ public class Photography_supplierCost_view extends Fragment {
         supplier_name.setText(costObj.getString("supplier_name"));
         String cost_text = costObj.getString("total_cost_per_type") + "  "+ costObj.getString("currency_name") ;
         cost.setText(cost_text);
-        delivery_date.setText(NullString.returnText(costObj.getString("delivery_date")));
-        expiry_date.setText(NullString.returnText(costObj.getString("expiry_date")));
-        notes.setText(NullString.returnText(costObj.getString("note")));
+        delivery_date.setText(StringCheck.returnText(costObj.getString("delivery_date")));
+        expiry_date.setText(StringCheck.returnText(costObj.getString("expiry_date")));
+        notes.setText(StringCheck.returnText(costObj.getString("note")));
 
         if (!costObj.getString("reference").equals("null")) {
             setAttachesList(costObj.getString("reference"));

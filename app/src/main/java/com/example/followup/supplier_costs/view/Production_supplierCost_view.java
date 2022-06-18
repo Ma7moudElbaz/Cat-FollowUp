@@ -19,7 +19,7 @@ import com.example.followup.R;
 import com.example.followup.home.Attach_item;
 import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.view.attaches.Attaches_adapter;
-import com.example.followup.utils.NullString;
+import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 
@@ -104,11 +104,11 @@ public class Production_supplierCost_view extends Fragment {
         cost_unit.setText(cost_unit_text);
         String cost_total_text = costObj.getString("total_cost_per_type") + "  " + costObj.getString("currency_name");
         cost_Total.setText(cost_total_text);
-        delivery_date.setText(NullString.returnText(costObj.getString("delivery_date")));
-        expiry_date.setText(NullString.returnText(costObj.getString("expiry_date")));
-        notes.setText(NullString.returnText(costObj.getString("note")));
-        assembly_dismantling.setText(NullString.returnText(costObj.getString("assembly_dimension")));
-        storage.setText(NullString.returnText(costObj.getString("storage")));
+        delivery_date.setText(StringCheck.returnText(costObj.getString("delivery_date")));
+        expiry_date.setText(StringCheck.returnText(costObj.getString("expiry_date")));
+        notes.setText(StringCheck.returnText(costObj.getString("note")));
+        assembly_dismantling.setText(StringCheck.returnText(costObj.getString("assembly_dimension")));
+        storage.setText(StringCheck.returnText(costObj.getString("storage")));
 
 
         if (!costObj.getString("reference").equals("null")) {

@@ -16,10 +16,8 @@ import android.widget.TextView;
 import com.example.followup.R;
 import com.example.followup.home.Attach_item;
 import com.example.followup.requests.RequestDetailsActivity;
-import com.example.followup.requests.list.adapters.Print_adapter;
-import com.example.followup.requests.list.models.Print_item;
 import com.example.followup.requests.view.attaches.Attaches_adapter;
-import com.example.followup.utils.NullString;
+import com.example.followup.utils.StringCheck;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -87,19 +85,19 @@ public class Print_view extends Fragment {
     }
 
     private void setFields(JSONObject dataObj) throws JSONException {
-        item_name.setText(NullString.returnText(dataObj.getString("item_name")));
-        quantity.setText(NullString.returnText(dataObj.getString("quantity")));
-        description.setText(NullString.returnText(dataObj.getString("description")));
-        pages.setText(NullString.returnText(dataObj.getString("pages")));
-        paper_weight.setText(NullString.returnText(dataObj.getString("paper_weight")));
-        colors.setText(NullString.returnText(dataObj.getString("color")));
-        di_cut.setText(NullString.returnText(dataObj.getString("di_cut")));
-        delivery_address.setText(NullString.returnText(dataObj.getString("delivery_address")));
-        notes.setText(NullString.returnText(dataObj.getString("note")));
-        designer_in_charge.setText(NullString.returnText(dataObj.getString("designer_name")));
-        print_type.setText(NullString.returnText(dataObj.getString("print_type")));
-        lamination.setText(NullString.returnText(dataObj.getString("lamination")));
-        binding.setText(NullString.returnText(dataObj.getString("binding")));
+        item_name.setText(StringCheck.returnText(dataObj.getString("item_name")));
+        quantity.setText(StringCheck.returnText(dataObj.getString("quantity")));
+        description.setText(StringCheck.returnText(dataObj.getString("description")));
+        pages.setText(StringCheck.returnText(dataObj.getString("pages")));
+        paper_weight.setText(StringCheck.returnText(dataObj.getString("paper_weight")));
+        colors.setText(StringCheck.returnText(dataObj.getString("color")));
+        di_cut.setText(StringCheck.returnText(dataObj.getString("di_cut")));
+        delivery_address.setText(StringCheck.returnText(dataObj.getString("delivery_address")));
+        notes.setText(StringCheck.returnText(dataObj.getString("note")));
+        designer_in_charge.setText(StringCheck.returnText(dataObj.getString("designer_name")));
+        print_type.setText(StringCheck.returnText(dataObj.getString("print_type")));
+        lamination.setText(StringCheck.returnText(dataObj.getString("lamination")));
+        binding.setText(StringCheck.returnText(dataObj.getString("binding")));
 
         setAttachesList(dataObj.getJSONArray("attach_files"));
     }

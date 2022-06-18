@@ -21,7 +21,7 @@ import androidx.annotation.NonNull;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
-import com.example.followup.utils.NullString;
+import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.RealPathUtil;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -162,12 +162,12 @@ public class EditPurchaseSupplierCostActivity extends LocalizationActivity {
 
     private void setFields(JSONObject dataObj) throws JSONException {
         JSONObject costObj = dataObj.getJSONObject("cost");
-        supplier_name.setText(NullString.returnEmpty(costObj.getString("supplier_name")));
-        cost.setText(NullString.returnEmpty(costObj.getString("cost_name")));
-        delivery_date.setText(NullString.returnEmpty(costObj.getString("delivery_date")));
-        expiry_date.setText(NullString.returnEmpty(costObj.getString("expiry_date")));
-        notes.setText(NullString.returnEmpty(costObj.getString("note")));
-        purchasing_type.setText(NullString.returnEmpty(costObj.getString("purchase_type")));
+        supplier_name.setText(StringCheck.returnEmpty(costObj.getString("supplier_name")));
+        cost.setText(StringCheck.returnEmpty(costObj.getString("cost_name")));
+        delivery_date.setText(StringCheck.returnEmpty(costObj.getString("delivery_date")));
+        expiry_date.setText(StringCheck.returnEmpty(costObj.getString("expiry_date")));
+        notes.setText(StringCheck.returnEmpty(costObj.getString("note")));
+        purchasing_type.setText(StringCheck.returnEmpty(costObj.getString("purchase_type")));
 
         cost_per_id = costObj.getString("cost_per_id");
         if (cost_per_id.equals("1")) {
@@ -275,7 +275,7 @@ public class EditPurchaseSupplierCostActivity extends LocalizationActivity {
     private Map<String, RequestBody> setCostMapRequestBody() {
         Map<String, RequestBody> map = new HashMap<>();
         map.put("supplier_name", RequestBody.create(MediaType.parse("text/plain"), supplier_name.getText().toString()));
-        map.put("cost", RequestBody.create(MediaType.parse("text/plain"), cost.getText().toString()));
+        map.put("cost", RequestBody.create(MediaType.parse("text/plain"), StringCheck.arabicToDecimal(cost.getText().toString())));
         map.put("delivery_date", RequestBody.create(MediaType.parse("text/plain"), delivery_date.getText().toString()));
         map.put("expiry_date", RequestBody.create(MediaType.parse("text/plain"), expiry_date.getText().toString()));
         map.put("note", RequestBody.create(MediaType.parse("text/plain"), notes.getText().toString()));

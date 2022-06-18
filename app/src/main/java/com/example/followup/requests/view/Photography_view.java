@@ -1,6 +1,5 @@
 package com.example.followup.requests.view;
 
-import android.app.ProgressDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,16 +9,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.followup.R;
 import com.example.followup.requests.RequestDetailsActivity;
-import com.example.followup.utils.NullString;
+import com.example.followup.utils.StringCheck;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -67,17 +61,17 @@ public class Photography_view extends Fragment {
     }
 
     private void setFields(JSONObject dataObj) throws JSONException {
-        item_name.setText(NullString.returnText(dataObj.getString("item_name")));
-        country.setText(NullString.returnText(dataObj.getString("country")));
-        location.setText(NullString.returnText(dataObj.getString("location")));
-        days.setText(NullString.returnText(dataObj.getString("days")));
-        project_type.setText(NullString.returnText(dataObj.getString("project_type")));
-        camera_type.setText(NullString.returnText(dataObj.getString("camera_type")));
-        number_of_cameras.setText(NullString.returnText(dataObj.getString("number_camera")));
-        lighting.setText(NullString.returnText(dataObj.getString("lighting")));
-        chroma.setText(NullString.returnText(dataObj.getString("chroma")));
-        props.setText(NullString.returnText(dataObj.getString("props")));
-        description.setText(NullString.returnText(dataObj.getString("description")));
-        notes.setText(NullString.returnText(dataObj.getString("note")));
+        item_name.setText(StringCheck.returnText(dataObj.getString("item_name")));
+        country.setText(StringCheck.returnText(dataObj.getString("country")));
+        location.setText(StringCheck.returnText(dataObj.getString("location")));
+        days.setText(StringCheck.returnText(dataObj.getString("days")));
+        project_type.setText(StringCheck.returnText(dataObj.getString("project_type")));
+        camera_type.setText(StringCheck.returnText(dataObj.getString("camera_type")));
+        number_of_cameras.setText(StringCheck.returnText(dataObj.getString("number_camera")));
+        lighting.setText(StringCheck.returnText(dataObj.getString("lighting")));
+        chroma.setText(StringCheck.returnText(dataObj.getString("chroma")));
+        props.setText(StringCheck.returnText(dataObj.getString("props")));
+        description.setText(StringCheck.returnText(dataObj.getString("description")));
+        notes.setText(StringCheck.returnText(dataObj.getString("note")));
     }
 }

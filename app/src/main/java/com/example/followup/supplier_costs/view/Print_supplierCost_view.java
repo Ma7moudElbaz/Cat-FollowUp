@@ -19,11 +19,10 @@ import com.example.followup.R;
 import com.example.followup.home.Attach_item;
 import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.view.attaches.Attaches_adapter;
-import com.example.followup.utils.NullString;
+import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -97,17 +96,17 @@ public class Print_supplierCost_view extends Fragment {
 
     private void setFields(JSONObject dataObj) throws JSONException {
         JSONObject costObj = dataObj.getJSONObject("cost");
-        supplier_name.setText(NullString.returnText(costObj.getString("supplier_name")));
+        supplier_name.setText(StringCheck.returnText(costObj.getString("supplier_name")));
         String quantity_text = costObj.getString("quantity_request");
         quantity.setText(quantity_text);
         String cost_unit_text = costObj.getString("unit_cost_per_type") + "  " + costObj.getString("currency_name");
         cost_unit.setText(cost_unit_text);
         String cost_total_text = costObj.getString("total_cost_per_type") + "  " + costObj.getString("currency_name");
         cost_Total.setText(cost_total_text);
-        delivery_date.setText(NullString.returnText(costObj.getString("delivery_date")));
-        expiry_date.setText(NullString.returnText(costObj.getString("expiry_date")));
-        notes.setText(NullString.returnText(costObj.getString("note")));
-        print_type.setText(NullString.returnText(costObj.getString("print_type")));
+        delivery_date.setText(StringCheck.returnText(costObj.getString("delivery_date")));
+        expiry_date.setText(StringCheck.returnText(costObj.getString("expiry_date")));
+        notes.setText(StringCheck.returnText(costObj.getString("note")));
+        print_type.setText(StringCheck.returnText(costObj.getString("print_type")));
 
         if (!costObj.getString("reference").equals("null")) {
             setAttachesList(costObj.getString("reference"));
