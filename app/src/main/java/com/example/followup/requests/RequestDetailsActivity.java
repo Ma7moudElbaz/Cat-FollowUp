@@ -120,7 +120,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
 
         sales_reject.setOnClickListener(v -> updateStatusDialog(5, ""));
         sales_approve.setOnClickListener(v -> updateStatusDialog(6, ""));
-        cancel_request.setOnClickListener(v -> updateStatusDialog(0, ""));
+        cancel_request.setOnClickListener(v -> deleteRequestDialog());
 
         swipe_refresh.setOnRefreshListener(() -> {
             swipe_refresh.setRefreshing(false);
@@ -336,9 +336,9 @@ public class RequestDetailsActivity extends LocalizationActivity {
     }
 
     private void setUserCostPermissions(int costStatus, Boolean canEditProject) {
-//        if (canEditProject){
-//            cancel_request.setVisibility(View.VISIBLE);
-//        }
+        if (canEditProject && costStatus == 1) {
+            cancel_request.setVisibility(View.VISIBLE);
+        }
         setRequestStepper(costStatus);
         Log.e("costStatus", String.valueOf(costStatus));
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
@@ -420,6 +420,43 @@ public class RequestDetailsActivity extends LocalizationActivity {
         setCostContainer(true);
         editCost.setVisibility(View.GONE);
         sales_approval_layout.setVisibility(View.GONE);
+    }
+
+    public void deleteRequestDialog() {
+        new AlertDialog.Builder(RequestDetailsActivity.this)
+                .setTitle("Are you sure? ")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    deleteRequest(request_id);
+                })
+                .setNegativeButton("Dismiss", null)
+                .show();
+    }
+
+    public void deleteRequest(int request_id) {
+        dialog.show();
+        ws.getApi().deleteRequest(UserUtils.getAccessToken(getBaseContext()), request_id).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getBaseContext(), "Updated successfully", Toast.LENGTH_LONG).show();
+                        onBackPressed();
+                    } else {
+                        JSONObject res = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
     }
 
     public void updateStatusDialog(int status, String reason) {

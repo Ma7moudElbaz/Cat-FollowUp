@@ -47,16 +47,6 @@
 
                 </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/cancel_request"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/ic_delete"
-                    android:visibility="gone"
-                    app:tint="@color/red" />
-
                 <TextView
                     android:id="@+id/job_orders"
                     android:layout_width="wrap_content"
@@ -80,8 +70,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:adjustViewBounds="true"
-                android:padding="5dp"
                 android:contentDescription="@string/description"
+                android:padding="5dp"
                 android:src="@drawable/request_1" />
 
 
@@ -192,6 +182,16 @@
                                 android:textColor="@color/black"
                                 android:textSize="20sp" />
 
+
+                            <ImageView
+                                android:id="@+id/cancel_request"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toStartOf="@id/expand_details"
+                                android:padding="5dp"
+                                android:src="@drawable/ic_delete"
+                                android:visibility="gone"
+                                app:tint="@color/red" />
 
                             <ImageView
                                 android:id="@+id/expand_details"

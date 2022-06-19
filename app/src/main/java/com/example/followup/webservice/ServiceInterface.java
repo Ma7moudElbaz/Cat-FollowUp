@@ -7,6 +7,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.DELETE;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -91,6 +92,9 @@ public interface ServiceInterface {
 
     @GET("requests/{request_id}")
     Call<ResponseBody> getRequestDetails(@Header("Authorization") String auth, @Path("request_id") int request_id);
+
+    @DELETE("requests/{request_id}")
+    Call<ResponseBody> deleteRequest(@Header("Authorization") String auth, @Path("request_id") int request_id);
 
     //costs
     @POST("costs")
