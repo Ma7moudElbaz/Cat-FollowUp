@@ -226,10 +226,10 @@ public class EditPrintSupplierCostActivity extends LocalizationActivity {
             expiry_date.setError("This is required field");
             return false;
         }
-        if (notes.length() == 0) {
-            notes.setError("This is required field");
-            return false;
-        }
+//        if (notes.length() == 0) {
+//            notes.setError("This is required field");
+//            return false;
+//        }
         if (printing_type.length() == 0) {
             printing_type.setError("This is required field");
             return false;

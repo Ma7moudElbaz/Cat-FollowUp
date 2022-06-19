@@ -225,10 +225,10 @@ public class EditProductionSupplierCostActivity extends LocalizationActivity {
             expiry_date.setError("This is required field");
             return false;
         }
-        if (notes.length() == 0) {
-            notes.setError("This is required field");
-            return false;
-        }
+//        if (notes.length() == 0) {
+//            notes.setError("This is required field");
+//            return false;
+//        }
         if (assembly_dismantling.length() == 0) {
             assembly_dismantling.setError("This is required field");
             return false;
