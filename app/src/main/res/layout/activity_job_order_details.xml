@@ -207,8 +207,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:adjustViewBounds="true"
+                android:padding="5dp"
                 android:contentDescription="@string/description"
-                android:paddingHorizontal="20dp"
                 android:src="@drawable/jo_1" />
 
             <params.com.stepview.StatusViewScroller
@@ -462,7 +462,8 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:textColor="@color/red"
-                    android:textSize="18sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/ceo_reasons"
@@ -472,7 +473,8 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginEnd="20dp"
                     android:textColor="@color/red"
-                    android:textSize="18sp"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
                     android:visibility="gone" />
 
             </LinearLayout>
