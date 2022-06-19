@@ -74,29 +74,16 @@
 
             </RelativeLayout>
 
-            <com.shuhart.stepview.StepView
-                android:id="@+id/step_view"
+            <ImageView
+                android:id="@+id/requestStepperImg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:visibility="gone"
-                app:sv_animationType="All"
-                app:sv_doneCircleColor="@color/green"
-                app:sv_doneCircleRadius="20dp"
-                app:sv_doneStepLineColor="@color/green"
-                app:sv_doneStepMarkColor="@color/white"
-                app:sv_doneTextColor="@color/black"
-                app:sv_nextStepCircleColor="@color/stepper_gray"
-                app:sv_nextStepCircleEnabled="true"
-                app:sv_nextStepLineColor="@color/light_gray"
-                app:sv_nextTextColor="@color/light_gray"
-                app:sv_selectedCircleColor="@color/light_gray"
-                app:sv_selectedCircleRadius="20dp"
-                app:sv_selectedStepNumberColor="@color/black"
-                app:sv_selectedTextColor="@color/light_gray"
-                app:sv_stepNumberTextSize="20sp"
-                app:sv_stepPadding="4dp"
-                app:sv_steps="@array/request_steps" />
+                android:layout_marginTop="10dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/description"
+                android:paddingHorizontal="20dp"
+                android:src="@drawable/request_1" />
+
 
             <params.com.stepview.StatusViewScroller
                 android:id="@+id/steps"
@@ -105,6 +92,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:entries="@array/request_steps"
+                android:visibility="gone"
                 app:alignStatusWithCurrent="true"
                 app:circleColor="@color/green"
                 app:circleColorCurrent="@color/stepper_gray"

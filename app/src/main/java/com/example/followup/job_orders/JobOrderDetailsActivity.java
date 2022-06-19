@@ -56,6 +56,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
     WebserviceContext ws;
 
+    ImageView joStepperImg;
+
     public void showReasonSheet(String title, String subtitle, String reasonHint, String type) {
         BottomSheet_choose_reason langBottomSheet =
                 new BottomSheet_choose_reason(title, subtitle, reasonHint, type);
@@ -134,13 +136,15 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         }
 
         swipe_refresh = findViewById(R.id.swipe_refresh);
+        joStepperImg = findViewById(R.id.joStepperImg);
 
 
         jobOrderId = getIntent().getIntExtra("job_order_id", 0);
     }
 
 
-    private void setUserJobOrderPermissions(int jobOrderStatus, boolean canEditProject) {
+    private void setUserJobOrderPermissions(int jobOrderStatus, boolean canEditProject, int ceo) {
+        setJoStepper(jobOrderStatus,ceo);
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
         resetData();
         switch (jobOrderStatus) {
@@ -196,6 +200,59 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 //ceo rejected
                 steps.setVisibility(View.GONE);
                 ceoSteps.setVisibility(View.VISIBLE);
+                break;
+            }
+        }
+    }
+
+    private void setJoStepper(int joStatus, int ceo) {
+        switch (joStatus) {
+            case 1: {
+                joStepperImg.setImageResource(R.drawable.jo_1);
+                break;
+            }
+            case 2: {
+                joStepperImg.setImageResource(R.drawable.jo_2);
+                break;
+            }
+            case 3: {
+                joStepperImg.setImageResource(R.drawable.jo_3);
+                break;
+            }
+            case 4: {
+                joStepperImg.setImageResource(R.drawable.jo_4);
+                break;
+            }
+            case 5: {
+                joStepperImg.setImageResource(R.drawable.jo_5);
+                break;
+            }
+            case 6: {
+                if (ceo == 1) {
+                    joStepperImg.setImageResource(R.drawable.jo_6_ceo);
+                } else {
+                    joStepperImg.setImageResource(R.drawable.jo_6);
+                }
+                break;
+            }
+            case 7: {
+                if (ceo == 1) {
+                    joStepperImg.setImageResource(R.drawable.jo_7_ceo);
+                } else {
+                    joStepperImg.setImageResource(R.drawable.jo_7);
+                }
+                break;
+            }
+            case 8: {
+                joStepperImg.setImageResource(R.drawable.jo_8);
+                break;
+            }
+            case 9: {
+                joStepperImg.setImageResource(R.drawable.jo_9);
+                break;
+            }
+            case 10: {
+                joStepperImg.setImageResource(R.drawable.jo_10);
                 break;
             }
         }
@@ -288,8 +345,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                         assigned_to_id = Integer.parseInt(assigned_to);
                     }
                     boolean canEditProject = UserType.canEditProject(getBaseContext(), project_creator_id, assigned_to_id);
-
-                    setUserJobOrderPermissions(jobOrderStatus, canEditProject);
+                    int ceo = dataObj.getInt("ceo");
+                    setUserJobOrderPermissions(jobOrderStatus, canEditProject, ceo);
 
 
                 } catch (Exception e) {

@@ -86,6 +86,8 @@ public class RequestDetailsActivity extends LocalizationActivity {
 
     int projectId;
 
+    ImageView requestStepperImg;
+
     public JSONObject getDataObj() {
         return dataObj;
     }
@@ -206,6 +208,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         job_orders = findViewById(R.id.job_orders);
 
         swipe_refresh = findViewById(R.id.swipe_refresh);
+        requestStepperImg = findViewById(R.id.requestStepperImg);
 
     }
 
@@ -336,6 +339,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
 //        if (canEditProject){
 //            cancel_request.setVisibility(View.VISIBLE);
 //        }
+        setRequestStepper(costStatus);
         Log.e("costStatus", String.valueOf(costStatus));
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
         Log.e("loggedInUser", loggedInUser);
@@ -379,6 +383,36 @@ public class RequestDetailsActivity extends LocalizationActivity {
                 steps.getStatusView().setCurrentCount(4);
                 break;
             }
+        }
+    }
+
+    private void setRequestStepper(int costStatus) {
+        switch (costStatus) {
+            case 1: {
+                requestStepperImg.setImageResource(R.drawable.request_1);
+                break;
+            }
+            case 2: {
+                requestStepperImg.setImageResource(R.drawable.request_2);
+                break;
+            }
+            case 3: {
+                requestStepperImg.setImageResource(R.drawable.request_3);
+                break;
+            }
+            case 4: {
+                requestStepperImg.setImageResource(R.drawable.request_4);
+                break;
+            }
+            case 5: {
+                requestStepperImg.setImageResource(R.drawable.request_5);
+                break;
+            }
+            case 6: {
+                requestStepperImg.setImageResource(R.drawable.request_6);
+                break;
+            }
+
         }
     }
 
