@@ -44,7 +44,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     Button sales_approve, sales_reject, magdi_approve, magdi_hold, hesham_approve, hesham_reject, hesham_ceo_approval, ceo_approve, ceo_reject;
     ProgressBar loading;
     ImageView back;
-    ImageView ceoSteps;
     TextView download, financial_reasons, ceo_reasons;
     int jobOrderId, projectId;
     int jobOrderStatus;
@@ -115,7 +114,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         magdi_approval_layout = findViewById(R.id.magdi_approval_layout);
         hesham_approval_layout = findViewById(R.id.hesham_approval_layout);
         ceo_approval_layout = findViewById(R.id.ceo_approval_layout);
-        ceoSteps = findViewById(R.id.ceo_steps);
         steps = findViewById(R.id.steps);
         sales_approve = findViewById(R.id.sales_approve);
         sales_reject = findViewById(R.id.sales_reject);
@@ -172,6 +170,11 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 steps.getStatusView().setCurrentCount(4);
                 if (loggedInUser.equals("hesham")) {
                     hesham_approval_layout.setVisibility(View.VISIBLE);
+                    if (ceo == 0){
+                        hesham_approve.setVisibility(View.GONE);
+                    }else {
+                        hesham_approve.setVisibility(View.VISIBLE);
+                    }
                 } else {
                     hesham_approval_layout.setVisibility(View.GONE);
                 }
@@ -187,8 +190,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 break;
             }
             case 8: {
-                steps.setVisibility(View.GONE);
-                ceoSteps.setVisibility(View.VISIBLE);
                 if (loggedInUser.equals("ceo")) {
                     ceo_approval_layout.setVisibility(View.VISIBLE);
                 } else {
@@ -198,8 +199,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
             }
             case 9: {
                 //ceo rejected
-                steps.setVisibility(View.GONE);
-                ceoSteps.setVisibility(View.VISIBLE);
                 break;
             }
         }
@@ -263,7 +262,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         magdi_approval_layout.setVisibility(View.GONE);
         hesham_approval_layout.setVisibility(View.GONE);
         ceo_approval_layout.setVisibility(View.GONE);
-        ceoSteps.setVisibility(View.GONE);
         steps.setVisibility(View.VISIBLE);
     }
 

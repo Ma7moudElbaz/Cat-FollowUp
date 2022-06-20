@@ -48,7 +48,7 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
     }
 
     TextView name, email;
-    Button changePassword,logOut;
+    Button changePassword, logOut;
     private ProgressDialog dialog;
     WebserviceContext ws;
 
@@ -61,6 +61,7 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
         name.setText(UserUtils.getUserName(getContext()));
         email.setText(UserUtils.getUserEmail(getContext()));
         logOut.setOnClickListener(v -> {
+            logout();
             startActivity(new Intent(getContext(), LoginActivity.class));
             getActivity().finish();
         });
@@ -87,7 +88,7 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
         map.put("old_password", oldPass);
         map.put("new_password", newPass);
         dialog.show();
-        ws.getApi().changePassword(UserUtils.getAccessToken(getContext()),map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().changePassword(UserUtils.getAccessToken(getContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
@@ -112,7 +113,31 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
                 dialog.dismiss();
             }
         });
+    }
 
+    public void logout() {
+        ws.getApi().logout(UserUtils.getAccessToken(getContext())).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 200) {
 
+                    } else {
+
+                        JSONObject res = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getContext(), res.getString("error"), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
     }
 }

@@ -32,6 +32,9 @@ public interface ServiceInterface {
     @FormUrlEncoded
     Call<ResponseBody> login(@FieldMap Map<String, String> map);
 
+    @POST("auth/logout")
+    Call<ResponseBody> logout(@Header("Authorization") String auth);
+
     @POST("password/change")
     @FormUrlEncoded
     Call<ResponseBody> changePassword(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
