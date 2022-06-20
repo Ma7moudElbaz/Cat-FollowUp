@@ -21,10 +21,14 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
+            android:name=".job_orders.edit_job_order.EditJobOrderActivity"
+            android:exported="false" />
+        <activity
             android:name=".ResultActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="RESULT" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -116,6 +120,7 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="UPDATE" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -126,8 +131,8 @@
 
         <service
             android:name=".utils.MyFirebaseMessagingService"
-            android:exported="false"
-            android:directBootAware="true">
+            android:directBootAware="true"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>

@@ -21,6 +21,7 @@ import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.bottomsheets.BottomSheet_po_number;
+import com.example.followup.job_orders.edit_job_order.EditJobOrderActivity;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -44,7 +45,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     Button sales_approve, sales_reject, magdi_approve, magdi_hold, hesham_approve, hesham_reject, hesham_ceo_approval, ceo_approve, ceo_reject;
     ProgressBar loading;
     ImageView back;
-    TextView download, financial_reasons, ceo_reasons;
+    TextView download, financial_reasons, ceo_reasons, edit;
     int jobOrderId, projectId;
     int jobOrderStatus;
     String poNumber;
@@ -92,6 +93,11 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         ceo_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "ceo"));
         ceo_approve.setOnClickListener(v -> updateStatusDialog(10, "", ""));
 
+        edit.setOnClickListener(view -> {
+            Intent i = new Intent(JobOrderDetailsActivity.this, EditJobOrderActivity.class);
+            i.putExtra("job_order_id", jobOrderId);
+            startActivity(i);
+        });
         swipe_refresh.setOnRefreshListener(() -> {
             swipe_refresh.setRefreshing(false);
             onResume();
@@ -127,6 +133,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
         financial_reasons = findViewById(R.id.financial_reasons);
         ceo_reasons = findViewById(R.id.ceo_reasons);
+        edit = findViewById(R.id.edit);
 
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
         if (loggedInUser.equals("hesham")) {
@@ -142,9 +149,15 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
 
     private void setUserJobOrderPermissions(int jobOrderStatus, boolean canEditProject, int ceo) {
-        setJoStepper(jobOrderStatus,ceo);
+        setJoStepper(jobOrderStatus, ceo);
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
         resetData();
+
+        if (loggedInUser.equals("hesham") && jobOrderStatus > 2 && jobOrderStatus != 9 && jobOrderStatus != 6 && jobOrderStatus != 7) {
+            edit.setVisibility(View.VISIBLE);
+        } else {
+            edit.setVisibility(View.GONE);
+        }
         switch (jobOrderStatus) {
             case 1: {
                 steps.getStatusView().setCurrentCount(2);
@@ -170,9 +183,9 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 steps.getStatusView().setCurrentCount(4);
                 if (loggedInUser.equals("hesham")) {
                     hesham_approval_layout.setVisibility(View.VISIBLE);
-                    if (ceo == 0){
+                    if (ceo == 0) {
                         hesham_approve.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         hesham_approve.setVisibility(View.VISIBLE);
                     }
                 } else {

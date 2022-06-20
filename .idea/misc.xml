@@ -61,13 +61,14 @@
         <entry key="app/src/main/res/layout/activity_add_purchase.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_purchase_supplier_cost.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_add_purchasing.xml" value="0.234375" />
+        <entry key="app/src/main/res/layout/activity_edit_job_order.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_edit_photography_supplier_cost.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/activity_edit_print_supplier_cost.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/activity_edit_production_supplier_cost.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/activity_edit_purchase_supplier_cost.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/activity_file_viewer.xml" value="0.17015818725951262" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.234375" />
-        <entry key="app/src/main/res/layout/activity_job_order_details.xml" value="0.18398268398268397" />
+        <entry key="app/src/main/res/layout/activity_job_order_details.xml" value="0.769029070701434" />
         <entry key="app/src/main/res/layout/activity_job_orders.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.18255664814023087" />
         <entry key="app/src/main/res/layout/activity_projects.xml" value="0.25" />
@@ -108,6 +109,7 @@
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/item_attaches.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_company.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_edit_job_order_request.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_job_order.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_job_order_request.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_notifications.xml" value="0.25" />

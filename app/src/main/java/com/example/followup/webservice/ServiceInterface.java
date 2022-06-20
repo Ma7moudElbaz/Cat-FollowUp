@@ -85,6 +85,9 @@ public interface ServiceInterface {
     @GET("requests")
     Call<ResponseBody> getJobOrderRequests(@Header("Authorization") String auth, @Query("status") int status, @Query("project_id") int project_id, @Query("type_id") int type_id, @Query("page") int pageNo);
 
+    @GET("job-order/edit")
+    Call<ResponseBody> getEditJobOrderRequests(@Header("Authorization") String auth, @Query("job_order_id") int job_order_id);
+
     @POST("requests")
     @FormUrlEncoded
     Call<ResponseBody> addRequest(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
@@ -129,6 +132,10 @@ public interface ServiceInterface {
     @POST("job-orders")
     @FormUrlEncoded
     Call<ResponseBody> addJobOrder(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
+
+    @PUT("job-order/update")
+    @FormUrlEncoded
+    Call<ResponseBody> editJobOrder(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
     @POST("job-orders/status")
     @FormUrlEncoded
