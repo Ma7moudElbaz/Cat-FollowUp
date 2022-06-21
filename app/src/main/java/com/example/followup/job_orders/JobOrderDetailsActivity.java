@@ -136,9 +136,9 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         edit = findViewById(R.id.edit);
 
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
-        if (loggedInUser.equals("hesham")) {
+//        if (loggedInUser.equals("hesham")) {
             ceo_reasons.setVisibility(View.VISIBLE);
-        }
+//        }
 
         swipe_refresh = findViewById(R.id.swipe_refresh);
         joStepperImg = findViewById(R.id.joStepperImg);
