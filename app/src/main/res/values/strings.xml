@@ -233,7 +233,6 @@
     <string name="po_nnumber">PO\nNumber</string>
     <string name="edit_po_number">Edit PO Number</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="all_job_orders">All Job Orders</string>
     <string name="edit_job_order">Edit Job Order</string>
     <string name="edit">Edit</string>
