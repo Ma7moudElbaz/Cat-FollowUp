@@ -167,7 +167,7 @@ public class Production_requests_list extends Fragment {
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        getRequests(0, currentPageNum,activity.getFilterMap());
+                        getRequests(2, currentPageNum,activity.getFilterMap());
 
                 }
             }

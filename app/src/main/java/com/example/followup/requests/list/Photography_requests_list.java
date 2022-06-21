@@ -165,7 +165,7 @@ public class Photography_requests_list extends Fragment {
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        getRequests(0, currentPageNum, activity.getFilterMap());
+                        getRequests(3, currentPageNum, activity.getFilterMap());
 
                 }
             }
