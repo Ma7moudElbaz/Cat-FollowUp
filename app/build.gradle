@@ -90,4 +90,8 @@ dependencies {
     //switch toggle
     implementation 'com.github.Chrisvin:FlipTabs:v1.5'
 
+
+    //file picker
+//    implementation 'com.github.atwa:filepicker:1.0.0'
+
 }

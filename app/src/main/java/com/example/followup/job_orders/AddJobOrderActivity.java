@@ -211,7 +211,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
                 actual_costs.append(items.get(i).getFinal_cost());
             } else {
                 requestIds.append(",").append(items.get(i).getId());
-                actual_costs.append(",").append(items.get(i).getId());
+                actual_costs.append(",").append(items.get(i).getFinal_cost());
             }
         }
 
