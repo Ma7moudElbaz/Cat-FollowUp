@@ -2,7 +2,6 @@ package com.example.followup.home.job_orders;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,15 +23,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.followup.R;
-import com.example.followup.bottomsheets.BottomSheet_choose_filter_job_orders;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_job_orders_fragment;
-import com.example.followup.job_orders.AddJobOrderActivity;
-import com.example.followup.job_orders.list.JobOrdersActivity;
 import com.example.followup.job_orders.list.Job_order_item;
 import com.example.followup.job_orders.list.Job_orders_adapter;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

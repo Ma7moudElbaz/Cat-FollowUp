@@ -1,7 +1,6 @@
 package com.example.followup.home.projects;
 
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +8,10 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.followup.R;
-import com.example.followup.requests.RequestsActivity;
-import com.example.followup.utils.UserType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +22,7 @@ public class Companies_adapter_with_callback extends RecyclerView.Adapter<Compan
     private final List<Company_item> items;
 
     private final Context mContext;
-    private AdapterCallback mAdapterCallback;
+    private final AdapterCallback mAdapterCallback;
 
     public Companies_adapter_with_callback(Context context, Fragment fragment, ArrayList<Company_item> items) {
         try {

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -20,7 +19,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.followup.R;
 import com.example.followup.requests.RequestsActivity;
 import com.example.followup.utils.UserType;
-import com.example.followup.utils.UserUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +29,7 @@ public class Projects_adapter_with_callback extends RecyclerView.Adapter<Project
     private final List<Project_item> items;
 
     private final Context mContext;
-    private AdapterCallback mAdapterCallback;
+    private final AdapterCallback mAdapterCallback;
 
     public Projects_adapter_with_callback(Context context, Fragment fragment, ArrayList<Project_item> items) {
         try {

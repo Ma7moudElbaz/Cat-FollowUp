@@ -22,7 +22,7 @@ public class Suppliers_adapter_with_callback extends RecyclerView.Adapter<Suppli
     private final List<Supplier_item> items;
 
     private final Context mContext;
-    private AdapterCallback mAdapterCallback;
+    private final AdapterCallback mAdapterCallback;
 
     public Suppliers_adapter_with_callback(Context context, Fragment fragment, ArrayList<Supplier_item> items) {
         try {

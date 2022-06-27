@@ -12,7 +12,6 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
 import com.example.followup.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -20,7 +19,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 public class BottomSheet_forget_password extends BottomSheetDialogFragment {
 
 
-    private ForgetPassListener forgetPassListener;
+    private final ForgetPassListener forgetPassListener;
 
     public BottomSheet_forget_password(Activity activity) {
         this.forgetPassListener = ((ForgetPassListener) activity);

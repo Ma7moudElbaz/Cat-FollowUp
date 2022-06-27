@@ -15,14 +15,13 @@ import androidx.fragment.app.Fragment;
 import com.adroitandroid.chipcloud.ChipCloud;
 import com.adroitandroid.chipcloud.ChipListener;
 import com.example.followup.R;
-import com.example.followup.home.projects.Projects_adapter_with_callback;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 public class BottomSheet_choose_filter_projects extends BottomSheetDialogFragment {
 
 
     int chipSelectedIndex;
-    private BottomSheet_choose_filter_projects.FilterListener filterListener;
+    private final BottomSheet_choose_filter_projects.FilterListener filterListener;
 
     public BottomSheet_choose_filter_projects( Fragment fragment,int chipSelectedIndex) {
         this.chipSelectedIndex = chipSelectedIndex;

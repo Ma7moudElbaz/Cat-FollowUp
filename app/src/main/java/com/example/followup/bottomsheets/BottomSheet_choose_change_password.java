@@ -20,7 +20,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 public class BottomSheet_choose_change_password extends BottomSheetDialogFragment {
 
 
-    private BottomSheet_choose_change_password.ChangePassListener changePassListener;
+    private final BottomSheet_choose_change_password.ChangePassListener changePassListener;
 
     public BottomSheet_choose_change_password(Fragment fragment) {
         this.changePassListener = ((BottomSheet_choose_change_password.ChangePassListener) fragment);

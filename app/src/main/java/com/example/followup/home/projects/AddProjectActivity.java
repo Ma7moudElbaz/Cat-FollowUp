@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
-import com.example.followup.bottomsheets.BottomSheet_companies;
 import com.example.followup.bottomsheets.BottomSheet_companies_from_activity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;

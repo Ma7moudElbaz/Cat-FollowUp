@@ -221,8 +221,8 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         map.put("project_id", String.valueOf(projectId));
         int type_id_data = request_types_spinner.getSelectedItemPosition() + 1;
         map.put("type_id", String.valueOf(type_id_data));
-        map.put("request_ids", requestIds.toString().toString());
-        map.put("actual_costs", actual_costs.toString().toString());
+        map.put("request_ids", requestIds.toString());
+        map.put("actual_costs", actual_costs.toString());
 
         Log.e("TAG", map.toString());
         return map;

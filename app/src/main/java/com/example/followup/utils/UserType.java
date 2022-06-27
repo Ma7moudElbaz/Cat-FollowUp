@@ -37,11 +37,7 @@ public class UserType {
     }
 
     public static boolean canEditProject( Context mContext,int projectOwnerId, int assignedToId) {
-        if (projectOwnerId == UserUtils.getUserId(mContext) ||
-                assignedToId == UserUtils.getUserId(mContext)) {
-            return true;
-        } else {
-            return false;
-        }
+        return projectOwnerId == UserUtils.getUserId(mContext) ||
+                assignedToId == UserUtils.getUserId(mContext);
     }
 }

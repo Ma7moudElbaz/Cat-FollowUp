@@ -299,7 +299,7 @@ public class AddPrintActivity extends LocalizationActivity {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
-                Log.d("Request failure", call.toString() + " , " + t.getMessage());
+                Log.d("Request failure", call + " , " + t.getMessage());
                 dialog.dismiss();
                 onBackPressed();
             }

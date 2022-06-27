@@ -80,7 +80,7 @@ public class WebserviceContext {
                 .build();
 
         api = retrofit.create(ServiceInterface.class);
-        Log.i("Api", "" + api.toString());
+        Log.i("Api", "" + api);
     }
 
     public static WebserviceContext getInstance() {

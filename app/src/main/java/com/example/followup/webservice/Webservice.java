@@ -1,17 +1,13 @@
 package com.example.followup.webservice;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import com.example.followup.utils.Constants;
-import com.example.followup.utils.UserUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -62,7 +58,7 @@ public class Webservice {
                 .build();
 
         api = retrofit.create(ServiceInterface.class);
-        Log.i("Api", "" + api.toString());
+        Log.i("Api", "" + api);
     }
 
     public static Webservice getInstance() {

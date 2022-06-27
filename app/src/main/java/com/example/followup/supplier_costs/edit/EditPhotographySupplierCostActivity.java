@@ -218,7 +218,7 @@ public class EditPhotographySupplierCostActivity extends LocalizationActivity {
 
                     } else {
                         JSONObject res = new JSONObject(response.errorBody().string());
-                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();;
+                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException | JSONException e) {
                     e.printStackTrace();

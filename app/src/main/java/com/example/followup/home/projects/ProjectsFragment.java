@@ -26,9 +26,7 @@ import android.widget.Toast;
 
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_projects;
-import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.bottomsheets.BottomSheet_companies;
-import com.example.followup.bottomsheets.BottomSheet_po_number;
 import com.example.followup.bottomsheets.BottomSheet_po_number_from_fragment;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -41,8 +39,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -291,7 +287,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     public void cancelProject(int project_id) {
 
         loading.setVisibility(View.VISIBLE);
-        ws.getInstance().getApi().projectCancel(UserUtils.getAccessToken(getContext()), project_id).enqueue(new Callback<ResponseBody>() {
+        WebserviceContext.getInstance().getApi().projectCancel(UserUtils.getAccessToken(getContext()), project_id).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
