@@ -1,5 +1,6 @@
 package com.example.followup.job_orders.job_order_requests;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
@@ -41,7 +42,8 @@ public class Job_orders_requests_adapter extends RecyclerView.Adapter<Job_orders
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Job_orders_requests_adapter.ViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull Job_orders_requests_adapter.ViewHolder holder,
+                                 @SuppressLint("RecyclerView") final int position) {
         holder.request_name.setText(items.get(position).getRequest_name());
         holder.quantity.setText(items.get(position).getQuantity());
         holder.final_cost.setText(items.get(position).getFinal_cost());

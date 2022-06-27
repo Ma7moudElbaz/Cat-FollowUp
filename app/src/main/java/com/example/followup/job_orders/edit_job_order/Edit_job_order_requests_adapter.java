@@ -1,23 +1,19 @@
 package com.example.followup.job_orders.edit_job_order;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.followup.R;
-import com.example.followup.job_orders.job_order_requests.Job_order_request_item;
-import com.example.followup.requests.RequestDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +23,7 @@ public class Edit_job_order_requests_adapter extends RecyclerView.Adapter<Edit_j
 
     private final List<Edit_job_order_request_item> items;
 
-    private final Context mContext;
-
     public Edit_job_order_requests_adapter(Context context, ArrayList<Edit_job_order_request_item> items) {
-        this.mContext = context;
         this.items = items;
     }
 
@@ -42,7 +35,7 @@ public class Edit_job_order_requests_adapter extends RecyclerView.Adapter<Edit_j
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Edit_job_order_requests_adapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Edit_job_order_requests_adapter.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.request_name.setText(items.get(position).getRequest_name());
         holder.final_cost.setText(items.get(position).getActual_cost());
         holder.final_cost.addTextChangedListener(new TextWatcher() {
