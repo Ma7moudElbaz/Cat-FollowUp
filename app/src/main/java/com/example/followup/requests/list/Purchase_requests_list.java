@@ -16,10 +16,10 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.followup.R;
-import com.example.followup.home.Attach_item;
 import com.example.followup.requests.RequestsActivity;
 import com.example.followup.requests.list.adapters.Purchase_adapter;
 import com.example.followup.requests.list.models.Purchase_item;
+import com.example.followup.requests.view.attaches.Attach_item;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 

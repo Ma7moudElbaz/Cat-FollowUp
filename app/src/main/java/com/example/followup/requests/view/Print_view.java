@@ -14,8 +14,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.followup.R;
-import com.example.followup.home.Attach_item;
 import com.example.followup.requests.RequestDetailsActivity;
+import com.example.followup.requests.view.attaches.Attach_item;
 import com.example.followup.requests.view.attaches.Attaches_adapter;
 import com.example.followup.utils.StringCheck;
 

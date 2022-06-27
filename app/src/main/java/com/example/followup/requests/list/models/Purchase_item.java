@@ -1,6 +1,7 @@
 package com.example.followup.requests.list.models;
 
-import com.example.followup.home.Attach_item;
+
+import com.example.followup.requests.view.attaches.Attach_item;
 
 import java.util.ArrayList;
 
