@@ -78,13 +78,13 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         back.setOnClickListener(v -> onBackPressed());
         create_job_order.setOnClickListener(v -> {
             if (validateSelectedRequests(job_order_requests_adapter.getSelectedData())) {
-//                showJONameSheet();
                 showSuppliersSheet();
             }
         });
         request_types_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                initRecyclerView();
                 job_order_requests_list.clear();
                 currentPageNum = 1;
                 getJobOrderRequests(currentPageNum);

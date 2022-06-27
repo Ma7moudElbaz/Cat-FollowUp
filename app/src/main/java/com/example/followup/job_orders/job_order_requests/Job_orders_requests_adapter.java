@@ -63,25 +63,30 @@ public class Job_orders_requests_adapter extends RecyclerView.Adapter<Job_orders
 
             }
         });
-        if (!items.get(position).isChecked() && holder.checkBox.isChecked()){
+        if (!items.get(position).isChecked() && holder.checkBox.isChecked()) {
             holder.checkBox.setChecked(false);
         }
-        if (items.get(position).isChecked()) {
-            holder.final_cost_container.setVisibility(View.VISIBLE);
-        } else {
-            holder.final_cost_container.setVisibility(View.GONE);
-        }
+
+//        if (items.get(position).isChecked()) {
+//            holder.final_cost_container.setVisibility(View.VISIBLE);
+//        } else {
+//            holder.final_cost_container.setVisibility(View.GONE);
+//        }
 
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             items.get(position).setChecked(isChecked);
-            notifyDataSetChanged();
+            if (isChecked) {
+                holder.final_cost_container.setVisibility(View.VISIBLE);
+            } else {
+                holder.final_cost_container.setVisibility(View.GONE);
+            }
         });
 
         holder.request_name.setOnClickListener(view -> {
-            Intent i  = new Intent(mContext, RequestDetailsActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            i.putExtra("request_id",items.get(position).getId());
-            i.putExtra("type_id",items.get(position).getType_id());
+            Intent i = new Intent(mContext, RequestDetailsActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.putExtra("request_id", items.get(position).getId());
+            i.putExtra("type_id", items.get(position).getType_id());
             mContext.startActivity(i);
         });
 
@@ -91,13 +96,11 @@ public class Job_orders_requests_adapter extends RecyclerView.Adapter<Job_orders
         List<Job_order_request_item> selectedList = new ArrayList<>();
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).isChecked()) {
-//                items.get(i).setFinal_cost();
                 selectedList.add(items.get(i));
             }
         }
         return selectedList;
     }
-
 
 
     @Override
@@ -108,7 +111,7 @@ public class Job_orders_requests_adapter extends RecyclerView.Adapter<Job_orders
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         final CheckBox checkBox;
-        final TextView request_name,quantity,cost_type;
+        final TextView request_name, quantity, cost_type;
         final EditText final_cost;
         final LinearLayout final_cost_container;
 
