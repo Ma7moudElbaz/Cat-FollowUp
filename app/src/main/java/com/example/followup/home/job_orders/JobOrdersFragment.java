@@ -41,7 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class JobOrdersFragment extends Fragment implements BottomSheet_choose_filter_job_orders_fragment.FilterListener{
+public class JobOrdersFragment extends Fragment implements BottomSheet_choose_filter_job_orders_fragment.FilterListener {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,7 +52,7 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
 
     public void showFilterSheet() {
         BottomSheet_choose_filter_job_orders_fragment langBottomSheet =
-                new BottomSheet_choose_filter_job_orders_fragment(JobOrdersFragment.this,selectedStatusIndex);
+                new BottomSheet_choose_filter_job_orders_fragment(JobOrdersFragment.this, selectedStatusIndex);
         langBottomSheet.show(getParentFragmentManager(), "jo_filter");
     }
 
@@ -90,7 +90,7 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
 
     int selectedStatusIndex = -1;
     String selectedStatus = "";
-    String[] chipsStatus = new String[]{"","1","2", "3", "5","6", "8","9", "7"};
+    String[] chipsStatus = new String[]{"", "1", "2", "3", "5", "6", "8", "9", "7"};
 
 
     SwipeRefreshLayout swipe_refresh;
@@ -109,7 +109,7 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
                 job_order_list.clear();
                 currentPageNum = 1;
                 getJobOrders(currentPageNum, getFilterMap());
-                hideKeyboardFragment(getContext(),v);
+                hideKeyboardFragment(getContext(), v);
                 return true;
             }
             return false;
@@ -166,8 +166,10 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
                 final String name = currentObject.getString("name");
                 final String po_number = currentObject.getString("po_number");
 
+                final boolean have_action = currentObject.getBoolean("have_action");
+
                 job_order_list.add(new Job_order_item(id, project_id, status_code, status_message,
-                        name, po_number));
+                        name, po_number, have_action));
 
             }
 

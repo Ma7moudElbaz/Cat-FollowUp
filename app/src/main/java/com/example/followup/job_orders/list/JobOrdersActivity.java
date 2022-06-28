@@ -176,8 +176,10 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
                 final String name = currentObject.getString("name");
                 final String po_number = currentObject.getString("po_number");
 
+                final boolean have_action = currentObject.getBoolean("have_action");
+
                 job_order_list.add(new Job_order_item(id, project_id, status_code, status_message,
-                        name, po_number));
+                        name, po_number, have_action));
 
             }
 

@@ -56,6 +56,12 @@ public class Job_orders_adapter extends RecyclerView.Adapter<Job_orders_adapter.
             holder.status.setText("In Progress");
         }
 
+        if (items.get(position).isHave_action()){
+            holder.have_action.setVisibility(View.VISIBLE);
+        }else {
+            holder.have_action.setVisibility(View.GONE);
+        }
+
         holder.parent_layout.setOnClickListener(v -> {
             Intent i = new Intent(mContext, JobOrderDetailsActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -73,7 +79,7 @@ public class Job_orders_adapter extends RecyclerView.Adapter<Job_orders_adapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView job_order_number, po_number, status;
+        final TextView job_order_number, po_number, status,have_action;
         final RelativeLayout parent_layout;
         final View status_color;
 
@@ -82,6 +88,7 @@ public class Job_orders_adapter extends RecyclerView.Adapter<Job_orders_adapter.
             job_order_number = itemView.findViewById(R.id.job_order_number);
             po_number = itemView.findViewById(R.id.po_number);
             status = itemView.findViewById(R.id.status);
+            have_action = itemView.findViewById(R.id.have_action);
             status_color = itemView.findViewById(R.id.status_color);
             parent_layout = itemView.findViewById(R.id.parent_layout);
         }

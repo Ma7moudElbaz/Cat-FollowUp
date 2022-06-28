@@ -45,13 +45,32 @@
                         android:layout_marginEnd="5dp"
                         android:orientation="vertical">
 
-                        <TextView
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/job_order_number"
-                            android:textColor="@color/text_request_gray"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/job_order_number"
+                                android:textColor="@color/text_request_gray"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/have_action"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:text="⦿"
+                                android:textColor="@color/red"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                android:visibility="gone"/>
+
+                        </LinearLayout>
+
 
                         <TextView
                             android:id="@+id/job_order_number"
