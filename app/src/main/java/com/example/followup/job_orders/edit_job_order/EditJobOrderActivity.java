@@ -55,6 +55,7 @@ public class EditJobOrderActivity extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                setJobOrderMap(edit_job_order_requests_list);
                 editJobOrder(edit_job_order_requests_list);
             }
         });
@@ -122,7 +123,10 @@ public class EditJobOrderActivity extends AppCompatActivity {
                 final int id = currentObject.getInt("id");
                 final String item_name = currentObject.getString("item_name");
                 final String actual_cost = currentObject.getString("actual_cost");
-                edit_job_order_requests_list.add(new Edit_job_order_request_item(id, item_name, actual_cost));
+                final String quantity = currentObject.getString("quantity");
+                final String cost_per_id = currentObject.getString("cost_per_id");
+                final String cost_type = currentObject.getString("cost_per_type");
+                edit_job_order_requests_list.add(new Edit_job_order_request_item(id, item_name, cost_type, cost_per_id, quantity, actual_cost));
 
             }
             edit_job_order_requests_adapter.notifyDataSetChanged();
@@ -167,20 +171,28 @@ public class EditJobOrderActivity extends AppCompatActivity {
 
         StringBuilder requestIds = new StringBuilder();
         StringBuilder actual_costs = new StringBuilder();
+        StringBuilder quantity = new StringBuilder();
+        StringBuilder cost_per_id = new StringBuilder();
 
         for (int i = 0; i < items.size(); i++) {
             if (i == 0) {
                 requestIds.append(items.get(i).getRequest_id());
                 actual_costs.append(items.get(i).getActual_cost());
+                quantity.append(items.get(i).getQuantity());
+                cost_per_id.append(items.get(i).getCost_per_id());
             } else {
                 requestIds.append(",").append(items.get(i).getRequest_id());
                 actual_costs.append(",").append(items.get(i).getActual_cost());
+                quantity.append(",").append(items.get(i).getQuantity());
+                cost_per_id.append(",").append(items.get(i).getCost_per_id());
             }
         }
 
         Map<String, String> map = new HashMap<>();
         map.put("request_ids", requestIds.toString());
         map.put("actual_costs", actual_costs.toString());
+        map.put("quantity", quantity.toString());
+        map.put("cost_per_type", cost_per_id.toString());
 
         Log.e("requests map", map.toString());
         return map;

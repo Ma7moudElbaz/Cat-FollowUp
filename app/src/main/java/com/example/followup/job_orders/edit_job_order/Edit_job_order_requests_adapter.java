@@ -37,7 +37,10 @@ public class Edit_job_order_requests_adapter extends RecyclerView.Adapter<Edit_j
     @Override
     public void onBindViewHolder(@NonNull Edit_job_order_requests_adapter.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.request_name.setText(items.get(position).getRequest_name());
+        holder.cost_type.setText(items.get(position).getCost_type() + " Cost");
         holder.final_cost.setText(items.get(position).getActual_cost());
+        holder.quantity.setText(items.get(position).getQuantity());
+
         holder.final_cost.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -54,6 +57,22 @@ public class Edit_job_order_requests_adapter extends RecyclerView.Adapter<Edit_j
 
             }
         });
+        holder.quantity.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                items.get(position).setQuantity(holder.quantity.getText().toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -63,13 +82,15 @@ public class Edit_job_order_requests_adapter extends RecyclerView.Adapter<Edit_j
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView request_name;
-        final EditText final_cost;
+        final TextView request_name, cost_type;
+        final EditText final_cost, quantity;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             request_name = itemView.findViewById(R.id.request_name);
+            cost_type = itemView.findViewById(R.id.cost_type);
             final_cost = itemView.findViewById(R.id.final_cost);
+            quantity = itemView.findViewById(R.id.quantity);
         }
     }
 }
