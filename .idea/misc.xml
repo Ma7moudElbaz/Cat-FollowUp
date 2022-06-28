@@ -112,7 +112,7 @@
         <entry key="app/src/main/res/layout/item_edit_job_order_request.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_job_order.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_job_order_request.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/item_notifications.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_notifications.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_projects.xml" value="0.5" />
         <entry key="app/src/main/res/layout/item_request.xml" value="0.18" />
         <entry key="app/src/main/res/layout/item_request_photography.xml" value="0.234375" />

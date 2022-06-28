@@ -43,6 +43,7 @@ public class Notification_adapter extends RecyclerView.Adapter<Notification_adap
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
         holder.message.setText(items.get(position).getMessage());
+        holder.date.setText(items.get(position).getCreated_at());
 
         holder.parent_layout.setOnClickListener(v -> {
             Intent i;
@@ -87,12 +88,13 @@ public class Notification_adapter extends RecyclerView.Adapter<Notification_adap
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView message;
+        final TextView message,date;
         final LinearLayout parent_layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             message = itemView.findViewById(R.id.message);
+            date = itemView.findViewById(R.id.date);
             parent_layout = itemView.findViewById(R.id.parent_layout);
         }
     }
