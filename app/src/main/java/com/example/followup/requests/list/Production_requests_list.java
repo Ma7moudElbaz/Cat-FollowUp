@@ -123,11 +123,12 @@ public class Production_requests_list extends Fragment {
                 final String designer_name = currentObject.getString("designer_name");
                 final String created_by_name = currentObject.getJSONObject("created_by_name").getString("name");
 
+                final boolean have_action = currentObject.getBoolean("have_action");
                 ArrayList<Attach_item> attach_files = new ArrayList<>();
 
                 production_list.add(new Production_item(id, type_id, created_by_id, status_code, quantity, status_message,
                         item_name, description, delivery_date, note, country, venue, days, dimensions, screen,
-                        designer_name, created_by_name, attach_files));
+                        designer_name, created_by_name, attach_files, have_action));
 
             }
 

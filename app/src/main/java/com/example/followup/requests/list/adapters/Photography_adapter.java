@@ -47,6 +47,12 @@ public class Photography_adapter extends RecyclerView.Adapter<Photography_adapte
         holder.country.setText(items.get(position).getCountry());
         holder.days.setText(items.get(position).getDays());
 
+        if (items.get(position).isHave_action()){
+            holder.have_action.setVisibility(View.VISIBLE);
+        }else {
+            holder.have_action.setVisibility(View.GONE);
+        }
+
         holder.parent_layout.setOnClickListener(v -> {
             Intent i =new Intent(mContext, RequestDetailsActivity.class);
             i.putExtra("request_id",items.get(position).getId());
@@ -63,7 +69,7 @@ public class Photography_adapter extends RecyclerView.Adapter<Photography_adapte
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView item_name, created_by, status, location, country, days;
+        final TextView item_name, created_by, status, location, country, days,have_action;
         final LinearLayout parent_layout;
 
         public ViewHolder(@NonNull View itemView) {
@@ -75,6 +81,7 @@ public class Photography_adapter extends RecyclerView.Adapter<Photography_adapte
             country = itemView.findViewById(R.id.country);
             days = itemView.findViewById(R.id.days);
             parent_layout = itemView.findViewById(R.id.parent_layout);
+            have_action = itemView.findViewById(R.id.have_action);
 
         }
     }

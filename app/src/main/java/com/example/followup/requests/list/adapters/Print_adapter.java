@@ -47,6 +47,12 @@ public class Print_adapter extends RecyclerView.Adapter<Print_adapter.ViewHolder
         holder.print_type.setText(items.get(position).getPrint_type());
         holder.quantity.setText(String.valueOf(items.get(position).getQuantity()));
 
+        if (items.get(position).isHave_action()){
+            holder.have_action.setVisibility(View.VISIBLE);
+        }else {
+            holder.have_action.setVisibility(View.GONE);
+        }
+
         holder.parent_layout.setOnClickListener(v -> {
             Intent i =new Intent(mContext, RequestDetailsActivity.class);
             i.putExtra("request_id",items.get(position).getId());
@@ -63,7 +69,7 @@ public class Print_adapter extends RecyclerView.Adapter<Print_adapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView item_name, created_by, status, designer, print_type, quantity;
+        final TextView item_name, created_by, status, designer, print_type, quantity,have_action;
         final LinearLayout parent_layout;
 
         public ViewHolder(@NonNull View itemView) {
@@ -76,6 +82,7 @@ public class Print_adapter extends RecyclerView.Adapter<Print_adapter.ViewHolder
             print_type = itemView.findViewById(R.id.print_type);
             quantity = itemView.findViewById(R.id.quantity);
             parent_layout = itemView.findViewById(R.id.parent_layout);
+            have_action = itemView.findViewById(R.id.have_action);
 
         }
     }

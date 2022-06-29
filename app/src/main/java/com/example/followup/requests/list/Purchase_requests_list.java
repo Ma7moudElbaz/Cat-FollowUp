@@ -115,10 +115,11 @@ public class Purchase_requests_list extends Fragment {
                 final String brand = currentObject.getString("brand");
                 final String created_by_name = currentObject.getJSONObject("created_by_name").getString("name");
 
+                final boolean have_action = currentObject.getBoolean("have_action");
                 ArrayList<Attach_item> attach_files = new ArrayList<>();
 
                 purchase_list.add(new Purchase_item(id,type_id,created_by_id,status_code,quantity, status_message,
-                        item_name,description,delivery_address,note,color,material,brand,created_by_name,attach_files));
+                        item_name,description,delivery_address,note,color,material,brand,created_by_name,attach_files, have_action));
             }
 
             purchase_adapter.notifyDataSetChanged();

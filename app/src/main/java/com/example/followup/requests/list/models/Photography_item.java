@@ -9,8 +9,9 @@ public class Photography_item {
     private final int id, type_id, created_by_id, status_code;
     private final String status_message, item_name, description, delivery_address, note, country, location, days, project_type, camera_type, numbers_cameras, lighting, chroma, props, created_by_name;
     private final ArrayList<Attach_item> attach_files;
+    private final boolean have_action;
 
-    public Photography_item(int id, int type_id, int created_by_id, int status_code, String status_message, String item_name, String description, String delivery_address, String note, String country, String location, String days, String project_type, String camera_type, String numbers_cameras, String lighting, String chroma, String props, String created_by_name, ArrayList<Attach_item> attach_files) {
+    public Photography_item(int id, int type_id, int created_by_id, int status_code, String status_message, String item_name, String description, String delivery_address, String note, String country, String location, String days, String project_type, String camera_type, String numbers_cameras, String lighting, String chroma, String props, String created_by_name, ArrayList<Attach_item> attach_files, boolean have_action) {
         this.id = id;
         this.type_id = type_id;
         this.created_by_id = created_by_id;
@@ -31,6 +32,7 @@ public class Photography_item {
         this.props = props;
         this.created_by_name = created_by_name;
         this.attach_files = attach_files;
+        this.have_action = have_action;
     }
 
     public int getId() {
@@ -111,5 +113,9 @@ public class Photography_item {
 
     public ArrayList<Attach_item> getAttach_files() {
         return attach_files;
+    }
+
+    public boolean isHave_action() {
+        return have_action;
     }
 }

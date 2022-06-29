@@ -121,11 +121,12 @@ public class Photography_requests_list extends Fragment {
                 final String props = currentObject.getString("props");
                 final String created_by_name = currentObject.getJSONObject("created_by_name").getString("name");
 
+                final boolean have_action = currentObject.getBoolean("have_action");
                 ArrayList<Attach_item> attach_files = new ArrayList<>();
 
                 photography_list.add(new Photography_item(id, type_id, created_by_id, status_code, status_message,
                         item_name, description, delivery_address, note, country, location, days, project_type, camera_type, numbers_cameras,
-                        lighting, chroma, props, created_by_name, attach_files));
+                        lighting, chroma, props, created_by_name, attach_files, have_action));
 
             }
 

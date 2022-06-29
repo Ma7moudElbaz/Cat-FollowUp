@@ -47,6 +47,12 @@ public class Production_adapter extends RecyclerView.Adapter<Production_adapter.
         holder.country.setText(items.get(position).getCountry());
         holder.quantity.setText(String.valueOf(items.get(position).getQuantity()));
 
+        if (items.get(position).isHave_action()){
+            holder.have_action.setVisibility(View.VISIBLE);
+        }else {
+            holder.have_action.setVisibility(View.GONE);
+        }
+
         holder.parent_layout.setOnClickListener(v -> {
             Intent i =new Intent(mContext, RequestDetailsActivity.class);
             i.putExtra("request_id",items.get(position).getId());
@@ -63,7 +69,7 @@ public class Production_adapter extends RecyclerView.Adapter<Production_adapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView item_name, created_by, status, designer, country, quantity;
+        final TextView item_name, created_by, status, designer, country, quantity,have_action;
         final LinearLayout parent_layout;
 
         public ViewHolder(@NonNull View itemView) {
@@ -76,6 +82,7 @@ public class Production_adapter extends RecyclerView.Adapter<Production_adapter.
             country = itemView.findViewById(R.id.country);
             quantity = itemView.findViewById(R.id.quantity);
             parent_layout = itemView.findViewById(R.id.parent_layout);
+            have_action = itemView.findViewById(R.id.have_action);
 
         }
     }

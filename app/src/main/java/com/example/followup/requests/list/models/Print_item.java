@@ -9,9 +9,10 @@ public class Print_item {
     private final int id, type_id,created_by_id, status_code;
     private final String quantity,status_message,item_name,description,delivery_address,note,pages,paper_weight,print_type,colors, lamination,binding,di_cut,designer_name,created_by_name;
     private final ArrayList<Attach_item> attach_files;
+    private final boolean have_action;
 
 
-    public Print_item(int id, int type_id, int created_by_id, int status_code, String quantity, String status_message, String item_name, String description, String delivery_address, String note, String pages, String paper_weight, String print_type, String colors, String lamination, String binding, String di_cut, String designer_name, String created_by_name, ArrayList<Attach_item> attach_files) {
+    public Print_item(int id, int type_id, int created_by_id, int status_code, String quantity, String status_message, String item_name, String description, String delivery_address, String note, String pages, String paper_weight, String print_type, String colors, String lamination, String binding, String di_cut, String designer_name, String created_by_name, ArrayList<Attach_item> attach_files, boolean have_action) {
         this.id = id;
         this.type_id = type_id;
         this.created_by_id = created_by_id;
@@ -32,6 +33,7 @@ public class Print_item {
         this.designer_name = designer_name;
         this.created_by_name = created_by_name;
         this.attach_files = attach_files;
+        this.have_action = have_action;
     }
 
     public int getId() {
@@ -112,5 +114,9 @@ public class Print_item {
 
     public ArrayList<Attach_item> getAttach_files() {
         return attach_files;
+    }
+
+    public boolean isHave_action() {
+        return have_action;
     }
 }
