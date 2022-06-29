@@ -113,10 +113,10 @@
         <entry key="app/src/main/res/layout/item_job_order.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_job_order_request.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_notifications.xml" value="0.33" />
-        <entry key="app/src/main/res/layout/item_projects.xml" value="0.46435845213849286" />
+        <entry key="app/src/main/res/layout/item_projects.xml" value="0.18398268398268397" />
         <entry key="app/src/main/res/layout/item_request.xml" value="0.18" />
-        <entry key="app/src/main/res/layout/item_request_photography.xml" value="0.234375" />
-        <entry key="app/src/main/res/layout/item_request_print.xml" value="0.37250996015936255" />
+        <entry key="app/src/main/res/layout/item_request_photography.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_request_print.xml" value="0.18398268398268397" />
         <entry key="app/src/main/res/layout/item_request_production.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/item_request_purchase.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/item_requests.xml" value="0.33" />
