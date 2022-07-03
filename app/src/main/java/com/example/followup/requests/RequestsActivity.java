@@ -438,6 +438,45 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
         });
     }
 
+    public void cancelRequestDialog(int request_id,int status) {
+        new AlertDialog.Builder(RequestsActivity.this)
+                .setTitle("Are you sure? ")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    cancelRequest(request_id, status);
+                })
+                .setNegativeButton("Dismiss", null)
+                .show();
+    }
+
+    public void cancelRequest(int request_id,int status) {
+        dialog.show();
+        Map<String, String> map = new HashMap<>();
+        map.put("status", String.valueOf(status));
+        ws.getApi().cancelRequest(UserUtils.getAccessToken(getBaseContext()), request_id,map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getBaseContext(), "Updated successfully", Toast.LENGTH_LONG).show();
+                       onResume();
+                    } else {
+                        JSONObject res = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
     @Override
     public void adapterCallback(String action, int request_id, int type_id) {
         switch (action){
@@ -445,7 +484,10 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
                 Toast.makeText(this, action, Toast.LENGTH_SHORT).show();
                 break;
             case "cancel":
-                Toast.makeText(this, action, Toast.LENGTH_SHORT).show();
+                cancelRequestDialog(request_id,0);
+                break;
+            case "resume":
+                cancelRequestDialog(request_id,1);
                 break;
             case "delete":
                 deleteRequestDialog(request_id);

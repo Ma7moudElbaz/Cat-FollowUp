@@ -109,6 +109,8 @@ public class Photography_adapter extends RecyclerView.Adapter<Photography_adapte
         void adapterCallback(String action, int request_id, int type_id);
     }
 
+
+
     public void showPopup(View v, int position) {
         PopupMenu popup = new PopupMenu(mContext, v);
         MenuInflater inflater = popup.getMenuInflater();
@@ -127,6 +129,9 @@ public class Photography_adapter extends RecyclerView.Adapter<Photography_adapte
                 case R.id.request_delete:
                     mAdapterCallback.adapterCallback("delete", items.get(position).getId(), items.get(position).getType_id());
                     return true;
+                case R.id.request_resume:
+                    mAdapterCallback.adapterCallback("resume", items.get(position).getId(), items.get(position).getType_id());
+                    return true;
                 default:
                     return false;
             }
@@ -136,19 +141,26 @@ public class Photography_adapter extends RecyclerView.Adapter<Photography_adapte
     private void setMenuData(Menu menu, int position) {
         boolean canEditProject = UserType.canEditProject(mContext, items.get(position).getProject_creator_id(), items.get(position).getProject_assign_id());
 
-        if (canEditProject && items.get(position).getCost_status_code() == 1) {
-            menu.getItem(2).setVisible(true);
-        } else {
-            menu.getItem(2).setVisible(false);
-        }
-
-        if (canEditProject && items.get(position).getStatus_code() != 7) {
-            menu.getItem(0).setVisible(true);
-            menu.getItem(1).setVisible(true);
-        } else {
+        if (canEditProject && items.get(position).getStatus_code() == 0) {
             menu.getItem(0).setVisible(false);
             menu.getItem(1).setVisible(false);
+            menu.getItem(2).setVisible(false);
+            menu.getItem(3).setVisible(true);
+        } else {
+
+            menu.getItem(2).setVisible(canEditProject && items.get(position).getCost_status_code() == 1);
+
+            if (canEditProject && items.get(position).getStatus_code() != 7) {
+                menu.getItem(0).setVisible(true);
+                menu.getItem(1).setVisible(true);
+            } else {
+                menu.getItem(0).setVisible(false);
+                menu.getItem(1).setVisible(false);
+            }
+
         }
+
+
     }
 
 }

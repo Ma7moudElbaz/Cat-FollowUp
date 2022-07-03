@@ -102,6 +102,11 @@ public interface ServiceInterface {
     @DELETE("requests/{request_id}")
     Call<ResponseBody> deleteRequest(@Header("Authorization") String auth, @Path("request_id") int request_id);
 
+
+    @POST("requests/action/{request_id}")
+    @FormUrlEncoded
+    Call<ResponseBody> cancelRequest(@Header("Authorization") String auth, @Path("request_id") int request_id, @FieldMap Map<String, String> map);
+
     //costs
     @POST("costs")
     @FormUrlEncoded

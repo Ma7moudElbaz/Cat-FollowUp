@@ -237,4 +237,5 @@
     <string name="edit_job_order">Edit Job Order</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="resume">Resume</string>
 </resources>
