@@ -108,12 +108,17 @@ public class Production_requests_list extends Fragment {
                 final int type_id = currentObject.getInt("type_id");
                 final int created_by_id = currentObject.getInt("created_by_id");
                 final int status_code = currentObject.getInt("status");
+                final String cost_status = currentObject.getString("status_cost");
+                int cost_status_code = 1;
+                if (!cost_status.equals("null")){
+                    cost_status_code = Integer.parseInt(cost_status);
+                }
                 final String quantity = currentObject.getString("quantity");
                 final String status_message = currentObject.getString("status_message");
                 final String item_name = currentObject.getString("item_name");
                 final String description = currentObject.getString("description");
 //                final String delivery_address = currentObject.getString("delivery_address");
-                final String delivery_date = currentObject.getString("delivery_address");
+                final String delivery_date = currentObject.getString("delivery_date");
                 final String note = currentObject.getString("note");
                 final String country = currentObject.getString("country");
                 final String venue = currentObject.getString("venue");
@@ -126,7 +131,14 @@ public class Production_requests_list extends Fragment {
                 final boolean have_action = currentObject.getBoolean("have_action");
                 ArrayList<Attach_item> attach_files = new ArrayList<>();
 
-                production_list.add(new Production_item(id, type_id, created_by_id, status_code, quantity, status_message,
+                int project_creator_id = currentObject.getInt("project_creator_id");
+                final String assigned_to = currentObject.getString("project_assign_id");
+                int project_assign_id = 0;
+                if (!assigned_to.equals("null")) {
+                    project_assign_id = Integer.parseInt(assigned_to);
+                }
+
+                production_list.add(new Production_item(id, type_id, created_by_id, project_creator_id, project_assign_id, status_code, cost_status_code, quantity, status_message,
                         item_name, description, delivery_date, note, country, venue, days, dimensions, screen,
                         designer_name, created_by_name, attach_files, have_action));
 

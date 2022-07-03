@@ -6,16 +6,19 @@ import java.util.ArrayList;
 
 public class Photography_item {
 
-    private final int id, type_id, created_by_id, status_code;
+    private final int id, type_id, created_by_id,project_creator_id,project_assign_id, status_code,cost_status_code;
     private final String status_message, item_name, description, delivery_address, note, country, location, days, project_type, camera_type, numbers_cameras, lighting, chroma, props, created_by_name;
     private final ArrayList<Attach_item> attach_files;
     private final boolean have_action;
 
-    public Photography_item(int id, int type_id, int created_by_id, int status_code, String status_message, String item_name, String description, String delivery_address, String note, String country, String location, String days, String project_type, String camera_type, String numbers_cameras, String lighting, String chroma, String props, String created_by_name, ArrayList<Attach_item> attach_files, boolean have_action) {
+    public Photography_item(int id, int type_id, int created_by_id, int project_creator_id, int project_assign_id, int status_code, int cost_status_code, String status_message, String item_name, String description, String delivery_address, String note, String country, String location, String days, String project_type, String camera_type, String numbers_cameras, String lighting, String chroma, String props, String created_by_name, ArrayList<Attach_item> attach_files, boolean have_action) {
         this.id = id;
         this.type_id = type_id;
         this.created_by_id = created_by_id;
+        this.project_creator_id = project_creator_id;
+        this.project_assign_id = project_assign_id;
         this.status_code = status_code;
+        this.cost_status_code = cost_status_code;
         this.status_message = status_message;
         this.item_name = item_name;
         this.description = description;
@@ -117,5 +120,17 @@ public class Photography_item {
 
     public boolean isHave_action() {
         return have_action;
+    }
+
+    public int getCost_status_code() {
+        return cost_status_code;
+    }
+
+    public int getProject_creator_id() {
+        return project_creator_id;
+    }
+
+    public int getProject_assign_id() {
+        return project_assign_id;
     }
 }

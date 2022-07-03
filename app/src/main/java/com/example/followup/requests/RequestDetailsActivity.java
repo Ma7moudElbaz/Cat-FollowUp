@@ -336,9 +336,9 @@ public class RequestDetailsActivity extends LocalizationActivity {
     }
 
     private void setUserCostPermissions(int costStatus, Boolean canEditProject) {
-        if (canEditProject && costStatus == 1) {
-            cancel_request.setVisibility(View.VISIBLE);
-        }
+//        if (canEditProject && costStatus == 1) {
+//            cancel_request.setVisibility(View.VISIBLE);
+//        }
         setRequestStepper(costStatus);
         Log.e("costStatus", String.valueOf(costStatus));
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));

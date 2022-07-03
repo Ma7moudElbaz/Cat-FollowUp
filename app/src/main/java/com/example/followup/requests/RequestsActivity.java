@@ -2,6 +2,8 @@ package com.example.followup.requests;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -31,6 +33,7 @@ import com.example.followup.requests.add.AddProductionActivity;
 import com.example.followup.requests.list.Production_requests_list;
 import com.example.followup.requests.add.AddPurchaseActivity;
 import com.example.followup.requests.list.Purchase_requests_list;
+import com.example.followup.requests.list.adapters.Purchase_adapter;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -38,8 +41,10 @@ import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.material.tabs.TabLayout;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -49,7 +54,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class RequestsActivity extends LocalizationActivity implements BottomSheet_choose_filter_requests.FilterListener {
+public class RequestsActivity extends LocalizationActivity implements BottomSheet_choose_filter_requests.FilterListener, Purchase_adapter.AdapterCallback {
 
     public void showFilterSheet() {
         BottomSheet_choose_filter_requests langBottomSheet =
@@ -90,6 +95,9 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     SwipeRefreshLayout swipe_refresh;
     int children_id;
     int purchase_no, printing_no, production_no, photo_no;
+
+
+    private ProgressDialog dialog;
 
     WebserviceContext ws;
 
@@ -181,6 +189,11 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
 
 
     private void initFields() {
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Please, Wait...");
+        dialog.setCancelable(false);
+
         ws = new WebserviceContext(this);
         projectId = getIntent().getIntExtra("project_id", 0);
         addPhotography = findViewById(R.id.photography_btn);
@@ -383,5 +396,58 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
 
         selectedStatusIndex = returenedSelectedStatusIndex;
         setRequestsFragment(tabPosition);
+    }
+
+    public void deleteRequestDialog(int request_id) {
+        new AlertDialog.Builder(RequestsActivity.this)
+                .setTitle("Are you sure? ")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    deleteRequest(request_id);
+                })
+                .setNegativeButton("Dismiss", null)
+                .show();
+    }
+
+    public void deleteRequest(int request_id) {
+        dialog.show();
+        ws.getApi().deleteRequest(UserUtils.getAccessToken(getBaseContext()), request_id).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getBaseContext(), "Updated successfully", Toast.LENGTH_LONG).show();
+                       onResume();
+                    } else {
+                        JSONObject res = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
+    @Override
+    public void adapterCallback(String action, int request_id, int type_id) {
+        switch (action){
+            case "edit":
+                Toast.makeText(this, action, Toast.LENGTH_SHORT).show();
+                break;
+            case "cancel":
+                Toast.makeText(this, action, Toast.LENGTH_SHORT).show();
+                break;
+            case "delete":
+                deleteRequestDialog(request_id);
+                break;
+        }
+
     }
 }

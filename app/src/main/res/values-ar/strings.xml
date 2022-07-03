@@ -202,4 +202,5 @@
     <string name="all_job_orders">All Job Orders</string>
     <string name="edit_job_order">Edit Job Order</string>
     <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>

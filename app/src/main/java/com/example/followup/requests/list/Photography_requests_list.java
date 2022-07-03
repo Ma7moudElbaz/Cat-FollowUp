@@ -105,6 +105,11 @@ public class Photography_requests_list extends Fragment {
                 final int type_id = currentObject.getInt("type_id");
                 final int created_by_id = currentObject.getInt("created_by_id");
                 final int status_code = currentObject.getInt("status");
+                final String cost_status = currentObject.getString("status_cost");
+                int cost_status_code = 1;
+                if (!cost_status.equals("null")){
+                    cost_status_code = Integer.parseInt(cost_status);
+                }
                 final String status_message = currentObject.getString("status_message");
                 final String item_name = currentObject.getString("item_name");
                 final String description = currentObject.getString("description");
@@ -124,7 +129,14 @@ public class Photography_requests_list extends Fragment {
                 final boolean have_action = currentObject.getBoolean("have_action");
                 ArrayList<Attach_item> attach_files = new ArrayList<>();
 
-                photography_list.add(new Photography_item(id, type_id, created_by_id, status_code, status_message,
+                int project_creator_id = currentObject.getInt("project_creator_id");
+                final String assigned_to = currentObject.getString("project_assign_id");
+                int project_assign_id = 0;
+                if (!assigned_to.equals("null")) {
+                    project_assign_id = Integer.parseInt(assigned_to);
+                }
+
+                photography_list.add(new Photography_item(id, type_id, created_by_id, project_creator_id, project_assign_id, status_code, cost_status_code, status_message,
                         item_name, description, delivery_address, note, country, location, days, project_type, camera_type, numbers_cameras,
                         lighting, chroma, props, created_by_name, attach_files, have_action));
 
