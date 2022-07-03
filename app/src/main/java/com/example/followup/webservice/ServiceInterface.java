@@ -92,6 +92,11 @@ public interface ServiceInterface {
     @FormUrlEncoded
     Call<ResponseBody> addRequest(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
+
+    @PUT("requests/{request_id}")
+    @FormUrlEncoded
+    Call<ResponseBody> editRequest(@Header("Authorization") String auth, @Path("request_id") int request_id, @FieldMap Map<String, String> map);
+
     @Multipart
     @POST("requests/attaches")
     Call<ResponseBody> addAttach(@Header("Authorization") String auth, @Part List<MultipartBody.Part> files, @Part("request_id") RequestBody request_id);

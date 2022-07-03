@@ -204,4 +204,5 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="resume">Resume</string>
+    <string name="edit_request">Edit Request</string>
 </resources>

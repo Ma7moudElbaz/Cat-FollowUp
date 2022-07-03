@@ -26,6 +26,10 @@ import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_requests;
 import com.example.followup.job_orders.list.JobOrdersActivity;
 import com.example.followup.requests.add.AddPhotographyActivity;
+import com.example.followup.requests.edit.Photography_edit;
+import com.example.followup.requests.edit.Print_edit;
+import com.example.followup.requests.edit.Production_edit;
+import com.example.followup.requests.edit.Purchase_edit;
 import com.example.followup.requests.list.Photography_requests_list;
 import com.example.followup.requests.add.AddPrintActivity;
 import com.example.followup.requests.list.Print_requests_list;
@@ -370,10 +374,10 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     public Map<String, String> getFilterMap() {
         Map<String, String> map = new HashMap<>();
         map.put("created_by", "");
-        switch (selectedStatus){
+        switch (selectedStatus) {
             case "1":
             case "6":
-            case"7":
+            case "7":
                 map.put("status", selectedStatus);
                 map.put("cost_status", "");
                 break;
@@ -419,7 +423,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
                 try {
                     if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Updated successfully", Toast.LENGTH_LONG).show();
-                       onResume();
+                        onResume();
                     } else {
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
@@ -438,7 +442,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
         });
     }
 
-    public void cancelRequestDialog(int request_id,int status) {
+    public void cancelRequestDialog(int request_id, int status) {
         new AlertDialog.Builder(RequestsActivity.this)
                 .setTitle("Are you sure? ")
                 .setPositiveButton("Yes", (dialog, which) -> {
@@ -448,17 +452,17 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
                 .show();
     }
 
-    public void cancelRequest(int request_id,int status) {
+    public void cancelRequest(int request_id, int status) {
         dialog.show();
         Map<String, String> map = new HashMap<>();
         map.put("status", String.valueOf(status));
-        ws.getApi().cancelRequest(UserUtils.getAccessToken(getBaseContext()), request_id,map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().cancelRequest(UserUtils.getAccessToken(getBaseContext()), request_id, map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Updated successfully", Toast.LENGTH_LONG).show();
-                       onResume();
+                        onResume();
                     } else {
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
@@ -479,20 +483,45 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
 
     @Override
     public void adapterCallback(String action, int request_id, int type_id) {
-        switch (action){
+        switch (action) {
             case "edit":
-                Toast.makeText(this, action, Toast.LENGTH_SHORT).show();
+                gotoEditActivity(request_id, type_id);
                 break;
             case "cancel":
-                cancelRequestDialog(request_id,0);
+                cancelRequestDialog(request_id, 0);
                 break;
             case "resume":
-                cancelRequestDialog(request_id,1);
+                cancelRequestDialog(request_id, 1);
                 break;
             case "delete":
                 deleteRequestDialog(request_id);
                 break;
         }
 
+    }
+
+    private void gotoEditActivity(int request_id, int type_id) {
+        Intent i;
+        switch (type_id) {
+            case 1:
+                i = new Intent(RequestsActivity.this, Purchase_edit.class);
+                break;
+            case 2:
+                i = new Intent(RequestsActivity.this, Print_edit.class);
+                break;
+            case 3:
+                i = new Intent(RequestsActivity.this, Production_edit.class);
+                break;
+            case 4:
+                i = new Intent(RequestsActivity.this, Photography_edit.class);
+                break;
+            default:
+                i = new Intent(RequestsActivity.this, RequestsActivity.class);
+        }
+
+        i.putExtra("project_id",projectId);
+        i.putExtra("request_id",request_id);
+
+        startActivity(i);
     }
 }

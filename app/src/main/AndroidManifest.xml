@@ -21,8 +21,25 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
+            android:name=".requests.edit.Production_edit"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".requests.edit.Photography_edit"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".requests.edit.Print_edit"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".requests.edit.Purchase_edit"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".job_orders.edit_job_order.EditJobOrderActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ResultActivity"
             android:exported="true">
@@ -151,8 +168,6 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/colorAccent" />
-
-
         <meta-data
             android:name="firebase_crashlytics_collection_enabled"
             android:value="${crashlyticsCollectionEnabled}" />
