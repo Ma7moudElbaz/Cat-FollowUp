@@ -33,6 +33,9 @@ import com.example.followup.requests.add.AddProductionActivity;
 import com.example.followup.requests.list.Production_requests_list;
 import com.example.followup.requests.add.AddPurchaseActivity;
 import com.example.followup.requests.list.Purchase_requests_list;
+import com.example.followup.requests.list.adapters.Photography_adapter;
+import com.example.followup.requests.list.adapters.Print_adapter;
+import com.example.followup.requests.list.adapters.Production_adapter;
 import com.example.followup.requests.list.adapters.Purchase_adapter;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
@@ -54,7 +57,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class RequestsActivity extends LocalizationActivity implements BottomSheet_choose_filter_requests.FilterListener, Purchase_adapter.AdapterCallback {
+public class RequestsActivity extends LocalizationActivity implements BottomSheet_choose_filter_requests.FilterListener, Purchase_adapter.AdapterCallback, Production_adapter.AdapterCallback, Print_adapter.AdapterCallback, Photography_adapter.AdapterCallback {
 
     public void showFilterSheet() {
         BottomSheet_choose_filter_requests langBottomSheet =
