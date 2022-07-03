@@ -48,6 +48,16 @@ public class Purchase_adapter extends RecyclerView.Adapter<Purchase_adapter.View
     @Override
     public void onBindViewHolder(@NonNull Purchase_adapter.ViewHolder holder, final int position) {
 
+        boolean canEditProject = UserType.canEditProject(mContext, items.get(position).getProject_creator_id(), items.get(position).getProject_assign_id());
+
+        //show action for owner only
+        if (!canEditProject || items.get(position).getStatus_code() == 7) {
+            holder.show_actions.setVisibility(View.GONE);
+        } else {
+            holder.show_actions.setVisibility(View.VISIBLE);
+        }
+
+
         holder.item_name.setText(items.get(position).getItem_name());
         holder.created_by.setText(items.get(position).getCreated_by_name());
         holder.status.setText(String.valueOf(items.get(position).getStatus_message()));
@@ -131,8 +141,16 @@ public class Purchase_adapter extends RecyclerView.Adapter<Purchase_adapter.View
 
         if (canEditProject && items.get(position).getCost_status_code() == 1) {
             menu.getItem(2).setVisible(true);
-        }else {
+        } else {
             menu.getItem(2).setVisible(false);
+        }
+
+        if (canEditProject && items.get(position).getStatus_code() != 7) {
+            menu.getItem(0).setVisible(true);
+            menu.getItem(1).setVisible(true);
+        } else {
+            menu.getItem(0).setVisible(false);
+            menu.getItem(1).setVisible(false);
         }
     }
 
