@@ -225,7 +225,7 @@ public class Purchase_edit extends AppCompatActivity {
         color.setText(StringCheck.returnText(dataObj.getString("color")));
         material.setText(StringCheck.returnText(dataObj.getString("material")));
 
-        if (dataObj.getString("brand").equals("null")){
+        if (dataObj.getString("brand").toString().equalsIgnoreCase("null")){
             branding.check(R.id.branding_no);
         }else {
             branding.check(R.id.branding_yes);

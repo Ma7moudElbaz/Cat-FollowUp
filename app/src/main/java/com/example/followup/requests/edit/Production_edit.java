@@ -254,10 +254,10 @@ public class Production_edit extends AppCompatActivity {
         dimensions.setText(StringCheck.returnText(dataObj.getString("dimension")));
         notes.setText(StringCheck.returnText(dataObj.getString("note")));
         designer_in_charge.setText(StringCheck.returnText(dataObj.getString("designer_name")));
-        if (screen_specs.getText().equals("no")){
+        if (screen_specs.getText().toString().equalsIgnoreCase("no")){
             screen.check(R.id.screen_no);
         }else {
-            screen.check(R.id.screen_no);
+            screen.check(R.id.screen_yes);
             screen_specs.setText(dataObj.getString("screen"));
         }
 
