@@ -239,4 +239,5 @@
     <string name="delete">Delete</string>
     <string name="resume">Resume</string>
     <string name="edit_request">Edit Request</string>
+    <string name="update_request">Update Request</string>
 </resources>

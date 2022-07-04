@@ -385,7 +385,7 @@
                     android:layout_marginTop="20dp"
                     android:background="@drawable/btn_yellow"
                     android:baselineAligned="false"
-                    android:text="@string/send_request"
+                    android:text="@string/update_request"
                     android:textAllCaps="false"
                     android:textColor="@color/black" />
 
