@@ -243,17 +243,17 @@ public class Production_edit extends AppCompatActivity {
     }
 
     private void setFields(JSONObject dataObj) throws JSONException {
-        item_name.setText(StringCheck.returnText(dataObj.getString("item_name")));
-        quantity.setText(StringCheck.returnText(dataObj.getString("quantity")));
-        description.setText(StringCheck.returnText(dataObj.getString("description")));
-        country.setText(StringCheck.returnText(dataObj.getString("country")));
-        city.setText(StringCheck.returnText(dataObj.getString("city")));
-        venue.setText(StringCheck.returnText(dataObj.getString("venue")));
-        days.setText(StringCheck.returnText(dataObj.getString("days")));
-        delivery_date.setText(StringCheck.returnText(dataObj.getString("delivery_date")));
-        dimensions.setText(StringCheck.returnText(dataObj.getString("dimension")));
-        notes.setText(StringCheck.returnText(dataObj.getString("note")));
-        designer_in_charge.setText(StringCheck.returnText(dataObj.getString("designer_name")));
+        item_name.setText(StringCheck.returnEmpty(dataObj.getString("item_name")));
+        quantity.setText(StringCheck.returnEmpty(dataObj.getString("quantity")));
+        description.setText(StringCheck.returnEmpty(dataObj.getString("description")));
+        country.setText(StringCheck.returnEmpty(dataObj.getString("country")));
+        city.setText(StringCheck.returnEmpty(dataObj.getString("city")));
+        venue.setText(StringCheck.returnEmpty(dataObj.getString("venue")));
+        days.setText(StringCheck.returnEmpty(dataObj.getString("days")));
+        delivery_date.setText(StringCheck.returnEmpty(dataObj.getString("delivery_date")));
+        dimensions.setText(StringCheck.returnEmpty(dataObj.getString("dimension")));
+        notes.setText(StringCheck.returnEmpty(dataObj.getString("note")));
+        designer_in_charge.setText(StringCheck.returnEmpty(dataObj.getString("designer_name")));
         if (screen_specs.getText().toString().equalsIgnoreCase("no")){
             screen.check(R.id.screen_no);
         }else {
@@ -277,7 +277,7 @@ public class Production_edit extends AppCompatActivity {
                             addRequestAttaches(responseObject.getJSONObject("data").getString("id"));
                         } else {
                             dialog.dismiss();
-                            Toast.makeText(getBaseContext(), "Request Added Successfully", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), "Request Updated Successfully", Toast.LENGTH_LONG).show();
                             onBackPressed();
                         }
 

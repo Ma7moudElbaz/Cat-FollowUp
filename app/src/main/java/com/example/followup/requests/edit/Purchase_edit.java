@@ -219,11 +219,11 @@ public class Purchase_edit extends AppCompatActivity {
     }
 
     private void setFields(JSONObject dataObj) throws JSONException {
-        item_name.setText(StringCheck.returnText(dataObj.getString("item_name")));
-        quantity.setText(StringCheck.returnText(dataObj.getString("quantity")));
-        description.setText(StringCheck.returnText(dataObj.getString("description")));
-        color.setText(StringCheck.returnText(dataObj.getString("color")));
-        material.setText(StringCheck.returnText(dataObj.getString("material")));
+        item_name.setText(StringCheck.returnEmpty(dataObj.getString("item_name")));
+        quantity.setText(StringCheck.returnEmpty(dataObj.getString("quantity")));
+        description.setText(StringCheck.returnEmpty(dataObj.getString("description")));
+        color.setText(StringCheck.returnEmpty(dataObj.getString("color")));
+        material.setText(StringCheck.returnEmpty(dataObj.getString("material")));
 
         if (dataObj.getString("brand").toString().equalsIgnoreCase("null")){
             branding.check(R.id.branding_no);
@@ -231,8 +231,8 @@ public class Purchase_edit extends AppCompatActivity {
             branding.check(R.id.branding_yes);
             brand.setText(dataObj.getString("brand"));
         }
-        delivery_address.setText(StringCheck.returnText(dataObj.getString("delivery_address")));
-        notes.setText(StringCheck.returnText(dataObj.getString("note")));
+        delivery_address.setText(StringCheck.returnEmpty(dataObj.getString("delivery_address")));
+        notes.setText(StringCheck.returnEmpty(dataObj.getString("note")));
     }
 
     private void editPurchase() {
@@ -248,7 +248,7 @@ public class Purchase_edit extends AppCompatActivity {
                         if (filesSelected.size() != 0) {
                             addRequestAttaches(responseObject.getJSONObject("data").getString("id"));
                         } else {
-                            Toast.makeText(getBaseContext(), "Request Added Successfully", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getBaseContext(), "Request Updated Successfully", Toast.LENGTH_LONG).show();
                             onBackPressed();
                         }
 
