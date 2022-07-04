@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-    implementation platform('com.google.firebase:firebase-bom:30.0.2')
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
     implementation 'com.google.firebase:firebase-analytics'
 
     implementation 'androidx.appcompat:appcompat:1.4.2'
@@ -52,7 +52,7 @@ dependencies {
     //firebase Messaging
     implementation 'com.google.firebase:firebase-messaging:23.0.6'
     implementation 'com.google.firebase:firebase-messaging-directboot:23.0.6'
-    implementation platform('com.google.firebase:firebase-bom:28.1.0')
+    implementation platform('com.google.firebase:firebase-bom:30.2.0')
     implementation 'com.google.firebase:firebase-analytics'
 
     //fire base crashlytics
@@ -65,20 +65,20 @@ dependencies {
     implementation 'com.makeramen:roundedimageview:2.3.0'
 
     //localisation
-    implementation 'com.akexorcist:localization:1.2.10'
+    implementation 'com.akexorcist:localization:1.2.11'
 
     //RecyclerView
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
     //Glide
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+    implementation 'com.github.bumptech.glide:glide:4.13.2'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation "com.squareup.okhttp3:okhttp:4.9.1"
-    implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.10'
+    implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.10'
 
     // ImagePicker
     implementation 'com.github.jkwiecien:EasyImage:3.2.0'
@@ -94,7 +94,6 @@ dependencies {
 
     //switch toggle
     implementation 'com.github.Chrisvin:FlipTabs:v1.5'
-
 
     //file picker
 //    implementation 'com.github.atwa:filepicker:1.0.0'
