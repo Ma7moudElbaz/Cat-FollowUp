@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.followup.R;
-import com.example.followup.home.projects.Projects_adapter_with_callback;
 import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.list.models.Purchase_item;
 import com.example.followup.utils.UserType;
