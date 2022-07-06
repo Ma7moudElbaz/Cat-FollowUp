@@ -264,7 +264,10 @@ public class RequestDetailsActivity extends LocalizationActivity {
                     dataObj = responseObject.getJSONObject("data");
                     type_id = dataObj.getInt("type_id");
                     projectId = dataObj.getInt("project_id");
-                    if (dataObj.getString("cost").equals("null")) {
+                    if (dataObj.getInt("status")==0){
+                        costStatus = 0;
+                    }
+                    else if (dataObj.getString("cost").equals("null")) {
                         costStatus = 1;
                     } else {
                         costStatus = dataObj.getJSONObject("cost").getInt("status");
@@ -336,14 +339,10 @@ public class RequestDetailsActivity extends LocalizationActivity {
     }
 
     private void setUserCostPermissions(int costStatus, Boolean canEditProject) {
-//        if (canEditProject && costStatus == 1) {
-//            cancel_request.setVisibility(View.VISIBLE);
-//        }
         setRequestStepper(costStatus);
-        Log.e("costStatus", String.valueOf(costStatus));
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
-        Log.e("loggedInUser", loggedInUser);
         resetData();
+        Log.e("Cost Status", String.valueOf(costStatus) );
         switch (costStatus) {
             case 1: {
                 setCostContainer(false);
@@ -419,6 +418,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
     private void resetData() {
         setCostContainer(true);
         editCost.setVisibility(View.GONE);
+        add_cost.setVisibility(View.GONE);
         sales_approval_layout.setVisibility(View.GONE);
     }
 
