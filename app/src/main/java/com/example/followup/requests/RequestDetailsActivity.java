@@ -75,7 +75,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
     int costStatus;
     int costId;
 
-    TextView job_orders;
+    TextView job_orders,txt_canceled;
 
     int request_id, type_id;
     JSONObject dataObj;
@@ -206,6 +206,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         editCost = findViewById(R.id.edit_cost);
         cancel_request = findViewById(R.id.cancel_request);
         job_orders = findViewById(R.id.job_orders);
+        txt_canceled = findViewById(R.id.txt_canceled);
 
         swipe_refresh = findViewById(R.id.swipe_refresh);
         requestStepperImg = findViewById(R.id.requestStepperImg);
@@ -344,6 +345,10 @@ public class RequestDetailsActivity extends LocalizationActivity {
         resetData();
         Log.e("Cost Status", String.valueOf(costStatus) );
         switch (costStatus) {
+            case 0:{
+                txt_canceled.setVisibility(View.VISIBLE);
+                break;
+            }
             case 1: {
                 setCostContainer(false);
                 steps.getStatusView().setCurrentCount(1);
@@ -419,6 +424,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         setCostContainer(true);
         editCost.setVisibility(View.GONE);
         add_cost.setVisibility(View.GONE);
+        txt_canceled.setVisibility(View.GONE);
         sales_approval_layout.setVisibility(View.GONE);
     }
 

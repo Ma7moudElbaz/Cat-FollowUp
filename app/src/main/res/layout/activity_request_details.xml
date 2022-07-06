@@ -129,6 +129,16 @@
                     android:paddingEnd="20dp"
                     android:paddingBottom="10dp">
 
+                    <TextView
+                        android:id="@+id/txt_canceled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Request Canceled"
+                        android:textColor="@color/red"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"/>
+
                     <LinearLayout
                         android:id="@+id/sales_approval_layout"
                         android:layout_width="match_parent"
