@@ -73,7 +73,7 @@ public class NotificationsFragment extends Fragment {
         ws = new WebserviceContext(getActivity());
         activity = (HomeActivity) getActivity();
 
-        activity.resetBadge();
+//        activity.resetBadge();
 
         loading = view.findViewById(R.id.loading);
         swipe_refresh = view.findViewById(R.id.swipe_refresh);
@@ -82,7 +82,7 @@ public class NotificationsFragment extends Fragment {
         notifications_list = new ArrayList<>();
 
 
-        initNotificaitonsRecyclerView();
+        initNotificationsRecyclerView();
     }
 
     @Override
@@ -154,7 +154,7 @@ public class NotificationsFragment extends Fragment {
 
     }
 
-    private void initNotificaitonsRecyclerView() {
+    private void initNotificationsRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         notifications_recycler.setLayoutManager(layoutManager);
         notifications_adapter = new Notification_adapter(getContext(), notifications_list);
@@ -177,8 +177,9 @@ public class NotificationsFragment extends Fragment {
 
     }
 
-    public void readNotification() {
+    public void readNotification(String notificationId) {
         Map<String, String> map = new HashMap<>();
+        map.put("notification_id",notificationId);
         ws.getApi().readNotification(UserUtils.getAccessToken(getContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {

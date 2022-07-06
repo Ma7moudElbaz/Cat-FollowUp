@@ -11,6 +11,7 @@
     <color name="list_item_bg">#F6F9FF</color>
     <color name="service_type_bg">#DEECFF</color>
     <color name="notification_list_item_bg">#FAFAFA</color>
+    <color name="notification_list_item_bg_unread">#DBEBF3</color>
     <color name="text_dark_blue">#0050A6</color>
     <color name="line_blue">#4D0050A6</color>
     <color name="text_light_blue">#9903A9F4</color>

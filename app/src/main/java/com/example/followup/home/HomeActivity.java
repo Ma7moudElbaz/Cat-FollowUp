@@ -70,7 +70,6 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
         initFields();
 
         badge = bottomNavigationView.getOrCreateBadge(R.id.navigation_notifications);
-        getNotificationNumber();
 
         String fromActivity = getIntent().getStringExtra("fromActivity");
         if (fromActivity.equals("notification")) {
@@ -151,5 +150,11 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
                     })
                     .setNegativeButton("Dismiss", null)
                     .show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getNotificationNumber();
     }
 }
