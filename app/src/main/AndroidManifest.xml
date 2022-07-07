@@ -21,6 +21,15 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
+            android:name=".AddExtrasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddExtrasSupplierCost"
+            android:exported="false" />
+        <activity
+            android:name=".EditExtrasSupplierCostActivity"
+            android:exported="false" />
+        <activity
             android:name=".requests.edit.Extras_edit"
             android:exported="false" />
         <activity

@@ -23,6 +23,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.job_orders.list.JobOrdersActivity;
+import com.example.followup.supplier_costs.add.AddExtrasSupplierCost;
+import com.example.followup.supplier_costs.edit.EditExtrasSupplierCostActivity;
+import com.example.followup.requests.view.Extras_view;
 import com.example.followup.requests.view.Photography_view;
 import com.example.followup.requests.view.Print_view;
 import com.example.followup.requests.view.Production_view;
@@ -35,6 +38,7 @@ import com.example.followup.supplier_costs.edit.EditPhotographySupplierCostActiv
 import com.example.followup.supplier_costs.edit.EditPrintSupplierCostActivity;
 import com.example.followup.supplier_costs.edit.EditProductionSupplierCostActivity;
 import com.example.followup.supplier_costs.edit.EditPurchaseSupplierCostActivity;
+import com.example.followup.supplier_costs.view.Extras_supplierCost_view;
 import com.example.followup.supplier_costs.view.Photography_supplierCost_view;
 import com.example.followup.supplier_costs.view.Print_supplierCost_view;
 import com.example.followup.supplier_costs.view.Production_supplierCost_view;
@@ -149,6 +153,9 @@ public class RequestDetailsActivity extends LocalizationActivity {
             case 4:
                 i = new Intent(getBaseContext(), EditPhotographySupplierCostActivity.class);
                 break;
+            case 5:
+                i = new Intent(getBaseContext(), EditExtrasSupplierCostActivity.class);
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + type_id);
         }
@@ -172,6 +179,9 @@ public class RequestDetailsActivity extends LocalizationActivity {
                 break;
             case 4:
                 i = new Intent(getBaseContext(), AddPhotographySupplierCostActivity.class);
+                break;
+            case 5:
+                i = new Intent(getBaseContext(), AddExtrasSupplierCost.class);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + type_id);
@@ -334,6 +344,10 @@ public class RequestDetailsActivity extends LocalizationActivity {
                 if (cost_status > 1)
                     setCostFragment(new Photography_supplierCost_view());
                 break;
+            case 5:
+                setDetailsFragment(new Extras_view());
+                if (cost_status > 1)
+                    setCostFragment(new Extras_supplierCost_view());
             default:
                 Toast.makeText(getBaseContext(), "typeId" + type_id + " cost" + cost_status, Toast.LENGTH_SHORT).show();
         }
