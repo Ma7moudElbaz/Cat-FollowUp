@@ -59,6 +59,8 @@ public class Extras_adapter extends RecyclerView.Adapter<Extras_adapter.ViewHold
 
         holder.item_name.setText(items.get(position).getItem_name());
         holder.created_by.setText(items.get(position).getCreated_by_name());
+        holder.address.setText(items.get(position).getDelivery_address());
+        holder.description.setText(items.get(position).getDescription());
         holder.status.setText(String.valueOf(items.get(position).getStatus_message()));
         holder.show_actions.setOnClickListener(v -> showPopup(v, position));
 
