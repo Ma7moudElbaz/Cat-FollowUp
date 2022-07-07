@@ -101,6 +101,7 @@
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.10260416666666666" />
         <entry key="app/src/main/res/layout/fragment_extras_requests_list.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_extras_supplier_cost_view.xml" value="0.18640350877192982" />
+        <entry key="app/src/main/res/layout/fragment_extras_view.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_job_orders.xml" value="0.18640350877192982" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_photography_requests_fragment.xml" value="0.20833333333333334" />

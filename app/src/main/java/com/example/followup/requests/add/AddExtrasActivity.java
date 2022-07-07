@@ -71,10 +71,10 @@ public class AddExtrasActivity extends AppCompatActivity {
             item_name.setError("This is required field");
             return false;
         }
-        if (address.length() == 0) {
-            address.setError("This is required field");
-            return false;
-        }
+//        if (address.length() == 0) {
+//            address.setError("This is required field");
+//            return false;
+//        }
         if (description.length() == 0) {
             description.setError("This is required field");
             return false;
