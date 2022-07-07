@@ -238,8 +238,6 @@ public class AddPhotographySupplierCostActivity extends LocalizationActivity {
         startActivityForResult(intent, FILES_REQUEST_CODE);
     }
 
-
-
     private void pickFromFiles() {
 
         //Create an Intent with action as ACTION_PICK

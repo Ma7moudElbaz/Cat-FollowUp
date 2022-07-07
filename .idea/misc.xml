@@ -56,7 +56,7 @@
         <entry key="app/src/main/res/font-v26/poppins.xml" value="0.26458333333333334" />
         <entry key="app/src/main/res/font/poppins.xml" value="0.26458333333333334" />
         <entry key="app/src/main/res/layout/activity_add_extras.xml" value="0.18640350877192982" />
-        <entry key="app/src/main/res/layout/activity_add_extras_supplier_cost.xml" value="0.17456140350877192" />
+        <entry key="app/src/main/res/layout/activity_add_extras_supplier_cost.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_job_order.xml" value="0.1794005909666526" />
         <entry key="app/src/main/res/layout/activity_add_photography.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_add_photography_supplier_cost.xml" value="0.22" />
