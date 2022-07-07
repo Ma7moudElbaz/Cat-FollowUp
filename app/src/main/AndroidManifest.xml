@@ -21,6 +21,9 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
+            android:name=".requests.edit.Extras_edit"
+            android:exported="false" />
+        <activity
             android:name=".requests.edit.Production_edit"
             android:exported="false"
             android:screenOrientation="portrait" />

@@ -26,6 +26,7 @@ import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_requests;
 import com.example.followup.job_orders.list.JobOrdersActivity;
 import com.example.followup.requests.add.AddPhotographyActivity;
+import com.example.followup.requests.edit.Extras_edit;
 import com.example.followup.requests.edit.Photography_edit;
 import com.example.followup.requests.edit.Print_edit;
 import com.example.followup.requests.edit.Production_edit;
@@ -359,6 +360,10 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
                 requests_tab.getTabAt(2).select();
                 removeTabs(2);
                 break;
+            case 12:
+                requests_tab.getTabAt(4).select();
+                removeTabs(4);
+                break;
             default:
                 requests_tab.getTabAt(0).select();
                 break;
@@ -369,7 +374,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     private void removeTabs(int keepTab) {
         int tab_to_keep = keepTab;
         int tab_to_delete = 0;
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             if (tab_to_keep != 0) {
                 requests_tab.removeTabAt(tab_to_delete);
                 tab_to_keep--;
@@ -523,6 +528,9 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
                 break;
             case 4:
                 i = new Intent(RequestsActivity.this, Photography_edit.class);
+                break;
+            case 5:
+                i = new Intent(RequestsActivity.this, Extras_edit.class);
                 break;
             default:
                 i = new Intent(RequestsActivity.this, RequestsActivity.class);
