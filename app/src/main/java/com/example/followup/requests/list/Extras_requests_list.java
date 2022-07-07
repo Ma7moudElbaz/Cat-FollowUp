@@ -1,5 +1,6 @@
 package com.example.followup.requests.list;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,11 +13,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.followup.R;
 import com.example.followup.requests.RequestsActivity;
+import com.example.followup.requests.add.AddExtrasActivity;
 import com.example.followup.requests.list.adapters.Extras_adapter;
 import com.example.followup.requests.list.adapters.Photography_adapter;
 import com.example.followup.requests.list.models.Extras_item;
@@ -51,6 +54,8 @@ public class Extras_requests_list extends Fragment {
     RequestsActivity activity;
     WebserviceContext ws;
 
+    Button addExtrasRequest;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,6 +67,10 @@ public class Extras_requests_list extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initFields(view);
+        addExtrasRequest.setOnClickListener(view1 -> {
+            Intent i = new Intent(getActivity(), AddExtrasActivity.class);
+            startActivity(i);
+        });
     }
 
 
@@ -148,6 +157,7 @@ public class Extras_requests_list extends Fragment {
         projectId = activity.getProjectId();
 
         loading = view.findViewById(R.id.loading);
+        addExtrasRequest = view.findViewById(R.id.add_extras_request);
         recyclerView = view.findViewById(R.id.recycler_view);
         extras_list = new ArrayList<>();
         initRecyclerView();

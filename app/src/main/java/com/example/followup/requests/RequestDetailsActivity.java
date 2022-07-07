@@ -348,6 +348,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
                 setDetailsFragment(new Extras_view());
                 if (cost_status > 1)
                     setCostFragment(new Extras_supplierCost_view());
+                break;
             default:
                 Toast.makeText(getBaseContext(), "typeId" + type_id + " cost" + cost_status, Toast.LENGTH_SHORT).show();
         }

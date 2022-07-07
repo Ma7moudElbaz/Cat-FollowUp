@@ -207,4 +207,6 @@
     <string name="edit_request">Edit Request</string>
     <string name="update_request">Update Request</string>
     <string name="extras">Extras</string>
+    <string name="add_request">Add Request</string>
+    <string name="add_extras_request">Add Extras Request</string>
 </resources>

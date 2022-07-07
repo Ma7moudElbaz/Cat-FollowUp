@@ -21,17 +21,21 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
-            android:name=".AddExtrasActivity"
-            android:exported="false" />
+            android:name=".requests.add.AddExtrasActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".AddExtrasSupplierCost"
-            android:exported="false" />
+            android:name=".supplier_costs.add.AddExtrasSupplierCost"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
-            android:name=".EditExtrasSupplierCostActivity"
-            android:exported="false" />
+            android:name=".supplier_costs.edit.EditExtrasSupplierCostActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".requests.edit.Extras_edit"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".requests.edit.Production_edit"
             android:exported="false"
