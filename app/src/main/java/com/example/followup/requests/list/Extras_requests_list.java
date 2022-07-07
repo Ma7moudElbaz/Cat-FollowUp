@@ -69,6 +69,7 @@ public class Extras_requests_list extends Fragment {
         initFields(view);
         addExtrasRequest.setOnClickListener(view1 -> {
             Intent i = new Intent(getActivity(), AddExtrasActivity.class);
+            i.putExtra("project_id",projectId);
             startActivity(i);
         });
     }
@@ -178,7 +179,7 @@ public class Extras_requests_list extends Fragment {
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        getRequests(3, currentPageNum, activity.getFilterMap());
+                        getRequests(4, currentPageNum, activity.getFilterMap());
 
                 }
             }
