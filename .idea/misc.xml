@@ -75,6 +75,7 @@
         <entry key="app/src/main/res/layout/activity_edit_print_supplier_cost.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/activity_edit_production_supplier_cost.xml" value="0.20833333333333334" />
         <entry key="app/src/main/res/layout/activity_edit_purchase_supplier_cost.xml" value="0.20833333333333334" />
+        <entry key="app/src/main/res/layout/activity_extras_edit.xml" value="0.18640350877192982" />
         <entry key="app/src/main/res/layout/activity_file_viewer.xml" value="0.17015818725951262" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_job_order_details.xml" value="0.25" />
