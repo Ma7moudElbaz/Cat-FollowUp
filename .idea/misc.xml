@@ -36,8 +36,14 @@
         <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.1615" />
         <entry key="app/src/main/res/drawable/ic_filter.xml" value="0.21388888888888888" />
         <entry key="app/src/main/res/drawable/ic_job_orders.xml" value="0.25052083333333336" />
-        <entry key="app/src/main/res/drawable/ic_photography.xml" value="0.25052083333333336" />
+        <entry key="app/src/main/res/drawable/ic_outline_camera_alt_24.xml" value="0.1545" />
+        <entry key="app/src/main/res/drawable/ic_outline_print_24.xml" value="0.1545" />
+        <entry key="app/src/main/res/drawable/ic_photography.xml" value="0.1545" />
+        <entry key="app/src/main/res/drawable/ic_print.xml" value="0.1545" />
+        <entry key="app/src/main/res/drawable/ic_production.xml" value="0.1545" />
+        <entry key="app/src/main/res/drawable/ic_purchase.xml" value="0.1545" />
         <entry key="app/src/main/res/drawable/ic_uae.xml" value="0.1328125" />
+        <entry key="app/src/main/res/drawable/ic_wallet.xml" value="0.1545" />
         <entry key="app/src/main/res/drawable/job_order_bg.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/red_circle.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/drawable/service_type_curved.xml" value="0.25052083333333336" />
@@ -77,7 +83,7 @@
         <entry key="app/src/main/res/layout/activity_projects.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_purchase_edit.xml" value="0.18398268398268397" />
         <entry key="app/src/main/res/layout/activity_request_details.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/activity_requests.xml" value="0.19360730593607306" />
+        <entry key="app/src/main/res/layout/activity_requests.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_result.xml" value="0.18170158187259514" />
         <entry key="app/src/main/res/layout/activity_splash.xml" value="0.18" />
         <entry key="app/src/main/res/layout/bottom_sheet_change_password.xml" value="0.18255664814023087" />

@@ -1,21 +1,9 @@
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="25.458dp"
-    android:height="24.788dp"
-    android:viewportWidth="25.458"
-    android:viewportHeight="24.788">
-  <path
-      android:pathData="M8.245,19.27a2.584,2.584 0,1 0,2.584 2.584A2.584,2.584 0,0 0,8.245 19.27ZM8.245,23.289a1.436,1.436 0,1 1,1.436 -1.436A1.435,1.435 0,0 1,8.245 23.29Z"
-      android:strokeWidth="0.7"
-      android:fillColor="#fff"
-      android:strokeColor="#fff"/>
-  <path
-      android:pathData="M19.155,19.27a2.584,2.584 0,1 0,2.584 2.584A2.584,2.584 0,0 0,19.155 19.27ZM19.155,23.289a1.436,1.436 0,1 1,1.436 -1.436A1.435,1.435 0,0 1,19.155 23.29Z"
-      android:strokeWidth="0.7"
-      android:fillColor="#fff"
-      android:strokeColor="#fff"/>
-  <path
-      android:pathData="M24.984,4.197a0.718,0.718 0,0 0,-0.459 -0.23L5.834,3.709 5.317,2.13A2.641,2.641 0,0 0,2.85 0.35L0.924,0.35a0.574,0.574 0,1 0,0 1.148L2.85,1.498a1.493,1.493 0,0 1,1.378 1l3.646,11 -0.287,0.66a2.756,2.756 0,0 0,0.258 2.5,2.67 2.67,0 0,0 2.153,1.206L21.165,17.864a0.574,0.574 0,1 0,0 -1.148L9.997,16.716A1.464,1.464 0,0 1,8.791 16.022,1.579 1.579,0 0,1 8.65,14.648l0.23,-0.517 12.087,-1.263a3.158,3.158 0,0 0,2.728 -2.412l1.378,-5.771A0.488,0.488 0,0 0,24.984 4.197ZM22.572,10.197A1.952,1.952 0,0 1,20.821 11.722L8.877,12.954l-2.67,-8.1 17.6,0.258Z"
-      android:strokeWidth="0.7"
-      android:fillColor="#fff"
-      android:strokeColor="#fff"/>
+    android:width="25.639dp"
+    android:height="25.639dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@android:color/white"
+        android:pathData="M15.55,13c0.75,0 1.41,-0.41 1.75,-1.03l3.58,-6.49c0.37,-0.66 -0.11,-1.48 -0.87,-1.48L5.21,4l-0.94,-2L1,2v2h2l3.6,7.59 -1.35,2.44C4.52,15.37 5.48,17 7,17h12v-2L7,15l1.1,-2h7.45zM6.16,6h12.15l-2.76,5L8.53,11L6.16,6zM7,18c-1.1,0 -1.99,0.9 -1.99,2S5.9,22 7,22s2,-0.9 2,-2 -0.9,-2 -2,-2zM17,18c-1.1,0 -1.99,0.9 -1.99,2s0.89,2 1.99,2 2,-0.9 2,-2 -0.9,-2 -2,-2z" />
 </vector>
