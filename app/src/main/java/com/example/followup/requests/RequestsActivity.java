@@ -72,6 +72,10 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
         langBottomSheet.show(getSupportFragmentManager(), "requests_filter");
     }
 
+    public boolean canAddExtrasRequest(){
+        return can_add_extras_request;
+    }
+
     public static void hideKeyboardActivity(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
@@ -110,6 +114,8 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     private ProgressDialog dialog;
 
     WebserviceContext ws;
+
+    boolean can_add_extras_request = true;
 
     public int getProjectId() {
         return projectId;
@@ -227,8 +233,16 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     }
 
     private void setFields(String projectName, boolean canEditProject, int projectStatus) {
+
+        setUserPermissions(canEditProject,projectStatus);
         project_name.setText(projectName);
-        Log.e("project status", "" + projectStatus);
+
+    }
+
+    private void setUserPermissions(boolean canEditProject, int projectStatus) {
+        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
+        can_add_extras_request = canEditProject || loggedInUser.equals("nagatTeam") || loggedInUser.equals("nagat");
+
 
         if (canEditProject && projectStatus == 1) {
             add_menu_btn.setVisibility(View.VISIBLE);

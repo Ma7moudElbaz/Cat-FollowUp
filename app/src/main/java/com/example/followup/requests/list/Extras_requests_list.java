@@ -69,7 +69,7 @@ public class Extras_requests_list extends Fragment {
         initFields(view);
         addExtrasRequest.setOnClickListener(view1 -> {
             Intent i = new Intent(getActivity(), AddExtrasActivity.class);
-            i.putExtra("project_id",projectId);
+            i.putExtra("project_id", projectId);
             startActivity(i);
         });
     }
@@ -162,6 +162,11 @@ public class Extras_requests_list extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         extras_list = new ArrayList<>();
         initRecyclerView();
+        if (activity.canAddExtrasRequest()) {
+            addExtrasRequest.setVisibility(View.VISIBLE);
+        } else {
+            addExtrasRequest.setVisibility(View.GONE);
+        }
     }
 
     private void initRecyclerView() {
