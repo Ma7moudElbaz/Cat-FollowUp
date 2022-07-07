@@ -102,7 +102,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
 
     SwipeRefreshLayout swipe_refresh;
     int children_id;
-    int purchase_no, printing_no, production_no, photo_no;
+    int purchase_no, printing_no, production_no, photo_no,extras_no;
 
 
     private ProgressDialog dialog;
@@ -258,6 +258,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
                     printing_no = dataObj.getInt("requests_printing");
                     production_no = dataObj.getInt("requests_production");
                     photo_no = dataObj.getInt("requests_photography");
+                    extras_no = dataObj.getInt("requests_extras");
                     setUserBadges();
 
                 } catch (Exception e) {
@@ -289,17 +290,21 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
             case 8:
                 setBadges(production_no);
                 break;
+            case 12:
+                setBadges(extras_no);
+                break;
             default:
-                setBadges(purchase_no, printing_no, production_no, photo_no);
+                setBadges(purchase_no, printing_no, production_no, photo_no,extras_no);
                 break;
         }
     }
 
-    private void setBadges(int purchase_no, int printing_no, int production_no, int photo_no) {
+    private void setBadges(int purchase_no, int printing_no, int production_no, int photo_no,int extras_no) {
         requests_tab.getTabAt(0).getOrCreateBadge().setNumber(purchase_no);
         requests_tab.getTabAt(1).getOrCreateBadge().setNumber(printing_no);
         requests_tab.getTabAt(2).getOrCreateBadge().setNumber(production_no);
         requests_tab.getTabAt(3).getOrCreateBadge().setNumber(photo_no);
+        requests_tab.getTabAt(4).getOrCreateBadge().setNumber(extras_no);
     }
 
     private void setBadges(int currentNo) {
