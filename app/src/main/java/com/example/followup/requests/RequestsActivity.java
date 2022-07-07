@@ -30,6 +30,7 @@ import com.example.followup.requests.edit.Photography_edit;
 import com.example.followup.requests.edit.Print_edit;
 import com.example.followup.requests.edit.Production_edit;
 import com.example.followup.requests.edit.Purchase_edit;
+import com.example.followup.requests.list.Extras_requests_list;
 import com.example.followup.requests.list.Photography_requests_list;
 import com.example.followup.requests.add.AddPrintActivity;
 import com.example.followup.requests.list.Print_requests_list;
@@ -328,6 +329,9 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
                 break;
             case 3:
                 setContentFragment(new Photography_requests_list());
+                break;
+            case 4:
+                setContentFragment(new Extras_requests_list());
                 break;
         }
     }

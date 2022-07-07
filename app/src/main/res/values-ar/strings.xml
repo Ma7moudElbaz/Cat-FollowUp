@@ -206,4 +206,5 @@
     <string name="resume">Resume</string>
     <string name="edit_request">Edit Request</string>
     <string name="update_request">Update Request</string>
+    <string name="extras">Extras</string>
 </resources>
