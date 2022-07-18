@@ -152,6 +152,7 @@ public class Purchase_edit extends AppCompatActivity {
         loading = findViewById(R.id.loading);
     }
 
+
     private boolean validateFields() {
         if (item_name.length() == 0) {
             item_name.setError("This is required field");
@@ -165,18 +166,18 @@ public class Purchase_edit extends AppCompatActivity {
             color.setError("This is required field");
             return false;
         }
-        if (material.length() == 0) {
-            material.setError("This is required field");
+        if (delivery_address.length() == 0) {
+            delivery_address.setError("This is required field");
             return false;
         }
         if (brand.length() == 0 && branding_text.equalsIgnoreCase("Yes")) {
             brand.setError("This is required field");
             return false;
         }
-        if (delivery_address.length() == 0) {
-            delivery_address.setError("This is required field");
-            return false;
-        }
+//        if (material.length() == 0) {
+//            material.setError("This is required field");
+//            return false;
+//        }
 //        if (description.length() == 0) {
 //            description.setError("This is required field");
 //            return false;
