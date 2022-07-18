@@ -7,7 +7,7 @@ apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
     compileSdk 32
-
+    buildFeatures { dataBinding = true }
     defaultConfig {
         applicationId "com.example.followup"
         minSdk 24
@@ -97,5 +97,7 @@ dependencies {
 
     //file picker
 //    implementation 'com.github.Atwa:FilePicker:1.0.1'
+    implementation 'com.github.girimystr1997:FilePickers:v1.0.6'
+
 
 }
