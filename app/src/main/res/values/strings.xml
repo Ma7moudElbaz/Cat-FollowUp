@@ -246,4 +246,5 @@
     <string name="add_request">Add Request</string>
     <string name="add_extras_request">Add Extras Request</string>
     <string name="quantity_of_logos">Quantity of logos</string>
+    <string name="final_deliverables">Final deliverables</string>
 </resources>

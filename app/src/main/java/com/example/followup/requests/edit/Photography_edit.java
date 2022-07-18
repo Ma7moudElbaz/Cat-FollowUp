@@ -140,13 +140,10 @@ public class Photography_edit extends AppCompatActivity {
         loading = findViewById(R.id.loading);
     }
 
+
     private boolean validateFields() {
         if (item_name.length() == 0) {
             item_name.setError("This is required field");
-            return false;
-        }
-        if (country.length() == 0) {
-            country.setError("This is required field");
             return false;
         }
         if (location.length() == 0) {
@@ -161,22 +158,6 @@ public class Photography_edit extends AppCompatActivity {
             project_type.setError("This is required field");
             return false;
         }
-        if (camera_type.length() == 0) {
-            camera_type.setError("This is required field");
-            return false;
-        }
-        if (number_of_cameras.length() == 0) {
-            number_of_cameras.setError("This is required field");
-            return false;
-        }
-//        if (description.length() == 0) {
-//            description.setError("This is required field");
-//            return false;
-//        }
-//        if (notes.length() == 0) {
-//            notes.setError("This is required field");
-//            return false;
-//        }
         if (lighting_specify.length() == 0 && lighting_text.equalsIgnoreCase("Yes")) {
             lighting_specify.setError("This is required field");
             return false;
@@ -189,6 +170,26 @@ public class Photography_edit extends AppCompatActivity {
             props_specify.setError("This is required field");
             return false;
         }
+//        if (country.length() == 0) {
+//            country.setError("This is required field");
+//            return false;
+//        }
+//        if (camera_type.length() == 0) {
+//            camera_type.setError("This is required field");
+//            return false;
+//        }
+//        if (number_of_cameras.length() == 0) {
+//            number_of_cameras.setError("This is required field");
+//            return false;
+//        }
+//        if (description.length() == 0) {
+//            description.setError("This is required field");
+//            return false;
+//        }
+//        if (notes.length() == 0) {
+//            notes.setError("This is required field");
+//            return false;
+//        }
         return true;
     }
 

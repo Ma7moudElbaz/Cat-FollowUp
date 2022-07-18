@@ -100,11 +100,13 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -190,7 +192,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/project_type"
+                    android:text="@string/final_deliverables"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -200,13 +202,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
-                    android:hint="@string/project_type"
+                    android:hint="@string/final_deliverables"
                     android:importantForAutofill="no"
                     android:inputType="text"
                     android:padding="10dp"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -284,7 +287,6 @@
                         android:id="@+id/lighting_yes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
                         android:text="@string/yes" />
 
                     <RadioButton
@@ -292,6 +294,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
+                        android:checked="true"
                         android:text="@string/no" />
                 </RadioGroup>
 
@@ -300,7 +303,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -349,7 +353,6 @@
                         android:id="@+id/chroma_yes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
                         android:text="@string/yes" />
 
                     <RadioButton
@@ -357,6 +360,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
+                        android:checked="true"
                         android:text="@string/no" />
                 </RadioGroup>
 
@@ -365,7 +369,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -414,7 +419,6 @@
                         android:id="@+id/props_yes"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="true"
                         android:text="@string/yes" />
 
                     <RadioButton
@@ -422,6 +426,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="20dp"
+                        android:checked="true"
                         android:text="@string/no" />
                 </RadioGroup>
 
@@ -430,7 +435,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"

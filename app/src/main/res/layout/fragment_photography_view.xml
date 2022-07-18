@@ -177,7 +177,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/project_type"
+                    android:text="@string/final_deliverables"
                     android:textColor="@color/light_gray"
                     android:textSize="16sp" />
 
