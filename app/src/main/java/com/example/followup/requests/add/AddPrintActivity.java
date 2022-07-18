@@ -55,8 +55,8 @@ public class AddPrintActivity extends LocalizationActivity {
     private ProgressDialog dialog;
     LinearLayout color_layout;
     String print_type_text = "Digital";
-    String lamination_text = "Matte";
-    String binding_text = "Wire";
+    String lamination_text = "None";
+    String binding_text = "None";
     int projectId;
 
     List<String> filesSelected;
@@ -180,39 +180,38 @@ public class AddPrintActivity extends LocalizationActivity {
             quantity.setError("This is required field");
             return false;
         }
-
-        if (pages.length() == 0) {
-            pages.setError("This is required field");
+        if (description.length() == 0) {
+            description.setError("This is required field");
             return false;
         }
-        if (paper_weight.length() == 0) {
-            paper_weight.setError("This is required field");
+        if (pages.length() == 0) {
+            pages.setError("This is required field");
             return false;
         }
         if (colors.length() == 0 && print_type_text.equalsIgnoreCase("Offset")) {
             colors.setError("This is required field");
             return false;
         }
-        if (di_cut.length() == 0) {
-            di_cut.setError("This is required field");
-            return false;
-        }
         if (delivery_address.length() == 0) {
-            colors.setError("This is required field");
+            delivery_address.setError("This is required field");
             return false;
         }
-//        if (description.length() == 0) {
-//            description.setError("This is required field");
+//        if (paper_weight.length() == 0) {
+//            paper_weight.setError("This is required field");
+//            return false;
+//        }
+//        if (di_cut.length() == 0) {
+//            di_cut.setError("This is required field");
 //            return false;
 //        }
 //        if (notes.length() == 0) {
 //            colors.setError("This is required field");
 //            return false;
 //        }
-        if (designer_in_charge.length() == 0) {
-            colors.setError("This is required field");
-            return false;
-        }
+//        if (designer_in_charge.length() == 0) {
+//            colors.setError("This is required field");
+//            return false;
+//        }
         return true;
     }
 
