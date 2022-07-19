@@ -167,7 +167,7 @@ public class Print_edit extends AppCompatActivity {
         pages = findViewById(R.id.pages);
         paper_weight = findViewById(R.id.paper_weight);
         colors = findViewById(R.id.colors);
-        color_layout = findViewById(R.id.color_layout);
+        color_layout = findViewById(R.id.colors_layout);
         di_cut = findViewById(R.id.di_cut);
         delivery_address = findViewById(R.id.delivery_address);
         notes = findViewById(R.id.notes);

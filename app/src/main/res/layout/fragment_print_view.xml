@@ -236,7 +236,7 @@
                 android:background="@color/line_gray" />
 
             <LinearLayout
-                android:id="@+id/color_layout"
+                android:id="@+id/colors_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">

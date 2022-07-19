@@ -9,9 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +20,8 @@ import com.example.followup.utils.RealPathUtil;
 import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -48,12 +48,12 @@ import retrofit2.Response;
 
 public class AddPrintActivity extends LocalizationActivity {
 
-    EditText item_name, quantity, description, pages, paper_weight, colors, di_cut, delivery_address, notes, designer_in_charge;
+    TextInputEditText item_name, quantity, description, pages, paper_weight, colors, di_cut, delivery_address, notes, designer_in_charge;
+    TextInputLayout  colors_layout;
     Button choose_file, send_request;
     RadioGroup print_type, lamination, binding;
     ImageView back;
     private ProgressDialog dialog;
-    LinearLayout color_layout;
     String print_type_text = "Digital";
     String lamination_text = "None";
     String binding_text = "None";
@@ -98,11 +98,11 @@ public class AddPrintActivity extends LocalizationActivity {
             switch (checkedId) {
                 case R.id.digital:
                     print_type_text = "Digital";
-                    color_layout.setVisibility(View.GONE);
+                    colors_layout.setVisibility(View.GONE);
                     break;
                 case R.id.offset:
                     print_type_text = "Offset";
-                    color_layout.setVisibility(View.VISIBLE);
+                    colors_layout.setVisibility(View.VISIBLE);
                     break;
             }
         });
@@ -159,7 +159,7 @@ public class AddPrintActivity extends LocalizationActivity {
         pages = findViewById(R.id.pages);
         paper_weight = findViewById(R.id.paper_weight);
         colors = findViewById(R.id.colors);
-        color_layout = findViewById(R.id.color_layout);
+        colors_layout = findViewById(R.id.colors_layout);
         di_cut = findViewById(R.id.di_cut);
         delivery_address = findViewById(R.id.delivery_address);
         notes = findViewById(R.id.notes);

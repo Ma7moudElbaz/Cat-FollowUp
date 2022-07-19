@@ -180,7 +180,7 @@ public class AddProjectActivity extends LocalizationActivity implements BottomSh
         project_name = findViewById(R.id.project_name);
         client_name = findViewById(R.id.client_name);
         country = findViewById(R.id.country);
-        project_timeLine = findViewById(R.id.project_timeLine);
+        project_timeLine = findViewById(R.id.project_timeline);
         project_timeLine.setInputType(InputType.TYPE_NULL);
 
         sales_contact = findViewById(R.id.sales_contact);
