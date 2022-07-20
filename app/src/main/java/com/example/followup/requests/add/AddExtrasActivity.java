@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.followup.R;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,7 +27,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddExtrasActivity extends AppCompatActivity {
-    EditText item_name, address, description;
+    TextInputEditText item_name, address, description;
     Button send_request;
 
     ImageView back;
@@ -35,6 +36,7 @@ public class AddExtrasActivity extends AppCompatActivity {
     int projectId;
 
     WebserviceContext ws;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +50,6 @@ public class AddExtrasActivity extends AppCompatActivity {
             }
         });
     }
-
 
 
     private void initFields() {
@@ -71,14 +72,14 @@ public class AddExtrasActivity extends AppCompatActivity {
             item_name.setError("This is required field");
             return false;
         }
-//        if (address.length() == 0) {
-//            address.setError("This is required field");
-//            return false;
-//        }
         if (description.length() == 0) {
             description.setError("This is required field");
             return false;
         }
+//        if (address.length() == 0) {
+//            address.setError("This is required field");
+//            return false;
+//        }
         return true;
     }
 

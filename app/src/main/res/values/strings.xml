@@ -10,6 +10,7 @@
         <item>Printing</item>
         <item>Production</item>
         <item>Photography</item>
+        <item>Extras</item>
     </string-array>
 
     <string-array name="currency">
@@ -232,7 +233,6 @@
     <string name="sample_nrequest">Sample\nRequest</string>
     <string name="po_nnumber">PO\nNumber</string>
     <string name="edit_po_number">Edit PO Number</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="all_job_orders">All Job Orders</string>
     <string name="edit_job_order">Edit Job Order</string>
     <string name="edit">Edit</string>
@@ -241,8 +241,6 @@
     <string name="edit_request">Edit Request</string>
     <string name="update_request">Update Request</string>
     <string name="extras">Extras</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_request">Add Request</string>
     <string name="add_extras_request">Add Extras Request</string>
     <string name="quantity_of_logos">Quantity of logos</string>
