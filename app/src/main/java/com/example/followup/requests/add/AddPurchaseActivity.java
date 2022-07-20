@@ -54,7 +54,7 @@ public class AddPurchaseActivity extends LocalizationActivity {
     ImageView back;
     private ProgressDialog dialog;
     LinearLayout brand_layout;
-    String branding_text = "yes";
+    String branding_text = "Yes";
     int projectId;
 
     List<String> filesSelected;
