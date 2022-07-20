@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -17,6 +16,7 @@ import com.example.followup.R;
 import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,15 +32,11 @@ import retrofit2.Response;
 
 public class Extras_edit extends AppCompatActivity {
 
-    EditText item_name, delivery_address, description;
+    TextInputEditText item_name, delivery_address, description;
     Button send_request;
-  ;
+
     ImageView back;
     private ProgressDialog dialog;
-
-    String lighting_text = "yes";
-    String chroma_text = "yes";
-    String props_text = "yes";
 
     int projectId, requestId;
 
@@ -51,12 +47,13 @@ public class Extras_edit extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_extras_edit);initFields();
+        setContentView(R.layout.activity_extras_edit);
+        initFields();
         back.setOnClickListener(v -> onBackPressed());
 
         send_request.setOnClickListener(v -> {
             if (validateFields()) {
-                editPhotography();
+                editExtras();
             }
         });
 
@@ -86,14 +83,14 @@ public class Extras_edit extends AppCompatActivity {
             item_name.setError("This is required field");
             return false;
         }
-        if (delivery_address.length() == 0) {
-            delivery_address.setError("This is required field");
-            return false;
-        }
         if (description.length() == 0) {
             description.setError("This is required field");
             return false;
         }
+//        if (delivery_address.length() == 0) {
+//            delivery_address.setError("This is required field");
+//            return false;
+//        }
         return true;
     }
 
@@ -134,7 +131,7 @@ public class Extras_edit extends AppCompatActivity {
 
     }
 
-    private void editPhotography() {
+    private void editExtras() {
         Map<String, String> map = setExtrasMap();
 
         dialog.show();
@@ -143,7 +140,7 @@ public class Extras_edit extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.code() == 200 || response.code() == 201) {
-                        Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Request Updated successfully", Toast.LENGTH_LONG).show();
                         onBackPressed();
 
                     } else {
