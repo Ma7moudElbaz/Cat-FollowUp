@@ -91,8 +91,7 @@ public class Notification_adapter extends RecyclerView.Adapter<Notification_adap
     }
 
     public void readNotification(String notificationId) {
-        WebserviceContext ws = ws = new WebserviceContext((Activity) mContext);
-        ;
+        WebserviceContext ws  = new WebserviceContext((Activity) mContext);
         Map<String, String> map = new HashMap<>();
         map.put("notification_id", notificationId);
         ws.getApi().readNotification(UserUtils.getAccessToken(mContext), map).enqueue(new Callback<ResponseBody>() {
