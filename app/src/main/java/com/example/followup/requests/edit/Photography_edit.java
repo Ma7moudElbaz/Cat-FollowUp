@@ -19,6 +19,7 @@ import com.example.followup.R;
 import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +35,7 @@ import retrofit2.Response;
 
 public class Photography_edit extends AppCompatActivity {
 
-    EditText item_name, country, location, days, project_type, camera_type, number_of_cameras, lighting_specify, chroma_specify, props_specify, description, notes;
+    TextInputEditText item_name, country, location, days, project_type, camera_type, number_of_cameras, lighting_specify, chroma_specify, props_specify, description, notes;
     Button send_request;
     RadioGroup lighting, chroma, props;
     LinearLayout lighting_layout, chroma_layout, props_layout;
