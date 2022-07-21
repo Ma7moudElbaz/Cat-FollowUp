@@ -74,222 +74,157 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-
-
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/item_name_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                app:endIconDrawable="@drawable/ic_required"
+                app:endIconMode="custom"
+                app:endIconTint="@color/red">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/item_name"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/item_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_white"
                     android:hint="@string/item_name"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:inputType="text" />
 
-            <LinearLayout
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/country_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                app:endIconDrawable="@drawable/ic_required"
+                app:endIconMode="custom"
+                app:endIconTint="@color/red">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/country"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/country"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_white"
                     android:hint="@string/country"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:inputType="text" />
 
-            <LinearLayout
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/city_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                app:endIconDrawable="@drawable/ic_required"
+                app:endIconMode="custom"
+                app:endIconTint="@color/red">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/city"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/city"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_white"
                     android:hint="@string/city"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:inputType="text" />
 
-            <LinearLayout
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/venue_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                app:endIconDrawable="@drawable/ic_required"
+                app:endIconMode="custom"
+                app:endIconTint="@color/red">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/venue"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/venue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_white"
                     android:hint="@string/venue"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
-            <LinearLayout
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/days_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                app:endIconDrawable="@drawable/ic_required"
+                app:endIconMode="custom"
+                app:endIconTint="@color/red">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/days"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/days"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_white"
                     android:hint="@string/days"
-                    android:importantForAutofill="no"
-                    android:inputType="number"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:inputType="number" />
 
-            <LinearLayout
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/delivery_date_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                app:endIconDrawable="@drawable/ic_required"
+                app:endIconMode="custom"
+                app:endIconTint="@color/red">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/delivery_date"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/delivery_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_white"
                     android:hint="@string/delivery_date"
-                    android:importantForAutofill="no"
-                    android:inputType="date"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:inputType="date" />
 
-            <LinearLayout
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/quantity_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                app:endIconDrawable="@drawable/ic_required"
+                app:endIconMode="custom"
+                app:endIconTint="@color/red">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/quantity"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/quantity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_white"
                     android:hint="@string/quantity"
-                    android:importantForAutofill="no"
-                    android:inputType="number"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:inputType="number" />
 
-            <LinearLayout
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/dimensions_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                app:endIconDrawable="@drawable/ic_required"
+                app:endIconMode="custom"
+                app:endIconTint="@color/red">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dimensions"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/dimensions"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_white"
                     android:hint="@string/dimensions"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:inputType="text" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -303,6 +238,7 @@
                     android:text="@string/screen"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
+
                 <RadioGroup
                     android:id="@+id/screen"
                     android:layout_width="match_parent"
@@ -324,95 +260,79 @@
                         android:text="@string/no" />
                 </RadioGroup>
 
-                <LinearLayout
-                    android:id="@+id/screen_specs_container"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/screen_specs_layout"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:orientation="vertical">
+                    app:endIconDrawable="@drawable/ic_required"
+                    app:endIconMode="custom"
+                    app:endIconTint="@color/red">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/screen_specs"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-
-                    <EditText
+                    <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/screen_specs"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="@drawable/et_white"
                         android:hint="@string/screen_specs"
-                        android:importantForAutofill="no"
-                        android:inputType="text"
-                        android:padding="10dp"
-                        android:textColor="@color/black"
-                        android:textSize="16sp" />
-                </LinearLayout>
+                        android:inputType="text" />
 
+                </com.google.android.material.textfield.TextInputLayout>
 
             </LinearLayout>
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/designer_in_charge_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                app:endIconDrawable="@drawable/ic_required"
+                app:endIconMode="custom"
+                app:endIconTint="@color/red">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/designer_in_charge"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/description"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
+                    android:hint="@string/designer_in_charge"
+                    android:inputType="text" />
 
-                <EditText
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/description_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top"
+                android:layout_marginTop="10dp">
+
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_white"
-                    android:gravity="top"
                     android:hint="@string/description"
-                    android:importantForAutofill="no"
-                    android:inputType="textMultiLine"
-                    android:minLines="3"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:inputType="textMultiLine" />
 
-            <LinearLayout
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/notes_layout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                android:layout_gravity="top"
+                android:layout_marginTop="10dp">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/notes"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-
-                <EditText
+                <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/notes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_white"
-                    android:gravity="top"
                     android:hint="@string/notes"
-                    android:importantForAutofill="no"
-                    android:inputType="textMultiLine"
-                    android:minLines="3"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-            </LinearLayout>
+                    android:inputType="textMultiLine" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -454,33 +374,6 @@
                 </LinearLayout>
 
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/designer_in_charge"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
-
-                <EditText
-                    android:id="@+id/designer_in_charge"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="5dp"
-                    android:background="@drawable/et_white"
-                    android:hint="@string/designer_in_charge"
-                    android:importantForAutofill="no"
-                    android:inputType="text"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textSize="16sp" />
             </LinearLayout>
 
             <Button

@@ -24,6 +24,7 @@ import com.example.followup.utils.RealPathUtil;
 import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.google.android.material.textfield.TextInputEditText;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -53,7 +54,7 @@ import retrofit2.Response;
 
 public class AddProductionActivity extends LocalizationActivity {
 
-    EditText item_name, country, city, venue, days, delivery_date, quantity, dimensions, designer_in_charge, description, notes, screen_specs;
+    TextInputEditText item_name, country, city, venue, days, delivery_date, quantity, dimensions, designer_in_charge, description, notes, screen_specs;
     Button choose_file, send_request;
     LinearLayout screen_specs_container;
     RadioGroup screen;
@@ -148,7 +149,7 @@ public class AddProductionActivity extends LocalizationActivity {
         designer_in_charge = findViewById(R.id.designer_in_charge);
         screen = findViewById(R.id.screen);
         screen_specs = findViewById(R.id.screen_specs);
-        screen_specs_container = findViewById(R.id.screen_specs_container);
+        screen_specs_container = findViewById(R.id.screen_specs_layout);
 
         choose_file = findViewById(R.id.choose_file);
         send_request = findViewById(R.id.btn_send_request);
