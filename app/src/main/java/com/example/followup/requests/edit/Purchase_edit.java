@@ -25,6 +25,7 @@ import com.example.followup.utils.RealPathUtil;
 import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.google.android.material.textfield.TextInputEditText;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
@@ -51,7 +52,7 @@ import retrofit2.Response;
 
 public class Purchase_edit extends AppCompatActivity {
 
-    EditText item_name, quantity, color, material, description, brand, delivery_address, notes;
+    TextInputEditText item_name, quantity, color, material, description, brand, delivery_address, notes;
     Button choose_file, send_request;
     RadioGroup branding;
     ImageView back;
