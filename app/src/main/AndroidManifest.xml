@@ -18,8 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:allowBackup"
-        tools:targetApi="n">
+        tools:replace="android:allowBackup">
         <activity
             android:name=".requests.add.AddExtrasActivity"
             android:exported="false"
