@@ -30,7 +30,7 @@ public class UserType {
                 }
                 break;
             default:
-                userType = "unknows";
+                userType = "unknown";
                 break;
         }
         return userType;
