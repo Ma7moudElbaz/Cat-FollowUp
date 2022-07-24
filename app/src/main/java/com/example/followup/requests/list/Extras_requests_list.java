@@ -21,10 +21,7 @@ import com.example.followup.R;
 import com.example.followup.requests.RequestsActivity;
 import com.example.followup.requests.add.AddExtrasActivity;
 import com.example.followup.requests.list.adapters.Extras_adapter;
-import com.example.followup.requests.list.adapters.Photography_adapter;
 import com.example.followup.requests.list.models.Extras_item;
-import com.example.followup.requests.list.models.Photography_item;
-import com.example.followup.requests.view.attaches.Attach_item;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 
@@ -125,6 +122,7 @@ public class Extras_requests_list extends Fragment {
                 }
                 final String status_message = currentObject.getString("status_message");
                 final String item_name = currentObject.getString("item_name");
+                final String extra_request_type = currentObject.getString("extra_request_type_name");
                 final String description = currentObject.getString("description");
                 final String delivery_address = currentObject.getString("delivery_address");
                 final String created_by_name = currentObject.getJSONObject("created_by_name").getString("name");
@@ -138,7 +136,7 @@ public class Extras_requests_list extends Fragment {
                     project_assign_id = Integer.parseInt(assigned_to);
                 }
 
-                extras_list.add(new Extras_item(id, type_id, created_by_id, project_creator_id, project_assign_id, status_code, cost_status_code, item_name, description, delivery_address, status_message, created_by_name, have_action));
+                extras_list.add(new Extras_item(id, type_id, created_by_id, project_creator_id, project_assign_id, status_code, cost_status_code, item_name, extra_request_type, description, delivery_address, status_message, created_by_name, have_action));
 
             }
 

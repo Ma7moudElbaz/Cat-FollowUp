@@ -4,10 +4,10 @@ package com.example.followup.requests.list.models;
 public class Extras_item {
 
     private final int id, type_id,created_by_id,project_creator_id,project_assign_id, status_code,cost_status_code;
-    private final String item_name,description, delivery_address,status_message,created_by_name;
+    private final String item_name,extra_request_type,description, delivery_address,status_message,created_by_name;
     private final boolean have_action;
 
-    public Extras_item(int id, int type_id, int created_by_id, int project_creator_id, int project_assign_id, int status_code, int cost_status_code, String item_name, String description, String delivery_address, String status_message, String created_by_name, boolean have_action) {
+    public Extras_item(int id, int type_id, int created_by_id, int project_creator_id, int project_assign_id, int status_code, int cost_status_code, String item_name, String extra_request_type, String description, String delivery_address, String status_message, String created_by_name, boolean have_action) {
         this.id = id;
         this.type_id = type_id;
         this.created_by_id = created_by_id;
@@ -16,6 +16,7 @@ public class Extras_item {
         this.status_code = status_code;
         this.cost_status_code = cost_status_code;
         this.item_name = item_name;
+        this.extra_request_type = extra_request_type;
         this.description = description;
         this.delivery_address = delivery_address;
         this.status_message = status_message;
@@ -73,5 +74,9 @@ public class Extras_item {
 
     public String getCreated_by_name() {
         return created_by_name;
+    }
+
+    public String getExtra_request_type() {
+        return extra_request_type;
     }
 }

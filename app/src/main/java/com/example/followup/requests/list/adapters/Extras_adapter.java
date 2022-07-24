@@ -60,7 +60,7 @@ public class Extras_adapter extends RecyclerView.Adapter<Extras_adapter.ViewHold
         holder.item_name.setText(items.get(position).getItem_name());
         holder.created_by.setText(items.get(position).getCreated_by_name());
         holder.address.setText(items.get(position).getDelivery_address());
-        holder.description.setText(items.get(position).getDescription());
+        holder.type.setText(items.get(position).getExtra_request_type());
         holder.status.setText(String.valueOf(items.get(position).getStatus_message()));
         holder.show_actions.setOnClickListener(v -> showPopup(v, position));
 
@@ -86,7 +86,7 @@ public class Extras_adapter extends RecyclerView.Adapter<Extras_adapter.ViewHold
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView item_name, created_by, status, address, description, have_action;
+        final TextView item_name, created_by, status, address, type, have_action;
         final ImageView show_actions;
         final LinearLayout parent_layout;
 
@@ -96,7 +96,7 @@ public class Extras_adapter extends RecyclerView.Adapter<Extras_adapter.ViewHold
             created_by = itemView.findViewById(R.id.created_by);
             status = itemView.findViewById(R.id.status);
             address = itemView.findViewById(R.id.address);
-            description = itemView.findViewById(R.id.description);
+            type = itemView.findViewById(R.id.type);
             parent_layout = itemView.findViewById(R.id.parent_layout);
             have_action = itemView.findViewById(R.id.have_action);
             show_actions = itemView.findViewById(R.id.show_actions);
