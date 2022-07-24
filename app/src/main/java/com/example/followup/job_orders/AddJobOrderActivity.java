@@ -42,7 +42,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
 
     ImageView back;
     ProgressBar loading;
-    RecyclerView recyclerView;
+    RecyclerView requestsRecyclerView;
     Spinner request_types_spinner;
     private ProgressDialog dialog;
     Button create_job_order;
@@ -241,7 +241,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         loading = findViewById(R.id.loading);
         create_job_order = findViewById(R.id.create_job_order);
         request_types_spinner = findViewById(R.id.request_types_spinner);
-        recyclerView = findViewById(R.id.recycler_view);
+        requestsRecyclerView = findViewById(R.id.recycler_view_requests);
         job_order_requests_list = new ArrayList<>();
         initRecyclerView();
 
@@ -249,11 +249,11 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
 
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(layoutManager);
+        requestsRecyclerView.setLayoutManager(layoutManager);
         job_order_requests_adapter = new Job_orders_requests_adapter(getBaseContext(), job_order_requests_list);
-        recyclerView.setAdapter(job_order_requests_adapter);
+        requestsRecyclerView.setAdapter(job_order_requests_adapter);
 
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        requestsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
