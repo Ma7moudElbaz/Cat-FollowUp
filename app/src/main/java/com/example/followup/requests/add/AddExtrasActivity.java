@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.followup.R;
@@ -28,6 +29,7 @@ import retrofit2.Response;
 
 public class AddExtrasActivity extends AppCompatActivity {
     TextInputEditText item_name, address, description;
+    Spinner request_types_spinner;
     Button send_request;
 
     ImageView back;
@@ -63,6 +65,7 @@ public class AddExtrasActivity extends AppCompatActivity {
         item_name = findViewById(R.id.item_name);
         address = findViewById(R.id.address);
         description = findViewById(R.id.description);
+        request_types_spinner = findViewById(R.id.request_types_spinner);
 
         send_request = findViewById(R.id.btn_send_request);
     }
@@ -121,6 +124,7 @@ public class AddExtrasActivity extends AppCompatActivity {
         map.put("item_name", item_name.getText().toString());
         map.put("delivery_address", address.getText().toString());
         map.put("description", description.getText().toString());
+        map.put("extra_request_type", String.valueOf(request_types_spinner.getSelectedItemPosition()+1));
         map.put("quantity", "1");
 
         return map;

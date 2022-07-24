@@ -27,7 +27,7 @@ public class Extras_view extends Fragment {
         return inflater.inflate(R.layout.fragment_extras_view, container, false);
     }
 
-    TextView item_name, delivery_address, description;
+    TextView item_name, extra_request_type, delivery_address, description;
 
 
     @Override
@@ -39,6 +39,7 @@ public class Extras_view extends Fragment {
 
     private void initFields(View view) {
         item_name = view.findViewById(R.id.item_name);
+        extra_request_type = view.findViewById(R.id.extra_request_type);
         delivery_address = view.findViewById(R.id.delivery_address);
         description = view.findViewById(R.id.description);
 
@@ -55,6 +56,7 @@ public class Extras_view extends Fragment {
 
     private void setFields(JSONObject dataObj) throws JSONException {
         item_name.setText(StringCheck.returnText(dataObj.getString("item_name")));
+        extra_request_type.setText(StringCheck.returnText(dataObj.getString("extra_request_type_name")));
         delivery_address.setText(StringCheck.returnText(dataObj.getString("delivery_address")));
         description.setText(StringCheck.returnText(dataObj.getString("description")));
     }

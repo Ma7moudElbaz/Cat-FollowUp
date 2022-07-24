@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.followup.R;
@@ -33,6 +34,7 @@ import retrofit2.Response;
 public class Extras_edit extends AppCompatActivity {
 
     TextInputEditText item_name, delivery_address, description;
+    Spinner request_types_spinner;
     Button send_request;
 
     ImageView back;
@@ -73,6 +75,7 @@ public class Extras_edit extends AppCompatActivity {
         item_name = findViewById(R.id.item_name);
         delivery_address = findViewById(R.id.delivery_address);
         description = findViewById(R.id.description);
+        request_types_spinner = findViewById(R.id.request_types_spinner);
         send_request = findViewById(R.id.btn_send_request);
 
         loading = findViewById(R.id.loading);
@@ -129,6 +132,11 @@ public class Extras_edit extends AppCompatActivity {
         delivery_address.setText(StringCheck.returnEmpty(dataObj.getString("delivery_address")));
         description.setText(StringCheck.returnEmpty(dataObj.getString("description")));
 
+        if (!dataObj.getString("extra_request_type").equals("null")){
+            int selectedType = Integer.parseInt(dataObj.getString("extra_request_type"))-1;
+            request_types_spinner.setSelection(selectedType);
+        }
+
     }
 
     private void editExtras() {
@@ -169,6 +177,7 @@ public class Extras_edit extends AppCompatActivity {
         map.put("item_name", item_name.getText().toString());
         map.put("delivery_address", delivery_address.getText().toString());
         map.put("description", description.getText().toString());
+        map.put("extra_request_type", String.valueOf(request_types_spinner.getSelectedItemPosition()+1));
         map.put("quantity", "1");
 
 

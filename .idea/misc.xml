@@ -56,9 +56,9 @@
         <entry key="app/src/main/res/drawable/white_curved_more.xml" value="0.25052083333333336" />
         <entry key="app/src/main/res/font-v26/poppins.xml" value="0.26458333333333334" />
         <entry key="app/src/main/res/font/poppins.xml" value="0.26458333333333334" />
-        <entry key="app/src/main/res/layout/activity_add_extras.xml" value="0.18640350877192982" />
+        <entry key="app/src/main/res/layout/activity_add_extras.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_add_extras_supplier_cost.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_add_job_order.xml" value="0.1794005909666526" />
+        <entry key="app/src/main/res/layout/activity_add_job_order.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_photography.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/activity_add_photography_supplier_cost.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_add_print.xml" value="0.18640350877192982" />
@@ -103,7 +103,7 @@
         <entry key="app/src/main/res/layout/fragment_blank.xml" value="0.10260416666666666" />
         <entry key="app/src/main/res/layout/fragment_extras_requests_list.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_extras_supplier_cost_view.xml" value="0.18640350877192982" />
-        <entry key="app/src/main/res/layout/fragment_extras_view.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_extras_view.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_job_orders.xml" value="0.18640350877192982" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.18640350877192982" />
         <entry key="app/src/main/res/layout/fragment_photography_requests_fragment.xml" value="0.20833333333333334" />
