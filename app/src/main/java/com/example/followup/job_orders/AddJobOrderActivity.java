@@ -42,13 +42,13 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
 
     ImageView back;
     ProgressBar loading;
-    RecyclerView requestsRecyclerView;
+    RecyclerView requestsRecyclerView, extrasRecyclerView;
     Spinner request_types_spinner;
     private ProgressDialog dialog;
     Button create_job_order;
 
-    ArrayList<Job_order_request_item> job_order_requests_list;
-    Job_orders_requests_adapter job_order_requests_adapter;
+    ArrayList<Job_order_request_item> job_order_requests_list, job_order_extras_list;
+    Job_orders_requests_adapter job_order_requests_adapter, job_order_extras_adapter;
 
     int currentPageNum = 1;
     int lastPageNum;
@@ -84,10 +84,11 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         request_types_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                initRecyclerView();
+                initRequestsRecyclerView();
                 job_order_requests_list.clear();
                 currentPageNum = 1;
                 getJobOrderRequests(currentPageNum);
+                getJobOrderExtras();
             }
 
             @Override
@@ -144,6 +145,35 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         });
     }
 
+    public void getJobOrderExtras() {
+
+        ws.getApi().getJobOrderExtras(UserUtils.getAccessToken(getBaseContext()), projectId, (request_types_spinner.getSelectedItemPosition() + 1)).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+
+                try {
+                    JSONObject responseObject = new JSONObject(response.body().string());
+                    JSONArray jobOrdersArray = responseObject.getJSONArray("data");
+                    setJobOrderExtrasList(jobOrdersArray);
+//                    JSONObject metaObject = responseObject.getJSONObject("meta");
+//                    lastPageNum = metaObject.getInt("last_page");
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Log.d("Error Throw", t.toString());
+                Log.d("commit Test Throw", t.toString());
+                Log.d("Call", t.toString());
+                Toast.makeText(getBaseContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void setJobOrderRequestsList(JSONArray list) {
         try {
             for (int i = 0; i < list.length(); i++) {
@@ -164,6 +194,31 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
             job_order_requests_adapter.notifyDataSetChanged();
             mHasReachedBottomOnce = false;
             currentPageNum++;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void setJobOrderExtrasList(JSONArray list) {
+        try {
+            for (int i = 0; i < list.length(); i++) {
+
+                JSONObject currentObject = list.getJSONObject(i);
+                final int id = currentObject.getInt("request_id");
+                final String request_id = currentObject.getString("item_name");
+                final int type_id = currentObject.getInt("extra_request_type");
+                final String final_cost = currentObject.getJSONObject("cost").getString("cost_name");
+                final String quantity = currentObject.getJSONObject("cost").getString("quantity_request");
+                final String cost_type = currentObject.getJSONObject("cost").getString("cost_per_type");
+
+
+                job_order_extras_list.add(new Job_order_request_item(id, type_id, request_id, final_cost, quantity, cost_type, false));
+
+            }
+
+            job_order_extras_adapter.notifyDataSetChanged();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -243,11 +298,14 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         request_types_spinner = findViewById(R.id.request_types_spinner);
         requestsRecyclerView = findViewById(R.id.recycler_view_requests);
         job_order_requests_list = new ArrayList<>();
-        initRecyclerView();
+        extrasRecyclerView = findViewById(R.id.recycler_view_extras);
+        job_order_extras_list = new ArrayList<>();
+        initRequestsRecyclerView();
+        initExtrasRecyclerView();
 
     }
 
-    private void initRecyclerView() {
+    private void initRequestsRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false);
         requestsRecyclerView.setLayoutManager(layoutManager);
         job_order_requests_adapter = new Job_orders_requests_adapter(getBaseContext(), job_order_requests_list);
@@ -267,6 +325,13 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
                 }
             }
         });
+    }
+
+    private void initExtrasRecyclerView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false);
+        extrasRecyclerView.setLayoutManager(layoutManager);
+        job_order_extras_adapter = new Job_orders_requests_adapter(getBaseContext(), job_order_extras_list);
+        extrasRecyclerView.setAdapter(job_order_extras_adapter);
     }
 
     @Override

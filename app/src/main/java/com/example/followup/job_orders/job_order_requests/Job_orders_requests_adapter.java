@@ -86,7 +86,7 @@ public class Job_orders_requests_adapter extends RecyclerView.Adapter<Job_orders
 
         holder.request_name.setOnClickListener(view -> {
             Intent i = new Intent(mContext, RequestDetailsActivity.class);
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             i.putExtra("request_id", items.get(position).getId());
             i.putExtra("type_id", items.get(position).getType_id());
             mContext.startActivity(i);

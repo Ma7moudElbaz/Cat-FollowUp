@@ -85,6 +85,9 @@ public interface ServiceInterface {
     @GET("requests")
     Call<ResponseBody> getJobOrderRequests(@Header("Authorization") String auth, @Query("status") int status, @Query("project_id") int project_id, @Query("type_id") int type_id, @Query("page") int pageNo);
 
+     @GET("request/extras")
+    Call<ResponseBody> getJobOrderExtras(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("type_id") int type_id);
+
     @GET("job-order/edit")
     Call<ResponseBody> getEditJobOrderRequests(@Header("Authorization") String auth, @Query("job_order_id") int job_order_id);
 
