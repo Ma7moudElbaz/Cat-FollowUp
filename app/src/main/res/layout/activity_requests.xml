@@ -104,8 +104,7 @@
             android:id="@+id/requests_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="fixed"
-            app:tabGravity="fill"
+            app:tabMode="scrollable"
             android:layout_marginTop="5dp"
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget">
 
