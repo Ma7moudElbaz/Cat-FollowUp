@@ -77,7 +77,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         initFields();
         back.setOnClickListener(v -> onBackPressed());
         create_job_order.setOnClickListener(v -> {
-            if (validateSelectedRequests(job_order_requests_adapter.getSelectedData())) {
+            if (validateSelectedRequests(job_order_requests_adapter.getSelectedData(), job_order_extras_adapter.getSelectedData())) {
                 showSuppliersSheet();
             }
         });
@@ -98,13 +98,19 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         });
     }
 
-    private boolean validateSelectedRequests(List<Job_order_request_item> items) {
-        if (items.isEmpty()) {
+    private boolean validateSelectedRequests(List<Job_order_request_item> requests_items, List<Job_order_request_item> extras_items) {
+        if (requests_items.isEmpty() && extras_items.isEmpty()) {
             Toast.makeText(getBaseContext(), "No Requests Selected", Toast.LENGTH_SHORT).show();
             return false;
         } else {
-            for (int i = 0; i < items.size(); i++) {
-                if (items.get(i).getFinal_cost().length() == 0) {
+            for (int i = 0; i < requests_items.size(); i++) {
+                if (requests_items.get(i).getFinal_cost().length() == 0) {
+                    Toast.makeText(getBaseContext(), "You must add final cost to all selected requests", Toast.LENGTH_SHORT).show();
+                    return false;
+                }
+            }
+            for (int i = 0; i < extras_items.size(); i++) {
+                if (extras_items.get(i).getFinal_cost().length() == 0) {
                     Toast.makeText(getBaseContext(), "You must add final cost to all selected requests", Toast.LENGTH_SHORT).show();
                     return false;
                 }
