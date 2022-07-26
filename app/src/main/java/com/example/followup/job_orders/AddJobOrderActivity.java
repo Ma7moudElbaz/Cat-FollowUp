@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -88,6 +89,8 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
                 job_order_requests_list.clear();
                 currentPageNum = 1;
                 getJobOrderRequests(currentPageNum);
+
+                job_order_extras_list.clear();
                 getJobOrderExtras();
             }
 
@@ -261,20 +264,22 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         });
     }
 
-    private Map<String, String> setJobOrderMap(List<Job_order_request_item> requests_items,List<Job_order_request_item> extras, String supplierName) {
+    private Map<String, String> setJobOrderMap(List<Job_order_request_item> requests_items,List<Job_order_request_item> extras_items, String supplierName) {
 
-        StringBuilder requestIds = new StringBuilder();
-        StringBuilder actual_costs = new StringBuilder();
+        ArrayList<String> requestIds_arr = new ArrayList<>();
+        ArrayList<String> actual_costs_arr = new ArrayList<>();
 
         for (int i = 0; i < requests_items.size(); i++) {
-            if (i == 0) {
-                requestIds.append(requests_items.get(i).getId());
-                actual_costs.append(requests_items.get(i).getFinal_cost());
-            } else {
-                requestIds.append(",").append(requests_items.get(i).getId());
-                actual_costs.append(",").append(requests_items.get(i).getFinal_cost());
-            }
+            requestIds_arr.add(String.valueOf(requests_items.get(i).getId()));
+            actual_costs_arr.add(requests_items.get(i).getFinal_cost());
         }
+        for (int i = 0; i < extras_items.size(); i++) {
+            requestIds_arr.add(String.valueOf(extras_items.get(i).getId()));
+            actual_costs_arr.add(extras_items.get(i).getFinal_cost());
+        }
+
+        String requestIds =  TextUtils.join(",",requestIds_arr);
+        String actual_costs = TextUtils.join(",",actual_costs_arr);
 
         Map<String, String> map = new HashMap<>();
         map.put("job_order_name", "");
