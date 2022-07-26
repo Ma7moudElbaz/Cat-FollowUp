@@ -232,8 +232,8 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
 
     }
 
-    private void createJobOrder(List<Job_order_request_item> items, String supplierName) {
-        Map<String, String> map = setJobOrderMap(items, supplierName);
+    private void createJobOrder(List<Job_order_request_item> requests_items,List<Job_order_request_item> extras_items, String supplierName) {
+        Map<String, String> map = setJobOrderMap(requests_items,extras_items, supplierName);
 
         dialog.show();
         ws.getApi().addJobOrder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
@@ -261,18 +261,18 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         });
     }
 
-    private Map<String, String> setJobOrderMap(List<Job_order_request_item> items, String supplierName) {
+    private Map<String, String> setJobOrderMap(List<Job_order_request_item> requests_items,List<Job_order_request_item> extras, String supplierName) {
 
         StringBuilder requestIds = new StringBuilder();
         StringBuilder actual_costs = new StringBuilder();
 
-        for (int i = 0; i < items.size(); i++) {
+        for (int i = 0; i < requests_items.size(); i++) {
             if (i == 0) {
-                requestIds.append(items.get(i).getId());
-                actual_costs.append(items.get(i).getFinal_cost());
+                requestIds.append(requests_items.get(i).getId());
+                actual_costs.append(requests_items.get(i).getFinal_cost());
             } else {
-                requestIds.append(",").append(items.get(i).getId());
-                actual_costs.append(",").append(items.get(i).getFinal_cost());
+                requestIds.append(",").append(requests_items.get(i).getId());
+                actual_costs.append(",").append(requests_items.get(i).getFinal_cost());
             }
         }
 
@@ -347,6 +347,6 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
 
     @Override
     public void selectedSupplier(String selectedSupplierName, String selectedSupplierId) {
-        createJobOrder(job_order_requests_adapter.getSelectedData(), selectedSupplierName);
+        createJobOrder(job_order_requests_adapter.getSelectedData(),job_order_extras_adapter.getSelectedData(), selectedSupplierName);
     }
 }
