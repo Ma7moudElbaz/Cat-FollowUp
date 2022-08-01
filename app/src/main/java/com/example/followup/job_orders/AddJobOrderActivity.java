@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -42,11 +43,12 @@ import retrofit2.Response;
 public class AddJobOrderActivity extends LocalizationActivity implements BottomSheet_suppliers.SelectedSupplierListener {
 
     ImageView back;
-    ProgressBar loading;
+    ProgressBar requests_loading, extras_loading;
     RecyclerView requestsRecyclerView, extrasRecyclerView;
     Spinner request_types_spinner;
     private ProgressDialog dialog;
     Button create_job_order;
+    LinearLayout extras_layout_container;
 
     ArrayList<Job_order_request_item> job_order_requests_list, job_order_extras_list;
     Job_orders_requests_adapter job_order_requests_adapter, job_order_extras_adapter;
@@ -86,6 +88,11 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 initRequestsRecyclerView();
+                if (position == 4) {
+                    extras_layout_container.setVisibility(View.GONE);
+                } else {
+                    extras_layout_container.setVisibility(View.VISIBLE);
+                }
                 job_order_requests_list.clear();
                 currentPageNum = 1;
                 getJobOrderRequests(currentPageNum);
@@ -123,7 +130,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
     }
 
     public void getJobOrderRequests(int pageNum) {
-        loading.setVisibility(View.VISIBLE);
+        requests_loading.setVisibility(View.VISIBLE);
 
         ws.getApi().getJobOrderRequests(UserUtils.getAccessToken(getBaseContext()), 6, projectId, (request_types_spinner.getSelectedItemPosition() + 1), pageNum).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -136,7 +143,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
                     JSONObject metaObject = responseObject.getJSONObject("meta");
                     lastPageNum = metaObject.getInt("last_page");
 
-                    loading.setVisibility(View.GONE);
+                    requests_loading.setVisibility(View.GONE);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -149,12 +156,13 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
                 Log.d("commit Test Throw", t.toString());
                 Log.d("Call", t.toString());
                 Toast.makeText(getBaseContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-                loading.setVisibility(View.GONE);
+                requests_loading.setVisibility(View.GONE);
             }
         });
     }
 
     public void getJobOrderExtras() {
+        extras_loading.setVisibility(View.VISIBLE);
 
         ws.getApi().getJobOrderExtras(UserUtils.getAccessToken(getBaseContext()), projectId, (request_types_spinner.getSelectedItemPosition() + 1)).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -166,7 +174,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
                     setJobOrderExtrasList(jobOrdersArray);
 //                    JSONObject metaObject = responseObject.getJSONObject("meta");
 //                    lastPageNum = metaObject.getInt("last_page");
-
+                    extras_loading.setVisibility(View.GONE);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -179,6 +187,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
                 Log.d("commit Test Throw", t.toString());
                 Log.d("Call", t.toString());
                 Toast.makeText(getBaseContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+                extras_loading.setVisibility(View.GONE);
             }
         });
     }
@@ -235,8 +244,8 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
 
     }
 
-    private void createJobOrder(List<Job_order_request_item> requests_items,List<Job_order_request_item> extras_items, String supplierName) {
-        Map<String, String> map = setJobOrderMap(requests_items,extras_items, supplierName);
+    private void createJobOrder(List<Job_order_request_item> requests_items, List<Job_order_request_item> extras_items, String supplierName) {
+        Map<String, String> map = setJobOrderMap(requests_items, extras_items, supplierName);
 
         dialog.show();
         ws.getApi().addJobOrder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
@@ -264,7 +273,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         });
     }
 
-    private Map<String, String> setJobOrderMap(List<Job_order_request_item> requests_items,List<Job_order_request_item> extras_items, String supplierName) {
+    private Map<String, String> setJobOrderMap(List<Job_order_request_item> requests_items, List<Job_order_request_item> extras_items, String supplierName) {
 
         ArrayList<String> requestIds_arr = new ArrayList<>();
         ArrayList<String> actual_costs_arr = new ArrayList<>();
@@ -278,8 +287,8 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
             actual_costs_arr.add(extras_items.get(i).getFinal_cost());
         }
 
-        String requestIds =  TextUtils.join(",",requestIds_arr);
-        String actual_costs = TextUtils.join(",",actual_costs_arr);
+        String requestIds = TextUtils.join(",", requestIds_arr);
+        String actual_costs = TextUtils.join(",", actual_costs_arr);
 
         Map<String, String> map = new HashMap<>();
         map.put("job_order_name", "");
@@ -304,12 +313,15 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         projectId = getIntent().getIntExtra("project_id", 0);
 
         back = findViewById(R.id.back);
-        loading = findViewById(R.id.loading);
+        requests_loading = findViewById(R.id.requests_loading);
+        requests_loading = findViewById(R.id.requests_loading);
+        extras_loading = findViewById(R.id.extras_loading);
         create_job_order = findViewById(R.id.create_job_order);
         request_types_spinner = findViewById(R.id.request_types_spinner);
         requestsRecyclerView = findViewById(R.id.recycler_view_requests);
         job_order_requests_list = new ArrayList<>();
         extrasRecyclerView = findViewById(R.id.recycler_view_extras);
+        extras_layout_container = findViewById(R.id.extras_layout_container);
         job_order_extras_list = new ArrayList<>();
         initRequestsRecyclerView();
         initExtrasRecyclerView();
@@ -352,6 +364,6 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
 
     @Override
     public void selectedSupplier(String selectedSupplierName, String selectedSupplierId) {
-        createJobOrder(job_order_requests_adapter.getSelectedData(),job_order_extras_adapter.getSelectedData(), selectedSupplierName);
+        createJobOrder(job_order_requests_adapter.getSelectedData(), job_order_extras_adapter.getSelectedData(), selectedSupplierName);
     }
 }
