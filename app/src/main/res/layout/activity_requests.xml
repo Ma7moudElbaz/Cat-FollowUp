@@ -104,27 +104,27 @@
             android:id="@+id/requests_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:tabMode="scrollable"
             android:layout_marginTop="5dp"
+            app:tabMode="scrollable"
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget">
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/purchase_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/ic_purchase"/>
+                android:icon="@drawable/ic_purchase" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/print_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/ic_print"/>
+                android:icon="@drawable/ic_print" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/production_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:icon="@drawable/ic_production"/>
+                android:icon="@drawable/ic_production" />
 
             <com.google.android.material.tabs.TabItem
                 android:id="@+id/photography_tab"
@@ -163,6 +163,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="15dp"
+        android:visibility="gone"
         app:menu_animationDelayPerItem="50"
         app:menu_backgroundColor="@android:color/transparent"
         app:menu_colorNormal="@color/colorAccent"
