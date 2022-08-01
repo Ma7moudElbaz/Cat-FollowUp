@@ -57,8 +57,8 @@ public class Print_edit extends AppCompatActivity {
     private ProgressDialog dialog;
     LinearLayout color_layout;
     String print_type_text = "Digital";
-    String lamination_text = "Matte";
-    String binding_text = "Wire";
+    String lamination_text = "None";
+    String binding_text = "None";
     int projectId, requestId;
 
     List<String> filesSelected;

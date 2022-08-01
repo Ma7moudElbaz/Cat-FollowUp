@@ -58,7 +58,7 @@ public class Purchase_edit extends AppCompatActivity {
     ImageView back;
     private ProgressDialog dialog;
     LinearLayout brand_layout;
-    String branding_text = "yes";
+    String branding_text = "Yes";
     int projectId,requestId;
 
     List<String> filesSelected;

@@ -42,9 +42,9 @@ public class Photography_edit extends AppCompatActivity {
     ImageView back;
     private ProgressDialog dialog;
 
-    String lighting_text = "yes";
-    String chroma_text = "yes";
-    String props_text = "yes";
+    String lighting_text = "No";
+    String chroma_text = "No";
+    String props_text = "No";
 
     int projectId, requestId;
 

@@ -61,7 +61,7 @@ public class AddProductionActivity extends LocalizationActivity {
     ImageView back;
     private ProgressDialog dialog;
     DatePickerDialog picker;
-    String screen_text = "yes";
+    String screen_text = "Yes";
     int projectId;
 
     List<String> filesSelected;
