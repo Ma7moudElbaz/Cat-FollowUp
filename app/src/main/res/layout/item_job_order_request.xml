@@ -87,38 +87,35 @@
                         app:cardCornerRadius="8dp"
                         app:cardElevation="3dp">
 
-                        <RelativeLayout
+
+                        <EditText
+                            android:id="@+id/final_cost"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="40dp"
+                            android:background="@color/transparent"
+                            android:hint="@string/cost"
+                            android:importantForAutofill="no"
+                            android:inputType="numberDecimal"
+                            android:padding="5dp"
+                            android:textColor="@color/black"
+                            android:imeOptions="actionDone"
+                            android:textSize="16sp" />
 
-
-                            <EditText
-                                android:id="@+id/final_cost"
-                                android:layout_width="match_parent"
-                                android:layout_height="40dp"
-                                android:background="@color/transparent"
-                                android:hint="@string/cost"
-                                android:importantForAutofill="no"
-                                android:inputType="numberDecimal"
-                                android:padding="10dp"
-                                android:textColor="@color/black"
-                                android:textSize="16sp" />
-                        </RelativeLayout>
                     </androidx.cardview.widget.CardView>
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
                         android:text="@string/qtyy"
-                        android:textSize="16sp"
-                        android:layout_marginStart="5dp"/>
+                        android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/quantity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="16sp"
-                        android:layout_marginStart="5dp"/>
+                        android:layout_marginStart="5dp"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 

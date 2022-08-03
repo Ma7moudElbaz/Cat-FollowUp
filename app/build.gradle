@@ -99,5 +99,8 @@ dependencies {
 //    implementation 'com.github.Atwa:FilePicker:1.0.1'
     implementation 'com.github.girimystr1997:FilePickers:v1.0.6'
 
+    //shimmer
+    implementation 'com.faltenreich:skeletonlayout:4.0.0'
+
 
 }
