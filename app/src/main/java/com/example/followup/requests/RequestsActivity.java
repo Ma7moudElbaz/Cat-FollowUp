@@ -242,7 +242,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     }
 
     private void setUserPermissions(boolean canEditProject, int projectStatus) {
-        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
+        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
         can_add_extras_request = canEditProject || loggedInUser.equals("nagatTeam") || loggedInUser.equals("nagat");
 
 

@@ -135,7 +135,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         ceo_reasons = findViewById(R.id.ceo_reasons);
         edit = findViewById(R.id.edit);
 
-        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
+        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
 //        if (loggedInUser.equals("hesham")) {
             ceo_reasons.setVisibility(View.VISIBLE);
 //        }
@@ -150,7 +150,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
     private void setUserJobOrderPermissions(int jobOrderStatus, boolean canEditProject, int ceo) {
         setJoStepper(jobOrderStatus, ceo);
-        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
+        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
         resetData();
 
         if (loggedInUser.equals("hesham") && jobOrderStatus > 2 && jobOrderStatus != 9 && jobOrderStatus != 6 && jobOrderStatus != 7) {

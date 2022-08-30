@@ -12,6 +12,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,7 @@ public class AddProjectActivity extends LocalizationActivity implements BottomSh
     TextView client_company;
     LinearLayout sales_contact_layout;
     CheckBox manage_myself;
+    RadioGroup country_select_group;
     Button add;
 
     private ProgressDialog dialog;
@@ -57,6 +59,7 @@ public class AddProjectActivity extends LocalizationActivity implements BottomSh
 
 
     String selectedCompanyId = "0";
+
 
     WebserviceContext ws;
 
@@ -133,7 +136,7 @@ public class AddProjectActivity extends LocalizationActivity implements BottomSh
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.code() == 200 || response.code() == 201) {
-                        Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Project Added successfully", Toast.LENGTH_LONG).show();
                         onBackPressed();
 
                     } else {
@@ -156,6 +159,13 @@ public class AddProjectActivity extends LocalizationActivity implements BottomSh
 
     private Map<String, String> setProjectMap() {
         Map<String, String> map = new HashMap<>();
+
+        int radioButtonID = country_select_group.getCheckedRadioButtonId();
+        View radioButton = country_select_group.findViewById(radioButtonID);
+        int selectedCountryId = country_select_group.indexOfChild(radioButton) + 1;
+
+
+        map.put("country_id", String.valueOf(selectedCountryId));
         map.put("company_id", selectedCompanyId);
         map.put("project_name", project_name.getText().toString());
         map.put("client_name", client_name.getText().toString());
@@ -186,6 +196,7 @@ public class AddProjectActivity extends LocalizationActivity implements BottomSh
         sales_contact = findViewById(R.id.sales_contact);
         sales_contact_layout = findViewById(R.id.sales_contact_layout);
         manage_myself = findViewById(R.id.manage_myself);
+        country_select_group = findViewById(R.id.country_select);
         add = findViewById(R.id.add);
 
         sales_names.add("Select Sales");

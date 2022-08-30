@@ -123,7 +123,7 @@ public class Production_supplierCost_view extends Fragment {
     }
 
     private void setUserCostPermissions(int costStatus) {
-        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getContext()), UserUtils.getChildId(getContext()));
+        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getContext()), UserUtils.getChildId(getContext()), UserUtils.getCountryId(getContext()));
         if (costStatus == 2 && loggedInUser.equals("nagat")) {
             nagat_approval_container.setVisibility(View.VISIBLE);
         } else {

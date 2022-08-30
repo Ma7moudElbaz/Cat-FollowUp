@@ -356,7 +356,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
 
     private void setUserCostPermissions(int costStatus, Boolean canEditProject) {
         setRequestStepper(costStatus);
-        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
+        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
         resetData();
         Log.e("Cost Status", String.valueOf(costStatus) );
         switch (costStatus) {

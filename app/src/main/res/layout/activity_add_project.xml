@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:id="@+id/back"
@@ -46,6 +47,31 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
+            <RadioGroup
+                android:id="@+id/country_select"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <RadioButton
+                    android:id="@+id/country_cat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:drawableEnd="@drawable/logo_cat" />
+
+                <RadioButton
+                    android:id="@+id/country_237"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/logo_237"
+                    android:layout_marginStart="30dp"/>
+
+            </RadioGroup>
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,10 +90,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="@string/select_company"
-                    android:textSize="16sp"
                     android:padding="5dp"
+                    android:text="@string/select_company"
                     android:textColor="@color/black"
+                    android:textSize="16sp"
                     app:drawableEndCompat="@drawable/ic_arrow_down" />
 
             </LinearLayout>
@@ -169,7 +195,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:hint="@string/sales_contact"
-                    android:theme="@style/spinnerItemStyle_black"/>
+                    android:theme="@style/spinnerItemStyle_black" />
             </LinearLayout>
 
             <CheckBox

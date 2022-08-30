@@ -122,7 +122,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
     }
 
     private void setUserPermissions() {
-        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()));
+        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
         if (loggedInUser.equals("nagat")) {
             fab_add_job_order.setVisibility(View.VISIBLE);
         } else {

@@ -47,6 +47,15 @@ public class UserUtils {
     }
 
 
+    public static void setCountryId(Context context, int country_id) {
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putInt("country_id", country_id);
+        editor.apply();
+    }
+
+    public static int getCountryId(Context context) {
+        return getSharedPreferences(context).getInt("country_id", 0);
+    }
 
     public static void setParentId(Context context, int parent_id) {
         SharedPreferences.Editor editor = getSharedPreferences(context).edit();
