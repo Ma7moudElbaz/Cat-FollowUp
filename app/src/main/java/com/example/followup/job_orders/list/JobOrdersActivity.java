@@ -78,7 +78,8 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
     int lastPageNum;
     boolean mHasReachedBottomOnce = false;
 
-    int projectId;
+    int projectId,country_id;
+    boolean is_project_owner;
 
 
     int selectedStatusIndex = -1;
@@ -126,6 +127,14 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
         if (loggedInUser.equals("nagat")) {
             fab_add_job_order.setVisibility(View.VISIBLE);
         } else {
+            fab_add_job_order.setVisibility(View.GONE);
+        }
+
+        if (country_id == 1 && loggedInUser.equals("nagat")){
+            fab_add_job_order.setVisibility(View.VISIBLE);
+        }else if (country_id == 2 && is_project_owner){
+            fab_add_job_order.setVisibility(View.VISIBLE);
+        }else {
             fab_add_job_order.setVisibility(View.GONE);
         }
     }
@@ -197,8 +206,10 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
 
         ws = new WebserviceContext(this);
         projectId = getIntent().getIntExtra("project_id", 0);
+        country_id = getIntent().getIntExtra("country_id", 0);
+        is_project_owner = getIntent().getBooleanExtra("is_project_owner",false);
 
-        back = findViewById(R.id.back);
+                back = findViewById(R.id.back);
         fab_add_job_order = findViewById(R.id.fab_add_job_order);
         loading = findViewById(R.id.loading);
         search = findViewById(R.id.search);

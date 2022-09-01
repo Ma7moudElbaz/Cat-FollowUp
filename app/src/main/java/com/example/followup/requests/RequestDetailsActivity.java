@@ -88,7 +88,8 @@ public class RequestDetailsActivity extends LocalizationActivity {
     SwipeRefreshLayout swipe_refresh;
     WebserviceContext ws;
 
-    int projectId;
+    int projectId, countryId;
+    boolean canEditProject;
 
     ImageView requestStepperImg;
 
@@ -134,6 +135,10 @@ public class RequestDetailsActivity extends LocalizationActivity {
         job_orders.setOnClickListener(v -> {
             Intent i = new Intent(getBaseContext(), JobOrdersActivity.class);
             i.putExtra("project_id", projectId);
+            i.putExtra("country_id", countryId);
+            i.putExtra("is_project_owner", canEditProject);
+
+            Log.e("TAG", "project_id: " + projectId + "country_id: " + countryId + "is_project_owner" + canEditProject);
             startActivity(i);
         });
     }
@@ -289,10 +294,8 @@ public class RequestDetailsActivity extends LocalizationActivity {
                     if (!assigned_to.equals("null")) {
                         assigned_to_id = Integer.parseInt(assigned_to);
                     }
-                    boolean canEditProject = UserType.canEditProject(getBaseContext(), project_creator_id, assigned_to_id);
-
-
-                    int countryId = dataObj.getInt("country_id");
+                     canEditProject = UserType.canEditProject(getBaseContext(), project_creator_id, assigned_to_id);
+                    countryId = dataObj.getInt("country_id");
                     if (countryId == 1) {
                         setEgUserCostPermissions(costStatus, canEditProject);
                     } else {

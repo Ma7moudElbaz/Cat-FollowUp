@@ -92,7 +92,6 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     FloatingActionButton addPhotography, addProduction, addPurchasing, addPrinting;
     TabLayout requests_tab;
     TextView job_orders, project_name;
-    int projectId;
     int tabPosition;
     boolean firstCall = true;
     ProgressBar loading;
@@ -117,6 +116,10 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     WebserviceContext ws;
 
     boolean can_add_extras_request = true;
+
+
+    int projectId,countryId;
+    boolean canEditProject;;
 
     public int getProjectId() {
         return projectId;
@@ -152,6 +155,8 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
         job_orders.setOnClickListener(v -> {
             Intent i = new Intent(getBaseContext(), JobOrdersActivity.class);
             i.putExtra("project_id", projectId);
+            i.putExtra("country_id", countryId);
+            i.putExtra("is_project_owner", canEditProject);
             startActivity(i);
         });
         requests_tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -269,7 +274,8 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
                     if (!assigned_to.equals("null")) {
                         assigned_to_id = Integer.parseInt(assigned_to);
                     }
-                    boolean canEditProject = UserType.canEditProject(getBaseContext(), created_by_id, assigned_to_id);
+                    countryId = dataObj.getInt("country_id");
+                    canEditProject = UserType.canEditProject(getBaseContext(), created_by_id, assigned_to_id);
                     setFields(projectName, canEditProject, projectStatus);
 
                     purchase_no = dataObj.getInt("requests_purchasing");
