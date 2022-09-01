@@ -72,7 +72,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/description"
                 android:padding="5dp"
-                android:src="@drawable/request_1" />
+                tools:src="@drawable/request_1" />
 
 
             <params.com.stepview.StatusViewScroller

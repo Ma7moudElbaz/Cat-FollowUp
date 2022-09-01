@@ -170,6 +170,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
             UserUtils.setUserId(getBaseContext(), res.getInt("id"));
             UserUtils.setUserName(getBaseContext(), res.getString("name"));
             UserUtils.setUserEmail(getBaseContext(), res.getString("email"));
+            UserUtils.setCountryId(getBaseContext(),res.getInt("country_id"));
 
 //                        subscribeToFirebaseTopic(department_id);
 

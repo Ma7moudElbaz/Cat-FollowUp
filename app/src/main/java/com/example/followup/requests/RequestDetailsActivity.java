@@ -79,7 +79,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
     int costStatus;
     int costId;
 
-    TextView job_orders,txt_canceled;
+    TextView job_orders, txt_canceled;
 
     int request_id, type_id;
     JSONObject dataObj;
@@ -275,10 +275,9 @@ public class RequestDetailsActivity extends LocalizationActivity {
                     dataObj = responseObject.getJSONObject("data");
                     type_id = dataObj.getInt("type_id");
                     projectId = dataObj.getInt("project_id");
-                    if (dataObj.getInt("status")==0){
+                    if (dataObj.getInt("status") == 0) {
                         costStatus = 0;
-                    }
-                    else if (dataObj.getString("cost").equals("null")) {
+                    } else if (dataObj.getString("cost").equals("null")) {
                         costStatus = 1;
                     } else {
                         costStatus = dataObj.getJSONObject("cost").getInt("status");
@@ -292,7 +291,13 @@ public class RequestDetailsActivity extends LocalizationActivity {
                     }
                     boolean canEditProject = UserType.canEditProject(getBaseContext(), project_creator_id, assigned_to_id);
 
-                    setUserCostPermissions(costStatus, canEditProject);
+
+                    int countryId = dataObj.getInt("country_id");
+                    if (countryId == 1) {
+                        setEgUserCostPermissions(costStatus, canEditProject);
+                    } else {
+                        setKsaUserCostPermissions(costStatus, canEditProject);
+                    }
                     setFragments(type_id, costStatus);
                     loading.setVisibility(View.GONE);
 
@@ -354,13 +359,13 @@ public class RequestDetailsActivity extends LocalizationActivity {
         }
     }
 
-    private void setUserCostPermissions(int costStatus, Boolean canEditProject) {
-        setRequestStepper(costStatus);
+    private void setEgUserCostPermissions(int costStatus, Boolean canEditProject) {
+        setEgRequestStepper(costStatus);
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
         resetData();
-        Log.e("Cost Status", String.valueOf(costStatus) );
+        Log.e("Cost Status", String.valueOf(costStatus));
         switch (costStatus) {
-            case 0:{
+            case 0: {
                 txt_canceled.setVisibility(View.VISIBLE);
                 break;
             }
@@ -405,7 +410,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
         }
     }
 
-    private void setRequestStepper(int costStatus) {
+    private void setEgRequestStepper(int costStatus) {
         switch (costStatus) {
             case 1: {
                 requestStepperImg.setImageResource(R.drawable.request_1);
@@ -434,6 +439,75 @@ public class RequestDetailsActivity extends LocalizationActivity {
 
         }
     }
+
+
+    private void setKsaUserCostPermissions(int costStatus, Boolean canEditProject) {
+        setKsaRequestStepper(costStatus);
+        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
+        resetData();
+        Log.e("Cost Status", String.valueOf(costStatus));
+        switch (costStatus) {
+            case 0: {
+                txt_canceled.setVisibility(View.VISIBLE);
+                break;
+            }
+            case 1: {
+                setCostContainer(false);
+                steps.getStatusView().setCurrentCount(1);
+                if (loggedInUser.equals("speranza")) {
+                    add_cost.setVisibility(View.VISIBLE);
+                } else {
+                    add_cost.setVisibility(View.GONE);
+                }
+                break;
+            }
+            case 5: {
+                steps.getStatusView().setCurrentCount(2);
+                if (loggedInUser.equals("speranza")) {
+                    editCost.setVisibility(View.VISIBLE);
+                } else {
+                    editCost.setVisibility(View.GONE);
+                }
+                break;
+            }
+            case 4: {
+                steps.getStatusView().setCurrentCount(3);
+                if (canEditProject) {
+                    sales_approval_layout.setVisibility(View.VISIBLE);
+                } else {
+                    sales_approval_layout.setVisibility(View.GONE);
+                }
+                break;
+            }
+            case 6: {
+                steps.getStatusView().setCurrentCount(4);
+                break;
+            }
+        }
+    }
+
+    private void setKsaRequestStepper(int costStatus) {
+        switch (costStatus) {
+            case 1: {
+                requestStepperImg.setImageResource(R.drawable.request_ksa_1);
+                break;
+            }
+            case 4: {
+                requestStepperImg.setImageResource(R.drawable.request_ksa_4);
+                break;
+            }
+            case 5: {
+                requestStepperImg.setImageResource(R.drawable.request_ksa_5);
+                break;
+            }
+            case 6: {
+                requestStepperImg.setImageResource(R.drawable.request_ksa_6);
+                break;
+            }
+
+        }
+    }
+
 
     private void resetData() {
         setCostContainer(true);
