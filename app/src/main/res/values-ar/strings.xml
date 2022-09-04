@@ -214,4 +214,5 @@
     <string name="read_all">Read All</string>
     <string name="extra_request_type">Extra request type</string>
     <string name="type">Type</string>
+    <string name="paid">Paid</string>
 </resources>

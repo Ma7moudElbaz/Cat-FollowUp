@@ -67,152 +67,6 @@
                     app:drawableTint="@color/white" />
             </RelativeLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp"
-                android:visibility="gone"
-                android:weightSum="5">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/circle_green"
-                        android:gravity="center"
-                        android:text="1"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text="Job Order \nCreation"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/circle_green"
-                        android:gravity="center"
-                        android:text="1"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text="Job Order \nCreation"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/circle_green"
-                        android:gravity="center"
-                        android:text="1"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text="Job Order \nCreation"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/circle_green"
-                        android:gravity="center"
-                        android:text="1"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text="Job Order \nCreation"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:background="@drawable/circle_green"
-                        android:gravity="center"
-                        android:text="1"
-                        android:textColor="@color/black"
-                        android:textSize="20sp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:gravity="center"
-                        android:text="Job Order \nCreation"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-
             <ImageView
                 android:id="@+id/joStepperImg"
                 android:layout_width="match_parent"
@@ -221,41 +75,7 @@
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/description"
                 android:padding="5dp"
-                android:src="@drawable/jo_1" />
-
-            <params.com.stepview.StatusViewScroller
-                android:id="@+id/steps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:entries="@array/job_orders_steps"
-                android:visibility="gone"
-                app:alignStatusWithCurrent="true"
-                app:circleColor="@color/green"
-                app:circleColorCurrent="@color/stepper_gray"
-                app:circleColorIncomplete="@color/stepper_gray"
-                app:circleColorType="fillStroke"
-                app:circleStrokeColor="@color/green"
-                app:circleStrokeColorCurrent="@color/green"
-                app:circleStrokeColorIncomplete="@color/stepper_gray"
-                app:circleStrokeWidth="2dp"
-                app:completeDrawable="@drawable/ic_done"
-                app:currentCount="2"
-                app:currentStepZoom="0.2"
-                app:drawLabels="true"
-                app:lineColor="@color/light_gray"
-                app:lineColorCurrent="@color/green"
-                app:lineColorIncomplete="@color/light_gray"
-                app:lineGap="5dp"
-                app:lineLength="35dp"
-                app:lineWidth="0.7dp"
-                app:stepCount="4"
-                app:strictObeyLineLength="true"
-                app:textColorLabelsCurrent="@color/black"
-                app:textColorLabelsIncomplete="@color/light_gray"
-                app:textSizeLabels="18sp" />
-
+                tools:src="@drawable/jo_1" />
 
         </LinearLayout>
 
@@ -409,6 +229,26 @@
                         android:text="@string/reject"
                         android:textAllCaps="false"
                         android:textColor="@color/white" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/adel_approval_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/adel_paid"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="@drawable/btn_green"
+                        android:text="@string/paid"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white" />
+
                 </LinearLayout>
 
                 <androidx.cardview.widget.CardView
