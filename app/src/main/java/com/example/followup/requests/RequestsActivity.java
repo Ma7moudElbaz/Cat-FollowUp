@@ -118,8 +118,8 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     boolean can_add_extras_request = true;
 
 
-    int projectId,countryId;
-    boolean canEditProject;;
+    int projectId, countryId;
+    boolean canEditProject, hasPoNumber;
 
     public int getProjectId() {
         return projectId;
@@ -157,6 +157,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
             i.putExtra("project_id", projectId);
             i.putExtra("country_id", countryId);
             i.putExtra("is_project_owner", canEditProject);
+            i.putExtra("has_po_number", hasPoNumber);
             startActivity(i);
         });
         requests_tab.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -277,7 +278,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
                     countryId = dataObj.getInt("country_id");
                     canEditProject = UserType.canEditProject(getBaseContext(), created_by_id, assigned_to_id);
                     setFields(projectName, canEditProject, projectStatus);
-
+                    hasPoNumber = !dataObj.getString("po_number").equals("null");
                     purchase_no = dataObj.getInt("requests_purchasing");
                     printing_no = dataObj.getInt("requests_printing");
                     production_no = dataObj.getInt("requests_production");

@@ -89,7 +89,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
     WebserviceContext ws;
 
     int projectId, countryId;
-    boolean canEditProject;
+    boolean canEditProject, hasPoNumber;
 
     ImageView requestStepperImg;
 
@@ -137,6 +137,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
             i.putExtra("project_id", projectId);
             i.putExtra("country_id", countryId);
             i.putExtra("is_project_owner", canEditProject);
+            i.putExtra("has_po_number", hasPoNumber);
             startActivity(i);
         });
     }
@@ -278,7 +279,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
                     dataObj = responseObject.getJSONObject("data");
                     type_id = dataObj.getInt("type_id");
                     projectId = dataObj.getInt("project_id");
-                   int requestStatus = dataObj.getInt("status");
+                    int requestStatus = dataObj.getInt("status");
                     if (dataObj.getString("cost").equals("null")) {
                         costStatus = 1;
                     } else {
@@ -291,12 +292,14 @@ public class RequestDetailsActivity extends LocalizationActivity {
                     if (!assigned_to.equals("null")) {
                         assigned_to_id = Integer.parseInt(assigned_to);
                     }
-                     canEditProject = UserType.canEditProject(getBaseContext(), project_creator_id, assigned_to_id);
+
+                    hasPoNumber = !dataObj.getString("po_number").equals("null");
+                    canEditProject = UserType.canEditProject(getBaseContext(), project_creator_id, assigned_to_id);
                     countryId = dataObj.getInt("country_id");
                     if (countryId == 1) {
-                        setEgUserCostPermissions(requestStatus,costStatus, canEditProject);
+                        setEgUserCostPermissions(requestStatus, costStatus, canEditProject);
                     } else {
-                        setKsaUserCostPermissions(requestStatus,costStatus, canEditProject);
+                        setKsaUserCostPermissions(requestStatus, costStatus, canEditProject);
                     }
                     setFragments(type_id, costStatus);
                     loading.setVisibility(View.GONE);
@@ -359,11 +362,11 @@ public class RequestDetailsActivity extends LocalizationActivity {
         }
     }
 
-    private void setEgUserCostPermissions(int requestStatus,int costStatus, Boolean canEditProject) {
+    private void setEgUserCostPermissions(int requestStatus, int costStatus, Boolean canEditProject) {
         setEgRequestStepper(costStatus);
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
         resetData();
-        if (requestStatus == 0){
+        if (requestStatus == 0) {
             txt_canceled.setVisibility(View.VISIBLE);
         }
         switch (costStatus) {
@@ -439,11 +442,11 @@ public class RequestDetailsActivity extends LocalizationActivity {
     }
 
 
-    private void setKsaUserCostPermissions(int requestStatus,int costStatus, Boolean canEditProject) {
+    private void setKsaUserCostPermissions(int requestStatus, int costStatus, Boolean canEditProject) {
         setKsaRequestStepper(costStatus);
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
         resetData();
-        if (requestStatus == 0){
+        if (requestStatus == 0) {
             txt_canceled.setVisibility(View.VISIBLE);
         }
         switch (costStatus) {

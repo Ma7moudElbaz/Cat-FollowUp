@@ -1,6 +1,7 @@
 package com.example.followup.job_orders.list;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_job_orders;
+import com.example.followup.bottomsheets.BottomSheet_po_number;
 import com.example.followup.job_orders.AddJobOrderActivity;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
@@ -30,6 +32,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -39,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class JobOrdersActivity extends LocalizationActivity implements BottomSheet_choose_filter_job_orders.FilterListener {
+public class JobOrdersActivity extends LocalizationActivity implements BottomSheet_choose_filter_job_orders.FilterListener, BottomSheet_po_number.PoNumberSubmitListener {
 
 
     public void showFilterSheet() {
@@ -64,6 +67,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    private ProgressDialog dialog;
     ImageView back;
     ProgressBar loading;
     RecyclerView recyclerView;
@@ -79,7 +83,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
     boolean mHasReachedBottomOnce = false;
 
     int projectId,country_id;
-    boolean is_project_owner;
+    boolean is_project_owner,has_po_number;
 
 
     int selectedStatusIndex = -1;
@@ -90,6 +94,12 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
     SwipeRefreshLayout swipe_refresh;
 
     WebserviceContext ws;
+
+    public void showPoNumberSheet() {
+        BottomSheet_po_number langBottomSheet =
+                new BottomSheet_po_number("po_number");
+        langBottomSheet.show(getSupportFragmentManager(), "po_number");
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,9 +121,13 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
             return false;
         });
         fab_add_job_order.setOnClickListener(v -> {
-            Intent i = new Intent(getBaseContext(), AddJobOrderActivity.class);
-            i.putExtra("project_id", projectId);
-            startActivity(i);
+            if (has_po_number){
+                Intent i = new Intent(getBaseContext(), AddJobOrderActivity.class);
+                i.putExtra("project_id", projectId);
+                startActivity(i);
+            }else {
+                showPoNumberSheet();
+            }
         });
 
         swipe_refresh.setOnRefreshListener(() -> {
@@ -124,12 +138,6 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
 
     private void setUserPermissions() {
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
-        if (loggedInUser.equals("nagat")) {
-            fab_add_job_order.setVisibility(View.VISIBLE);
-        } else {
-            fab_add_job_order.setVisibility(View.GONE);
-        }
-
         if (country_id == 1 && loggedInUser.equals("nagat")){
             fab_add_job_order.setVisibility(View.VISIBLE);
         }else if (country_id == 2 && is_project_owner){
@@ -204,10 +212,17 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
 
     private void initFields() {
 
+
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Please, Wait...");
+        dialog.setCancelable(false);
+
         ws = new WebserviceContext(this);
         projectId = getIntent().getIntExtra("project_id", 0);
         country_id = getIntent().getIntExtra("country_id", 0);
         is_project_owner = getIntent().getBooleanExtra("is_project_owner",false);
+        has_po_number = getIntent().getBooleanExtra("has_po_number",false);
 
                 back = findViewById(R.id.back);
         fab_add_job_order = findViewById(R.id.fab_add_job_order);
@@ -273,5 +288,41 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
         job_order_list.clear();
         currentPageNum = 1;
         getJobOrders(currentPageNum, getFilterMap());
+    }
+
+    @Override
+    public void poNumberSubmitListener(String po_number, String type) {
+        addPoNumber(projectId, po_number);
+    }
+
+
+    private void addPoNumber(int projectId, String poNumber) {
+        Map<String, String> map = new HashMap<>();
+        map.put("project_id", String.valueOf(projectId));
+        map.put("number", poNumber);
+
+        dialog.show();
+        ws.getApi().addPoNumber(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 200 || response.code() == 201) {
+                        Toast.makeText(getBaseContext(), "PO Added successfully", Toast.LENGTH_LONG).show();
+                        has_po_number = true;
+                    } else {
+                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
     }
 }
