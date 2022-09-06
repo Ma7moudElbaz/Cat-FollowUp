@@ -27,7 +27,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    tools:ignore="UseCompoundDrawables">
 
                     <ImageView
                         android:id="@+id/back"
@@ -93,6 +94,7 @@
                 android:paddingStart="20dp"
                 android:paddingTop="20dp"
                 android:paddingEnd="20dp">
+
 
                 <LinearLayout
                     android:id="@+id/sales_approval_layout"
@@ -231,26 +233,6 @@
                         android:textColor="@color/white" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/adel_approval_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/adel_paid"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@drawable/btn_green"
-                        android:text="@string/paid"
-                        android:textAllCaps="false"
-                        android:textColor="@color/white" />
-
-                </LinearLayout>
-
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -269,11 +251,13 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:orientation="horizontal"
-                            android:padding="10dp">
+                            android:padding="10dp"
+                            tools:ignore="UseCompoundDrawables">
 
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:contentDescription="@string/description"
                                 android:src="@drawable/ic_pdf"
                                 android:text="@string/request_id"
                                 android:textColor="@color/black"
@@ -306,6 +290,113 @@
                     </RelativeLayout>
                 </androidx.cardview.widget.CardView>
 
+
+                <RelativeLayout
+                    android:id="@+id/payment_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/payment_percent_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginEnd="10dp"
+                        android:text="% paid"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="14sp" />
+
+                    <com.google.android.material.progressindicator.LinearProgressIndicator
+                        android:id="@+id/progress_indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/adel_seen_txt"
+                        android:layout_toEndOf="@+id/payment_percent_txt"
+                        tools:progress="30" />
+
+                    <TextView
+                        android:id="@+id/adel_seen_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginStart="10dp"
+                        android:text="@string/adel_seen"
+                        android:textColor="@color/green"
+                        android:textSize="14sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/adel_approval_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toStartOf="@+id/adel_pay"
+                        android:orientation="vertical">
+
+                        <EditText
+                            android:id="@+id/payment_percent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/et_white"
+                            android:hint="@string/percentage"
+                            android:importantForAutofill="no"
+                            android:inputType="number"
+                            android:padding="10dp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:orientation="horizontal">
+
+                            <androidx.appcompat.widget.AppCompatButton
+                                android:id="@+id/choose_file"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:elevation="0dp"
+                                android:text="@string/choose_file"
+                                android:textAllCaps="false"
+                                android:textColor="@color/black" />
+
+
+                            <TextView
+                                android:id="@+id/files_chosen"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:hint="@string/no_file_choose"
+                                android:textColor="@color/black"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/adel_pay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/btn_green"
+                        android:text="@string/pay"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white" />
+
+                </RelativeLayout>
+
                 <TextView
                     android:id="@+id/financial_reasons"
                     android:layout_width="wrap_content"
@@ -326,7 +417,7 @@
                     android:layout_marginEnd="20dp"
                     android:textColor="@color/red"
                     android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

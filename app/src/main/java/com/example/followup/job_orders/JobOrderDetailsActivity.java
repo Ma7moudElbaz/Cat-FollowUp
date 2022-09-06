@@ -1,5 +1,7 @@
 package com.example.followup.job_orders;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -8,9 +10,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,16 +26,31 @@ import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.bottomsheets.BottomSheet_po_number;
 import com.example.followup.job_orders.edit_job_order.EditJobOrderActivity;
+import com.example.followup.utils.RealPathUtil;
+import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.google.android.material.progressindicator.LinearProgressIndicator;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.MultiplePermissionsReport;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,8 +59,14 @@ import retrofit2.Response;
 public class JobOrderDetailsActivity extends LocalizationActivity implements BottomSheet_choose_reason.ReasonSubmitListener, BottomSheet_po_number.PoNumberSubmitListener {
 
     private ProgressDialog dialog;
-    LinearLayout sales_approval_layout, magdi_approval_layout, hesham_approval_layout, ceo_approval_layout,adel_approval_layout;
-    Button sales_approve, sales_reject, magdi_approve, magdi_hold, hesham_approve, hesham_reject, hesham_ceo_approval, ceo_approve, ceo_reject,adel_paid;
+    LinearLayout sales_approval_layout, magdi_approval_layout, hesham_approval_layout, ceo_approval_layout;
+    RelativeLayout adel_approval_layout, payment_layout;
+    Button sales_approve, sales_reject, magdi_approve, magdi_hold, hesham_approve, hesham_reject, hesham_ceo_approval, ceo_approve, ceo_reject, adel_pay, choose_file;
+    TextView filesChosen;
+    TextView payment_percent_txt, adel_seen_txt;
+    LinearProgressIndicator progress_indicator;
+    EditText payment_percent;
+    List<String> filesSelected;
     ProgressBar loading;
     ImageView back;
     TextView download, financial_reasons, ceo_reasons, edit;
@@ -55,6 +80,9 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     WebserviceContext ws;
 
     ImageView joStepperImg;
+
+
+    private static final int FILES_REQUEST_CODE = 764546;
 
     public void showReasonSheet(String title, String subtitle, String reasonHint, String type) {
         BottomSheet_choose_reason langBottomSheet =
@@ -90,7 +118,9 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         hesham_ceo_approval.setOnClickListener(v -> updateStatusDialog(8, "", ""));
         ceo_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "ceo"));
         ceo_approve.setOnClickListener(v -> updateStatusDialog(10, "", ""));
-        adel_paid.setOnClickListener(v -> updateStatusDialog(11, "", ""));
+
+
+//        adel_pay.setOnClickListener(v -> updateStatusDialog(11, "", ""));
 
         edit.setOnClickListener(view -> {
             Intent i = new Intent(JobOrderDetailsActivity.this, EditJobOrderActivity.class);
@@ -100,6 +130,32 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         swipe_refresh.setOnRefreshListener(() -> {
             swipe_refresh.setRefreshing(false);
             onResume();
+        });
+
+        adel_pay.setOnClickListener(v -> {
+            if (validateFields()) {
+                addPayment();
+            }
+        });
+        choose_file.setOnClickListener(v -> {
+
+            Dexter.withContext(getBaseContext())
+                    .withPermissions(
+                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE
+                    ).withListener(new MultiplePermissionsListener() {
+                        @Override
+                        public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                            if (multiplePermissionsReport.areAllPermissionsGranted()) {
+                                pickFromGallery();
+                            }
+                        }
+
+                        @Override
+                        public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+
+                        }
+                    }).check();
         });
 
     }
@@ -112,6 +168,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         dialog.setMessage("Please, Wait...");
         dialog.setCancelable(false);
 
+        filesSelected = new ArrayList<>();
+
         back = findViewById(R.id.back);
         loading = findViewById(R.id.loading);
         download = findViewById(R.id.download);
@@ -120,6 +178,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         hesham_approval_layout = findViewById(R.id.hesham_approval_layout);
         ceo_approval_layout = findViewById(R.id.ceo_approval_layout);
         adel_approval_layout = findViewById(R.id.adel_approval_layout);
+        payment_layout = findViewById(R.id.payment_layout);
         sales_approve = findViewById(R.id.sales_approve);
         sales_reject = findViewById(R.id.sales_reject);
         magdi_approve = findViewById(R.id.magdi_approve);
@@ -129,7 +188,13 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         hesham_ceo_approval = findViewById(R.id.hesham_ceo_approval);
         ceo_approve = findViewById(R.id.ceo_approve);
         ceo_reject = findViewById(R.id.ceo_reject);
-        adel_paid = findViewById(R.id.adel_paid);
+        adel_pay = findViewById(R.id.adel_pay);
+        choose_file = findViewById(R.id.choose_file);
+        filesChosen = findViewById(R.id.files_chosen);
+        payment_percent = findViewById(R.id.payment_percent);
+        payment_percent_txt = findViewById(R.id.payment_percent_txt);
+        adel_seen_txt = findViewById(R.id.adel_seen_txt);
+        progress_indicator = findViewById(R.id.progress_indicator);
 
         financial_reasons = findViewById(R.id.financial_reasons);
         ceo_reasons = findViewById(R.id.ceo_reasons);
@@ -137,7 +202,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
 //        if (loggedInUser.equals("hesham")) {
-            ceo_reasons.setVisibility(View.VISIBLE);
+        ceo_reasons.setVisibility(View.VISIBLE);
 //        }
 
         swipe_refresh = findViewById(R.id.swipe_refresh);
@@ -298,7 +363,9 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
             }
             case 7: {
                 if (loggedInUser.equals("adel")) {
-                adel_approval_layout.setVisibility(View.VISIBLE);}
+                    adel_approval_layout.setVisibility(View.VISIBLE);
+                }
+                payment_layout.setVisibility(View.VISIBLE);
                 break;
             }
             case 8: {
@@ -387,7 +454,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 .show();
     }
 
-
     public void updateStatus(int status, String ceo_reasons, String financial_reasons) {
         Map<String, String> map = new HashMap<>();
         map.put("job_order_id", String.valueOf(jobOrderId));
@@ -440,6 +506,18 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
                     String ceo_reasons_text = dataObj.getString("ceo_reasons");
                     String financial_reasons_text = dataObj.getString("financial_reasons");
+
+                    boolean isAdelSeen = dataObj.getBoolean("adel_seen");
+                    if (!isAdelSeen) {
+                        adel_seen_txt.setVisibility(View.GONE);
+                    }
+
+                    String paidAmount = dataObj.getString("paied");
+                    int paidAmountInt = Integer.parseInt(paidAmount.substring(0, paidAmount.length() - 1));
+
+                    payment_percent_txt.setText(paidAmount +" paid");
+
+                    progress_indicator.setProgress(paidAmountInt);
 
                     if (!ceo_reasons_text.equals("null")) {
                         ceo_reasons.setText("CEO Rejection Reasons : " + ceo_reasons_text);
@@ -532,5 +610,107 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     @Override
     public void poNumberSubmitListener(String po_number, String type) {
         addPoNumber(projectId, po_number);
+    }
+
+    private void pickFromGallery() {
+        //Create an Intent with action as ACTION_PICK
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        // Sets the type as image/*. This ensures only components of type image are selected
+        intent.setType("image/*");
+        //We pass an extra array with the accepted mime types. This will ensure only components with these MIME types as targeted.
+        String[] mimeTypes = {"image/jpeg", "image/png"};
+        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+
+//        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        // Launching the Intent
+        startActivityForResult(intent, FILES_REQUEST_CODE);
+    }
+
+    private boolean validateFields() {
+        if (payment_percent.length() == 0) {
+            payment_percent.setError("This is required field");
+            return false;
+        }
+        if (filesSelected.size() == 0) {
+            Toast.makeText(this, "You must add attachment", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
+    }
+
+    private void addPayment() {
+        Map<String, RequestBody> map = setPaymentMapRequestBody();
+        List<MultipartBody.Part> fileToUpload = addAttaches(filesSelected);
+        dialog.show();
+        ws.getApi().addPayment(UserUtils.getAccessToken(getBaseContext()), fileToUpload, map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 200 || response.code() == 201) {
+                        Toast.makeText(getBaseContext(), "Cost Added successfully", Toast.LENGTH_LONG).show();
+                        onResume();
+
+                    } else {
+                        JSONObject res = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
+    private Map<String, RequestBody> setPaymentMapRequestBody() {
+        Map<String, RequestBody> map = new HashMap<>();
+        map.put("percentage", RequestBody.create(MediaType.parse("text/plain"), payment_percent.getText().toString()));
+        map.put("job_order_id", RequestBody.create(MediaType.parse("text/plain"), String.valueOf(jobOrderId)));
+
+        return map;
+    }
+
+    private List<MultipartBody.Part> addAttaches(List<String> files) {
+        List<MultipartBody.Part> list = new ArrayList<>();
+        for (int i = 0; i < files.size(); i++) {
+            File file = new File(files.get(i));
+            RequestBody fileReqBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+            MultipartBody.Part part = MultipartBody.Part.createFormData("reference", file.getName(), fileReqBody);
+            list.add(part);
+        }
+        return list;
+    }
+
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // Result code is RESULT_OK only if the user selects an Image
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Activity.RESULT_OK)
+            switch (requestCode) {
+                case FILES_REQUEST_CODE:
+                    filesSelected.clear();
+                    //data.getData returns the content URI for the selected files
+                    if (data == null) {
+                        return;
+                    } else if (data.getClipData() != null) {
+                        for (int i = 0; i < data.getClipData().getItemCount(); i++) {
+                            Uri uri = data.getClipData().getItemAt(i).getUri();
+                            filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
+                        }
+                    } else {
+                        Uri uri = data.getData();
+                        filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
+                    }
+                    filesChosen.setText(filesSelected.size() + " Files Selected");
+
+                    Log.e("Data selected", filesSelected.toString());
+            }
     }
 }

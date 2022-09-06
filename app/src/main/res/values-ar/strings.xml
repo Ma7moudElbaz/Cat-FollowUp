@@ -215,4 +215,7 @@
     <string name="extra_request_type">Extra request type</string>
     <string name="type">Type</string>
     <string name="paid">Paid</string>
+    <string name="percentage">Percentage</string>
+    <string name="pay">Pay</string>
+    <string name="adel_seen">Adel seen</string>
 </resources>

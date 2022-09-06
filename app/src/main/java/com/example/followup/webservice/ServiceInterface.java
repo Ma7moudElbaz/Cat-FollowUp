@@ -154,6 +154,11 @@ public interface ServiceInterface {
     @FormUrlEncoded
     Call<ResponseBody> changeJobOrderStatus(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
+    @Multipart
+    @POST("payments")
+    Call<ResponseBody> addPayment(@Header("Authorization") String auth, @Part List<MultipartBody.Part> files, @PartMap Map<String, RequestBody> map);
+
+
     @POST("pos")
     @FormUrlEncoded
     Call<ResponseBody> addPoNumber(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
