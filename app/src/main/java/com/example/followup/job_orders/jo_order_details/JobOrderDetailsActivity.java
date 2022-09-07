@@ -1,4 +1,4 @@
-package com.example.followup.job_orders;
+package com.example.followup.job_orders.jo_order_details;
 
 import android.Manifest;
 import android.app.Activity;
@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
@@ -26,8 +28,9 @@ import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.bottomsheets.BottomSheet_po_number;
 import com.example.followup.job_orders.edit_job_order.EditJobOrderActivity;
+import com.example.followup.job_orders.list.Job_order_item;
+import com.example.followup.job_orders.list.Job_orders_adapter;
 import com.example.followup.utils.RealPathUtil;
-import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -38,6 +41,7 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,8 +63,8 @@ import retrofit2.Response;
 public class JobOrderDetailsActivity extends LocalizationActivity implements BottomSheet_choose_reason.ReasonSubmitListener, BottomSheet_po_number.PoNumberSubmitListener {
 
     private ProgressDialog dialog;
-    LinearLayout sales_approval_layout, magdi_approval_layout, hesham_approval_layout, ceo_approval_layout;
-    RelativeLayout adel_approval_layout, payment_layout;
+    LinearLayout sales_approval_layout, magdi_approval_layout, hesham_approval_layout, ceo_approval_layout, payment_layout;
+    RelativeLayout adel_approval_layout;
     Button sales_approve, sales_reject, magdi_approve, magdi_hold, hesham_approve, hesham_reject, hesham_ceo_approval, ceo_approve, ceo_reject, adel_pay, choose_file;
     TextView filesChosen;
     TextView payment_percent_txt, adel_seen_txt;
@@ -75,12 +79,16 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     String poNumber;
     String pdfUrl;
 
+
+    RecyclerView recyclerView;
+    ArrayList<Payment_item> payments_list;
+    Payments_adapter payments_adapter;
+
     SwipeRefreshLayout swipe_refresh;
 
     WebserviceContext ws;
 
     ImageView joStepperImg;
-
 
     private static final int FILES_REQUEST_CODE = 764546;
 
@@ -118,9 +126,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         hesham_ceo_approval.setOnClickListener(v -> updateStatusDialog(8, "", ""));
         ceo_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "ceo"));
         ceo_approve.setOnClickListener(v -> updateStatusDialog(10, "", ""));
-
-
-//        adel_pay.setOnClickListener(v -> updateStatusDialog(11, "", ""));
 
         edit.setOnClickListener(view -> {
             Intent i = new Intent(JobOrderDetailsActivity.this, EditJobOrderActivity.class);
@@ -210,8 +215,42 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
 
         jobOrderId = getIntent().getIntExtra("job_order_id", 0);
+
+        recyclerView = findViewById(R.id.recycler_view);
+        payments_list = new ArrayList<>();
+        initRecyclerView();
     }
 
+
+    private void initRecyclerView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        payments_adapter = new Payments_adapter(getBaseContext(), payments_list);
+        recyclerView.setAdapter(payments_adapter);
+    }
+
+    public void setPaymentsList(JSONArray list) {
+        payments_list.clear();
+        try {
+            for (int i = 0; i < list.length(); i++) {
+
+                JSONObject currentObject = list.getJSONObject(i);
+                final int id = currentObject.getInt("id");
+                final int job_order_id = currentObject.getInt("job_order_id");
+                final String percentage = currentObject.getString("percentage");
+                final String attachment = currentObject.getString("attachment");
+                final String created_at = currentObject.getString("created_at");
+
+                payments_list.add(new Payment_item(id, job_order_id, percentage, attachment, created_at));
+
+            }
+            payments_adapter.notifyDataSetChanged();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     private void setEgUserJobOrderPermissions(int jobOrderStatus, boolean canEditProject, int ceo) {
         setEgJoStepper(jobOrderStatus, ceo);
@@ -376,6 +415,10 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 }
                 break;
             }
+            case 11: {
+                payment_layout.setVisibility(View.VISIBLE);
+                break;
+            }
 
         }
     }
@@ -504,6 +547,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                     poNumber = dataObj.getString("po_number");
                     projectId = dataObj.getInt("project_id");
 
+                    setPaymentsList(dataObj.getJSONArray("payments"));
+
                     String ceo_reasons_text = dataObj.getString("ceo_reasons");
                     String financial_reasons_text = dataObj.getString("financial_reasons");
 
@@ -515,7 +560,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                     String paidAmount = dataObj.getString("paied");
                     int paidAmountInt = Integer.parseInt(paidAmount.substring(0, paidAmount.length() - 1));
 
-                    payment_percent_txt.setText(paidAmount +" paid");
+                    payment_percent_txt.setText(paidAmount + " paid");
 
                     progress_indicator.setProgress(paidAmountInt);
 
@@ -593,7 +638,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         super.onResume();
         getJobOrderDetails();
     }
-
 
     @Override
     public void reasonSubmitListener(String reason, String type) {
@@ -682,12 +726,11 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         for (int i = 0; i < files.size(); i++) {
             File file = new File(files.get(i));
             RequestBody fileReqBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            MultipartBody.Part part = MultipartBody.Part.createFormData("reference", file.getName(), fileReqBody);
+            MultipartBody.Part part = MultipartBody.Part.createFormData("attachment", file.getName(), fileReqBody);
             list.add(part);
         }
         return list;
     }
-
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // Result code is RESULT_OK only if the user selects an Image

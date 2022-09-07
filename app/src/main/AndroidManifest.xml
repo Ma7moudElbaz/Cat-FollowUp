@@ -85,7 +85,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".job_orders.JobOrderDetailsActivity"
+            android:name=".job_orders.jo_order_details.JobOrderDetailsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
