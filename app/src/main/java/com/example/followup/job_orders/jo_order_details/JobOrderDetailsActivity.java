@@ -28,8 +28,6 @@ import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.bottomsheets.BottomSheet_po_number;
 import com.example.followup.job_orders.edit_job_order.EditJobOrderActivity;
-import com.example.followup.job_orders.list.Job_order_item;
-import com.example.followup.job_orders.list.Job_orders_adapter;
 import com.example.followup.utils.RealPathUtil;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
