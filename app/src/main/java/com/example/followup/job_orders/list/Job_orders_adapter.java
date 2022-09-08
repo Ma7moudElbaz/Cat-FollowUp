@@ -42,31 +42,32 @@ public class Job_orders_adapter extends RecyclerView.Adapter<Job_orders_adapter.
         holder.job_order_number.setText(items.get(position).getName());
         holder.po_number.setText(items.get(position).getPo_number());
 
-        if (items.get(position).getStatus_code() == 7){
+        if ((items.get(position).getStatus_code() == 7 && items.get(position).getCountry_id() == 1)
+                || (items.get(position).getStatus_code() == 11)) {
             holder.status_color.setBackgroundResource(R.drawable.status_green);
             holder.status.setBackgroundResource(R.drawable.status_green);
             holder.status.setText("Approved");
-        }else if (items.get(position).getStatus_code() == 6||items.get(position).getStatus_code() == 9){
+        } else if (items.get(position).getStatus_code() == 6 || items.get(position).getStatus_code() == 9) {
             holder.status_color.setBackgroundResource(R.drawable.status_red);
             holder.status.setBackgroundResource(R.drawable.status_red);
             holder.status.setText("Rejected");
-        }else{
+        } else {
             holder.status_color.setBackgroundResource(R.drawable.status_yellow);
             holder.status.setBackgroundResource(R.drawable.status_yellow);
             holder.status.setText("In Progress");
         }
 
-        if (items.get(position).isHave_action()){
+        if (items.get(position).isHave_action()) {
             holder.have_action.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             holder.have_action.setVisibility(View.GONE);
         }
 
         holder.parent_layout.setOnClickListener(v -> {
             Intent i = new Intent(mContext, JobOrderDetailsActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            i.putExtra("job_order_id",items.get(position).getId());
-            i.putExtra("project_id",items.get(position).getProject_id());
+            i.putExtra("job_order_id", items.get(position).getId());
+            i.putExtra("project_id", items.get(position).getProject_id());
             mContext.startActivity(i);
         });
 
@@ -79,7 +80,7 @@ public class Job_orders_adapter extends RecyclerView.Adapter<Job_orders_adapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView job_order_number, po_number, status,have_action;
+        final TextView job_order_number, po_number, status, have_action;
         final RelativeLayout parent_layout;
         final View status_color;
 

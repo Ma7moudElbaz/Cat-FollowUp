@@ -546,8 +546,15 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                     jobOrderStatus = dataObj.getInt("status");
                     poNumber = dataObj.getString("po_number");
                     projectId = dataObj.getInt("project_id");
+                    int countryId = dataObj.getInt("country_id");
 
-                    setPaymentsList(dataObj.getJSONArray("payments"));
+                    if (countryId == 2) {
+                        setPaymentsList(dataObj.getJSONArray("payments"));
+                        String paidAmount = dataObj.getString("paied");
+                        int paidAmountInt = Integer.parseInt(paidAmount.substring(0, paidAmount.length() - 1));
+                        payment_percent_txt.setText(paidAmount + " paid");
+                        progress_indicator.setProgress(paidAmountInt);
+                    }
 
                     String ceo_reasons_text = dataObj.getString("ceo_reasons");
                     String financial_reasons_text = dataObj.getString("financial_reasons");
@@ -557,12 +564,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                         adel_seen_txt.setVisibility(View.GONE);
                     }
 
-                    String paidAmount = dataObj.getString("paied");
-                    int paidAmountInt = Integer.parseInt(paidAmount.substring(0, paidAmount.length() - 1));
 
-                    payment_percent_txt.setText(paidAmount + " paid");
-
-                    progress_indicator.setProgress(paidAmountInt);
 
                     if (!ceo_reasons_text.equals("null")) {
                         ceo_reasons.setText("CEO Rejection Reasons : " + ceo_reasons_text);
@@ -580,7 +582,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                     boolean canEditProject = UserType.canEditProject(getBaseContext(), project_creator_id, assigned_to_id);
                     int ceo = dataObj.getInt("ceo");
 
-                    int countryId = dataObj.getInt("country_id");
                     if (countryId == 1) {
                         setEgUserJobOrderPermissions(jobOrderStatus, canEditProject, ceo);
                     } else {

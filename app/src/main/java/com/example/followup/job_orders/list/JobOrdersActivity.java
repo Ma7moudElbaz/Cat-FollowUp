@@ -188,6 +188,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
                 JSONObject currentObject = list.getJSONObject(i);
                 final int id = currentObject.getInt("id");
                 final int project_id = currentObject.getInt("project_id");
+                final int item_country_id = currentObject.getInt("country_id");
                 final int status_code = currentObject.getInt("status");
                 final String status_message = currentObject.getString("status_message");
                 final String name = currentObject.getString("name");
@@ -195,7 +196,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
 
                 final boolean have_action = currentObject.getBoolean("have_action");
 
-                job_order_list.add(new Job_order_item(id, project_id, status_code, status_message,
+                job_order_list.add(new Job_order_item(id, project_id, item_country_id, status_code, status_message,
                         name, po_number, have_action));
 
             }

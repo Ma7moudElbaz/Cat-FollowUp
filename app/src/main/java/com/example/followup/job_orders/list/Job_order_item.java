@@ -1,13 +1,14 @@
 package com.example.followup.job_orders.list;
 
 public class Job_order_item {
-    private final int id, project_id,status_code;
+    private final int id, project_id,country_id,status_code;
     private final String status_message,name,po_number;
     private final boolean have_action;
 
-    public Job_order_item(int id, int project_id, int status_code, String status_message, String name, String po_number, boolean have_action) {
+    public Job_order_item(int id, int project_id, int country_id, int status_code, String status_message, String name, String po_number, boolean have_action) {
         this.id = id;
         this.project_id = project_id;
+        this.country_id = country_id;
         this.status_code = status_code;
         this.status_message = status_message;
         this.name = name;
@@ -41,5 +42,9 @@ public class Job_order_item {
 
     public boolean isHave_action() {
         return have_action;
+    }
+
+    public int getCountry_id() {
+        return country_id;
     }
 }
