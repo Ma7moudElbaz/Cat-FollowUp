@@ -22,6 +22,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
+import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.job_orders.list.JobOrdersActivity;
 import com.example.followup.supplier_costs.add.AddExtrasSupplierCost;
 import com.example.followup.supplier_costs.edit.EditExtrasSupplierCostActivity;
@@ -43,6 +44,7 @@ import com.example.followup.supplier_costs.view.Photography_supplierCost_view;
 import com.example.followup.supplier_costs.view.Print_supplierCost_view;
 import com.example.followup.supplier_costs.view.Production_supplierCost_view;
 import com.example.followup.supplier_costs.view.Purchase_supplierCost_view;
+import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -60,7 +62,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class RequestDetailsActivity extends LocalizationActivity {
+public class RequestDetailsActivity extends LocalizationActivity implements BottomSheet_choose_reason.ReasonSubmitListener {
 
     public int getCostStatus() {
         return costStatus;
@@ -79,7 +81,8 @@ public class RequestDetailsActivity extends LocalizationActivity {
     int costStatus;
     int costId;
 
-    TextView job_orders, txt_canceled;
+    TextView job_orders, txt_canceled, txt_rejection_reason_request, txt_rejection_reason_cost;
+    Button nagat_reject;
 
     int request_id, type_id;
     JSONObject dataObj;
@@ -109,6 +112,12 @@ public class RequestDetailsActivity extends LocalizationActivity {
         fragmentTransaction.commit();
     }
 
+    public void showReasonSheet(String title, String subtitle, String reasonHint, String type) {
+        BottomSheet_choose_reason langBottomSheet =
+                new BottomSheet_choose_reason(title, subtitle, reasonHint, type);
+        langBottomSheet.show(getSupportFragmentManager(), type);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,10 +131,12 @@ public class RequestDetailsActivity extends LocalizationActivity {
         editCost.setOnClickListener(v -> {
             gotoEditCost(costId, type_id);
         });
-
-        sales_reject.setOnClickListener(v -> updateStatusDialog(5, ""));
+        sales_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "sales_reject"));
         sales_approve.setOnClickListener(v -> updateStatusDialog(6, ""));
         cancel_request.setOnClickListener(v -> deleteRequestDialog());
+
+        nagat_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "nagat_reject_request"));
+
 
         swipe_refresh.setOnRefreshListener(() -> {
             swipe_refresh.setRefreshing(false);
@@ -222,6 +233,10 @@ public class RequestDetailsActivity extends LocalizationActivity {
         job_orders = findViewById(R.id.job_orders);
         txt_canceled = findViewById(R.id.txt_canceled);
 
+        txt_rejection_reason_request = findViewById(R.id.txt_rejection_reason_request);
+        txt_rejection_reason_cost = findViewById(R.id.txt_rejection_reason_cost);
+        nagat_reject = findViewById(R.id.nagat_reject);
+
         swipe_refresh = findViewById(R.id.swipe_refresh);
         requestStepperImg = findViewById(R.id.requestStepperImg);
 
@@ -285,6 +300,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
                     } else {
                         costStatus = dataObj.getJSONObject("cost").getInt("status");
                         costId = dataObj.getJSONObject("cost").getInt("id");
+                        txt_rejection_reason_cost.setText(StringCheck.returnEmpty(dataObj.getJSONObject("cost").getString("reason_description")));
                     }
                     int project_creator_id = dataObj.getInt("project_creator_id");
                     final String assigned_to = dataObj.getString("project_assign_id");
@@ -302,6 +318,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
                         setKsaUserCostPermissions(requestStatus, costStatus, canEditProject);
                     }
                     setFragments(type_id, costStatus);
+                    txt_rejection_reason_request.setText(StringCheck.returnEmpty(dataObj.getString("reason_description")));
                     loading.setVisibility(View.GONE);
 
                 } catch (Exception e) {
@@ -368,12 +385,19 @@ public class RequestDetailsActivity extends LocalizationActivity {
         resetData();
         if (requestStatus == 0) {
             txt_canceled.setVisibility(View.VISIBLE);
+        } else if (requestStatus == 2) {
+            txt_canceled.setVisibility(View.VISIBLE);
+            txt_canceled.setText("Request Rejected");
+            txt_rejection_reason_request.setVisibility(View.VISIBLE);
         }
         switch (costStatus) {
             case 1: {
                 setCostContainer(false);
                 steps.getStatusView().setCurrentCount(1);
-                if (loggedInUser.equals("nagatTeam") || loggedInUser.equals("nagat")) {
+                if (loggedInUser.equals("nagat") && requestStatus != 2) {
+                    nagat_reject.setVisibility(View.VISIBLE);
+                }
+                if (loggedInUser.equals("nagatTeam") || loggedInUser.equals("nagat") && requestStatus != 2) {
                     add_cost.setVisibility(View.VISIBLE);
                 } else {
                     add_cost.setVisibility(View.GONE);
@@ -388,6 +412,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
             case 3:
             case 5: {
                 steps.getStatusView().setCurrentCount(2);
+                txt_rejection_reason_cost.setVisibility(View.VISIBLE);
                 if (loggedInUser.equals("nagatTeam") || loggedInUser.equals("nagat")) {
                     editCost.setVisibility(View.VISIBLE);
                 } else {
@@ -441,20 +466,24 @@ public class RequestDetailsActivity extends LocalizationActivity {
         }
     }
 
-
     private void setKsaUserCostPermissions(int requestStatus, int costStatus, Boolean canEditProject) {
         setKsaRequestStepper(costStatus);
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
         resetData();
         if (requestStatus == 0) {
             txt_canceled.setVisibility(View.VISIBLE);
+        } else if (requestStatus == 2) {
+            txt_canceled.setVisibility(View.VISIBLE);
+            txt_canceled.setText("Request Rejected");
+            txt_rejection_reason_request.setVisibility(View.VISIBLE);
         }
         switch (costStatus) {
             case 1: {
                 setCostContainer(false);
                 steps.getStatusView().setCurrentCount(1);
-                if (loggedInUser.equals("speranza")) {
+                if (loggedInUser.equals("speranza") && requestStatus != 2) {
                     add_cost.setVisibility(View.VISIBLE);
+                    nagat_reject.setVisibility(View.VISIBLE);
                 } else {
                     add_cost.setVisibility(View.GONE);
                 }
@@ -462,6 +491,7 @@ public class RequestDetailsActivity extends LocalizationActivity {
             }
             case 5: {
                 steps.getStatusView().setCurrentCount(2);
+                txt_rejection_reason_cost.setVisibility(View.VISIBLE);
                 if (loggedInUser.equals("speranza")) {
                     editCost.setVisibility(View.VISIBLE);
                 } else {
@@ -507,13 +537,15 @@ public class RequestDetailsActivity extends LocalizationActivity {
         }
     }
 
-
     private void resetData() {
         setCostContainer(true);
         editCost.setVisibility(View.GONE);
         add_cost.setVisibility(View.GONE);
         txt_canceled.setVisibility(View.GONE);
         sales_approval_layout.setVisibility(View.GONE);
+        nagat_reject.setVisibility(View.GONE);
+        txt_rejection_reason_request.setVisibility(View.GONE);
+        txt_rejection_reason_cost.setVisibility(View.GONE);
     }
 
     public void deleteRequestDialog() {
@@ -596,9 +628,55 @@ public class RequestDetailsActivity extends LocalizationActivity {
         });
     }
 
+    public void nagatReject(int status, String reason) {
+
+        Map<String, String> map = new HashMap<>();
+        map.put("request_id", String.valueOf(request_id));
+        map.put("status", String.valueOf(status));
+        map.put("reason", reason);
+
+        dialog.show();
+        ws.getApi().rejectRequest(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 200 || response.code() == 201) {
+                        Toast.makeText(getBaseContext(), "Updated successfully", Toast.LENGTH_LONG).show();
+                        getRequestDetails();
+                    } else {
+                        JSONObject res = new JSONObject(response.errorBody().string());
+                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         getRequestDetails();
+    }
+
+    @Override
+    public void reasonSubmitListener(String reason, String type) {
+        switch (type) {
+            case "nagat_reject_request":
+                nagatReject(2, reason);
+                break;
+            case "sales_reject":
+                updateStatusDialog(5, reason);
+                break;
+
+        }
     }
 }

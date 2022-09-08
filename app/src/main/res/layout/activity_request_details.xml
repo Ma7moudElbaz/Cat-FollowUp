@@ -133,11 +133,42 @@
                         android:id="@+id/txt_canceled"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Request Canceled"
+                        android:text="@string/request_canceled"
                         android:textColor="@color/red"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:visibility="gone"/>
+
+
+                    <TextView
+                        android:id="@+id/txt_rejection_reason_request"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="reason"
+                        android:textColor="@color/red"
+                        android:textSize="16sp"
+                        android:visibility="gone"/>
+
+                    <TextView
+                        android:id="@+id/txt_rejection_reason_cost"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="reason"
+                        android:textColor="@color/red"
+                        android:textSize="16sp"
+                        android:visibility="gone"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/nagat_reject"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/btn_red"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/reject"
+                        android:visibility="gone"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white" />
 
                     <LinearLayout
                         android:id="@+id/sales_approval_layout"

@@ -95,6 +95,10 @@ public interface ServiceInterface {
     @FormUrlEncoded
     Call<ResponseBody> addRequest(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
+    @POST("request/reject")
+    @FormUrlEncoded
+    Call<ResponseBody> rejectRequest(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
+
 
     @PUT("requests/{request_id}")
     @FormUrlEncoded

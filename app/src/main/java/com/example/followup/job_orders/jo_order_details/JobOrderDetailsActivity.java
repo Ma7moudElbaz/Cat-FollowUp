@@ -109,6 +109,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         initFields();
         back.setOnClickListener(v -> onBackPressed());
         download.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl)), null));
+
         sales_reject.setOnClickListener(v -> updateStatusDialog(2, "", ""));
         sales_approve.setOnClickListener(v -> {
             if (poNumber.equals("null")) {
@@ -117,11 +118,14 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 updateStatusDialog(3, "", "");
             }
         });
+
         magdi_hold.setOnClickListener(v -> updateStatusDialog(4, "", ""));
         magdi_approve.setOnClickListener(v -> updateStatusDialog(5, "", ""));
+
         hesham_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "hesham"));
         hesham_approve.setOnClickListener(v -> updateStatusDialog(7, "", ""));
         hesham_ceo_approval.setOnClickListener(v -> updateStatusDialog(8, "", ""));
+
         ceo_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "ceo"));
         ceo_approve.setOnClickListener(v -> updateStatusDialog(10, "", ""));
 
