@@ -20,9 +20,12 @@
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
         <activity
+            android:name=".job_orders.job_order_details.comments.CommentsActivity"
+            android:exported="false" />
+        <activity
             android:name=".requests.add.AddExtrasActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".supplier_costs.add.AddExtrasSupplierCost"
             android:exported="false"
@@ -30,7 +33,7 @@
         <activity
             android:name=".supplier_costs.edit.EditExtrasSupplierCostActivity"
             android:exported="false"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".requests.edit.Extras_edit"
             android:exported="false"

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context=".job_orders.job_order_details.JobOrderDetailsActivity">
 
     <LinearLayout
@@ -366,8 +365,8 @@
                     android:layout_marginEnd="20dp"
                     android:textColor="@color/red"
                     android:textSize="16sp"
-                    android:visibility="gone"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/ceo_reasons"
@@ -377,17 +376,16 @@
                     android:layout_marginTop="10dp"
                     android:layout_marginEnd="20dp"
                     android:textColor="@color/red"
-                    android:visibility="gone"
                     android:textSize="16sp"
-                    android:textStyle="bold" />
-
+                    android:textStyle="bold"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:id="@+id/payment_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -400,9 +398,9 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentStart="true"
                             android:layout_marginEnd="10dp"
-                            tools:text="% paid"
                             android:textColor="@color/colorAccent"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            tools:text="% paid" />
 
                         <com.google.android.material.progressindicator.LinearProgressIndicator
                             android:id="@+id/progress_indicator"
@@ -424,14 +422,15 @@
                             android:textSize="14sp" />
 
                     </RelativeLayout>
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="20dp"
-                        android:textColor="@color/gray"
                         android:text="@string/payments"
+                        android:textColor="@color/gray"
                         android:textSize="16sp" />
 
                     <androidx.recyclerview.widget.RecyclerView
@@ -444,7 +443,6 @@
 
                 </LinearLayout>
 
-
             </LinearLayout>
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -456,5 +454,23 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_gravity="center" />
+
+
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btn_comments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/content_description"
+        app:backgroundTint="@color/gray"
+        android:text="@string/comments"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        app:icon="@drawable/ic_comments"
+        app:iconTint="@color/white"/>
 
 </RelativeLayout>

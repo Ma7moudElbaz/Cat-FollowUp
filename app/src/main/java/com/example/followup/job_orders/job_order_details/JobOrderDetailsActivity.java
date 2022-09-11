@@ -28,10 +28,12 @@ import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.bottomsheets.BottomSheet_po_number;
 import com.example.followup.job_orders.edit_job_order.EditJobOrderActivity;
+import com.example.followup.job_orders.job_order_details.comments.CommentsActivity;
 import com.example.followup.utils.RealPathUtil;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.progressindicator.LinearProgressIndicator;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.MultiplePermissionsReport;
@@ -76,6 +78,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     int jobOrderStatus;
     String poNumber;
     String pdfUrl;
+    ExtendedFloatingActionButton btn_comments;
 
 
     RecyclerView recyclerView;
@@ -129,6 +132,10 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         ceo_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "ceo"));
         ceo_approve.setOnClickListener(v -> updateStatusDialog(10, "", ""));
 
+        btn_comments.setOnClickListener(view -> {
+            Intent i = new Intent(JobOrderDetailsActivity.this, CommentsActivity.class);
+            startActivity(i);
+        });
         edit.setOnClickListener(view -> {
             Intent i = new Intent(JobOrderDetailsActivity.this, EditJobOrderActivity.class);
             i.putExtra("job_order_id", jobOrderId);
@@ -178,6 +185,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         filesSelected = new ArrayList<>();
 
         back = findViewById(R.id.back);
+        btn_comments = findViewById(R.id.btn_comments);
         loading = findViewById(R.id.loading);
         download = findViewById(R.id.download);
         sales_approval_layout = findViewById(R.id.sales_approval_layout);
@@ -565,7 +573,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                     if (!isAdelSeen) {
                         adel_seen_txt.setVisibility(View.GONE);
                     }
-
 
 
                     if (!ceo_reasons_text.equals("null")) {

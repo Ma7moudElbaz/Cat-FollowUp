@@ -261,4 +261,6 @@
     <string name="adel_seen">Adel seen</string>
     <string name="payments">Payments</string>
     <string name="request_canceled">Request Canceled</string>
+    <string name="comments">Comments</string>
+    <string name="add_comment">Add Comment</string>
 </resources>

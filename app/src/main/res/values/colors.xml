@@ -18,7 +18,7 @@
     <color name="green">#23DB80</color>
     <color name="red">#ED6F6F</color>
     <color name="request_details_bg">#F2F2F2</color>
-
+    <color name="comment_bg">#F5F9FC</color>
 
     <color name="white">#FEFEFE</color>
     <color name="transparent">#00FEFEFE</color>
