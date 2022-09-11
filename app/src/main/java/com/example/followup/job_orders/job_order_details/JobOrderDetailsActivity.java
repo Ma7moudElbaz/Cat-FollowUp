@@ -134,6 +134,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
         btn_comments.setOnClickListener(view -> {
             Intent i = new Intent(JobOrderDetailsActivity.this, CommentsActivity.class);
+            i.putExtra("job_order_id",jobOrderId);
             startActivity(i);
         });
         edit.setOnClickListener(view -> {
