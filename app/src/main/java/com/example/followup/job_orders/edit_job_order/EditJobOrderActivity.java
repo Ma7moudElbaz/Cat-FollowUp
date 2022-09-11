@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.followup.R;
+import com.example.followup.job_orders.jo_order_details.JobOrderDetailsActivity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 
@@ -32,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditJobOrderActivity extends AppCompatActivity {
+public class EditJobOrderActivity extends AppCompatActivity implements Edit_job_order_requests_adapter.AdapterCallback {
     ImageView back;
     ProgressBar loading;
     RecyclerView recyclerView;
@@ -52,12 +54,9 @@ public class EditJobOrderActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit_job_order);
         initFields();
         back.setOnClickListener(v -> onBackPressed());
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        submit.setOnClickListener(view -> {
 //                setJobOrderMap(edit_job_order_requests_list);
-                editJobOrder(edit_job_order_requests_list);
-            }
+            editJobOrder(edit_job_order_requests_list);
         });
         getJobOrderRequests();
     }
@@ -82,7 +81,7 @@ public class EditJobOrderActivity extends AppCompatActivity {
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        edit_job_order_requests_adapter = new Edit_job_order_requests_adapter(getBaseContext(), edit_job_order_requests_list);
+        edit_job_order_requests_adapter = new Edit_job_order_requests_adapter(this, edit_job_order_requests_list);
         recyclerView.setAdapter(edit_job_order_requests_adapter);
     }
 
@@ -116,6 +115,7 @@ public class EditJobOrderActivity extends AppCompatActivity {
     }
 
     public void setJobOrderRequestsList(JSONArray list) {
+        edit_job_order_requests_list.clear();
         try {
             for (int i = 0; i < list.length(); i++) {
 
@@ -136,7 +136,6 @@ public class EditJobOrderActivity extends AppCompatActivity {
         }
 
     }
-
 
     private void editJobOrder(List<Edit_job_order_request_item> items) {
         Map<String, String> map = setJobOrderMap(items);
@@ -198,4 +197,48 @@ public class EditJobOrderActivity extends AppCompatActivity {
         return map;
     }
 
+
+    private void deleteJobOrderRequest(String requestId, String reason) {
+        Map<String, String> map = new HashMap<>();
+
+        map.put("request_ids", requestId);
+        map.put("job_order_id", String.valueOf(jobOrderId));
+        map.put("reason", reason);
+
+        dialog.show();
+        ws.getApi().deleteJobOrderRequest(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    if (response.code() == 200 || response.code() == 201) {
+                        Toast.makeText(getBaseContext(), "Request deleted successfully", Toast.LENGTH_LONG).show();
+                        getJobOrderRequests();
+
+                    } else {
+                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
+    @Override
+    public void adapterCallback(int job_order_request_id, String reason) {
+        new AlertDialog.Builder(this)
+                .setTitle("Are you sure? ")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    deleteJobOrderRequest(String.valueOf(job_order_request_id),reason);
+                })
+                .setNegativeButton("Dismiss", null)
+                .show();
+    }
 }

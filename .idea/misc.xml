@@ -127,7 +127,7 @@
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.234375" />
         <entry key="app/src/main/res/layout/item_attaches.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_company.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/item_edit_job_order_request.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/item_edit_job_order_request.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_job_order.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_job_order_request.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_notifications.xml" value="0.2795358649789029" />

@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,7 +25,13 @@ public class Edit_job_order_requests_adapter extends RecyclerView.Adapter<Edit_j
 
     private final List<Edit_job_order_request_item> items;
 
+    private final Context mContext;
+    private final AdapterCallback mAdapterCallback;
+
+
     public Edit_job_order_requests_adapter(Context context, ArrayList<Edit_job_order_request_item> items) {
+        this.mAdapterCallback = ((AdapterCallback) context);
+        this.mContext = context;
         this.items = items;
     }
 
@@ -40,6 +48,8 @@ public class Edit_job_order_requests_adapter extends RecyclerView.Adapter<Edit_j
         holder.cost_type.setText(items.get(position).getCost_type() + " Cost");
         holder.final_cost.setText(items.get(position).getActual_cost());
         holder.quantity.setText(items.get(position).getQuantity());
+
+        holder.delete.setOnClickListener(view -> mAdapterCallback.adapterCallback(items.get(position).getRequest_id(), ""));
 
         holder.final_cost.addTextChangedListener(new TextWatcher() {
             @Override
@@ -83,14 +93,20 @@ public class Edit_job_order_requests_adapter extends RecyclerView.Adapter<Edit_j
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         final TextView request_name, cost_type;
+        final ImageView delete;
         final EditText final_cost, quantity;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             request_name = itemView.findViewById(R.id.request_name);
+            delete = itemView.findViewById(R.id.delete);
             cost_type = itemView.findViewById(R.id.cost_type);
             final_cost = itemView.findViewById(R.id.final_cost);
             quantity = itemView.findViewById(R.id.quantity);
         }
+    }
+
+    public interface AdapterCallback {
+        void adapterCallback(int job_order_request_id, String reason);
     }
 }

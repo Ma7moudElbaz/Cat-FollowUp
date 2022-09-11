@@ -121,13 +121,20 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
             return false;
         });
         fab_add_job_order.setOnClickListener(v -> {
-            if (has_po_number){
+            if (country_id == 2){
+                if (has_po_number){
+                    Intent i = new Intent(getBaseContext(), AddJobOrderActivity.class);
+                    i.putExtra("project_id", projectId);
+                    startActivity(i);
+                }else {
+                    showPoNumberSheet();
+                }
+            }else {
                 Intent i = new Intent(getBaseContext(), AddJobOrderActivity.class);
                 i.putExtra("project_id", projectId);
                 startActivity(i);
-            }else {
-                showPoNumberSheet();
             }
+
         });
 
         swipe_refresh.setOnRefreshListener(() -> {

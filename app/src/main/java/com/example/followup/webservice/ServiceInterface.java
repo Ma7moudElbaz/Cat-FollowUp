@@ -154,6 +154,10 @@ public interface ServiceInterface {
     @FormUrlEncoded
     Call<ResponseBody> editJobOrder(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
+    @POST("job-order/remove")
+    @FormUrlEncoded
+    Call<ResponseBody> deleteJobOrderRequest(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
+
     @POST("job-orders/status")
     @FormUrlEncoded
     Call<ResponseBody> changeJobOrderStatus(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
