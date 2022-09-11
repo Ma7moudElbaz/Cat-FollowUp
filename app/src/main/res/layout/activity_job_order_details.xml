@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".job_orders.jo_order_details.JobOrderDetailsActivity">
+    tools:context=".job_orders.job_order_details.JobOrderDetailsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -1,4 +1,4 @@
-package com.example.followup.job_orders.jo_order_details;
+package com.example.followup.job_orders.job_order_details;
 
 import android.Manifest;
 import android.app.Activity;

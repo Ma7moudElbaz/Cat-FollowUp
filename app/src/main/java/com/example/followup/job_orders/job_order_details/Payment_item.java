@@ -1,4 +1,4 @@
-package com.example.followup.job_orders.jo_order_details;
+package com.example.followup.job_orders.job_order_details;
 
 public class Payment_item {
     private final int id, job_order_id;

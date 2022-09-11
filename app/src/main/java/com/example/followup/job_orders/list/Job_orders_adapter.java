@@ -12,7 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.followup.R;
-import com.example.followup.job_orders.jo_order_details.JobOrderDetailsActivity;
+import com.example.followup.job_orders.job_order_details.JobOrderDetailsActivity;
 
 import java.util.ArrayList;
 import java.util.List;
