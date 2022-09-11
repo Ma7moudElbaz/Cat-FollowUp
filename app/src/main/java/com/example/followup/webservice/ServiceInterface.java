@@ -171,6 +171,14 @@ public interface ServiceInterface {
     @FormUrlEncoded
     Call<ResponseBody> addPoNumber(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
+    //Comment
+    @Multipart
+    @POST("comments")
+    Call<ResponseBody> addComment(@Header("Authorization") String auth, @Part List<MultipartBody.Part> files, @PartMap Map<String, RequestBody> map);
+
+    @GET("comments")
+    Call<ResponseBody> getComments(@Header("Authorization") String auth, @Query("job_order_id") int project_id, @Query("page") int pageNo);
+
     //notifications
     @GET("notifications")
     Call<ResponseBody> getNotifications(@Header("Authorization") String auth, @Query("page") int pageNo);
