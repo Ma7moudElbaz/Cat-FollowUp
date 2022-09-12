@@ -1,4 +1,4 @@
-package com.example.followup.job_orders.job_order_details;
+package com.example.followup.job_orders.job_order_details.payment;
 
 import android.content.Context;
 import android.content.Intent;
@@ -44,9 +44,11 @@ public class Payments_adapter extends RecyclerView.Adapter<Payments_adapter.View
 
 
         holder.parent_layout.setOnClickListener(v -> {
-            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(items.get(position).getAttachment()));
-            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            mContext.startActivity(i);
+            if (!items.get(position).getAttachment().equalsIgnoreCase("null")){
+                Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(items.get(position).getAttachment()));
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                mContext.startActivity(i);
+            }
         });
 
     }

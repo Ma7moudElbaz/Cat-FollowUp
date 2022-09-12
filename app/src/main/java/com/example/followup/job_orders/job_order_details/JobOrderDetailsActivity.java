@@ -29,6 +29,8 @@ import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.bottomsheets.BottomSheet_po_number;
 import com.example.followup.job_orders.edit_job_order.EditJobOrderActivity;
 import com.example.followup.job_orders.job_order_details.comments.CommentsActivity;
+import com.example.followup.job_orders.job_order_details.payment.Payment_item;
+import com.example.followup.job_orders.job_order_details.payment.Payments_adapter;
 import com.example.followup.utils.RealPathUtil;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;

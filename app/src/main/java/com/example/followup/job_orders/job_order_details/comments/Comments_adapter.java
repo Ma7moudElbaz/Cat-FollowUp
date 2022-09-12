@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.followup.R;
-import com.example.followup.job_orders.job_order_details.Payment_item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,10 +50,21 @@ public class Comments_adapter extends RecyclerView.Adapter<Comments_adapter.View
                 .error(R.drawable.ic_profile)
                 .into(holder.img_profile);
 
+        if (!items.get(position).getAttachment().equalsIgnoreCase("null")){
+            holder.attachment.setVisibility(View.VISIBLE);
+        }else {
+            holder.attachment.setVisibility(View.GONE);
+        }
 
+        holder.attachment.setOnClickListener(v -> {
+            Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(items.get(position).getAttachment()));
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            mContext.startActivity(i);
+        });
         holder.parent_layout.setOnClickListener(v -> {
 
         });
+
 
     }
 
@@ -67,7 +76,7 @@ public class Comments_adapter extends RecyclerView.Adapter<Comments_adapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         final ImageView img_profile;
-        final TextView user_name, comment,date;
+        final TextView user_name, comment,date,attachment;
 
         final RelativeLayout parent_layout;
 
@@ -77,6 +86,7 @@ public class Comments_adapter extends RecyclerView.Adapter<Comments_adapter.View
             user_name = itemView.findViewById(R.id.user_name);
             comment = itemView.findViewById(R.id.comment);
             date = itemView.findViewById(R.id.date);
+            attachment = itemView.findViewById(R.id.attachment);
             parent_layout = itemView.findViewById(R.id.parent_layout);
         }
     }

@@ -55,17 +55,36 @@
 
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/comment"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:background="@color/comment_bg"
-            android:ellipsize="end"
-            android:padding="10dp"
-            tools:text="data data datat data datat datat datdatadtada"
-            android:textColor="@color/gray"
-            android:textSize="16sp" />
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/comment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:textColor="@color/gray"
+                android:textSize="14sp"
+                tools:text="data data datat data datat datat datdatadtada" />
+
+            <TextView
+                android:id="@+id/attachment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:textColor="@color/text_dark_blue"
+                android:textSize="14sp"
+                android:visibility="gone"
+                android:text="Attachment" />
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

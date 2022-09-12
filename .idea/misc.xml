@@ -74,7 +74,7 @@
         <entry key="app/src/main/res/layout/activity_add_purchase.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_add_purchase_supplier_cost.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_add_purchasing.xml" value="0.234375" />
-        <entry key="app/src/main/res/layout/activity_comments.xml" value="0.1794005909666526" />
+        <entry key="app/src/main/res/layout/activity_comments.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_edit_extras_supplier_cost.xml" value="0.17456140350877192" />
         <entry key="app/src/main/res/layout/activity_edit_job_order.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_edit_photography_supplier_cost.xml" value="0.20833333333333334" />
