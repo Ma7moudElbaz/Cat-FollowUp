@@ -50,7 +50,7 @@ import retrofit2.Response;
 
 public class CommentsActivity extends AppCompatActivity {
 
-    ImageView back,add_comment,add_attach;
+    ImageView back, add_comment, add_attach;
     EditText et_comment;
     TextView filesChosen;
     RecyclerView recyclerView;
@@ -78,7 +78,7 @@ public class CommentsActivity extends AppCompatActivity {
         initFields();
         back.setOnClickListener(view -> onBackPressed());
         add_comment.setOnClickListener(view -> {
-            if (validateFields()){
+            if (validateFields()) {
                 addComment();
             }
         });
@@ -117,7 +117,7 @@ public class CommentsActivity extends AppCompatActivity {
         filesChosen = findViewById(R.id.files_chosen);
         loading = findViewById(R.id.loading);
         recyclerView = findViewById(R.id.recycler_view);
-        jobOrderId = getIntent().getIntExtra("job_order_id",0);
+        jobOrderId = getIntent().getIntExtra("job_order_id", 0);
         comments_list = new ArrayList<>();
 
         dialog = new ProgressDialog(this);
@@ -202,9 +202,12 @@ public class CommentsActivity extends AppCompatActivity {
                 final String user_name = currentObject.getJSONObject("user").getString("name");
                 final String user_avatar = currentObject.getJSONObject("user").getString("avatar");
                 final String created_at = currentObject.getString("created_at");
-                final String attachment = "";
-
-
+                final JSONArray attachment_arr = currentObject.getJSONArray("attaches");
+                String attachment = "";
+                if (attachment_arr.length() != 0) {
+                    JSONObject currentAttach = attachment_arr.getJSONObject(0);
+                    attachment = currentAttach.getString("file");
+                }
                 comments_list.add(new Comment_item(id, user_id, comment, user_name, user_avatar, created_at, attachment));
 
             }
@@ -261,17 +264,15 @@ public class CommentsActivity extends AppCompatActivity {
     }
 
     private List<MultipartBody.Part> addAttaches(List<String> files) {
-
         List<MultipartBody.Part> list = new ArrayList<>();
         for (int i = 0; i < files.size(); i++) {
             File file = new File(files.get(i));
             RequestBody fileReqBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-            MultipartBody.Part part = MultipartBody.Part.createFormData("files", file.getName(), fileReqBody);
+            MultipartBody.Part part = MultipartBody.Part.createFormData("file", file.getName(), fileReqBody);
             list.add(part);
         }
         return list;
     }
-
 
     private void pickFromGallery() {
         //Create an Intent with action as ACTION_PICK
@@ -287,7 +288,7 @@ public class CommentsActivity extends AppCompatActivity {
         startActivityForResult(intent, FILES_REQUEST_CODE);
     }
 
-    private void resetAddComment(){
+    private void resetAddComment() {
         et_comment.setText("");
         filesSelected.clear();
         filesChosen.setVisibility(View.GONE);
@@ -312,12 +313,12 @@ public class CommentsActivity extends AppCompatActivity {
                         }
                     } else {
                         Uri uri = data.getData();
-                        filesSelected.add(RealPathUtil.getRealPath(getBaseContext(),uri));
+                        filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
                     }
                     filesChosen.setVisibility(View.VISIBLE);
-                    filesChosen.setText(filesSelected.size()+" Files Selected");
+                    filesChosen.setText(filesSelected.size() + " Files Selected");
 
-                    Log.e("Data selected", filesSelected.toString() );
+                    Log.e("Data selected", filesSelected.toString());
             }
     }
 

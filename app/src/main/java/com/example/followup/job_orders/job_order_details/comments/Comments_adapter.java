@@ -50,7 +50,7 @@ public class Comments_adapter extends RecyclerView.Adapter<Comments_adapter.View
                 .error(R.drawable.ic_profile)
                 .into(holder.img_profile);
 
-        if (!items.get(position).getAttachment().equalsIgnoreCase("null")){
+        if (!items.get(position).getAttachment().equals("")){
             holder.attachment.setVisibility(View.VISIBLE);
         }else {
             holder.attachment.setVisibility(View.GONE);
