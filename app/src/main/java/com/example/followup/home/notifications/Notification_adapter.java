@@ -72,7 +72,7 @@ public class Notification_adapter extends RecyclerView.Adapter<Notification_adap
                 i = new Intent(mContext, RequestDetailsActivity.class);
                 i.putExtra("request_id", items.get(position).getAction_id());
                 mContext.startActivity(i);
-            } else if (items.get(position).getAction_type().equals("jo")) {
+            } else if (items.get(position).getAction_type().equals("jo")|| items.get(position).getAction_type().equals("comment")) {
                 i = new Intent(mContext, JobOrderDetailsActivity.class);
                 i.putExtra("job_order_id", items.get(position).getAction_id());
                 mContext.startActivity(i);

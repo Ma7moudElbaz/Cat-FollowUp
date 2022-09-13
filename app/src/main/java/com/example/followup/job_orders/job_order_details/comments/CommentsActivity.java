@@ -17,6 +17,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.View;
@@ -80,7 +81,7 @@ public class CommentsActivity extends AppCompatActivity {
     int lastPageNum;
     boolean mHasReachedBottomOnce = false;
 
-    int jobOrderId;
+    int jobOrderId, projectId;
 
     WebserviceContext ws;
     List<String> filesSelected;
@@ -88,14 +89,14 @@ public class CommentsActivity extends AppCompatActivity {
     private static final int FILES_REQUEST_CODE = 764546;
 
 
-
     ArrayList<User> users_list;
+    ArrayList<String> users_mentioned_ids_list;
 
     private void setupMentionsAutocomplete() {
         float elevation = 6f;
         Drawable backgroundDrawable = new ColorDrawable(Color.WHITE);
         AutocompletePolicy policy = new CharPolicy('@'); // Look for @mentions
-        AutocompletePresenter<User> presenter = new UserPresenter(this,users_list);
+        AutocompletePresenter<User> presenter = new UserPresenter(this, users_list);
         AutocompleteCallback<User> callback = new AutocompleteCallback<User>() {
             @Override
             public boolean onPopupItemClicked(@NonNull Editable editable, @NonNull User item) {
@@ -108,12 +109,14 @@ public class CommentsActivity extends AppCompatActivity {
                 editable.replace(start, end, replacement);
                 // This is better done with regexes and a TextWatcher, due to what happens when
                 // the user clears some parts of the text. Up to you.
-                editable.setSpan(new StyleSpan(Typeface.BOLD), start, start+replacement.length(),
+                editable.setSpan(new StyleSpan(Typeface.BOLD), start, start + replacement.length(),
                         Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-                Toast.makeText(CommentsActivity.this, item.getUser_id() + item.getUsername(), Toast.LENGTH_SHORT).show();
+                users_mentioned_ids_list.add(String.valueOf(item.getUser_id()));
                 return true;
             }
-            public void onPopupVisibilityChanged(boolean shown) {}
+
+            public void onPopupVisibilityChanged(boolean shown) {
+            }
         };
 
         mentionsAutocomplete = Autocomplete.<User>on(et_comment)
@@ -131,7 +134,6 @@ public class CommentsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_comments);
         initFields();
         back.setOnClickListener(view -> onBackPressed());
-        setupMentionsAutocomplete();
         add_comment.setOnClickListener(view -> {
             if (validateFields()) {
                 addComment();
@@ -158,7 +160,7 @@ public class CommentsActivity extends AppCompatActivity {
                     }).check();
         });
 
-//        getComments(currentPageNum);
+        getComments(currentPageNum);
     }
 
     private void initFields() {
@@ -173,9 +175,11 @@ public class CommentsActivity extends AppCompatActivity {
         loading = findViewById(R.id.loading);
         recyclerView = findViewById(R.id.recycler_view);
         jobOrderId = getIntent().getIntExtra("job_order_id", 0);
+        projectId = getIntent().getIntExtra("project_id", 0);
         comments_list = new ArrayList<>();
         users_list = new ArrayList<>();
-        setMentionsUsers();
+        users_mentioned_ids_list = new ArrayList<>();
+        getMentionUsers();
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please, Wait...");
@@ -184,10 +188,52 @@ public class CommentsActivity extends AppCompatActivity {
         initRecyclerView();
     }
 
-    private void setMentionsUsers() {
-        users_list.add(new User(1, "Sherif"));
-        users_list.add(new User(2, "Nagat"));
-        users_list.add(new User(3, "Baz"));
+    public void getMentionUsers() {
+
+        ws.getApi().getMentionUsers(UserUtils.getAccessToken(getBaseContext()), projectId).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+
+                try {
+                    if (response.isSuccessful()) {
+                        JSONObject responseObject = new JSONObject(response.body().string());
+                        JSONArray usersArray = responseObject.getJSONArray("data");
+                        setMentionsUsersList(usersArray);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Log.d("Error Throw", t.toString());
+                Log.d("commit Test Throw", t.toString());
+                Log.d("Call", t.toString());
+                Toast.makeText(getBaseContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void setMentionsUsersList(JSONArray list) {
+        try {
+            for (int i = 0; i < list.length(); i++) {
+
+                JSONObject currentObject = list.getJSONObject(i);
+                final int user_id = currentObject.getInt("id");
+                final String user_name = currentObject.getString("name");
+
+                users_list.add(new User(user_id, user_name));
+            }
+
+            setupMentionsAutocomplete();
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
 
@@ -296,7 +342,7 @@ public class CommentsActivity extends AppCompatActivity {
                 try {
                     if (response.isSuccessful()) {
                         resetAddComment();
-                        onResume();
+//                        onResume();
 
                     } else {
                         JSONObject res = new JSONObject(response.errorBody().string());
@@ -322,7 +368,7 @@ public class CommentsActivity extends AppCompatActivity {
         map.put("body", RequestBody.create(MediaType.parse("text/plain"), et_comment.getText().toString()));
         map.put("job_order_id", RequestBody.create(MediaType.parse("text/plain"), String.valueOf(jobOrderId)));
         map.put("comment_id", RequestBody.create(MediaType.parse("text/plain"), ""));
-        map.put("user_ids", RequestBody.create(MediaType.parse("text/plain"), ""));
+        map.put("user_ids", RequestBody.create(MediaType.parse("text/plain"), TextUtils.join(",", users_mentioned_ids_list)));
 
         return map;
     }
@@ -389,9 +435,6 @@ public class CommentsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        comments_list.clear();
-        currentPageNum = 1;
-        getComments(currentPageNum);
     }
 
 }

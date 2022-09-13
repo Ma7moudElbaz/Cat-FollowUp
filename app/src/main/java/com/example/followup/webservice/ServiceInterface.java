@@ -177,7 +177,10 @@ public interface ServiceInterface {
     Call<ResponseBody> addComment(@Header("Authorization") String auth, @Part List<MultipartBody.Part> files, @PartMap Map<String, RequestBody> map);
 
     @GET("comments")
-    Call<ResponseBody> getComments(@Header("Authorization") String auth, @Query("job_order_id") int project_id, @Query("page") int pageNo);
+    Call<ResponseBody> getComments(@Header("Authorization") String auth, @Query("job_order_id") int job_order_id, @Query("page") int pageNo);
+
+    @GET("comments/users")
+    Call<ResponseBody> getMentionUsers(@Header("Authorization") String auth, @Query("project_id") int project_id);
 
     //notifications
     @GET("notifications")
