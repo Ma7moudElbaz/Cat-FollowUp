@@ -9,8 +9,15 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.Spanned;
+import android.text.style.StyleSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -20,6 +27,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.followup.R;
+import com.example.followup.job_orders.job_order_details.comments.mentions.User;
+import com.example.followup.job_orders.job_order_details.comments.mentions.UserPresenter;
+import com.example.followup.job_orders.list.Job_order_item;
 import com.example.followup.utils.RealPathUtil;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -28,6 +38,11 @@ import com.karumi.dexter.MultiplePermissionsReport;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
+import com.otaliastudios.autocomplete.Autocomplete;
+import com.otaliastudios.autocomplete.AutocompleteCallback;
+import com.otaliastudios.autocomplete.AutocompletePolicy;
+import com.otaliastudios.autocomplete.AutocompletePresenter;
+import com.otaliastudios.autocomplete.CharPolicy;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,6 +67,7 @@ public class CommentsActivity extends AppCompatActivity {
 
     ImageView back, add_comment, add_attach;
     EditText et_comment;
+    private Autocomplete mentionsAutocomplete;
     TextView filesChosen;
     RecyclerView recyclerView;
     ProgressBar loading;
@@ -71,12 +87,51 @@ public class CommentsActivity extends AppCompatActivity {
 
     private static final int FILES_REQUEST_CODE = 764546;
 
+
+
+    ArrayList<User> users_list;
+
+    private void setupMentionsAutocomplete() {
+        float elevation = 6f;
+        Drawable backgroundDrawable = new ColorDrawable(Color.WHITE);
+        AutocompletePolicy policy = new CharPolicy('@'); // Look for @mentions
+        AutocompletePresenter<User> presenter = new UserPresenter(this,users_list);
+        AutocompleteCallback<User> callback = new AutocompleteCallback<User>() {
+            @Override
+            public boolean onPopupItemClicked(@NonNull Editable editable, @NonNull User item) {
+                // Replace query text with the full name.
+                int[] range = CharPolicy.getQueryRange(editable);
+                if (range == null) return false;
+                int start = range[0];
+                int end = range[1];
+                String replacement = item.getUsername();
+                editable.replace(start, end, replacement);
+                // This is better done with regexes and a TextWatcher, due to what happens when
+                // the user clears some parts of the text. Up to you.
+                editable.setSpan(new StyleSpan(Typeface.BOLD), start, start+replacement.length(),
+                        Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+                Toast.makeText(CommentsActivity.this, item.getUser_id() + item.getUsername(), Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            public void onPopupVisibilityChanged(boolean shown) {}
+        };
+
+        mentionsAutocomplete = Autocomplete.<User>on(et_comment)
+                .with(elevation)
+                .with(backgroundDrawable)
+                .with(policy)
+                .with(presenter)
+                .with(callback)
+                .build();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
         initFields();
         back.setOnClickListener(view -> onBackPressed());
+        setupMentionsAutocomplete();
         add_comment.setOnClickListener(view -> {
             if (validateFields()) {
                 addComment();
@@ -119,6 +174,8 @@ public class CommentsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         jobOrderId = getIntent().getIntExtra("job_order_id", 0);
         comments_list = new ArrayList<>();
+        users_list = new ArrayList<>();
+        setMentionsUsers();
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please, Wait...");
@@ -126,6 +183,13 @@ public class CommentsActivity extends AppCompatActivity {
 
         initRecyclerView();
     }
+
+    private void setMentionsUsers() {
+        users_list.add(new User(1, "Sherif"));
+        users_list.add(new User(2, "Nagat"));
+        users_list.add(new User(3, "Baz"));
+    }
+
 
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getBaseContext(), LinearLayoutManager.VERTICAL, false);
