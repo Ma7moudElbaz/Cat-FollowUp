@@ -115,24 +115,24 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         back.setOnClickListener(v -> onBackPressed());
         download.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl)), null));
 
-        sales_reject.setOnClickListener(v -> updateStatusDialog(2, "", ""));
+        sales_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "sales"));
         sales_approve.setOnClickListener(v -> {
             if (poNumber.equals("null")) {
                 showPoNumberSheet();
             } else {
-                updateStatusDialog(3, "", "");
+                updateStatusDialog(3, "");
             }
         });
 
-        magdi_hold.setOnClickListener(v -> updateStatusDialog(4, "", ""));
-        magdi_approve.setOnClickListener(v -> updateStatusDialog(5, "", ""));
+        magdi_hold.setOnClickListener(v -> updateStatusDialog(4, ""));
+        magdi_approve.setOnClickListener(v -> updateStatusDialog(5, ""));
 
         hesham_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "hesham"));
-        hesham_approve.setOnClickListener(v -> updateStatusDialog(7, "", ""));
-        hesham_ceo_approval.setOnClickListener(v -> updateStatusDialog(8, "", ""));
+        hesham_approve.setOnClickListener(v -> updateStatusDialog(7, ""));
+        hesham_ceo_approval.setOnClickListener(v -> updateStatusDialog(8, ""));
 
         ceo_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "ceo"));
-        ceo_approve.setOnClickListener(v -> updateStatusDialog(10, "", ""));
+        ceo_approve.setOnClickListener(v -> updateStatusDialog(10, ""));
 
         btn_comments.setOnClickListener(view -> {
             Intent i = new Intent(JobOrderDetailsActivity.this, CommentsActivity.class);
@@ -501,22 +501,21 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         ceo_approval_layout.setVisibility(View.GONE);
     }
 
-    public void updateStatusDialog(int status, String ceo_reasons, String financial_reasons) {
+    public void updateStatusDialog(int status, String reason) {
         new AlertDialog.Builder(JobOrderDetailsActivity.this)
                 .setTitle("Are you sure? ")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    updateStatus(status, ceo_reasons, financial_reasons);
+                    updateStatus(status, reason);
                 })
                 .setNegativeButton("Dismiss", null)
                 .show();
     }
 
-    public void updateStatus(int status, String ceo_reasons, String financial_reasons) {
+    public void updateStatus(int status, String reason) {
         Map<String, String> map = new HashMap<>();
         map.put("job_order_id", String.valueOf(jobOrderId));
         map.put("status", String.valueOf(status));
-        map.put("ceo_reasons", ceo_reasons);
-        map.put("financial_reasons", financial_reasons);
+        map.put("reason_description", reason);
 
         dialog.show();
         ws.getApi().changeJobOrderStatus(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
@@ -657,10 +656,13 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     public void reasonSubmitListener(String reason, String type) {
         switch (type) {
             case "ceo":
-                updateStatusDialog(9, reason, "");
+                updateStatusDialog(9, reason);
                 break;
             case "hesham":
-                updateStatusDialog(6, "", reason);
+                updateStatusDialog(6, reason);
+                break;
+            case "sales":
+                updateStatusDialog(2, reason);
                 break;
         }
     }
