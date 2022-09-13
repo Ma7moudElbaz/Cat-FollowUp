@@ -75,7 +75,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     List<String> filesSelected;
     ProgressBar loading;
     ImageView back;
-    TextView download, financial_reasons, ceo_reasons, edit;
+    TextView download, reasons, edit;
     int jobOrderId, projectId;
     int jobOrderStatus;
     String poNumber;
@@ -215,14 +215,11 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         adel_seen_txt = findViewById(R.id.adel_seen_txt);
         progress_indicator = findViewById(R.id.progress_indicator);
 
-        financial_reasons = findViewById(R.id.financial_reasons);
-        ceo_reasons = findViewById(R.id.ceo_reasons);
+        reasons = findViewById(R.id.reasons);
         edit = findViewById(R.id.edit);
 
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
-//        if (loggedInUser.equals("hesham")) {
-        ceo_reasons.setVisibility(View.VISIBLE);
-//        }
+
 
         swipe_refresh = findViewById(R.id.swipe_refresh);
         joStepperImg = findViewById(R.id.joStepperImg);
@@ -515,7 +512,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         Map<String, String> map = new HashMap<>();
         map.put("job_order_id", String.valueOf(jobOrderId));
         map.put("status", String.valueOf(status));
-        map.put("reason_description", reason);
+        map.put("reason", reason);
 
         dialog.show();
         ws.getApi().changeJobOrderStatus(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
@@ -569,20 +566,15 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                         progress_indicator.setProgress(paidAmountInt);
                     }
 
-                    String ceo_reasons_text = dataObj.getString("ceo_reasons");
-                    String financial_reasons_text = dataObj.getString("financial_reasons");
+                    String reasonsTxt = dataObj.getString("reason_description");
 
                     boolean isAdelSeen = dataObj.getBoolean("adel_seen");
                     if (!isAdelSeen) {
                         adel_seen_txt.setVisibility(View.GONE);
                     }
 
-
-                    if (!ceo_reasons_text.equals("null")) {
-                        ceo_reasons.setText("CEO Rejection Reasons : " + ceo_reasons_text);
-                    }
-                    if (!financial_reasons_text.equals("null")) {
-                        financial_reasons.setText("Hisham Rejection Reasons : " + financial_reasons_text);
+                    if (!reasonsTxt.equals("null")) {
+                       reasons.setText(reasonsTxt);
                     }
 
                     int project_creator_id = dataObj.getInt("project_creator_id");
