@@ -253,7 +253,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.code() == 200 || response.code() == 201) {
-                        Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), "Job Order Added successfully", Toast.LENGTH_LONG).show();
                         onBackPressed();
 
                     } else {

@@ -373,8 +373,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone"
-                    >
+                    android:visibility="gone">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -396,33 +395,37 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_toStartOf="@+id/adel_seen_txt"
+                            android:layout_toStartOf="@+id/adel_seen_layout"
                             android:layout_toEndOf="@+id/payment_percent_txt"
                             tools:progress="30" />
+
+                        <RelativeLayout
+                            android:id="@+id/adel_seen_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_alignParentEnd="true">
 
                         <TextView
                             android:id="@+id/adel_seen_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginStart="10dp"
                             android:text="@string/seen_by_adel"
                             android:textColor="@color/green"
                             android:textSize="14sp"
                             app:drawableStartCompat="@drawable/ic_seen"
                             app:drawableTint="@color/green" />
+
                         <TextView
                             android:id="@+id/adel_unseen_txt"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginStart="10dp"
                             android:text="@string/not_seen_by_adel"
                             android:textColor="@color/red"
                             android:textSize="14sp"
                             app:drawableStartCompat="@drawable/ic_unseen"
                             app:drawableTint="@color/red" />
-
+                        </RelativeLayout>
                     </RelativeLayout>
 
                     <TextView

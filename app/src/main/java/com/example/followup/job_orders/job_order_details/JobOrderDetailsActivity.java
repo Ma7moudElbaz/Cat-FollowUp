@@ -497,6 +497,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         magdi_approval_layout.setVisibility(View.GONE);
         hesham_approval_layout.setVisibility(View.GONE);
         ceo_approval_layout.setVisibility(View.GONE);
+        adel_approval_layout.setVisibility(View.GONE);
     }
 
     public void updateStatusDialog(int status, String reason) {
