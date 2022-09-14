@@ -69,7 +69,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     RelativeLayout adel_approval_layout;
     Button sales_approve, sales_reject, magdi_approve, magdi_hold, hesham_approve, hesham_reject, hesham_ceo_approval, ceo_approve, ceo_reject, adel_pay, choose_file;
     TextView filesChosen;
-    TextView payment_percent_txt, adel_seen_txt;
+    TextView payment_percent_txt, adel_seen_txt, adel_unseen_txt;
     LinearProgressIndicator progress_indicator;
     EditText payment_percent;
     List<String> filesSelected;
@@ -213,6 +213,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         payment_percent = findViewById(R.id.payment_percent);
         payment_percent_txt = findViewById(R.id.payment_percent_txt);
         adel_seen_txt = findViewById(R.id.adel_seen_txt);
+        adel_unseen_txt = findViewById(R.id.adel_unseen_txt);
         progress_indicator = findViewById(R.id.progress_indicator);
 
         reasons = findViewById(R.id.reasons);
@@ -569,8 +570,12 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                     String reasonsTxt = dataObj.getString("reason_description");
 
                     boolean isAdelSeen = dataObj.getBoolean("adel_seen");
-                    if (!isAdelSeen) {
+                    if (isAdelSeen) {
+                        adel_seen_txt.setVisibility(View.VISIBLE);
+                        adel_unseen_txt.setVisibility(View.GONE);
+                    }else {
                         adel_seen_txt.setVisibility(View.GONE);
+                        adel_unseen_txt.setVisibility(View.VISIBLE);
                     }
 
                     if (!reasonsTxt.equals("null")) {

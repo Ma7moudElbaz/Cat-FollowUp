@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -36,21 +37,38 @@ public class Job_orders_adapter extends RecyclerView.Adapter<Job_orders_adapter.
         return new ViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull Job_orders_adapter.ViewHolder holder, final int position) {
 
         holder.job_order_number.setText(items.get(position).getName());
         holder.po_number.setText(items.get(position).getPo_number());
 
-        if ((items.get(position).getStatus_code() == 7 && items.get(position).getCountry_id() == 1)
-                || (items.get(position).getStatus_code() == 11)) {
+        if ((items.get(position).getStatus_code() == 7 && items.get(position).getCountry_id() == 1)) {
             holder.status_color.setBackgroundResource(R.drawable.status_green);
             holder.status.setBackgroundResource(R.drawable.status_green);
             holder.status.setText("Approved");
-        } else if (items.get(position).getStatus_code() == 6 || items.get(position).getStatus_code() == 9) {
+        }else if ((items.get(position).getStatus_code() == 7 && items.get(position).getCountry_id() == 2)){
+            holder.status_color.setBackgroundResource(R.drawable.status_yellow);
+            holder.status.setBackgroundResource(R.drawable.status_yellow);
+            holder.status.setText("Pending Payment");
+        }
+        else if ((items.get(position).getStatus_code() == 11)) {
+            holder.status_color.setBackgroundResource(R.drawable.status_green);
+            holder.status.setBackgroundResource(R.drawable.status_green);
+            holder.status.setText("Adel Paid");
+        } else if (items.get(position).getStatus_code() == 2) {
             holder.status_color.setBackgroundResource(R.drawable.status_red);
             holder.status.setBackgroundResource(R.drawable.status_red);
-            holder.status.setText("Rejected");
+            holder.status.setText("Sales Rejected");
+        }else if (items.get(position).getStatus_code() == 6) {
+            holder.status_color.setBackgroundResource(R.drawable.status_red);
+            holder.status.setBackgroundResource(R.drawable.status_red);
+            holder.status.setText("FM Rejected");
+        }else if ( items.get(position).getStatus_code() == 9) {
+            holder.status_color.setBackgroundResource(R.drawable.status_red);
+            holder.status.setBackgroundResource(R.drawable.status_red);
+            holder.status.setText("CEO Rejected");
         } else {
             holder.status_color.setBackgroundResource(R.drawable.status_yellow);
             holder.status.setBackgroundResource(R.drawable.status_yellow);
@@ -81,7 +99,7 @@ public class Job_orders_adapter extends RecyclerView.Adapter<Job_orders_adapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         final TextView job_order_number, po_number, status, have_action;
-        final RelativeLayout parent_layout;
+        final LinearLayout parent_layout;
         final View status_color;
 
         public ViewHolder(@NonNull View itemView) {
