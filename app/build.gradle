@@ -10,7 +10,7 @@ android {
     buildFeatures { dataBinding = true }
     defaultConfig {
         applicationId "com.example.followup"
-        minSdk 24
+        minSdk 22
         targetSdk 32
         versionCode 8
         versionName "1.3.1"
