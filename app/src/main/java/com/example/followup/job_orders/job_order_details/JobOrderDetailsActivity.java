@@ -32,6 +32,7 @@ import com.example.followup.job_orders.job_order_details.comments.CommentsActivi
 import com.example.followup.job_orders.job_order_details.payment.Payment_item;
 import com.example.followup.job_orders.job_order_details.payment.Payments_adapter;
 import com.example.followup.utils.RealPathUtil;
+import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -69,7 +70,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     RelativeLayout adel_approval_layout;
     Button sales_approve, sales_reject, magdi_approve, magdi_hold, hesham_approve, hesham_reject, hesham_ceo_approval, ceo_approve, ceo_reject, adel_pay, choose_file;
     TextView filesChosen;
-    TextView payment_percent_txt, adel_seen_txt, adel_unseen_txt;
+    TextView payment_percent_txt, adel_seen_txt, adel_unseen_txt, txt_hany_notes;
     LinearProgressIndicator progress_indicator;
     EditText payment_percent;
     List<String> filesSelected;
@@ -92,6 +93,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     WebserviceContext ws;
 
     ImageView joStepperImg;
+
+    int countryId;
 
     private static final int FILES_REQUEST_CODE = 764546;
 
@@ -120,24 +123,31 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
             if (poNumber.equals("null")) {
                 showPoNumberSheet();
             } else {
-                updateStatusDialog(3, "");
+                updateStatusDialog(3, "", "");
             }
         });
 
-        magdi_hold.setOnClickListener(v -> updateStatusDialog(4, ""));
-        magdi_approve.setOnClickListener(v -> updateStatusDialog(5, ""));
+        magdi_hold.setOnClickListener(v -> updateStatusDialog(4, "", ""));
+        magdi_approve.setOnClickListener(v -> updateStatusDialog(5, "", ""));
 
         hesham_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "hesham"));
-        hesham_approve.setOnClickListener(v -> updateStatusDialog(7, ""));
-        hesham_ceo_approval.setOnClickListener(v -> updateStatusDialog(8, ""));
+        hesham_approve.setOnClickListener(v -> updateStatusDialog(7, "", ""));
+        hesham_approve.setOnClickListener(view -> {
+            if (countryId == 2) {
+                showReasonSheet("Notes", "", "", "hany_approve");
+            } else {
+                updateStatusDialog(7, "", "");
+            }
+        });
+        hesham_ceo_approval.setOnClickListener(v -> updateStatusDialog(8, "", ""));
 
         ceo_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "ceo"));
-        ceo_approve.setOnClickListener(v -> updateStatusDialog(10, ""));
+        ceo_approve.setOnClickListener(v -> updateStatusDialog(10, "", ""));
 
         btn_comments.setOnClickListener(view -> {
             Intent i = new Intent(JobOrderDetailsActivity.this, CommentsActivity.class);
-            i.putExtra("job_order_id",jobOrderId);
-            i.putExtra("project_id",projectId);
+            i.putExtra("job_order_id", jobOrderId);
+            i.putExtra("project_id", projectId);
             startActivity(i);
         });
         edit.setOnClickListener(view -> {
@@ -214,6 +224,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         payment_percent_txt = findViewById(R.id.payment_percent_txt);
         adel_seen_txt = findViewById(R.id.adel_seen_txt);
         adel_unseen_txt = findViewById(R.id.adel_unseen_txt);
+        txt_hany_notes = findViewById(R.id.hany_notes);
         progress_indicator = findViewById(R.id.progress_indicator);
 
         reasons = findViewById(R.id.reasons);
@@ -415,6 +426,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
             case 7: {
                 if (loggedInUser.equals("adel")) {
                     adel_approval_layout.setVisibility(View.VISIBLE);
+                    txt_hany_notes.setVisibility(View.VISIBLE);
                 }
                 payment_layout.setVisibility(View.VISIBLE);
                 break;
@@ -498,23 +510,25 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         hesham_approval_layout.setVisibility(View.GONE);
         ceo_approval_layout.setVisibility(View.GONE);
         adel_approval_layout.setVisibility(View.GONE);
+        txt_hany_notes.setVisibility(View.GONE);
     }
 
-    public void updateStatusDialog(int status, String reason) {
+    public void updateStatusDialog(int status, String reason, String hany_notes) {
         new AlertDialog.Builder(JobOrderDetailsActivity.this)
                 .setTitle("Are you sure? ")
                 .setPositiveButton("Yes", (dialog, which) -> {
-                    updateStatus(status, reason);
+                    updateStatus(status, reason, hany_notes);
                 })
                 .setNegativeButton("Dismiss", null)
                 .show();
     }
 
-    public void updateStatus(int status, String reason) {
+    public void updateStatus(int status, String reason, String hany_notes) {
         Map<String, String> map = new HashMap<>();
         map.put("job_order_id", String.valueOf(jobOrderId));
         map.put("status", String.valueOf(status));
         map.put("reason", reason);
+        map.put("percentage", hany_notes);
 
         dialog.show();
         ws.getApi().changeJobOrderStatus(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
@@ -558,7 +572,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                     jobOrderStatus = dataObj.getInt("status");
                     poNumber = dataObj.getString("po_number");
                     projectId = dataObj.getInt("project_id");
-                    int countryId = dataObj.getInt("country_id");
+                    countryId = dataObj.getInt("country_id");
 
                     if (countryId == 2) {
                         setPaymentsList(dataObj.getJSONArray("payments"));
@@ -566,6 +580,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                         int paidAmountInt = Integer.parseInt(paidAmount.substring(0, paidAmount.length() - 1));
                         payment_percent_txt.setText(paidAmount + " paid");
                         progress_indicator.setProgress(paidAmountInt);
+                        txt_hany_notes.setText(StringCheck.returnEmpty(dataObj.getString("percentage")));
                     }
 
                     String reasonsTxt = dataObj.getString("reason_description");
@@ -574,13 +589,13 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                     if (isAdelSeen) {
                         adel_seen_txt.setVisibility(View.VISIBLE);
                         adel_unseen_txt.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         adel_seen_txt.setVisibility(View.GONE);
                         adel_unseen_txt.setVisibility(View.VISIBLE);
                     }
 
                     if (!reasonsTxt.equals("null")) {
-                       reasons.setText(reasonsTxt);
+                        reasons.setText(reasonsTxt);
                     }
 
                     int project_creator_id = dataObj.getInt("project_creator_id");
@@ -654,13 +669,16 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     public void reasonSubmitListener(String reason, String type) {
         switch (type) {
             case "ceo":
-                updateStatusDialog(9, reason);
+                updateStatusDialog(9, reason, "");
                 break;
             case "hesham":
-                updateStatusDialog(6, reason);
+                updateStatusDialog(6, reason, "");
                 break;
             case "sales":
-                updateStatusDialog(2, reason);
+                updateStatusDialog(2, reason, "");
+                break;
+            case "hany_approve":
+                updateStatusDialog(7, "", reason);
                 break;
         }
     }
