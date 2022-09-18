@@ -296,7 +296,7 @@
                     android:layout_marginTop="20dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    >
+                    android:visibility="gone">
 
 
                     <LinearLayout
@@ -363,7 +363,8 @@
                     android:id="@+id/hany_notes"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="hany notes"/>
+                    tools:text="hany notes"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/reasons"
