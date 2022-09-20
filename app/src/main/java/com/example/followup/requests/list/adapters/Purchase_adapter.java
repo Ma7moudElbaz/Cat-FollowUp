@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.followup.R;
 import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.list.models.Purchase_item;
+import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserType;
 
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class Purchase_adapter extends RecyclerView.Adapter<Purchase_adapter.View
         holder.created_by.setText(items.get(position).getCreated_by_name());
         holder.status.setText(String.valueOf(items.get(position).getStatus_message()));
         holder.color.setText(items.get(position).getColor());
-        holder.material.setText(items.get(position).getMaterial());
+        holder.material.setText(StringCheck.returnText(items.get(position).getMaterial()));
         holder.quantity.setText(String.valueOf(items.get(position).getQuantity()));
 
         holder.show_actions.setOnClickListener(v -> showPopup(v, position));

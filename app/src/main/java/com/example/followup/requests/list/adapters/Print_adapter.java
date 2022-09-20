@@ -59,8 +59,8 @@ public class Print_adapter extends RecyclerView.Adapter<Print_adapter.ViewHolder
         holder.item_name.setText(items.get(position).getItem_name());
         holder.created_by.setText(items.get(position).getCreated_by_name());
         holder.status.setText(String.valueOf(items.get(position).getStatus_message()));
-        holder.designer.setText(items.get(position).getDesigner_name());
-        holder.print_type.setText(items.get(position).getPrint_type());
+        holder.pages.setText(items.get(position).getPages());
+        holder.colors.setText(items.get(position).getColors());
         holder.quantity.setText(String.valueOf(items.get(position).getQuantity()));
         holder.show_actions.setOnClickListener(v -> showPopup(v, position));
 
@@ -86,7 +86,7 @@ public class Print_adapter extends RecyclerView.Adapter<Print_adapter.ViewHolder
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView item_name, created_by, status, designer, print_type, quantity,have_action;
+        final TextView item_name, created_by, status, pages, colors, quantity,have_action;
         final ImageView show_actions;
         final LinearLayout parent_layout;
 
@@ -96,8 +96,8 @@ public class Print_adapter extends RecyclerView.Adapter<Print_adapter.ViewHolder
             item_name = itemView.findViewById(R.id.item_name);
             created_by = itemView.findViewById(R.id.created_by);
             status = itemView.findViewById(R.id.status);
-            designer = itemView.findViewById(R.id.designer);
-            print_type = itemView.findViewById(R.id.print_type);
+            pages = itemView.findViewById(R.id.pages);
+            colors = itemView.findViewById(R.id.colors);
             quantity = itemView.findViewById(R.id.quantity);
             parent_layout = itemView.findViewById(R.id.parent_layout);
             have_action = itemView.findViewById(R.id.have_action);

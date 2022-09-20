@@ -60,7 +60,7 @@ public class Photography_adapter extends RecyclerView.Adapter<Photography_adapte
         holder.created_by.setText(items.get(position).getCreated_by_name());
         holder.status.setText(String.valueOf(items.get(position).getStatus_message()));
         holder.location.setText(items.get(position).getLocation());
-        holder.country.setText(items.get(position).getCountry());
+        holder.final_deliverables.setText(items.get(position).getProject_type());
         holder.days.setText(items.get(position).getDays());
         holder.show_actions.setOnClickListener(v -> showPopup(v, position));
 
@@ -86,7 +86,7 @@ public class Photography_adapter extends RecyclerView.Adapter<Photography_adapte
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        final TextView item_name, created_by, status, location, country, days,have_action;
+        final TextView item_name, created_by, status, location, final_deliverables, days,have_action;
         final ImageView show_actions;
         final LinearLayout parent_layout;
 
@@ -96,7 +96,7 @@ public class Photography_adapter extends RecyclerView.Adapter<Photography_adapte
             created_by = itemView.findViewById(R.id.created_by);
             status = itemView.findViewById(R.id.status);
             location = itemView.findViewById(R.id.location);
-            country = itemView.findViewById(R.id.country);
+            final_deliverables = itemView.findViewById(R.id.final_deliverables);
             days = itemView.findViewById(R.id.days);
             parent_layout = itemView.findViewById(R.id.parent_layout);
             have_action = itemView.findViewById(R.id.have_action);
