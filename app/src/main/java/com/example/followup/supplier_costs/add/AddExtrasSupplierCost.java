@@ -50,7 +50,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class AddExtrasSupplierCost extends AppCompatActivity {
-    EditText supplier_name, cost, delivery_date, notes;
+    EditText supplier_name, cost, delivery_date, expiry_date, notes;
     Button add_cost;
     Spinner currency;
     ImageView back;
@@ -77,6 +77,13 @@ public class AddExtrasSupplierCost extends AppCompatActivity {
         delivery_date.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
                 showDatePicker(delivery_date);
+            }
+        });
+
+        expiry_date.setOnClickListener(v -> showDatePicker(expiry_date));
+        expiry_date.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                showDatePicker(expiry_date);
             }
         });
 
@@ -143,6 +150,8 @@ public class AddExtrasSupplierCost extends AppCompatActivity {
         cost = findViewById(R.id.cost);
         delivery_date = findViewById(R.id.delivery_date);
         delivery_date.setInputType(InputType.TYPE_NULL);
+        expiry_date = findViewById(R.id.expiry_date);
+        expiry_date.setInputType(InputType.TYPE_NULL);
         notes = findViewById(R.id.notes);
         currency = findViewById(R.id.currency_spinner);
         add_cost = findViewById(R.id.btn_add_cost);
@@ -161,10 +170,10 @@ public class AddExtrasSupplierCost extends AppCompatActivity {
             delivery_date.setError("This is required field");
             return false;
         }
-//        if (notes.length() == 0) {
-//            notes.setError("This is required field");
-//            return false;
-//        }
+        if (expiry_date.length() == 0) {
+            expiry_date.setError("This is required field");
+            return false;
+        }
         return true;
     }
 
@@ -206,6 +215,7 @@ public class AddExtrasSupplierCost extends AppCompatActivity {
         map.put("supplier_name", RequestBody.create(MediaType.parse("text/plain"), supplier_name.getText().toString()));
         map.put("cost", RequestBody.create(MediaType.parse("text/plain"), cost.getText().toString()));
         map.put("delivery_date", RequestBody.create(MediaType.parse("text/plain"), delivery_date.getText().toString()));
+        map.put("expiry_date", RequestBody.create(MediaType.parse("text/plain"),expiry_date.getText().toString()));
         map.put("note", RequestBody.create(MediaType.parse("text/plain"), notes.getText().toString()));
         map.put("currency_id", RequestBody.create(MediaType.parse("text/plain"), String.valueOf(currency.getSelectedItemPosition() + 1)));
         map.put("cost_per_id", RequestBody.create(MediaType.parse("text/plain"), "2"));
