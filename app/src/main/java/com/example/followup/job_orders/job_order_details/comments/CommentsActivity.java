@@ -30,7 +30,6 @@ import android.widget.Toast;
 import com.example.followup.R;
 import com.example.followup.job_orders.job_order_details.comments.mentions.User;
 import com.example.followup.job_orders.job_order_details.comments.mentions.UserPresenter;
-import com.example.followup.job_orders.list.Job_order_item;
 import com.example.followup.utils.RealPathUtil;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -341,7 +340,7 @@ public class CommentsActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
-                        resetAddComment();
+                        resetAddCommentAndRefreshList();
 //                        onResume();
 
                     } else {
@@ -398,10 +397,14 @@ public class CommentsActivity extends AppCompatActivity {
         startActivityForResult(intent, FILES_REQUEST_CODE);
     }
 
-    private void resetAddComment() {
+    private void resetAddCommentAndRefreshList() {
         et_comment.setText("");
         filesSelected.clear();
         filesChosen.setVisibility(View.GONE);
+
+        comments_list.clear();
+        currentPageNum = 1;
+        getComments(currentPageNum);
 
     }
 
