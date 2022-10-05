@@ -19,6 +19,7 @@ import com.example.followup.R;
 import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.list.models.Extras_item;
 import com.example.followup.requests.list.models.Photography_item;
+import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserType;
 
 import java.util.ArrayList;
@@ -59,7 +60,7 @@ public class Extras_adapter extends RecyclerView.Adapter<Extras_adapter.ViewHold
 
         holder.item_name.setText(items.get(position).getItem_name());
         holder.created_by.setText(items.get(position).getCreated_by_name());
-        holder.address.setText(items.get(position).getDelivery_address());
+        holder.address.setText(StringCheck.returnText(items.get(position).getDelivery_address()));
         holder.type.setText(items.get(position).getExtra_request_type());
         holder.status.setText(String.valueOf(items.get(position).getStatus_message()));
         holder.show_actions.setOnClickListener(v -> showPopup(v, position));
