@@ -673,6 +673,9 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
             case "nagat_reject_request":
                 nagatReject(2, reason);
                 break;
+            case "nagat_reject_cost":
+                    updateStatusDialog(3, reason);
+                break;
             case "sales_reject":
                 updateStatusDialog(5, reason);
                 break;

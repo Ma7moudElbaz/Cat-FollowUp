@@ -50,7 +50,7 @@ public class Production_supplierCost_view extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initFields(view);
-        nagat_reject.setOnClickListener(v -> activity.updateStatusDialog(3, ""));
+        nagat_reject.setOnClickListener(v -> activity.showReasonSheet("Rejection reason", "", "", "nagat_reject_cost"));
         nagat_approve.setOnClickListener(v -> activity.updateStatusDialog(4, ""));
     }
 
