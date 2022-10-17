@@ -2,9 +2,6 @@ package com.example.followup.job_orders.job_order_details.comments.mentions;
 
 import androidx.annotation.NonNull;
 
-import java.util.Arrays;
-import java.util.List;
-
 @SuppressWarnings("WeakerAccess")
 public class User {
 

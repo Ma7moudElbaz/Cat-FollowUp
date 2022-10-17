@@ -11,11 +11,13 @@ import android.widget.Toast;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
+import com.example.followup.home.all_requests.AllRequestsFragment;
 import com.example.followup.home.job_orders.JobOrdersFragment;
 import com.example.followup.home.notifications.NotificationsFragment;
 import com.example.followup.home.profile.ProfileFragment;
 import com.example.followup.home.projects.ProjectsFragment;
 import com.example.followup.home.settings.SettingsFragment;
+import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 import com.google.android.material.badge.BadgeDrawable;
@@ -69,6 +71,11 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
         setContentView(R.layout.activity_home);
         initFields();
 
+        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
+        if (!loggedInUser.equals("nagat")) {
+            bottomNavigationView.getMenu().removeItem(R.id.navigation_all_requests);
+        }
+
         badge = bottomNavigationView.getOrCreateBadge(R.id.navigation_notifications);
 
         String fromActivity = getIntent().getStringExtra("fromActivity");
@@ -99,13 +106,16 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
             setContentFragment(new ProjectsFragment());
         } else if (id == R.id.navigation_job_orders) {
             setContentFragment(new JobOrdersFragment());
-        }  else if (id == R.id.navigation_profile) {
+        } else if (id == R.id.navigation_all_requests) {
+            setContentFragment(new AllRequestsFragment());
+        } else if (id == R.id.navigation_profile) {
             setContentFragment(new ProfileFragment());
         } else if (id == R.id.navigation_notifications) {
             setContentFragment(new NotificationsFragment());
-        } else if (id == R.id.navigation_settings) {
-            setContentFragment(new SettingsFragment());
         }
+//        else if (id == R.id.navigation_settings) {
+//            setContentFragment(new SettingsFragment());
+//        }
         return true;
     }
 
@@ -143,13 +153,13 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
 
     @Override
     public void onBackPressed() {
-            new AlertDialog.Builder(HomeActivity.this)
-                    .setTitle("Are you sure you want to exit ? ")
-                    .setPositiveButton("Yes", (dialog, which) -> {
-                        finish();
-                    })
-                    .setNegativeButton("Dismiss", null)
-                    .show();
+        new AlertDialog.Builder(HomeActivity.this)
+                .setTitle("Are you sure you want to exit ? ")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    finish();
+                })
+                .setNegativeButton("Dismiss", null)
+                .show();
     }
 
     @Override

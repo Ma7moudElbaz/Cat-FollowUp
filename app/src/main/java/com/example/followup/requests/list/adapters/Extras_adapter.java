@@ -18,7 +18,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.followup.R;
 import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.list.models.Extras_item;
-import com.example.followup.requests.list.models.Photography_item;
 import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserType;
 
