@@ -38,9 +38,11 @@
                 android:maxLines="2"
                 android:text="@string/all_projects"
                 android:textColor="@color/black"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:padding="5dp"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="15dp"
+                android:background="@drawable/et_gray"
                 app:drawableEndCompat="@drawable/ic_arrow_down" />
 
 
