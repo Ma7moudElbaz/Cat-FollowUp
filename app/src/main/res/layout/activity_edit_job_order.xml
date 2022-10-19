@@ -41,11 +41,30 @@
 
         </LinearLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/item_name_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:endIconDrawable="@drawable/ic_required"
+            app:endIconMode="custom"
+            app:endIconTint="@color/red">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/supplier_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/supplier_name"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
             tools:listitem="@layout/item_edit_job_order_request" />
 
     </LinearLayout>

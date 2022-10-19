@@ -245,7 +245,11 @@ public class AllRequestsFragment extends Fragment implements BottomSheet_choose_
     public Map<String, String> getFilterMap() {
         Map<String, String> map = new HashMap<>();
         map.put("project_id", project_id);
-        map.put("type_id", String.valueOf(requests_tab.getSelectedTabPosition() + 1));
+        if (requests_tab.getSelectedTabPosition() == 0 ){
+            map.put("type_id", "");
+        }else {
+            map.put("type_id", String.valueOf(requests_tab.getSelectedTabPosition()));
+        }
         map.put("search", search.getText().toString());
         switch (selectedStatus) {
             case "0":

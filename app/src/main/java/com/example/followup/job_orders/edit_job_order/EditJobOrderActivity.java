@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.followup.R;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -35,6 +36,7 @@ import retrofit2.Response;
 
 public class EditJobOrderActivity extends AppCompatActivity implements Edit_job_order_requests_adapter.AdapterCallback {
     ImageView back;
+    TextInputEditText supplier_name;
     ProgressBar loading;
     RecyclerView recyclerView;
     Button submit;
@@ -70,6 +72,7 @@ public class EditJobOrderActivity extends AppCompatActivity implements Edit_job_
         jobOrderId = getIntent().getIntExtra("job_order_id", 0);
 
         back = findViewById(R.id.back);
+        supplier_name = findViewById(R.id.supplier_name);
         loading = findViewById(R.id.loading);
         submit = findViewById(R.id.submit);
         recyclerView = findViewById(R.id.recycler_view);
@@ -94,6 +97,8 @@ public class EditJobOrderActivity extends AppCompatActivity implements Edit_job_
                 try {
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray jobOrdersArray = responseObject.getJSONObject("data").getJSONArray("requests");
+                    String supplierNameText = responseObject.getJSONObject("data").getJSONObject("jo").getString("supplier_name");
+                    supplier_name.setText(supplierNameText);
                     setJobOrderRequestsList(jobOrdersArray);
                     loading.setVisibility(View.GONE);
 
@@ -187,10 +192,12 @@ public class EditJobOrderActivity extends AppCompatActivity implements Edit_job_
         }
 
         Map<String, String> map = new HashMap<>();
+        map.put("job_order_id", String.valueOf(jobOrderId));
         map.put("request_ids", requestIds.toString());
         map.put("actual_costs", actual_costs.toString());
         map.put("quantity", quantity.toString());
         map.put("cost_per_type", cost_per_id.toString());
+        map.put("supplier_name", supplier_name.getText().toString());
 
         Log.e("requests map", map.toString());
         return map;

@@ -75,6 +75,12 @@
             app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget">
 
             <com.google.android.material.tabs.TabItem
+                android:id="@+id/all_tab"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/ic_all_requests" />
+
+            <com.google.android.material.tabs.TabItem
                 android:id="@+id/purchase_tab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
