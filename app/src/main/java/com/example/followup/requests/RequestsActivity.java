@@ -98,7 +98,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     TextView search;
     ImageView filterBtn;
 
-    int selectedStatusIndex = -1;
+    int selectedStatusIndex = 0;
     String selectedStatus = "";
     String[] chipsStatus = new String[]{"", "2", "4", "5", "3", "6"};
 

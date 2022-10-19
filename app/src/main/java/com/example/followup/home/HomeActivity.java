@@ -72,7 +72,7 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
         initFields();
 
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
-        if (!loggedInUser.equals("nagat")) {
+        if (!(loggedInUser.equals("nagat")||loggedInUser.equals("speranza"))) {
             bottomNavigationView.getMenu().removeItem(R.id.navigation_all_requests);
         }
 

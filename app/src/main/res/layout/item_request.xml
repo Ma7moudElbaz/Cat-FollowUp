@@ -15,9 +15,6 @@
         app:cardCornerRadius="10dp"
         app:cardElevation="3dp">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:id="@+id/parent_layout"
@@ -104,10 +101,11 @@
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                        android:layout_weight="1"
+                        android:visibility="gone">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:orientation="vertical">
@@ -121,7 +119,7 @@
                                 android:textStyle="bold" />
 
                             <TextView
-                                android:id="@+id/timeline"
+                                android:id="@+id/request_type"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/purchasing"
@@ -138,16 +136,17 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="5dp"
                         android:layout_marginRight="5dp"
+                        android:visibility="gone"
                         android:background="@color/line_blue" />
 
 
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                        android:layout_weight="1.8">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:orientation="vertical">
@@ -182,10 +181,10 @@
                     <RelativeLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1">
+                        android:layout_weight="1.2">
 
                         <LinearLayout
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerHorizontal="true"
                             android:orientation="vertical">
@@ -271,16 +270,6 @@
 
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/show_actions"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:adjustViewBounds="true"
-                android:contentDescription="@string/description"
-                android:padding="7dp"
-                android:src="@drawable/ic_actions" />
-        </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
 

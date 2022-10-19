@@ -10,11 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,13 +41,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BottomSheet_companies extends BottomSheetDialogFragment implements Companies_adapter_with_callback.AdapterCallback {
+public class BottomSheet_projects extends BottomSheetDialogFragment implements Companies_adapter_with_callback.AdapterCallback {
 
 
-    private final BottomSheet_companies.SelectedCompanyListener selectedCompanyListener;
+    private final SelectedProjectsListener selectedProjectListener;
 
-    public BottomSheet_companies(Fragment fragment) {
-        this.selectedCompanyListener = ((BottomSheet_companies.SelectedCompanyListener) fragment);
+    public BottomSheet_projects(Fragment fragment) {
+        this.selectedProjectListener = ((SelectedProjectsListener) fragment);
     }
 
 
@@ -68,23 +66,21 @@ public class BottomSheet_companies extends BottomSheetDialogFragment implements 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.bottom_sheet_companies, container, false);
+        return inflater.inflate(R.layout.bottom_sheet_projects, container, false);
     }
 
 
     int currentPageNum = 1;
     int lastPageNum;
     boolean mHasReachedBottomOnce = false;
-    Companies_adapter_with_callback companies_adapter;
-    ArrayList<Company_item> companies_list;
+    Companies_adapter_with_callback projects_adapter;
+    ArrayList<Company_item> projects_list;
 
     ImageView closeButton;
     RecyclerView recyclerView;
     ProgressBar loading;
     WebserviceContext ws;
     EditText search, company_name;
-    Button add_company, add_new_company;
-    RelativeLayout add_company_layout;
 
 
     @Override
@@ -92,27 +88,16 @@ public class BottomSheet_companies extends BottomSheetDialogFragment implements 
         super.onViewCreated(view, savedInstanceState);
         initFields(view);
 
-        add_new_company.setOnClickListener(v -> {
-            add_company_layout.setVisibility(View.VISIBLE);
-            add_new_company.setVisibility(View.GONE);
-        });
 
         closeButton.setOnClickListener(v -> dismiss());
 
-        add_company.setOnClickListener(v -> {
-            if (company_name.length() != 0) {
-                addCompany();
-            } else {
-                company_name.setError("This is required field");
-            }
-        });
 
         search.setOnEditorActionListener((v, actionId, event) -> {
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                companies_list.clear();
+                projects_list.clear();
                 currentPageNum = 1;
-                getCompanies(currentPageNum);
+                getProjects(currentPageNum);
 //                hideKeyboardFragment(getContext(), view);
                 return true;
             }
@@ -126,14 +111,10 @@ public class BottomSheet_companies extends BottomSheetDialogFragment implements 
         loading = view.findViewById(R.id.loading);
         recyclerView = view.findViewById(R.id.recycler);
         search = view.findViewById(R.id.search);
-        company_name = view.findViewById(R.id.company_name);
-        add_company = view.findViewById(R.id.add_company);
-        add_new_company = view.findViewById(R.id.add_new_company);
-        add_company_layout = view.findViewById(R.id.add_company_layout);
-        companies_list = new ArrayList<>();
+        projects_list = new ArrayList<>();
         ws = new WebserviceContext(getActivity());
         initRecyclerView();
-        getCompanies(currentPageNum);
+        getProjects(currentPageNum);
     }
 
     @Override
@@ -155,67 +136,31 @@ public class BottomSheet_companies extends BottomSheetDialogFragment implements 
     }
 
 
-    public interface SelectedCompanyListener {
-        void selectedCompany(String selectedCompanyName, String selectedCompanyId);
+    public interface SelectedProjectsListener {
+        void selectedProject(String selectedProjectName, String selectedProjectId);
     }
 
-    public void sendBackResult(String selectedCompanyName, String selectedCompanyId) {
-        selectedCompanyListener.selectedCompany(selectedCompanyName, selectedCompanyId);
+    public void sendBackResult(String selectedProjectName, String selectedProjectId) {
+        selectedProjectListener.selectedProject(selectedProjectName, selectedProjectId);
         dismiss();
     }
 
 
-    public void getCompanies(int pageNum) {
+    public void getProjects(int pageNum) {
         loading.setVisibility(View.VISIBLE);
         Map<String, String> map = new HashMap<>();
         map.put("search", search.getText().toString());
 
-        ws.getApi().getCompanies(UserUtils.getAccessToken(getContext()), pageNum, map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().getAllProjects(UserUtils.getAccessToken(getContext()), pageNum, map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray companiesArray = responseObject.getJSONArray("data");
-                    setCompaniesList(companiesArray);
-                    JSONObject metaObject = responseObject.getJSONObject("meta");
-                    lastPageNum = metaObject.getInt("last_page");
-
-                    loading.setVisibility(View.GONE);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                Log.d("Error Throw", t.toString());
-                Log.d("commit Test Throw", t.toString());
-                Log.d("Call", t.toString());
-                Toast.makeText(getContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-                loading.setVisibility(View.GONE);
-            }
-        });
-    }
-
-    public void addCompany() {
-        loading.setVisibility(View.VISIBLE);
-        Map<String, String> map = new HashMap<>();
-        map.put("name", company_name.getText().toString());
-
-        ws.getApi().AddCompany(UserUtils.getAccessToken(getContext()), map).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-
-                try {
-                    if (response.isSuccessful()) {
-                        company_name.setText("");
-                        Toast.makeText(getContext(), "Company Added Successfully and waiting admin approval", Toast.LENGTH_SHORT).show();
-                    } else {
-                        JSONObject responseObject = new JSONObject(response.errorBody().string());
-                        Toast.makeText(getContext(), responseObject.getString("error"), Toast.LENGTH_SHORT).show();
-                    }
+                    setProjectsList(companiesArray);
+//                    JSONObject metaObject = responseObject.getJSONObject("meta");
+                    lastPageNum = responseObject.getInt("last_page");
 
                     loading.setVisibility(View.GONE);
 
@@ -237,21 +182,21 @@ public class BottomSheet_companies extends BottomSheetDialogFragment implements 
 
 
     @SuppressLint("NotifyDataSetChanged")
-    public void setCompaniesList(JSONArray list) {
+    public void setProjectsList(JSONArray list) {
         if (currentPageNum == 1) {
-            companies_list.add(new Company_item("", "All Companies"));
+            projects_list.add(new Company_item("", "All Projects"));
         }
         try {
             for (int i = 0; i < list.length(); i++) {
                 JSONObject currentObject = list.getJSONObject(i);
                 final String id = currentObject.getString("id");
-                final String name = currentObject.getString("name");
+                final String name = currentObject.getString("project_name");
 
-                companies_list.add(new Company_item(id, name));
+                projects_list.add(new Company_item(id, name));
 
             }
 
-            companies_adapter.notifyDataSetChanged();
+            projects_adapter.notifyDataSetChanged();
             mHasReachedBottomOnce = false;
             currentPageNum++;
 
@@ -264,8 +209,8 @@ public class BottomSheet_companies extends BottomSheetDialogFragment implements 
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        companies_adapter = new Companies_adapter_with_callback(getContext(), this, companies_list);
-        recyclerView.setAdapter(companies_adapter);
+        projects_adapter = new Companies_adapter_with_callback(getContext(), this, projects_list);
+        recyclerView.setAdapter(projects_adapter);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -276,7 +221,7 @@ public class BottomSheet_companies extends BottomSheetDialogFragment implements 
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        getCompanies(currentPageNum);
+                        getProjects(currentPageNum);
 
                 }
             }

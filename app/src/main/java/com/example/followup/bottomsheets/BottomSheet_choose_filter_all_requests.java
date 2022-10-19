@@ -10,19 +10,21 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 
 import com.adroitandroid.chipcloud.ChipCloud;
 import com.adroitandroid.chipcloud.ChipListener;
 import com.example.followup.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
-public class BottomSheet_choose_filter_requests extends BottomSheetDialogFragment {
+public class BottomSheet_choose_filter_all_requests extends BottomSheetDialogFragment {
 
+    private final BottomSheet_choose_filter_all_requests.FilterListener filterListener;
 
     int chipSelectedIndex;
-
-    public BottomSheet_choose_filter_requests(int chipSelectedIndex) {
+    public BottomSheet_choose_filter_all_requests(int chipSelectedIndex, Fragment fragment) {
         this.chipSelectedIndex = chipSelectedIndex;
+        this.filterListener = ((BottomSheet_choose_filter_all_requests.FilterListener) fragment);
     }
 
 
@@ -37,7 +39,7 @@ public class BottomSheet_choose_filter_requests extends BottomSheetDialogFragmen
     Button applyButton, resetButton;
     ChipCloud statusChip;
     String[] chipsText = new String[]{"All", "Waiting Procurement", "Waiting sales approval", "Sales reject", "Procurement reject", "Approved"};
-
+    String[] chipsStatus = new String[]{"", "2", "4", "5", "3", "6"};
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -65,8 +67,7 @@ public class BottomSheet_choose_filter_requests extends BottomSheetDialogFragmen
 
 
         closeButton.setOnClickListener(v -> dismiss());
-        applyButton.setOnClickListener(v -> sendBackResult(chipSelectedIndex));
-//        resetButton.setOnClickListener(v -> statusChip.setSelectedChip(chipSelectedIndex));
+        applyButton.setOnClickListener(v -> sendBackResult(chipSelectedIndex,chipsStatus[chipSelectedIndex]));
 
 
     }
@@ -84,12 +85,11 @@ public class BottomSheet_choose_filter_requests extends BottomSheetDialogFragmen
     }
 
     public interface FilterListener {
-        void applyFilterListener(int selectedStatusIndex);
+        void applyFilterListener(int selectedStatusIndex,String selectedStatus);
     }
 
-    public void sendBackResult(int selectedStatusIndex) {
-        FilterListener listener = (FilterListener) getActivity();
-        listener.applyFilterListener(selectedStatusIndex);
+    public void sendBackResult(int selectedStatusIndex,String selectedStatus) {
+        filterListener.applyFilterListener(selectedStatusIndex,selectedStatus);
         dismiss();
     }
 }

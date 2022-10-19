@@ -53,7 +53,6 @@ public interface ServiceInterface {
     @GET("companies")
     Call<ResponseBody> getCompanies(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
 
-
     @GET("projects/suppliers/{project_id}")
     Call<ResponseBody> getSuppliers(@Header("Authorization") String auth, @Path("project_id") int project_id);
 
@@ -64,6 +63,9 @@ public interface ServiceInterface {
     //projects
     @GET("projects")
     Call<ResponseBody> getProjects(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
+
+    @GET("projects/all")
+    Call<ResponseBody> getAllProjects(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
 
     @POST("projects")
     @FormUrlEncoded
@@ -79,13 +81,17 @@ public interface ServiceInterface {
     Call<ResponseBody> projectCancel(@Header("Authorization") String auth, @Path("project_id") int project_id);
 
     //requests
+
+    @GET("requests/all")
+    Call<ResponseBody> getAllRequests(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
+
     @GET("requests")
     Call<ResponseBody> getRequests(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("type_id") int type_id, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
 
     @GET("requests")
     Call<ResponseBody> getJobOrderRequests(@Header("Authorization") String auth, @Query("status") int status, @Query("project_id") int project_id, @Query("type_id") int type_id, @Query("page") int pageNo);
 
-     @GET("request/extras")
+    @GET("request/extras")
     Call<ResponseBody> getJobOrderExtras(@Header("Authorization") String auth, @Query("project_id") int project_id, @Query("extra_request_type") int type_id);
 
     @GET("job-order/edit")

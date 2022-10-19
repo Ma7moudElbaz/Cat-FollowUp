@@ -86,7 +86,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
     boolean is_project_owner, has_po_number;
 
 
-    int selectedStatusIndex = -1;
+    int selectedStatusIndex = 0;
     String selectedStatus = "";
     String[] chipsStatus = new String[]{"", "1", "2", "3", "5", "6", "8", "9", "7"};
 
