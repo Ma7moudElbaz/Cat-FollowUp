@@ -248,6 +248,10 @@ public class AllRequestsFragment extends Fragment implements BottomSheet_choose_
         map.put("type_id", String.valueOf(requests_tab.getSelectedTabPosition() + 1));
         map.put("search", search.getText().toString());
         switch (selectedStatus) {
+            case "0":
+                map.put("status", selectedStatus);
+                map.put("cost_status", selectedStatus);
+                break;
             case "1":
             case "6":
             case "7":

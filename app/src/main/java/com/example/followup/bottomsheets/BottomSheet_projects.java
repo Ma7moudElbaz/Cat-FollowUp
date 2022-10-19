@@ -159,8 +159,8 @@ public class BottomSheet_projects extends BottomSheetDialogFragment implements C
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray companiesArray = responseObject.getJSONArray("data");
                     setProjectsList(companiesArray);
-//                    JSONObject metaObject = responseObject.getJSONObject("meta");
-                    lastPageNum = responseObject.getInt("last_page");
+                    JSONObject metaObject = responseObject.getJSONObject("meta");
+                    lastPageNum = metaObject.getInt("last_page");
 
                     loading.setVisibility(View.GONE);
 

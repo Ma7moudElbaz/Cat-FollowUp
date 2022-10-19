@@ -38,8 +38,8 @@ public class BottomSheet_choose_filter_all_requests extends BottomSheetDialogFra
     ImageView closeButton;
     Button applyButton, resetButton;
     ChipCloud statusChip;
-    String[] chipsText = new String[]{"All", "Waiting Procurement", "Waiting sales approval", "Sales reject", "Procurement reject", "Approved"};
-    String[] chipsStatus = new String[]{"", "2", "4", "5", "3", "6"};
+    String[] chipsText = new String[]{"Need action","All", "Waiting procurement", "Waiting sales approval", "Sales reject", "Procurement reject", "Approved"};
+    String[] chipsStatus = new String[]{"","0", "2", "4", "5", "3", "6"};
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

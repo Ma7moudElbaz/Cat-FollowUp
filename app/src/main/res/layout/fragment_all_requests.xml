@@ -26,8 +26,7 @@
                 android:maxLines="2"
                 android:text="@string/all_projects"
                 android:textColor="@color/black"
-                android:textSize="20sp"
-                android:textStyle="bold"
+                android:textSize="18sp"
                 android:padding="8dp"
                 android:background="@drawable/et_gray"
                 app:drawableEndCompat="@drawable/ic_arrow_down" />
