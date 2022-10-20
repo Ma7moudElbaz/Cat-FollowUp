@@ -112,18 +112,16 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
         } else if (id == R.id.navigation_notifications) {
             setContentFragment(new NotificationsFragment());
         }
-//        else if (id == R.id.navigation_settings) {
-//            setContentFragment(new SettingsFragment());
-//        }
         return true;
     }
 
     public void getNotificationNumber() {
         ws.getApi().getNotificationsNumber(UserUtils.getAccessToken(getBaseContext())).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.code() == 200) {
+                        assert response.body() != null;
                         JSONObject res = new JSONObject(response.body().string());
                         int notificationNo = res.getInt("unreadNotificationsNumber");
                         if (notificationNo == 0) {
@@ -134,6 +132,7 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
 
 
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
@@ -143,7 +142,7 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
             }
         });
@@ -154,9 +153,7 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
     public void onBackPressed() {
         new AlertDialog.Builder(HomeActivity.this)
                 .setTitle("Are you sure you want to exit ? ")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    finish();
-                })
+                .setPositiveButton("Yes", (dialog, which) -> finish())
                 .setNegativeButton("Dismiss", null)
                 .show();
     }

@@ -35,9 +35,9 @@ public class SettingsFragment extends Fragment implements BottomSheet_choose_lan
         languageSelected = view.findViewById(R.id.language_selected);
 
         if (Locale.getDefault().toString().equals("ar")) {
-            languageSelected.setText(getActivity().getString(R.string.arabic));
+            languageSelected.setText(requireActivity().getString(R.string.arabic));
         } else {
-            languageSelected.setText(getActivity().getString(R.string.english));
+            languageSelected.setText(requireActivity().getString(R.string.english));
         }
 
         languageSelected.setOnClickListener(v -> showLanguageBottomSheet());
