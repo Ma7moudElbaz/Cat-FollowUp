@@ -1,4 +1,4 @@
-package com.example.followup.home.job_orders;
+package com.example.followup.home.all_job_orders;
 
 import android.app.Activity;
 import android.content.Context;
@@ -73,7 +73,6 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
     }
 
 
-    ProgressBar loading;
     RecyclerView recyclerView;
     TextView search;
     ImageView filterBtn;
@@ -115,13 +114,13 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
             return false;
         });
         swipe_refresh.setOnRefreshListener(() -> {
-            swipe_refresh.setRefreshing(false);
-            onResume();
+            reloadData();
         });
+        reloadData();
     }
 
     public void getJobOrders(int pageNum, Map<String, String> filterMap) {
-        loading.setVisibility(View.VISIBLE);
+        swipe_refresh.setRefreshing(true);
 
         ws.getApi().getAllJobOrders(UserUtils.getAccessToken(getContext()), pageNum, filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -136,7 +135,7 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
                         lastPageNum = metaObject.getInt("last_page");
                     }
 
-                    loading.setVisibility(View.GONE);
+                    swipe_refresh.setRefreshing(false);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -149,7 +148,7 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
                 Log.d("commit Test Throw", t.toString());
                 Log.d("Call", t.toString());
                 Toast.makeText(getContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-                loading.setVisibility(View.GONE);
+                swipe_refresh.setRefreshing(false);
             }
         });
     }
@@ -187,7 +186,6 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
     private void initFields(View view) {
 
         ws = new WebserviceContext(getActivity());
-        loading = view.findViewById(R.id.loading);
         search = view.findViewById(R.id.search);
         filterBtn = view.findViewById(R.id.filter_btn);
         recyclerView = view.findViewById(R.id.recycler_view);
@@ -222,6 +220,9 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
     @Override
     public void onResume() {
         super.onResume();
+    }
+
+    private void reloadData(){
         job_order_list.clear();
         currentPageNum = 1;
         getJobOrders(currentPageNum, getFilterMap());

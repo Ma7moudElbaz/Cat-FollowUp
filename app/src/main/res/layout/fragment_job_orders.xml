@@ -7,7 +7,7 @@
     android:paddingStart="15dp"
     android:paddingTop="15dp"
     android:paddingEnd="15dp"
-    tools:context=".home.job_orders.JobOrdersFragment">
+    tools:context=".home.all_job_orders.JobOrdersFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -72,12 +72,5 @@
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </LinearLayout>
-
-    <ProgressBar
-        android:id="@+id/loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center" />
 
 </RelativeLayout>
