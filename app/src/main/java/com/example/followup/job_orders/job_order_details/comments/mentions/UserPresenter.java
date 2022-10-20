@@ -22,10 +22,9 @@ import java.util.List;
 
 public class UserPresenter extends RecyclerViewPresenter<User> {
 
-    @SuppressWarnings("WeakerAccess")
     protected Adapter adapter;
     ArrayList<User> users;
-    @SuppressWarnings("WeakerAccess")
+
     public UserPresenter(@NonNull Context context,ArrayList<User> users) {
         super(context);
         this.users =users;
@@ -47,6 +46,7 @@ public class UserPresenter extends RecyclerViewPresenter<User> {
         return adapter;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onQuery(@Nullable CharSequence query) {
         List<User> all = users;
@@ -71,10 +71,9 @@ public class UserPresenter extends RecyclerViewPresenter<User> {
 
         private List<User> data;
 
-        @SuppressWarnings("WeakerAccess")
         protected class Holder extends RecyclerView.ViewHolder {
-            private View root;
-            private TextView username;
+            private final View root;
+            private final TextView username;
             Holder(View itemView) {
                 super(itemView);
                 root = itemView;

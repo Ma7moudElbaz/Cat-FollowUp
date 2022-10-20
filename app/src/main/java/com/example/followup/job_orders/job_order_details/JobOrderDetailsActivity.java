@@ -1,6 +1,7 @@
 package com.example.followup.job_orders.job_order_details;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -165,26 +166,23 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 addPayment();
             }
         });
-        choose_file.setOnClickListener(v -> {
-
-            Dexter.withContext(getBaseContext())
-                    .withPermissions(
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                    ).withListener(new MultiplePermissionsListener() {
-                        @Override
-                        public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
-                            if (multiplePermissionsReport.areAllPermissionsGranted()) {
-                                pickFromGallery();
-                            }
+        choose_file.setOnClickListener(v -> Dexter.withContext(getBaseContext())
+                .withPermissions(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                        if (multiplePermissionsReport.areAllPermissionsGranted()) {
+                            pickFromGallery();
                         }
+                    }
 
-                        @Override
-                        public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
 
-                        }
-                    }).check();
-        });
+                    }
+                }).check());
 
     }
 
@@ -230,9 +228,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         reasons = findViewById(R.id.reasons);
         edit = findViewById(R.id.edit);
 
-        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
-
-
         swipe_refresh = findViewById(R.id.swipe_refresh);
         joStepperImg = findViewById(R.id.joStepperImg);
 
@@ -252,6 +247,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         recyclerView.setAdapter(payments_adapter);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setPaymentsList(JSONArray list) {
         payments_list.clear();
         try {
@@ -516,9 +512,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     public void updateStatusDialog(int status, String reason, String hany_notes) {
         new AlertDialog.Builder(JobOrderDetailsActivity.this)
                 .setTitle("Are you sure? ")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    updateStatus(status, reason, hany_notes);
-                })
+                .setPositiveButton("Yes", (dialog, which) -> updateStatus(status, reason, hany_notes))
                 .setNegativeButton("Dismiss", null)
                 .show();
     }
@@ -533,12 +527,13 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         dialog.show();
         ws.getApi().changeJobOrderStatus(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Updated successfully", Toast.LENGTH_LONG).show();
                         onResume();
                     } else {
+                        assert response.errorBody() != null;
                         Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException e) {
@@ -548,7 +543,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -564,6 +559,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
                 try {
                     loading.setVisibility(View.GONE);
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONObject dataObj = responseObject.getJSONObject("data");
                     String pdfLinkUrl = dataObj.getString("url");
@@ -637,12 +633,13 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         dialog.show();
         ws.getApi().addPoNumber(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "PO Added successfully", Toast.LENGTH_LONG).show();
                         getJobOrderDetails();
                     } else {
+                        assert response.errorBody() != null;
                         Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException e) {
@@ -652,7 +649,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -720,13 +717,14 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         dialog.show();
         ws.getApi().addPayment(UserUtils.getAccessToken(getBaseContext()), fileToUpload, map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Cost Added successfully", Toast.LENGTH_LONG).show();
                         onResume();
 
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                         Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
@@ -738,7 +736,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -768,24 +766,23 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         // Result code is RESULT_OK only if the user selects an Image
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK)
-            switch (requestCode) {
-                case FILES_REQUEST_CODE:
-                    filesSelected.clear();
-                    //data.getData returns the content URI for the selected files
-                    if (data == null) {
-                        return;
-                    } else if (data.getClipData() != null) {
-                        for (int i = 0; i < data.getClipData().getItemCount(); i++) {
-                            Uri uri = data.getClipData().getItemAt(i).getUri();
-                            filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
-                        }
-                    } else {
-                        Uri uri = data.getData();
+            if (requestCode == FILES_REQUEST_CODE) {
+                filesSelected.clear();
+                //data.getData returns the content URI for the selected files
+                if (data == null) {
+                    return;
+                } else if (data.getClipData() != null) {
+                    for (int i = 0; i < data.getClipData().getItemCount(); i++) {
+                        Uri uri = data.getClipData().getItemAt(i).getUri();
                         filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
                     }
-                    filesChosen.setText(filesSelected.size() + " Files Selected");
+                } else {
+                    Uri uri = data.getData();
+                    filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
+                }
+                filesChosen.setText(filesSelected.size() + " Files Selected");
 
-                    Log.e("Data selected", filesSelected.toString());
+                Log.e("Data selected", filesSelected.toString());
             }
     }
 }
