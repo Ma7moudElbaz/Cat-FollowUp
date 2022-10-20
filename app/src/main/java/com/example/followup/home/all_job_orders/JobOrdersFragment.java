@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -61,18 +60,6 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    public static void hideKeyboardActivity(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
-
     RecyclerView recyclerView;
     TextView search;
     ImageView filterBtn;
@@ -83,9 +70,6 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
     int currentPageNum = 1;
     int lastPageNum;
     boolean mHasReachedBottomOnce = false;
-
-    int projectId;
-
 
     int selectedStatusIndex = -1;
     String selectedStatus = "";
@@ -108,14 +92,12 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
                 job_order_list.clear();
                 currentPageNum = 1;
                 getJobOrders(currentPageNum, getFilterMap());
-                hideKeyboardFragment(getContext(), v);
+                hideKeyboardFragment(requireContext(), v);
                 return true;
             }
             return false;
         });
-        swipe_refresh.setOnRefreshListener(() -> {
-            reloadData();
-        });
+        swipe_refresh.setOnRefreshListener(this::reloadData);
         reloadData();
     }
 
@@ -128,6 +110,7 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
 
                 try {
                     if (response.isSuccessful()) {
+                        assert response.body() != null;
                         JSONObject responseObject = new JSONObject(response.body().string());
                         JSONArray jobOrdersArray = responseObject.getJSONArray("data");
                         setJobOrdersList(jobOrdersArray);
