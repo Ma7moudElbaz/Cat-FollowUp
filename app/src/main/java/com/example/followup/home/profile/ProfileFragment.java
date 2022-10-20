@@ -63,7 +63,7 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
         logOut.setOnClickListener(v -> {
             logout();
             startActivity(new Intent(getContext(), LoginActivity.class));
-            getActivity().finish();
+            requireActivity().finish();
         });
     }
 
@@ -90,14 +90,16 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
         dialog.show();
         ws.getApi().changePassword(UserUtils.getAccessToken(getContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
 
+                        assert response.body() != null;
                         JSONObject res = new JSONObject(response.body().string());
                         Toast.makeText(getContext(), res.getString("message"), Toast.LENGTH_SHORT).show();
 
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getContext(), res.getString("message"), Toast.LENGTH_LONG).show();
                     }
@@ -108,7 +110,7 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -118,12 +120,10 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
     public void logout() {
         ws.getApi().logout(UserUtils.getAccessToken(getContext())).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200) {
-
-                    } else {
-
+                    if (response.code() != 200) {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
@@ -134,7 +134,7 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }

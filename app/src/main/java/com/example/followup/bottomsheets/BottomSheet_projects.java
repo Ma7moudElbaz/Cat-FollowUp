@@ -209,7 +209,7 @@ public class BottomSheet_projects extends BottomSheetDialogFragment implements C
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        projects_adapter = new Companies_adapter_with_callback(getContext(), this, projects_list);
+        projects_adapter = new Companies_adapter_with_callback(this, projects_list);
         recyclerView.setAdapter(projects_adapter);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

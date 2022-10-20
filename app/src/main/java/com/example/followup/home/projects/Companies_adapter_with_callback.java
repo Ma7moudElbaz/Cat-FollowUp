@@ -1,6 +1,5 @@
 package com.example.followup.home.projects;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,16 +20,14 @@ public class Companies_adapter_with_callback extends RecyclerView.Adapter<Compan
 
     private final List<Company_item> items;
 
-    private final Context mContext;
     private final AdapterCallback mAdapterCallback;
 
-    public Companies_adapter_with_callback(Context context, Fragment fragment, ArrayList<Company_item> items) {
+    public Companies_adapter_with_callback(Fragment fragment, ArrayList<Company_item> items) {
         try {
             this.mAdapterCallback = ((AdapterCallback) fragment);
         } catch (ClassCastException e) {
             throw new ClassCastException("Fragment must implement AdapterCallback.");
         }
-        this.mContext = context;
         this.items = items;
     }
 

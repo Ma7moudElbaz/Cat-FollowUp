@@ -1,5 +1,6 @@
 package com.example.followup.home.all_job_orders;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -136,6 +137,7 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
         });
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setJobOrdersList(JSONArray list) {
         try {
             for (int i = 0; i < list.length(); i++) {

@@ -17,6 +17,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_companies_from_activity;
@@ -100,9 +102,10 @@ public class AddProjectActivity extends LocalizationActivity implements BottomSh
         dialog.show();
         ws.getApi().getMyTeam(UserUtils.getAccessToken(getBaseContext())).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
+                        assert response.body() != null;
                         JSONObject responseObject = new JSONObject(response.body().string());
                         JSONArray teamArray = responseObject.getJSONArray("data");
                         for (int i = 0; i < teamArray.length(); i++) {
@@ -120,7 +123,7 @@ public class AddProjectActivity extends LocalizationActivity implements BottomSh
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -133,13 +136,14 @@ public class AddProjectActivity extends LocalizationActivity implements BottomSh
         dialog.show();
         ws.getApi().addProject(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.code() == 200 || response.code() == 201) {
                         Toast.makeText(getBaseContext(), "Project Added successfully", Toast.LENGTH_LONG).show();
                         onBackPressed();
 
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
@@ -150,7 +154,7 @@ public class AddProjectActivity extends LocalizationActivity implements BottomSh
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -204,7 +208,7 @@ public class AddProjectActivity extends LocalizationActivity implements BottomSh
     }
 
     private void setSalesSpinner() {
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(), android.R.layout.simple_list_item_1, sales_names);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getBaseContext(), android.R.layout.simple_list_item_1, sales_names);
         sales_contact.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }

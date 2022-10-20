@@ -1,5 +1,6 @@
 package com.example.followup.home.notifications;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -117,6 +118,7 @@ public class NotificationsFragment extends Fragment {
         });
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setNotifications(JSONArray list) {
         try {
             for (int i = 0; i < list.length(); i++) {
@@ -169,9 +171,8 @@ public class NotificationsFragment extends Fragment {
 
     }
 
-    public void readNotification(String notificationId) {
+    public void readAllNotifications() {
         Map<String, String> map = new HashMap<>();
-        map.put("notification_id", notificationId);
         ws.getApi().readNotification(UserUtils.getAccessToken(getContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {

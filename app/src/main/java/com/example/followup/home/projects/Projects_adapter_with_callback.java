@@ -1,5 +1,6 @@
 package com.example.followup.home.projects;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -133,7 +134,8 @@ public class Projects_adapter_with_callback extends RecyclerView.Adapter<Project
         void adapterCallback(String action, int project_id);
     }
 
-    public void showPopup(View v,int position) {
+    @SuppressLint("NonConstantResourceId")
+    public void showPopup(View v, int position) {
         PopupMenu popup = new PopupMenu(mContext, v);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.project_actions, popup.getMenu());

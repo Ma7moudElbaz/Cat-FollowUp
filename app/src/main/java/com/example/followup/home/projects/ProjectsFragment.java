@@ -1,5 +1,6 @@
 package com.example.followup.home.projects;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -119,7 +120,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
                 projects_list.clear();
                 currentPageNum = 1;
                 getProjects(currentPageNum, getFilterMap());
-                hideKeyboardFragment(getContext(), view);
+                hideKeyboardFragment(requireContext(), view);
                 return true;
             }
             return false;
@@ -141,6 +142,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray projectsArray = responseObject.getJSONArray("data");
                     setProjectsList(projectsArray);
@@ -165,6 +167,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         });
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setProjectsList(JSONArray list) {
         try {
             for (int i = 0; i < list.length(); i++) {
@@ -262,25 +265,25 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
 
     @Override
     public void adapterCallback(String action, int project_id) {
-        if (action.equals("cancel")) {
-            new AlertDialog.Builder(getContext())
-                    .setTitle("Are you sure? ")
-                    .setPositiveButton("Yes", (dialog, which) -> {
-                        cancelProject(project_id);
-                    })
-                    .setNegativeButton("Dismiss", null)
-                    .show();
+        switch (action) {
+            case "cancel":
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Are you sure? ")
+                        .setPositiveButton("Yes", (dialog, which) -> cancelProject(project_id))
+                        .setNegativeButton("Dismiss", null)
+                        .show();
 
-        } else if (action.equals("done")) {
-            new AlertDialog.Builder(getContext())
-                    .setTitle("Are you sure? ")
-                    .setPositiveButton("Yes", (dialog, which) -> {
-                        doneProject(project_id);
-                    })
-                    .setNegativeButton("Dismiss", null)
-                    .show();
-        } else if (action.equals("po_number")) {
-            showPoNumberSheet(project_id);
+                break;
+            case "done":
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Are you sure? ")
+                        .setPositiveButton("Yes", (dialog, which) -> doneProject(project_id))
+                        .setNegativeButton("Dismiss", null)
+                        .show();
+                break;
+            case "po_number":
+                showPoNumberSheet(project_id);
+                break;
         }
     }
 
@@ -289,14 +292,15 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         loading.setVisibility(View.VISIBLE);
         WebserviceContext.getInstance().getApi().projectCancel(UserUtils.getAccessToken(getContext()), project_id).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_LONG).show();
                         projects_list.clear();
                         currentPageNum = 1;
                         getProjects(currentPageNum, getFilterMap());
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
@@ -307,7 +311,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 loading.setVisibility(View.GONE);
             }
@@ -319,7 +323,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         loading.setVisibility(View.VISIBLE);
         ws.getApi().projectDone(UserUtils.getAccessToken(getContext()), project_id).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.code() == 200 || response.code() == 201) {
                         Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_LONG).show();
@@ -327,6 +331,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
                         currentPageNum = 1;
                         getProjects(currentPageNum, getFilterMap());
                     } else {
+                        assert response.errorBody() != null;
                         Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException e) {
@@ -336,7 +341,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 loading.setVisibility(View.GONE);
             }
@@ -351,11 +356,12 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         loading.setVisibility(View.VISIBLE);
         ws.getApi().addPoNumber(UserUtils.getAccessToken(getContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         Toast.makeText(getContext(), "PO Added successfully", Toast.LENGTH_LONG).show();
                     } else {
+                        assert response.errorBody() != null;
                         Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException e) {
@@ -365,7 +371,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 loading.setVisibility(View.GONE);
             }
@@ -373,14 +379,14 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     }
 
     @Override
-    public void applyFilterListener(int returenedSelectedStatusIndex) {
-        if (returenedSelectedStatusIndex == -1) {
+    public void applyFilterListener(int returnedSelectedStatusIndex) {
+        if (returnedSelectedStatusIndex == -1) {
             selectedStatus = "";
         } else {
-            selectedStatus = chipsStatus[returenedSelectedStatusIndex];
+            selectedStatus = chipsStatus[returnedSelectedStatusIndex];
         }
 
-        selectedStatusIndex = returenedSelectedStatusIndex;
+        selectedStatusIndex = returnedSelectedStatusIndex;
 
         projects_list.clear();
         currentPageNum = 1;

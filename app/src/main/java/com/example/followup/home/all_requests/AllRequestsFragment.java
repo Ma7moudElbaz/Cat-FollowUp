@@ -1,5 +1,6 @@
 package com.example.followup.home.all_requests;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
@@ -195,6 +196,7 @@ public class AllRequestsFragment extends Fragment implements BottomSheet_choose_
         });
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setPurchaseList(JSONArray list) {
         try {
             for (int i = 0; i < list.length(); i++) {

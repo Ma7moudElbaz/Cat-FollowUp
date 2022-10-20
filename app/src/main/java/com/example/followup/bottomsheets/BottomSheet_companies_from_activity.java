@@ -260,7 +260,7 @@ public class BottomSheet_companies_from_activity extends BottomSheetDialogFragme
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        companies_adapter = new Companies_adapter_with_callback(getContext(), this, companies_list);
+        companies_adapter = new Companies_adapter_with_callback(this, companies_list);
         recyclerView.setAdapter(companies_adapter);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
