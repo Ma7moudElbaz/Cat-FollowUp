@@ -58,7 +58,7 @@
                 android:layout_marginStart="5dp"
                 android:background="@drawable/black_curved"
                 android:padding="10dp"
-                android:src="@drawable/ic_filter"/>
+                android:src="@drawable/ic_filter" />
         </RelativeLayout>
 
         <TextView
@@ -66,12 +66,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="@string/all_companies"
-            android:textSize="16sp"
             android:padding="5dp"
+            android:text="@string/all_companies"
             android:textColor="@color/black"
+            android:textSize="16sp"
             app:drawableEndCompat="@drawable/ic_arrow_down" />
-
 
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -80,11 +79,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_projects" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_projects" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
@@ -109,5 +108,6 @@
         android:id="@+id/loading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true" />
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 </RelativeLayout>

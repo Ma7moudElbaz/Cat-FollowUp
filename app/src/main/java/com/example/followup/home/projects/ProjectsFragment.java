@@ -126,16 +126,13 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
             return false;
         });
 
-        swipe_refresh.setOnRefreshListener(() -> {
-            swipe_refresh.setRefreshing(false);
-            onResume();
-        });
+        swipe_refresh.setOnRefreshListener(this::reloadData);
 
     }
 
 
     public void getProjects(int pageNum, Map<String, String> filterMap) {
-        loading.setVisibility(View.VISIBLE);
+        swipe_refresh.setRefreshing(true);
 
         ws.getApi().getProjects(UserUtils.getAccessToken(getContext()), pageNum, filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -149,7 +146,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
                     JSONObject metaObject = responseObject.getJSONObject("meta");
                     lastPageNum = metaObject.getInt("last_page");
 
-                    loading.setVisibility(View.GONE);
+                    swipe_refresh.setRefreshing(false);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -162,7 +159,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
                 Log.d("commit Test Throw", t.toString());
                 Log.d("Call", t.toString());
                 Toast.makeText(getContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-                loading.setVisibility(View.GONE);
+                swipe_refresh.setRefreshing(false);
             }
         });
     }
@@ -257,6 +254,10 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     @Override
     public void onResume() {
         super.onResume();
+        reloadData();
+    }
+
+    private void reloadData(){
         projects_list.clear();
         currentPageNum = 1;
         getProjects(currentPageNum, getFilterMap());
@@ -397,7 +398,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     public void selectedCompany(String companyName, String companyId) {
         client_company.setText(companyName);
         selectedCompanyId = companyId;
-        onResume();
+        reloadData();
     }
 
     @Override
