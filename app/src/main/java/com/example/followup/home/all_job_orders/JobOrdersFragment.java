@@ -205,6 +205,7 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
     @Override
     public void onResume() {
         super.onResume();
+        reloadData();
     }
 
     private void reloadData(){
