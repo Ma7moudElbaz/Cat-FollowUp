@@ -13,7 +13,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.followup.R;
@@ -46,7 +45,6 @@ public class NotificationsFragment extends Fragment {
     RecyclerView notifications_recycler;
     Notification_adapter notifications_adapter;
 
-    ProgressBar loading;
     int currentPageNum = 1;
     int lastPageNum;
     boolean mHasReachedBottomOnce = false;
@@ -62,25 +60,15 @@ public class NotificationsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         initFields(view);
 
-        swipe_refresh.setOnRefreshListener(() -> {
-            swipe_refresh.setRefreshing(false);
-            onResume();
-        });
+        swipe_refresh.setOnRefreshListener(this::reloadData);
     }
 
     private void initFields(View view) {
-
         ws = new WebserviceContext(getActivity());
         activity = (HomeActivity) getActivity();
-
-//        activity.resetBadge();
-
-        loading = view.findViewById(R.id.loading);
         swipe_refresh = view.findViewById(R.id.swipe_refresh);
-
         notifications_recycler = view.findViewById(R.id.notifications_recycler);
         notifications_list = new ArrayList<>();
-
 
         initNotificationsRecyclerView();
     }
@@ -88,26 +76,30 @@ public class NotificationsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        reloadData();
+    }
+
+    private void reloadData(){
         notifications_list.clear();
         currentPageNum = 1;
         loadNotificationsData(currentPageNum);
     }
 
     public void loadNotificationsData(int pageNum) {
-        loading.setVisibility(View.VISIBLE);
+        swipe_refresh.setRefreshing(true);
 
         ws.getApi().getNotifications(UserUtils.getAccessToken(getContext()), pageNum).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray notificationsArray = responseObject.getJSONArray("data");
                     setNotifications(notificationsArray);
                     JSONObject metaObject = responseObject.getJSONObject("meta");
                     lastPageNum = metaObject.getInt("last_page");
-//                    readNotification();
-                    loading.setVisibility(View.GONE);
+                    swipe_refresh.setRefreshing(false);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -120,7 +112,7 @@ public class NotificationsFragment extends Fragment {
                 Log.d("commit Test Throw", t.toString());
                 Log.d("Call", t.toString());
                 Toast.makeText(getContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-                loading.setVisibility(View.GONE);
+                swipe_refresh.setRefreshing(false);
             }
         });
     }
@@ -179,7 +171,7 @@ public class NotificationsFragment extends Fragment {
 
     public void readNotification(String notificationId) {
         Map<String, String> map = new HashMap<>();
-        map.put("notification_id",notificationId);
+        map.put("notification_id", notificationId);
         ws.getApi().readNotification(UserUtils.getAccessToken(getContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {

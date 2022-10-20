@@ -68,18 +68,24 @@ public class Notification_adapter extends RecyclerView.Adapter<Notification_adap
 
         holder.parent_layout.setOnClickListener(v -> {
             Intent i;
-            if (items.get(position).getAction_type().equals("request") || items.get(position).getAction_type().equals("cost")) {
-                i = new Intent(mContext, RequestDetailsActivity.class);
-                i.putExtra("request_id", items.get(position).getAction_id());
-                mContext.startActivity(i);
-            } else if (items.get(position).getAction_type().equals("jo")|| items.get(position).getAction_type().equals("comment")) {
-                i = new Intent(mContext, JobOrderDetailsActivity.class);
-                i.putExtra("job_order_id", items.get(position).getAction_id());
-                mContext.startActivity(i);
-            } else if (items.get(position).getAction_type().equals("project")) {
-                i = new Intent(mContext, RequestsActivity.class);
-                i.putExtra("project_id", items.get(position).getAction_id());
-                mContext.startActivity(i);
+            switch (items.get(position).getAction_type()) {
+                case "request":
+                case "cost":
+                    i = new Intent(mContext, RequestDetailsActivity.class);
+                    i.putExtra("request_id", items.get(position).getAction_id());
+                    mContext.startActivity(i);
+                    break;
+                case "jo":
+                case "comment":
+                    i = new Intent(mContext, JobOrderDetailsActivity.class);
+                    i.putExtra("job_order_id", items.get(position).getAction_id());
+                    mContext.startActivity(i);
+                    break;
+                case "project":
+                    i = new Intent(mContext, RequestsActivity.class);
+                    i.putExtra("project_id", items.get(position).getAction_id());
+                    mContext.startActivity(i);
+                    break;
             }
 
             if (items.get(position).getRead_at().equalsIgnoreCase("null")) {
