@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -50,10 +51,10 @@ import retrofit2.Response;
 public class AllRequestsFragment extends Fragment implements BottomSheet_choose_filter_all_requests.FilterListener,BottomSheet_projects.SelectedProjectsListener {
 
     RecyclerView recyclerView;
-    ProgressBar loading;
     TextView search, project_name;
     ImageView filterBtn;
     TabLayout requests_tab;
+    SwipeRefreshLayout swipe_refresh;
 
     ArrayList<Request_item> requests_list;
     Request_adapter request_adapter;
@@ -128,18 +129,22 @@ public class AllRequestsFragment extends Fragment implements BottomSheet_choose_
 
             }
         });
+
+        swipe_refresh.setOnRefreshListener(() -> {
+            reloadRequestsData();
+        });
         getRequests(currentPageNum, getFilterMap());
     }
 
     private void initFields(View view) {
         ws = new WebserviceContext(getActivity());
 
-        loading = view.findViewById(R.id.loading);
         search = view.findViewById(R.id.search);
         project_name = view.findViewById(R.id.project_name);
         filterBtn = view.findViewById(R.id.filter_btn);
         recyclerView = view.findViewById(R.id.recycler_view);
         requests_tab = view.findViewById(R.id.requests_tab);
+        swipe_refresh = view.findViewById(R.id.swipe_refresh);
         requests_list = new ArrayList<>();
         initRecyclerView();
     }
@@ -168,7 +173,7 @@ public class AllRequestsFragment extends Fragment implements BottomSheet_choose_
 
 
     public void getRequests(int pageNum, Map<String, String> filterMap) {
-        loading.setVisibility(View.VISIBLE);
+        swipe_refresh.setRefreshing(true);
 
         ws.getApi().getAllRequests(UserUtils.getAccessToken(getContext()), pageNum, filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -181,8 +186,7 @@ public class AllRequestsFragment extends Fragment implements BottomSheet_choose_
                     JSONObject metaObject = responseObject.getJSONObject("meta");
                     lastPageNum = metaObject.getInt("last_page");
 
-                    loading.setVisibility(View.GONE);
-
+                    swipe_refresh.setRefreshing(false);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -194,7 +198,8 @@ public class AllRequestsFragment extends Fragment implements BottomSheet_choose_
                 Log.d("commit Test Throw", t.toString());
                 Log.d("Call", t.toString());
                 Toast.makeText(getContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-                loading.setVisibility(View.GONE);
+//                loading.setVisibility(View.GONE);
+                swipe_refresh.setRefreshing(false);
             }
         });
     }
