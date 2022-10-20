@@ -18,20 +18,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_all_requests;
-import com.example.followup.bottomsheets.BottomSheet_choose_filter_requests;
-import com.example.followup.bottomsheets.BottomSheet_companies;
 import com.example.followup.bottomsheets.BottomSheet_projects;
-import com.example.followup.home.projects.ProjectsFragment;
-import com.example.followup.requests.RequestsActivity;
-import com.example.followup.requests.list.adapters.Purchase_adapter;
-import com.example.followup.requests.list.models.Purchase_item;
-import com.example.followup.requests.view.attaches.Attach_item;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 import com.google.android.material.tabs.TabLayout;
@@ -108,7 +100,7 @@ public class AllRequestsFragment extends Fragment implements BottomSheet_choose_
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 reloadRequestsData();
-                hideKeyboardFragment(getContext(), view);
+                hideKeyboardFragment(requireContext(), view);
                 return true;
             }
             return false;
@@ -130,9 +122,7 @@ public class AllRequestsFragment extends Fragment implements BottomSheet_choose_
             }
         });
 
-        swipe_refresh.setOnRefreshListener(() -> {
-            reloadRequestsData();
-        });
+        swipe_refresh.setOnRefreshListener(this::reloadRequestsData);
         getRequests(currentPageNum, getFilterMap());
     }
 
@@ -180,6 +170,7 @@ public class AllRequestsFragment extends Fragment implements BottomSheet_choose_
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray requestsArray = responseObject.getJSONArray("data");
                     setPurchaseList(requestsArray);
