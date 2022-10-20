@@ -68,7 +68,7 @@ public class BottomSheet_choose_reason extends BottomSheetDialogFragment {
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
     }
@@ -85,6 +85,7 @@ public class BottomSheet_choose_reason extends BottomSheetDialogFragment {
     public void sendBackResult(String reason,String type) {
         // Notice the use of `getTargetFragment` which will be set when the dialog is displayed
         ReasonSubmitListener listener = (ReasonSubmitListener) getActivity();
+        assert listener != null;
         listener.reasonSubmitListener(reason,type);
         dismiss();
     }

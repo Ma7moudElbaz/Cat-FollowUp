@@ -89,7 +89,7 @@ public class BottomSheet_suppliers extends BottomSheetDialogFragment implements 
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
     }
@@ -123,6 +123,7 @@ public class BottomSheet_suppliers extends BottomSheetDialogFragment implements 
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray suppliersArray = responseObject.getJSONArray("data");
                     setSuppliersList(suppliersArray);

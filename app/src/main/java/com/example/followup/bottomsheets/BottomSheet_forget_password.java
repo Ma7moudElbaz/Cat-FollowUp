@@ -65,7 +65,7 @@ public class BottomSheet_forget_password extends BottomSheetDialogFragment {
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
     }

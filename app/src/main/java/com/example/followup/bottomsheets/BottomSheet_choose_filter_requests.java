@@ -73,7 +73,7 @@ public class BottomSheet_choose_filter_requests extends BottomSheetDialogFragmen
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
     }
@@ -89,6 +89,7 @@ public class BottomSheet_choose_filter_requests extends BottomSheetDialogFragmen
 
     public void sendBackResult(int selectedStatusIndex) {
         FilterListener listener = (FilterListener) getActivity();
+        assert listener != null;
         listener.applyFilterListener(selectedStatusIndex);
         dismiss();
     }

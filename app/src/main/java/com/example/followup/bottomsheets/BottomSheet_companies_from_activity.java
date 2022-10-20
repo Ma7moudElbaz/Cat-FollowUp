@@ -51,12 +51,6 @@ public class BottomSheet_companies_from_activity extends BottomSheetDialogFragme
         this.selectedCompanyListener = ((BottomSheet_companies_from_activity.SelectedCompanyListener) activity);
     }
 
-
-    public static void hideKeyboardFragment(Context context, View view) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,7 +130,7 @@ public class BottomSheet_companies_from_activity extends BottomSheetDialogFragme
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
     }
@@ -174,6 +168,7 @@ public class BottomSheet_companies_from_activity extends BottomSheetDialogFragme
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray companiesArray = responseObject.getJSONArray("data");
                     setCompaniesList(companiesArray);
@@ -212,6 +207,7 @@ public class BottomSheet_companies_from_activity extends BottomSheetDialogFragme
                         company_name.setText("");
                         Toast.makeText(getContext(), "Company Added Successfully and waiting admin approval", Toast.LENGTH_SHORT).show();
                     } else {
+                        assert response.body() != null;
                         JSONObject responseObject = new JSONObject(response.body().string());
                         Toast.makeText(getContext(), responseObject.getString("error"), Toast.LENGTH_SHORT).show();
                     }

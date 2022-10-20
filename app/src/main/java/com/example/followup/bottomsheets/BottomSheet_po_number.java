@@ -1,5 +1,6 @@
 package com.example.followup.bottomsheets;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -39,6 +40,7 @@ public class BottomSheet_po_number extends BottomSheetDialogFragment {
     RadioGroup po_type;
     String po_number_text = "";
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -78,7 +80,7 @@ public class BottomSheet_po_number extends BottomSheetDialogFragment {
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
     }
@@ -95,6 +97,7 @@ public class BottomSheet_po_number extends BottomSheetDialogFragment {
     public void sendBackResult(String poNumber, String type) {
         // Notice the use of `getTargetFragment` which will be set when the dialog is displayed
         PoNumberSubmitListener listener = (PoNumberSubmitListener) getActivity();
+        assert listener != null;
         listener.poNumberSubmitListener(poNumber, type);
         dismiss();
     }

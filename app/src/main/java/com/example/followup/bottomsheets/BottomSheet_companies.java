@@ -1,7 +1,6 @@
 package com.example.followup.bottomsheets;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +8,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -52,11 +50,6 @@ public class BottomSheet_companies extends BottomSheetDialogFragment implements 
         this.selectedCompanyListener = ((BottomSheet_companies.SelectedCompanyListener) fragment);
     }
 
-
-    public static void hideKeyboardFragment(Context context, View view) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -137,7 +130,7 @@ public class BottomSheet_companies extends BottomSheetDialogFragment implements 
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
     }
@@ -175,6 +168,7 @@ public class BottomSheet_companies extends BottomSheetDialogFragment implements 
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray companiesArray = responseObject.getJSONArray("data");
                     setCompaniesList(companiesArray);
@@ -213,6 +207,7 @@ public class BottomSheet_companies extends BottomSheetDialogFragment implements 
                         company_name.setText("");
                         Toast.makeText(getContext(), "Company Added Successfully and waiting admin approval", Toast.LENGTH_SHORT).show();
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject responseObject = new JSONObject(response.errorBody().string());
                         Toast.makeText(getContext(), responseObject.getString("error"), Toast.LENGTH_SHORT).show();
                     }

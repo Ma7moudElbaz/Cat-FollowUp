@@ -50,12 +50,6 @@ public class BottomSheet_projects extends BottomSheetDialogFragment implements C
         this.selectedProjectListener = ((SelectedProjectsListener) fragment);
     }
 
-
-    public static void hideKeyboardFragment(Context context, View view) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +74,7 @@ public class BottomSheet_projects extends BottomSheetDialogFragment implements C
     RecyclerView recyclerView;
     ProgressBar loading;
     WebserviceContext ws;
-    EditText search, company_name;
+    EditText search;
 
 
     @Override
@@ -118,7 +112,7 @@ public class BottomSheet_projects extends BottomSheetDialogFragment implements C
     }
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
     }
@@ -156,6 +150,7 @@ public class BottomSheet_projects extends BottomSheetDialogFragment implements C
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray companiesArray = responseObject.getJSONArray("data");
                     setProjectsList(companiesArray);

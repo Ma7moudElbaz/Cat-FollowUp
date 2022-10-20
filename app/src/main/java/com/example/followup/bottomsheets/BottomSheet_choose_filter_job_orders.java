@@ -73,7 +73,7 @@ public class BottomSheet_choose_filter_job_orders extends BottomSheetDialogFragm
 
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
     }
@@ -90,6 +90,7 @@ public class BottomSheet_choose_filter_job_orders extends BottomSheetDialogFragm
 
     public void sendBackResult(int selectedStatusIndex) {
         FilterListener listener = (FilterListener) getActivity();
+        assert listener != null;
         listener.applyFilterListener(selectedStatusIndex);
         dismiss();
     }
