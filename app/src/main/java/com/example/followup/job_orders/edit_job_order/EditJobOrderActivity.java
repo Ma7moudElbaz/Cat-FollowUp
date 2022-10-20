@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -55,10 +57,7 @@ public class EditJobOrderActivity extends AppCompatActivity implements Edit_job_
         setContentView(R.layout.activity_edit_job_order);
         initFields();
         back.setOnClickListener(v -> onBackPressed());
-        submit.setOnClickListener(view -> {
-//                setJobOrderMap(edit_job_order_requests_list);
-            editJobOrder(edit_job_order_requests_list);
-        });
+        submit.setOnClickListener(view -> editJobOrder(edit_job_order_requests_list));
         getJobOrderRequests();
     }
 
@@ -95,6 +94,7 @@ public class EditJobOrderActivity extends AppCompatActivity implements Edit_job_
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray jobOrdersArray = responseObject.getJSONObject("data").getJSONArray("requests");
                     String supplierNameText = responseObject.getJSONObject("data").getJSONObject("jo").getString("supplier_name");
@@ -118,6 +118,7 @@ public class EditJobOrderActivity extends AppCompatActivity implements Edit_job_
         });
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setJobOrderRequestsList(JSONArray list) {
         edit_job_order_requests_list.clear();
         try {
@@ -147,13 +148,14 @@ public class EditJobOrderActivity extends AppCompatActivity implements Edit_job_
         dialog.show();
         ws.getApi().editJobOrder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.code() == 200 || response.code() == 201) {
                         Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
                         onBackPressed();
 
                     } else {
+                        assert response.errorBody() != null;
                         Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException e) {
@@ -163,7 +165,7 @@ public class EditJobOrderActivity extends AppCompatActivity implements Edit_job_
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -197,7 +199,7 @@ public class EditJobOrderActivity extends AppCompatActivity implements Edit_job_
         map.put("actual_costs", actual_costs.toString());
         map.put("quantity", quantity.toString());
         map.put("cost_per_type", cost_per_id.toString());
-        map.put("supplier_name", supplier_name.getText().toString());
+        map.put("supplier_name", Objects.requireNonNull(supplier_name.getText()).toString());
 
         Log.e("requests map", map.toString());
         return map;
@@ -214,13 +216,14 @@ public class EditJobOrderActivity extends AppCompatActivity implements Edit_job_
         dialog.show();
         ws.getApi().deleteJobOrderRequest(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Request deleted successfully", Toast.LENGTH_LONG).show();
                         getJobOrderRequests();
 
                     } else {
+                        assert response.errorBody() != null;
                         Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException e) {
@@ -230,7 +233,7 @@ public class EditJobOrderActivity extends AppCompatActivity implements Edit_job_
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -241,9 +244,7 @@ public class EditJobOrderActivity extends AppCompatActivity implements Edit_job_
     public void adapterCallback(int job_order_request_id, String reason) {
         new AlertDialog.Builder(this)
                 .setTitle("Are you sure? ")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    deleteJobOrderRequest(String.valueOf(job_order_request_id),reason);
-                })
+                .setPositiveButton("Yes", (dialog, which) -> deleteJobOrderRequest(String.valueOf(job_order_request_id),reason))
                 .setNegativeButton("Dismiss", null)
                 .show();
     }

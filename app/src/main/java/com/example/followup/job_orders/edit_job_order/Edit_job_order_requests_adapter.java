@@ -24,13 +24,11 @@ public class Edit_job_order_requests_adapter extends RecyclerView.Adapter<Edit_j
 
     private final List<Edit_job_order_request_item> items;
 
-    private final Context mContext;
     private final AdapterCallback mAdapterCallback;
 
 
     public Edit_job_order_requests_adapter(Context context, ArrayList<Edit_job_order_request_item> items) {
         this.mAdapterCallback = ((AdapterCallback) context);
-        this.mContext = context;
         this.items = items;
     }
 
@@ -41,6 +39,7 @@ public class Edit_job_order_requests_adapter extends RecyclerView.Adapter<Edit_j
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull Edit_job_order_requests_adapter.ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.request_name.setText(items.get(position).getRequest_name());
