@@ -134,7 +134,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
                 @Override
                 public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     try {
-                        if (response.code() == 200) {
+                        if (response.isSuccessful()) {
                             assert response.body() != null;
                             JSONObject res = new JSONObject(response.body().string());
                             String accessToken = res.getString("access_token");

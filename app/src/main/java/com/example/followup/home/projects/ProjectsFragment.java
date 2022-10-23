@@ -326,7 +326,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         Toast.makeText(getContext(), "Updated successfully", Toast.LENGTH_LONG).show();
                         projects_list.clear();
                         currentPageNum = 1;

@@ -122,7 +122,7 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() != 200) {
+                    if (response.isSuccessful()) {
                         assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getContext(), res.getString("error"), Toast.LENGTH_LONG).show();
