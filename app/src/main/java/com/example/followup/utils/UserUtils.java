@@ -100,16 +100,4 @@ public class UserUtils {
     public static String getUserEmail(Context context) {
         return getSharedPreferences(context).getString("userEmail", "");
     }
-
-    public static void setSubscribedTopic(Context context,String userName){
-        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
-        editor.putString("subscribedTopic", userName);
-        editor.apply();
-    }
-
-
-    public static String getSubscribedTopic(Context context) {
-        return getSharedPreferences(context).getString("subscribedTopic", "");
-    }
-
 }

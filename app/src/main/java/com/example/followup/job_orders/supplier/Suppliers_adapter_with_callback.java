@@ -21,16 +21,14 @@ public class Suppliers_adapter_with_callback extends RecyclerView.Adapter<Suppli
 
     private final List<Supplier_item> items;
 
-    private final Context mContext;
     private final AdapterCallback mAdapterCallback;
 
-    public Suppliers_adapter_with_callback(Context context, Fragment fragment, ArrayList<Supplier_item> items) {
+    public Suppliers_adapter_with_callback(Fragment fragment, ArrayList<Supplier_item> items) {
         try {
             this.mAdapterCallback = ((AdapterCallback) fragment);
         } catch (ClassCastException e) {
             throw new ClassCastException("Fragment must implement AdapterCallback.");
         }
-        this.mContext = context;
         this.items = items;
     }
 

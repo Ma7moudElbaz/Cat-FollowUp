@@ -126,10 +126,6 @@ public interface ServiceInterface {
     Call<ResponseBody> cancelRequest(@Header("Authorization") String auth, @Path("request_id") int request_id, @FieldMap Map<String, String> map);
 
     //costs
-    @POST("costs")
-    @FormUrlEncoded
-    Call<ResponseBody> addCost(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
-
     @Multipart
     @POST("costs")
     Call<ResponseBody> addCostData(@Header("Authorization") String auth, @Part List<MultipartBody.Part> files, @PartMap Map<String, RequestBody> map);

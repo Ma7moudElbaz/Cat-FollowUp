@@ -1,5 +1,6 @@
 package com.example.followup.requests.add;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.view.View;
@@ -8,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
@@ -44,6 +47,7 @@ public class AddPhotographyActivity extends LocalizationActivity {
 
     WebserviceContext ws;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -156,26 +160,6 @@ public class AddPhotographyActivity extends LocalizationActivity {
             props_specify.setError("This is required field");
             return false;
         }
-//        if (country.length() == 0) {
-//            country.setError("This is required field");
-//            return false;
-//        }
-//        if (camera_type.length() == 0) {
-//            camera_type.setError("This is required field");
-//            return false;
-//        }
-//        if (number_of_cameras.length() == 0) {
-//            number_of_cameras.setError("This is required field");
-//            return false;
-//        }
-//        if (description.length() == 0) {
-//            description.setError("This is required field");
-//            return false;
-//        }
-//        if (notes.length() == 0) {
-//            notes.setError("This is required field");
-//            return false;
-//        }
         return true;
     }
 
@@ -185,13 +169,14 @@ public class AddPhotographyActivity extends LocalizationActivity {
         dialog.show();
         ws.getApi().addRequest(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.code() == 200 || response.code() == 201) {
                         Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
                         onBackPressed();
 
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
@@ -202,7 +187,7 @@ public class AddPhotographyActivity extends LocalizationActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }

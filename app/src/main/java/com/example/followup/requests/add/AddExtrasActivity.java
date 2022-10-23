@@ -1,5 +1,6 @@
 package com.example.followup.requests.add;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
@@ -78,10 +79,6 @@ public class AddExtrasActivity extends AppCompatActivity {
             description.setError("This is required field");
             return false;
         }
-//        if (address.length() == 0) {
-//            address.setError("This is required field");
-//            return false;
-//        }
         return true;
     }
 
@@ -91,13 +88,14 @@ public class AddExtrasActivity extends AppCompatActivity {
         dialog.show();
         ws.getApi().addRequest(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
                         onBackPressed();
 
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
@@ -108,7 +106,7 @@ public class AddExtrasActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }

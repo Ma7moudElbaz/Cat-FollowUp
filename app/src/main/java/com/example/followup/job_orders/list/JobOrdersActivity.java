@@ -1,5 +1,6 @@
 package com.example.followup.job_orders.list;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -49,11 +50,6 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
         BottomSheet_choose_filter_job_orders langBottomSheet =
                 new BottomSheet_choose_filter_job_orders(selectedStatusIndex);
         langBottomSheet.show(getSupportFragmentManager(), "jo_filter");
-    }
-
-    public static void hideKeyboardFragment(Context context, View view) {
-        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     public static void hideKeyboardActivity(Activity activity) {
@@ -163,6 +159,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
 
                 try {
                     if (response.isSuccessful()) {
+                        assert response.body() != null;
                         JSONObject responseObject = new JSONObject(response.body().string());
                         JSONArray jobOrdersArray = responseObject.getJSONArray("data");
                         setJobOrdersList(jobOrdersArray);
@@ -188,6 +185,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
         });
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setJobOrdersList(JSONArray list) {
         try {
             for (int i = 0; i < list.length(); i++) {
@@ -311,12 +309,13 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
         dialog.show();
         ws.getApi().addPoNumber(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "PO Added successfully", Toast.LENGTH_LONG).show();
                         has_po_number = true;
                     } else {
+                        assert response.errorBody() != null;
                         Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException e) {
@@ -326,7 +325,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }

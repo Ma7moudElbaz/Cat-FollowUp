@@ -69,12 +69,6 @@ public class Job_orders_requests_adapter extends RecyclerView.Adapter<Job_orders
             holder.checkBox.setChecked(false);
         }
 
-//        if (items.get(position).isChecked()) {
-//            holder.final_cost_container.setVisibility(View.VISIBLE);
-//        } else {
-//            holder.final_cost_container.setVisibility(View.GONE);
-//        }
-
         holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             items.get(position).setChecked(isChecked);
             if (isChecked) {

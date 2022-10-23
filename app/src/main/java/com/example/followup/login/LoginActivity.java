@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.BuildConfig;
 import com.example.followup.R;
@@ -27,6 +29,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -90,14 +93,14 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
 
         ws.getApi().checkAppVersion(versionName).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (!response.isSuccessful()) {
                     showUpdateDialog();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
             }
         });
@@ -118,29 +121,31 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
 
     public void login() {
         Map<String, String> map = new HashMap<>();
-        final String emailtxt = email.getText().toString();
-        final String passwordtxt = password.getText().toString();
+        final String emailTxt = Objects.requireNonNull(email.getText()).toString();
+        final String passwordTxt = Objects.requireNonNull(password.getText()).toString();
 
-        if (emailtxt.length() == 0 || passwordtxt.length() == 0) {
+        if (emailTxt.length() == 0 || passwordTxt.length() == 0) {
             Toast.makeText(getBaseContext(), R.string.fill_fields, Toast.LENGTH_SHORT).show();
         } else {
-            map.put("email", emailtxt);
-            map.put("password", passwordtxt);
+            map.put("email", emailTxt);
+            map.put("password", passwordTxt);
             dialog.show();
             ws.getApi().login(map).enqueue(new Callback<ResponseBody>() {
                 @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     try {
                         if (response.code() == 200) {
+                            assert response.body() != null;
                             JSONObject res = new JSONObject(response.body().string());
                             String accessToken = res.getString("access_token");
                             UserUtils.setAccessToken(getBaseContext(), accessToken);
-                            UserUtils.setLoginData(getBaseContext(), emailtxt, passwordtxt);
+                            UserUtils.setLoginData(getBaseContext(), emailTxt, passwordTxt);
                             setMyData(res.getJSONObject("me"));
                             updateDeviceToken();
 
                         } else {
 
+                            assert response.errorBody() != null;
                             JSONObject res = new JSONObject(response.errorBody().string());
                             Toast.makeText(LoginActivity.this, res.getString("error"), Toast.LENGTH_LONG).show();
                         }
@@ -151,7 +156,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                     Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                 }
@@ -184,52 +189,6 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
 
     }
 
-    private void subscribeToFirebaseTopic(int department_id) {
-
-        String topicToSubscribe = "";
-        switch (department_id) {
-            case 2:
-                topicToSubscribe = "nagat";
-                break;
-            case 3:
-                topicToSubscribe = "magdy";
-                break;
-            case 4:
-                topicToSubscribe = "hisham";
-                break;
-            case 5:
-                topicToSubscribe = "sherif";
-                break;
-            case 6:
-                topicToSubscribe = "gamal";
-                break;
-            case 7:
-                topicToSubscribe = "naser";
-                break;
-            case 9:
-                topicToSubscribe = "hossam";
-                break;
-            case 10:
-                topicToSubscribe = "adel";
-                break;
-            case 11:
-                topicToSubscribe = "hazem";
-                break;
-            case 12:
-                topicToSubscribe = "spranza";
-                break;
-            case 13:
-                topicToSubscribe = "hany";
-                break;
-        }
-
-        if (UserUtils.getSubscribedTopic(getBaseContext()) != null) {
-            FirebaseMessaging.getInstance().unsubscribeFromTopic(UserUtils.getSubscribedTopic(getBaseContext()));
-        }
-        UserUtils.setSubscribedTopic(getBaseContext(), topicToSubscribe);
-        FirebaseMessaging.getInstance().subscribeToTopic(topicToSubscribe);
-    }
-
     public void updateDeviceToken() {
         Map<String, String> map = new HashMap<>();
         FirebaseMessaging.getInstance().getToken().addOnSuccessListener(token -> {
@@ -238,21 +197,19 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
             map.put("device_token", device_token);
             ws.getApi().updateToken(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
                 @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     try {
-                        if (response.code() == 200) {
-                            JSONObject res = new JSONObject(response.body().string());
-//                        Toast.makeText(getBaseContext(), res.toString(), Toast.LENGTH_LONG).show();
-                        } else {
+                        if (!response.isSuccessful()) {
+                            assert response.errorBody() != null;
                             Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
                         }
-                    } catch (IOException | JSONException e) {
+                    } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                     Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -267,14 +224,16 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
         dialog.show();
         ws.getApi().forgetPassword(map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
 
+                        assert response.body() != null;
                         JSONObject res = new JSONObject(response.body().string());
                         Toast.makeText(getBaseContext(), res.getString("message"), Toast.LENGTH_SHORT).show();
 
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("message"), Toast.LENGTH_LONG).show();
                     }
@@ -285,7 +244,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }

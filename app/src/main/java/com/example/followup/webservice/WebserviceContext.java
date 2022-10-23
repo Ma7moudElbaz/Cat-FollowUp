@@ -51,13 +51,7 @@ public class WebserviceContext {
             Response response = chain.proceed(request);
             Log.e("Response", "Code : " + response.code());
 
-//            mActivity.runOnUiThread(() -> new AlertDialog.Builder(mActivity)
-//                    .setTitle("test Done")
-//                    .setPositiveButton("Done", (dialog, which) -> {
-//                        dialog.dismiss();
-//                    })
-//                    .show());
-
+//
             if (response.code() == 401) {
                 mActivity.runOnUiThread(() -> new AlertDialog.Builder(mActivity)
                         .setTitle("Session Expired")
@@ -66,7 +60,7 @@ public class WebserviceContext {
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                             mActivity.startActivity(i);
                         })
-                        .setCancelable(false)
+                        .setCancelable(true)
                         .show());
                 return response;
             }

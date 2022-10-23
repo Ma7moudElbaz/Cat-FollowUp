@@ -1,6 +1,7 @@
 package com.example.followup.requests.add;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -16,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
@@ -69,6 +72,7 @@ public class AddProductionActivity extends LocalizationActivity {
 
     WebserviceContext ws;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,26 +80,23 @@ public class AddProductionActivity extends LocalizationActivity {
         initFields();
         back.setOnClickListener(v -> onBackPressed());
 
-        choose_file.setOnClickListener(v -> {
-
-            Dexter.withContext(getBaseContext())
-                    .withPermissions(
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                    ).withListener(new MultiplePermissionsListener() {
-                @Override
-                public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
-                    if (multiplePermissionsReport.areAllPermissionsGranted()) {
-                        pickFromGallery();
-                    }
+        choose_file.setOnClickListener(v -> Dexter.withContext(getBaseContext())
+                .withPermissions(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                ).withListener(new MultiplePermissionsListener() {
+            @Override
+            public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                if (multiplePermissionsReport.areAllPermissionsGranted()) {
+                    pickFromGallery();
                 }
+            }
 
-                @Override
-                public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
 
-                }
-            }).check();
-        });
+            }
+        }).check());
         delivery_date.setOnClickListener(v -> showDatePicker(delivery_date));
         delivery_date.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
@@ -183,14 +184,6 @@ public class AddProductionActivity extends LocalizationActivity {
             quantity.setError("This is required field");
             return false;
         }
-//        if (description.length() == 0) {
-//            description.setError("This is required field");
-//            return false;
-//        }
-//        if (notes.length() == 0) {
-//            notes.setError("This is required field");
-//            return false;
-//        }
         if (designer_in_charge.length() == 0) {
             designer_in_charge.setError("This is required field");
             return false;
@@ -208,9 +201,10 @@ public class AddProductionActivity extends LocalizationActivity {
         dialog.show();
         ws.getApi().addRequest(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
+                        assert response.body() != null;
                         JSONObject responseObject = new JSONObject(response.body().string());
                         if (filesSelected.size() != 0) {
                             addRequestAttaches(responseObject.getJSONObject("data").getString("id"));
@@ -221,6 +215,7 @@ public class AddProductionActivity extends LocalizationActivity {
                         }
 
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                         dialog.dismiss();
@@ -231,7 +226,7 @@ public class AddProductionActivity extends LocalizationActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -280,30 +275,24 @@ public class AddProductionActivity extends LocalizationActivity {
 
 
     public void addRequestAttaches(final String requestId) {
-//        dialog.show();
 
         List<MultipartBody.Part> fileToUpload = addAttaches(filesSelected);
         RequestBody request_id = RequestBody.create(MediaType.parse("text/plain"), requestId);
 
         ws.getApi().addAttach(UserUtils.getAccessToken(getBaseContext()), fileToUpload, request_id).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     if (response.isSuccessful()) {
-                        JSONObject res = new JSONObject(response.body().string());
                         Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
                     } else {
                         Toast.makeText(getBaseContext(), "Request Added successfully but attachment failed", Toast.LENGTH_LONG).show();
                     }
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
-                }
                 dialog.dismiss();
                 onBackPressed();
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 Log.d("Request failure", call + " , " + t.getMessage());
                 dialog.dismiss();

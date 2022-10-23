@@ -1,6 +1,7 @@
 package com.example.followup.requests.add;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,6 +15,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
@@ -63,6 +66,7 @@ public class AddPurchaseActivity extends LocalizationActivity {
 
     WebserviceContext ws;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,26 +75,23 @@ public class AddPurchaseActivity extends LocalizationActivity {
 
         back.setOnClickListener(v -> onBackPressed());
 
-        choose_file.setOnClickListener(v -> {
-
-            Dexter.withContext(getBaseContext())
-                    .withPermissions(
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                    ).withListener(new MultiplePermissionsListener() {
-                @Override
-                public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
-                    if (multiplePermissionsReport.areAllPermissionsGranted()) {
-                        pickFromGallery();
+        choose_file.setOnClickListener(v -> Dexter.withContext(getBaseContext())
+                .withPermissions(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                        if (multiplePermissionsReport.areAllPermissionsGranted()) {
+                            pickFromGallery();
+                        }
                     }
-                }
 
-                @Override
-                public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
 
-                }
-            }).check();
-        });
+                    }
+                }).check());
 
         branding.setOnCheckedChangeListener((group, checkedId) -> {
             switch (checkedId) {
@@ -160,18 +161,6 @@ public class AddPurchaseActivity extends LocalizationActivity {
             brand.setError("This is required field");
             return false;
         }
-//        if (material.length() == 0) {
-//            material.setError("This is required field");
-//            return false;
-//        }
-//        if (description.length() == 0) {
-//            description.setError("This is required field");
-//            return false;
-//        }
-//        if (notes.length() == 0) {
-//            notes.setError("This is required field");
-//            return false;
-//        }
         return true;
     }
 
@@ -181,9 +170,10 @@ public class AddPurchaseActivity extends LocalizationActivity {
         dialog.show();
         ws.getApi().addRequest(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
+                        assert response.body() != null;
                         JSONObject responseObject = new JSONObject(response.body().string());
                         if (filesSelected.size() != 0) {
                             addRequestAttaches(responseObject.getJSONObject("data").getString("id"));
@@ -193,8 +183,10 @@ public class AddPurchaseActivity extends LocalizationActivity {
                         }
 
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
-                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
+                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
                         dialog.dismiss();
                     }
                 } catch (IOException | JSONException e) {
@@ -203,7 +195,7 @@ public class AddPurchaseActivity extends LocalizationActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -240,17 +232,13 @@ public class AddPurchaseActivity extends LocalizationActivity {
 
         ws.getApi().addAttach(UserUtils.getAccessToken(getBaseContext()), fileToUpload, request_id).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    if (response.code() == 200 || response.code() == 201) {
-                        JSONObject res = new JSONObject(response.body().string());
-                        Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getBaseContext(), "Request Added successfully but attachment failed", Toast.LENGTH_LONG).show();
-                    }
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Request Added successfully but attachment failed", Toast.LENGTH_LONG).show();
                 }
+
                 dialog.dismiss();
                 onBackPressed();
             }
@@ -311,25 +299,24 @@ public class AddPurchaseActivity extends LocalizationActivity {
         // Result code is RESULT_OK only if the user selects an Image
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK)
-            switch (requestCode) {
-                case FILES_REQUEST_CODE:
-                    filesSelected.clear();
-                    //data.getData returns the content URI for the selected files
-                    if (data == null) {
-                        return;
-                    } else if (data.getClipData() != null) {
-                        for (int i = 0; i < data.getClipData().getItemCount(); i++) {
-                            Uri uri = data.getClipData().getItemAt(i).getUri();
-                            filesSelected.add(RealPathUtil.getRealPath(getBaseContext(),uri));
-                        }
-                    } else {
-
-                        Uri uri = data.getData();
-                        filesSelected.add(RealPathUtil.getRealPath(getBaseContext(),uri));
+            if (requestCode == FILES_REQUEST_CODE) {
+                filesSelected.clear();
+                //data.getData returns the content URI for the selected files
+                if (data == null) {
+                    return;
+                } else if (data.getClipData() != null) {
+                    for (int i = 0; i < data.getClipData().getItemCount(); i++) {
+                        Uri uri = data.getClipData().getItemAt(i).getUri();
+                        filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
                     }
-                    filesChosen.setText(filesSelected.size() + " Files Selected");
+                } else {
 
-                    Log.e("Data selected", filesSelected.toString());
+                    Uri uri = data.getData();
+                    filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
+                }
+                filesChosen.setText(filesSelected.size() + " Files Selected");
+
+                Log.e("Data selected", filesSelected.toString());
             }
     }
 }

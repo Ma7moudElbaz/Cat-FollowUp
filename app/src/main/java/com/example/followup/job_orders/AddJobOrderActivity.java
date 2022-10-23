@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -19,7 +20,6 @@ import android.widget.Toast;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
-import com.example.followup.bottomsheets.BottomSheet_choose_reason;
 import com.example.followup.bottomsheets.BottomSheet_suppliers;
 import com.example.followup.job_orders.job_order_requests.Job_order_request_item;
 import com.example.followup.job_orders.job_order_requests.Job_orders_requests_adapter;
@@ -60,12 +60,6 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
     int projectId;
 
     WebserviceContext ws;
-
-    public void showJONameSheet() {
-        BottomSheet_choose_reason langBottomSheet =
-                new BottomSheet_choose_reason("Job Order Name", "Job Order Name", "", "po");
-        langBottomSheet.show(getSupportFragmentManager(), "jo");
-    }
 
     public void showSuppliersSheet() {
         BottomSheet_suppliers suppliersBottomSheet =
@@ -137,6 +131,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray jobOrdersArray = responseObject.getJSONArray("data");
                     setJobOrderRequestsList(jobOrdersArray);
@@ -169,11 +164,10 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray jobOrdersArray = responseObject.getJSONArray("data");
                     setJobOrderExtrasList(jobOrdersArray);
-//                    JSONObject metaObject = responseObject.getJSONObject("meta");
-//                    lastPageNum = metaObject.getInt("last_page");
                     extras_loading.setVisibility(View.GONE);
 
                 } catch (Exception e) {
@@ -192,6 +186,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         });
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setJobOrderRequestsList(JSONArray list) {
         try {
             for (int i = 0; i < list.length(); i++) {
@@ -219,6 +214,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setJobOrderExtrasList(JSONArray list) {
         try {
             for (int i = 0; i < list.length(); i++) {
@@ -250,13 +246,14 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         dialog.show();
         ws.getApi().addJobOrder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Job Order Added successfully", Toast.LENGTH_LONG).show();
                         onBackPressed();
 
                     } else {
+                        assert response.errorBody() != null;
                         Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
                     }
                 } catch (IOException e) {
@@ -266,7 +263,7 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -296,8 +293,8 @@ public class AddJobOrderActivity extends LocalizationActivity implements BottomS
         map.put("project_id", String.valueOf(projectId));
         int type_id_data = request_types_spinner.getSelectedItemPosition() + 1;
         map.put("type_id", String.valueOf(type_id_data));
-        map.put("request_ids", requestIds.toString());
-        map.put("actual_costs", actual_costs.toString());
+        map.put("request_ids", requestIds);
+        map.put("actual_costs", actual_costs);
 
         Log.e("TAG", map.toString());
         return map;

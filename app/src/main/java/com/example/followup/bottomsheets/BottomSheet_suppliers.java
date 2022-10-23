@@ -167,7 +167,7 @@ public class BottomSheet_suppliers extends BottomSheetDialogFragment implements 
     private void initRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(layoutManager);
-        suppliers_adapter = new Suppliers_adapter_with_callback(getContext(), this, suppliers_list);
+        suppliers_adapter = new Suppliers_adapter_with_callback(this, suppliers_list);
         recyclerView.setAdapter(suppliers_adapter);
 
     }
