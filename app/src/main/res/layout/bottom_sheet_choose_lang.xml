@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -8,8 +9,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:padding="20dp"
-        android:orientation="vertical">
+        tools:ignore="UselessParent">
 
         <ImageView
             android:id="@+id/img_close"
@@ -17,9 +19,9 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:adjustViewBounds="true"
+            android:contentDescription="@string/description"
             android:src="@drawable/ic_close"
-            app:tint="@color/black"
-            android:contentDescription="@string/description" />
+            app:tint="@color/black" />
 
         <TextView
             android:id="@+id/name"
@@ -36,9 +38,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:gravity="end"
             android:divider="@color/gray"
-            android:dividerPadding="5dp">
+            android:dividerPadding="5dp"
+            android:gravity="end">
 
 
             <com.google.android.material.radiobutton.MaterialRadioButton
@@ -48,8 +50,8 @@
                 android:text="@string/english"
                 android:textAlignment="viewStart"
                 android:textColor="@color/gray"
-                app:buttonTint="@color/colorAccent"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                app:buttonTint="@color/colorAccent" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/radio_ar"
@@ -59,8 +61,8 @@
                 android:text="@string/arabic"
                 android:textAlignment="viewStart"
                 android:textColor="@color/gray"
-                app:buttonTint="@color/colorAccent"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                app:buttonTint="@color/colorAccent" />
 
         </RadioGroup>
 

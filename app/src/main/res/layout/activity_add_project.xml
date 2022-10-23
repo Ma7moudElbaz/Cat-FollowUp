@@ -52,8 +52,8 @@
                 android:id="@+id/country_select"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/country_cat"
@@ -66,8 +66,8 @@
                     android:id="@+id/country_237"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/logo_237"
-                    android:layout_marginStart="30dp"/>
+                    android:layout_marginStart="30dp"
+                    android:drawableEnd="@drawable/logo_237" />
 
             </RadioGroup>
 

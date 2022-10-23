@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/parent_layout">
+    android:layout_height="wrap_content">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -12,18 +12,15 @@
         app:cardCornerRadius="5dp"
         app:cardElevation="2.5dp">
 
-
-            <TextView
-                android:id="@+id/company_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/list_item_bg"
-                android:text="@string/test_text"
-                android:textSize="16sp"
-                android:padding="10dp"/>
-
+        <TextView
+            android:id="@+id/company_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/list_item_bg"
+            android:padding="10dp"
+            android:text="@string/test_text"
+            android:textSize="16sp" />
 
     </androidx.cardview.widget.CardView>
-
 
 </RelativeLayout>

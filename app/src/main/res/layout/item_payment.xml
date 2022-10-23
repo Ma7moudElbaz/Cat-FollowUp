@@ -31,18 +31,18 @@
                     android:id="@+id/notification_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_attach"
-                    app:tint="@color/colorAccent"
                     android:layout_marginTop="5dp"
-                    android:contentDescription="@string/description" />
+                    android:contentDescription="@string/description"
+                    android:src="@drawable/ic_attach"
+                    app:tint="@color/colorAccent" />
 
                 <TextView
                     android:id="@+id/payment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:text="@string/test_text"
-                    android:layout_gravity="center"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 

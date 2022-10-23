@@ -268,4 +268,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string translatable="false" name="hello_blank_fragment">Hello blank fragment</string>
     <string name="select_project">Select Project</string>
+    <string name="test_notification_open">Test Notification open</string>
+    <string name="_50">50</string>
+    <string name="total_cost">Total Cost</string>
+    <string name="attachment">Attachment</string>
 </resources>

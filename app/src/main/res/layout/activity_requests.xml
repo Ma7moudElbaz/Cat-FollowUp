@@ -26,7 +26,8 @@
                 android:layout_height="wrap_content"
                 android:layout_toStartOf="@+id/job_orders"
                 android:gravity="center_vertical"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:id="@+id/back"
@@ -84,6 +85,7 @@
                 android:drawableTint="@color/black"
                 android:hint="@string/type_to_search"
                 android:imeOptions="actionSearch"
+                android:importantForAutofill="no"
                 android:inputType="text"
                 android:padding="8dp" />
 

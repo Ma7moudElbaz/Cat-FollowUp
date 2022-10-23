@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:id="@+id/back"
@@ -124,18 +125,18 @@
                         android:id="@+id/cost_per_switch"
                         android:layout_width="130dp"
                         android:layout_height="wrap_content"
-                        app:leftTabText="Unit"
-                        app:rightTabText="@string/total"
-                        app:startingTab="left"
+                        android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="5dp"
-                        android:layout_alignParentEnd="true"
-                        app:removeDefaultPadding="true"
-                        app:overallColor="@color/colorAccent"
+                        app:borderWidth="1dp"
                         app:flipAnimationDuration="0"
+                        app:leftTabText="Unit"
+                        app:overallColor="@color/colorAccent"
+                        app:removeDefaultPadding="true"
+                        app:rightTabText="@string/total"
+                        app:startingTab="left"
                         app:wobbleAngle="0"
-                        app:wobbleReturnAnimationDuration="0"
-                        app:borderWidth="1dp"/>
+                        app:wobbleReturnAnimationDuration="0" />
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -195,6 +196,7 @@
                         android:layout_alignParentEnd="true"
                         android:adjustViewBounds="true"
                         android:background="@drawable/calender_yellow"
+                        android:contentDescription="@string/description"
                         android:paddingStart="15dp"
                         android:paddingTop="8dp"
                         android:paddingEnd="15dp"
@@ -241,6 +243,7 @@
                         android:layout_alignParentEnd="true"
                         android:adjustViewBounds="true"
                         android:background="@drawable/calender_yellow"
+                        android:contentDescription="@string/description"
                         android:paddingStart="15dp"
                         android:paddingTop="8dp"
                         android:paddingEnd="15dp"

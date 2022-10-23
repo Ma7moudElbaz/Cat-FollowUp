@@ -8,7 +8,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        tools:ignore="UselessParent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -103,6 +104,7 @@
                     android:textColor="@color/black"
                     android:textSize="16sp" />
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -113,6 +115,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
@@ -141,7 +144,7 @@
                         android:layout_marginTop="5dp"
                         android:importantForAutofill="no"
                         android:padding="5dp"
-                        android:text="50"
+                        android:text="@string/_50"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -157,7 +160,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Total Cost"
+                        android:text="@string/total_cost"
                         android:textColor="@color/light_gray"
                         android:textSize="16sp" />
 
@@ -169,7 +172,7 @@
                         android:layout_marginTop="5dp"
                         android:importantForAutofill="no"
                         android:padding="5dp"
-                        android:text="50"
+                        android:text="@string/_50"
                         android:textColor="@color/black"
                         android:textSize="16sp" />
                 </LinearLayout>
@@ -311,13 +314,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    tools:ignore="UseCompoundDrawables">
 
                     <ImageView
                         android:id="@+id/nagat_reject"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
+                        android:contentDescription="@string/description"
                         android:src="@drawable/ic_reject"
                         app:tint="@color/red" />
 
@@ -334,13 +339,15 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    tools:ignore="UseCompoundDrawables">
 
                     <ImageView
                         android:id="@+id/nagat_approve"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
+                        android:contentDescription="@string/description"
                         android:src="@drawable/ic_approve"
                         app:tint="@color/green" />
 

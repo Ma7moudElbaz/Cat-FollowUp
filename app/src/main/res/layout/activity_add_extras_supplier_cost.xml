@@ -15,7 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
 
         <ImageView
             android:id="@+id/back"
@@ -75,7 +76,6 @@
             </LinearLayout>
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -120,7 +120,6 @@
             </LinearLayout>
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -143,15 +142,16 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:background="@drawable/calender_yellow"
-                        android:src="@drawable/ic_date"
+                        android:layout_alignParentEnd="true"
                         android:adjustViewBounds="true"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
+                        android:background="@drawable/calender_yellow"
+                        android:contentDescription="@string/description"
                         android:paddingStart="15dp"
+                        android:paddingTop="8dp"
                         android:paddingEnd="15dp"
-                        app:tint="@color/white"
-                        android:layout_alignParentEnd="true"/>
+                        android:paddingBottom="8dp"
+                        android:src="@drawable/ic_date"
+                        app:tint="@color/white" />
 
                     <EditText
                         android:id="@+id/delivery_date"
@@ -190,15 +190,16 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
-                        android:background="@drawable/calender_yellow"
-                        android:src="@drawable/ic_date"
+                        android:layout_alignParentEnd="true"
                         android:adjustViewBounds="true"
-                        android:paddingTop="8dp"
-                        android:paddingBottom="8dp"
+                        android:background="@drawable/calender_yellow"
+                        android:contentDescription="@string/description"
                         android:paddingStart="15dp"
+                        android:paddingTop="8dp"
                         android:paddingEnd="15dp"
-                        app:tint="@color/white"
-                        android:layout_alignParentEnd="true"/>
+                        android:paddingBottom="8dp"
+                        android:src="@drawable/ic_date"
+                        app:tint="@color/white" />
 
                     <EditText
                         android:id="@+id/expiry_date"

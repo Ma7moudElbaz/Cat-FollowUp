@@ -31,10 +31,10 @@
                     android:id="@+id/notification_img"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_notifications"
-                    app:tint="@color/colorAccent"
                     android:layout_marginTop="5dp"
-                    android:contentDescription="@string/description" />
+                    android:contentDescription="@string/description"
+                    android:src="@drawable/ic_notifications"
+                    app:tint="@color/colorAccent" />
 
                 <TextView
                     android:id="@+id/message"

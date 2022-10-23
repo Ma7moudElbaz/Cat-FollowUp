@@ -1,87 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/img_close"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/description"
+        android:src="@drawable/ic_close"
+        app:tint="@color/black" />
+
+    <TextView
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="20dp">
+        android:gravity="start"
+        android:text="@string/request_po_number"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
-        <ImageView
-            android:id="@+id/img_close"
-            android:layout_width="30dp"
+    <RadioGroup
+        android:id="@+id/po_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/radio_po_number"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/description"
-            android:src="@drawable/ic_close"
-            app:tint="@color/black" />
+            android:checked="true"
+            android:text="@string/po_nnumber" />
 
-        <TextView
-            android:id="@+id/title"
-            android:layout_width="match_parent"
+        <RadioButton
+            android:id="@+id/radio_quotation_approved"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="start"
-            android:text="@string/request_po_number"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:layout_marginStart="15dp"
+            android:text="@string/quotation_napproved" />
 
-        <RadioGroup
-            android:id="@+id/po_type"
-            android:layout_width="match_parent"
+        <RadioButton
+            android:id="@+id/radio_sample"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/radio_po_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="@string/po_nnumber" />
-
-            <RadioButton
-                android:id="@+id/radio_quotation_approved"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:text="@string/quotation_napproved" />
-
-            <RadioButton
-                android:id="@+id/radio_sample"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15dp"
-                android:text="@string/sample_nrequest" />
-        </RadioGroup>
+            android:layout_marginStart="15dp"
+            android:text="@string/sample_nrequest" />
+    </RadioGroup>
 
 
-        <EditText
-            android:id="@+id/reason"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/et_gray"
-            android:importantForAutofill="no"
-            android:inputType="text"
-            android:padding="15dp"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+    <EditText
+        android:id="@+id/reason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/et_gray"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:padding="15dp"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        tools:ignore="LabelFor" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_submit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:background="@drawable/btn_yellow"
-            android:text="@string/submit"
-            android:textColor="@color/black" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/btn_yellow"
+        android:text="@string/submit"
+        android:textColor="@color/black" />
 
-    </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

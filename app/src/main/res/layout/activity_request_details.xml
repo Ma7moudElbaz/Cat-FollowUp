@@ -23,10 +23,12 @@
                 android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_toStartOf="@+id/job_orders"
                     android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    tools:ignore="UseCompoundDrawables">
 
                     <ImageView
                         android:id="@+id/back"
@@ -52,12 +54,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:layout_marginStart="5dp"
                     android:background="@drawable/job_order_bg"
                     android:gravity="center"
-                    android:paddingStart="15dp"
-                    android:paddingTop="5dp"
-                    android:paddingEnd="15dp"
-                    android:paddingBottom="5dp"
+                    android:paddingHorizontal="15dp"
+                    android:paddingVertical="5dp"
                     android:text="@string/job_orders"
                     android:textColor="@color/white"
                     app:drawableStartCompat="@drawable/ic_job_orders" />
@@ -137,38 +138,38 @@
                         android:textColor="@color/red"
                         android:textSize="18sp"
                         android:textStyle="bold"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
 
                     <TextView
                         android:id="@+id/txt_rejection_reason_request"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:text="reason"
                         android:textColor="@color/red"
                         android:textSize="16sp"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        tools:text="reason" />
 
                     <TextView
                         android:id="@+id/txt_rejection_reason_cost"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:text="reason"
                         android:textColor="@color/red"
                         android:textSize="16sp"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        tools:text="reason" />
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/nagat_reject"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
-                        android:background="@drawable/btn_red"
                         android:layout_marginBottom="10dp"
+                        android:background="@drawable/btn_red"
                         android:text="@string/reject"
-                        android:visibility="gone"
                         android:textAllCaps="false"
-                        android:textColor="@color/white" />
+                        android:textColor="@color/white"
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:id="@+id/sales_approval_layout"
@@ -229,6 +230,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toStartOf="@id/expand_details"
+                                android:contentDescription="@string/description"
                                 android:padding="5dp"
                                 android:src="@drawable/ic_delete"
                                 android:visibility="gone"
@@ -283,6 +285,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_toStartOf="@id/expand_cost"
+                                android:contentDescription="@string/description"
                                 android:padding="5dp"
                                 android:src="@drawable/ic_error"
                                 android:visibility="gone"
