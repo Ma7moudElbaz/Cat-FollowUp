@@ -102,8 +102,6 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     String selectedStatus = "";
     String[] chipsStatus = new String[]{"", "2", "4", "5", "3", "6"};
 
-    //    String projectName;
-//    boolean canEditProject;
     FloatingActionMenu add_menu_btn;
 
     SwipeRefreshLayout swipe_refresh;
@@ -265,6 +263,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONObject dataObj = responseObject.getJSONObject("data");
                     String projectName = dataObj.getString("project_name");
@@ -419,9 +418,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     public void deleteRequestDialog(int request_id) {
         new AlertDialog.Builder(RequestsActivity.this)
                 .setTitle("Are you sure? ")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    deleteRequest(request_id);
-                })
+                .setPositiveButton("Yes", (dialog, which) -> deleteRequest(request_id))
                 .setNegativeButton("Dismiss", null)
                 .show();
     }
@@ -430,12 +427,13 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
         dialog.show();
         ws.getApi().deleteRequest(UserUtils.getAccessToken(getBaseContext()), request_id).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Updated successfully", Toast.LENGTH_LONG).show();
                         onResume();
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
@@ -446,7 +444,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -456,9 +454,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     public void cancelRequestDialog(int request_id, int status) {
         new AlertDialog.Builder(RequestsActivity.this)
                 .setTitle("Are you sure? ")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    cancelRequest(request_id, status);
-                })
+                .setPositiveButton("Yes", (dialog, which) -> cancelRequest(request_id, status))
                 .setNegativeButton("Dismiss", null)
                 .show();
     }
@@ -469,12 +465,13 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
         map.put("status", String.valueOf(status));
         ws.getApi().cancelRequest(UserUtils.getAccessToken(getBaseContext()), request_id, map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Updated successfully", Toast.LENGTH_LONG).show();
                         onResume();
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
@@ -485,7 +482,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }

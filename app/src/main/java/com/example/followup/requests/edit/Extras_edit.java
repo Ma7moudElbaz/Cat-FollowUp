@@ -90,10 +90,6 @@ public class Extras_edit extends AppCompatActivity {
             description.setError("This is required field");
             return false;
         }
-//        if (delivery_address.length() == 0) {
-//            delivery_address.setError("This is required field");
-//            return false;
-//        }
         return true;
     }
 
@@ -105,10 +101,10 @@ public class Extras_edit extends AppCompatActivity {
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONObject dataObj = responseObject.getJSONObject("data");
                     setFields(dataObj);
-//                    projectId = dataObj.getInt("project_id");
                     loading.setVisibility(View.GONE);
 
                 } catch (Exception e) {
@@ -145,13 +141,14 @@ public class Extras_edit extends AppCompatActivity {
         dialog.show();
         ws.getApi().editRequest(UserUtils.getAccessToken(getBaseContext()), requestId, map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Request Updated successfully", Toast.LENGTH_LONG).show();
                         onBackPressed();
 
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
@@ -162,7 +159,7 @@ public class Extras_edit extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }

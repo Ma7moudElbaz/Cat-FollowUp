@@ -128,9 +128,7 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
         expandDetails.setOnClickListener(v -> toggleDetails(isDetailsExpanded));
         expandCost.setOnClickListener(v -> toggleCost(isCostExpanded));
         add_cost.setOnClickListener(v -> gotoAddCost(request_id, type_id));
-        editCost.setOnClickListener(v -> {
-            gotoEditCost(costId, type_id);
-        });
+        editCost.setOnClickListener(v -> gotoEditCost(costId, type_id));
         sales_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "sales_reject"));
         sales_approve.setOnClickListener(v -> updateStatusDialog(6, ""));
         cancel_request.setOnClickListener(v -> deleteRequestDialog());
@@ -290,6 +288,7 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     dataObj = responseObject.getJSONObject("data");
                     type_id = dataObj.getInt("type_id");
@@ -551,9 +550,7 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
     public void deleteRequestDialog() {
         new AlertDialog.Builder(RequestDetailsActivity.this)
                 .setTitle("Are you sure? ")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    deleteRequest(request_id);
-                })
+                .setPositiveButton("Yes", (dialog, which) -> deleteRequest(request_id))
                 .setNegativeButton("Dismiss", null)
                 .show();
     }
@@ -562,12 +559,13 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
         dialog.show();
         ws.getApi().deleteRequest(UserUtils.getAccessToken(getBaseContext()), request_id).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Updated successfully", Toast.LENGTH_LONG).show();
                         onBackPressed();
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
@@ -578,7 +576,7 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -588,9 +586,7 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
     public void updateStatusDialog(int status, String reason) {
         new AlertDialog.Builder(RequestDetailsActivity.this)
                 .setTitle("Are you sure? ")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    updateStatus(status, reason);
-                })
+                .setPositiveButton("Yes", (dialog, which) -> updateStatus(status, reason))
                 .setNegativeButton("Dismiss", null)
                 .show();
     }
@@ -605,12 +601,13 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
         dialog.show();
         ws.getApi().changeCostStatus(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Updated successfully", Toast.LENGTH_LONG).show();
                         getRequestDetails();
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
@@ -621,7 +618,7 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -638,12 +635,13 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
         dialog.show();
         ws.getApi().rejectRequest(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Updated successfully", Toast.LENGTH_LONG).show();
                         getRequestDetails();
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
@@ -654,7 +652,7 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }

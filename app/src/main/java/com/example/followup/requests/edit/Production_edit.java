@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -64,7 +65,7 @@ public class Production_edit extends AppCompatActivity {
     private ProgressDialog dialog;
     DatePickerDialog picker;
     String screen_text = "Yes";
-    int projectId,requestId;
+    int projectId, requestId;
 
     List<String> filesSelected;
     private static final int FILES_REQUEST_CODE = 764546;
@@ -74,6 +75,7 @@ public class Production_edit extends AppCompatActivity {
 
     WebserviceContext ws;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,26 +84,23 @@ public class Production_edit extends AppCompatActivity {
         initFields();
         back.setOnClickListener(v -> onBackPressed());
 
-        choose_file.setOnClickListener(v -> {
-
-            Dexter.withContext(getBaseContext())
-                    .withPermissions(
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                    ).withListener(new MultiplePermissionsListener() {
-                        @Override
-                        public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
-                            if (multiplePermissionsReport.areAllPermissionsGranted()) {
-                                pickFromGallery();
-                            }
+        choose_file.setOnClickListener(v -> Dexter.withContext(getBaseContext())
+                .withPermissions(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                        if (multiplePermissionsReport.areAllPermissionsGranted()) {
+                            pickFromGallery();
                         }
+                    }
 
-                        @Override
-                        public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
 
-                        }
-                    }).check();
-        });
+                    }
+                }).check());
         delivery_date.setOnClickListener(v -> showDatePicker(delivery_date));
         delivery_date.setOnFocusChangeListener((v, hasFocus) -> {
             if (hasFocus) {
@@ -193,14 +192,6 @@ public class Production_edit extends AppCompatActivity {
             quantity.setError("This is required field");
             return false;
         }
-//        if (description.length() == 0) {
-//            description.setError("This is required field");
-//            return false;
-//        }
-//        if (notes.length() == 0) {
-//            notes.setError("This is required field");
-//            return false;
-//        }
         if (designer_in_charge.length() == 0) {
             designer_in_charge.setError("This is required field");
             return false;
@@ -223,7 +214,6 @@ public class Production_edit extends AppCompatActivity {
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONObject dataObj = responseObject.getJSONObject("data");
                     setFields(dataObj);
-//                    projectId = dataObj.getInt("project_id");
                     loading.setVisibility(View.GONE);
 
                 } catch (Exception e) {
@@ -255,9 +245,9 @@ public class Production_edit extends AppCompatActivity {
         dimensions.setText(StringCheck.returnEmpty(dataObj.getString("dimension")));
         notes.setText(StringCheck.returnEmpty(dataObj.getString("note")));
         designer_in_charge.setText(StringCheck.returnEmpty(dataObj.getString("designer_name")));
-        if (screen_specs.getText().toString().equalsIgnoreCase("no")){
+        if (screen_specs.getText().toString().equalsIgnoreCase("no")) {
             screen.check(R.id.screen_no);
-        }else {
+        } else {
             screen.check(R.id.screen_yes);
             screen_specs.setText(dataObj.getString("screen"));
         }
@@ -268,11 +258,12 @@ public class Production_edit extends AppCompatActivity {
         Map<String, String> map = setProductionMap();
 
         dialog.show();
-        ws.getApi().editRequest(UserUtils.getAccessToken(getBaseContext()),requestId, map).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().editRequest(UserUtils.getAccessToken(getBaseContext()), requestId, map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
+                        assert response.body() != null;
                         JSONObject responseObject = new JSONObject(response.body().string());
                         if (filesSelected.size() != 0) {
                             addRequestAttaches(responseObject.getJSONObject("data").getString("id"));
@@ -283,6 +274,7 @@ public class Production_edit extends AppCompatActivity {
                         }
 
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                         dialog.dismiss();
@@ -293,7 +285,7 @@ public class Production_edit extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -342,30 +334,26 @@ public class Production_edit extends AppCompatActivity {
 
 
     public void addRequestAttaches(final String requestId) {
-//        dialog.show();
 
         List<MultipartBody.Part> fileToUpload = addAttaches(filesSelected);
         RequestBody request_id = RequestBody.create(MediaType.parse("text/plain"), requestId);
 
         ws.getApi().addAttach(UserUtils.getAccessToken(getBaseContext()), fileToUpload, request_id).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    if (response.isSuccessful()) {
-                        JSONObject res = new JSONObject(response.body().string());
-                        Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getBaseContext(), "Request Added successfully but attachment failed", Toast.LENGTH_LONG).show();
-                    }
-                } catch (IOException | JSONException e) {
-                    e.printStackTrace();
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+
+                if (response.isSuccessful()) {
+                    Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getBaseContext(), "Request Added successfully but attachment failed", Toast.LENGTH_LONG).show();
                 }
+
                 dialog.dismiss();
                 onBackPressed();
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 Log.d("Request failure", call + " , " + t.getMessage());
                 dialog.dismiss();
@@ -418,25 +406,24 @@ public class Production_edit extends AppCompatActivity {
         // Result code is RESULT_OK only if the user selects an Image
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK)
-            switch (requestCode) {
-                case FILES_REQUEST_CODE:
-                    filesSelected.clear();
-                    //data.getData returns the content URI for the selected files
-                    if (data == null) {
-                        return;
-                    } else if (data.getClipData() != null) {
-                        for (int i = 0; i < data.getClipData().getItemCount(); i++) {
-                            Uri uri = data.getClipData().getItemAt(i).getUri();
-                            filesSelected.add(RealPathUtil.getRealPath(getBaseContext(),uri));
-                        }
-                    } else {
-
-                        Uri uri = data.getData();
-                        filesSelected.add(RealPathUtil.getRealPath(getBaseContext(),uri));
+            if (requestCode == FILES_REQUEST_CODE) {
+                filesSelected.clear();
+                //data.getData returns the content URI for the selected files
+                if (data == null) {
+                    return;
+                } else if (data.getClipData() != null) {
+                    for (int i = 0; i < data.getClipData().getItemCount(); i++) {
+                        Uri uri = data.getClipData().getItemAt(i).getUri();
+                        filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
                     }
-                    filesChosen.setText(filesSelected.size() + " Files Selected");
+                } else {
 
-                    Log.e("Data selected", filesSelected.toString());
+                    Uri uri = data.getData();
+                    filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
+                }
+                filesChosen.setText(filesSelected.size() + " Files Selected");
+
+                Log.e("Data selected", filesSelected.toString());
             }
     }
 }

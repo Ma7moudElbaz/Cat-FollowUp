@@ -1,5 +1,6 @@
 package com.example.followup.requests.list;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -73,6 +74,7 @@ public class Production_requests_list extends Fragment {
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray requestsArray = responseObject.getJSONArray("data");
                     setPrintList(requestsArray);
@@ -98,6 +100,7 @@ public class Production_requests_list extends Fragment {
     }
 
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setPrintList(JSONArray list) {
         try {
             for (int i = 0; i < list.length(); i++) {
@@ -157,6 +160,7 @@ public class Production_requests_list extends Fragment {
     private void initFields(View view) {
         ws = new WebserviceContext(getActivity());
         activity = (RequestsActivity) getActivity();
+        assert activity != null;
         projectId = activity.getProjectId();
 
         loading = view.findViewById(R.id.loading);

@@ -1,5 +1,6 @@
 package com.example.followup.requests.list.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -111,13 +112,13 @@ public class Print_adapter extends RecyclerView.Adapter<Print_adapter.ViewHolder
     }
 
 
+    @SuppressLint("NonConstantResourceId")
     public void showPopup(View v, int position) {
         PopupMenu popup = new PopupMenu(mContext, v);
         MenuInflater inflater = popup.getMenuInflater();
         inflater.inflate(R.menu.request_actions, popup.getMenu());
         popup.show();
         setMenuData(popup.getMenu(), position);
-//        popup.getMenu().getItem(1).setVisible(false);
         popup.setOnMenuItemClickListener(item -> {
             switch (item.getItemId()) {
                 case R.id.request_edit:

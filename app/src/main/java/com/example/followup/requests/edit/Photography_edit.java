@@ -3,6 +3,7 @@ package com.example.followup.requests.edit;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.util.Log;
@@ -52,6 +53,7 @@ public class Photography_edit extends AppCompatActivity {
     WebserviceContext ws;
 
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -170,26 +172,6 @@ public class Photography_edit extends AppCompatActivity {
             props_specify.setError("This is required field");
             return false;
         }
-//        if (country.length() == 0) {
-//            country.setError("This is required field");
-//            return false;
-//        }
-//        if (camera_type.length() == 0) {
-//            camera_type.setError("This is required field");
-//            return false;
-//        }
-//        if (number_of_cameras.length() == 0) {
-//            number_of_cameras.setError("This is required field");
-//            return false;
-//        }
-//        if (description.length() == 0) {
-//            description.setError("This is required field");
-//            return false;
-//        }
-//        if (notes.length() == 0) {
-//            notes.setError("This is required field");
-//            return false;
-//        }
         return true;
     }
 
@@ -201,10 +183,10 @@ public class Photography_edit extends AppCompatActivity {
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
+                    assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONObject dataObj = responseObject.getJSONObject("data");
                     setFields(dataObj);
-//                    projectId = dataObj.getInt("project_id");
                     loading.setVisibility(View.GONE);
 
                 } catch (Exception e) {
@@ -234,31 +216,26 @@ public class Photography_edit extends AppCompatActivity {
         description.setText(StringCheck.returnEmpty(dataObj.getString("description")));
         notes.setText(StringCheck.returnEmpty(dataObj.getString("note")));
 
-        if (dataObj.getString("lighting").toString().equalsIgnoreCase("null")){
+        if (dataObj.getString("lighting").equalsIgnoreCase("null")){
             lighting.check(R.id.lighting_no);
         }else {
             lighting.check(R.id.lighting_yes);
             lighting_specify.setText(dataObj.getString("lighting"));
         }
 
-        if (dataObj.getString("chroma").toString().equalsIgnoreCase("null")){
+        if (dataObj.getString("chroma").equalsIgnoreCase("null")){
             chroma.check(R.id.chroma_no);
         }else {
             chroma.check(R.id.chroma_yes);
             chroma_specify.setText(dataObj.getString("chroma"));
         }
 
-        if (dataObj.getString("props").toString().equalsIgnoreCase("null")){
+        if (dataObj.getString("props").equalsIgnoreCase("null")){
             props.check(R.id.props_no);
         }else {
             props.check(R.id.props_yes);
             props_specify.setText(dataObj.getString("props"));
         }
-
-
-//        lighting.setText(StringCheck.returnEmpty(dataObj.getString("lighting")));
-//        chroma.setText(StringCheck.returnEmpty(dataObj.getString("chroma")));
-//        props.setText(StringCheck.returnEmpty(dataObj.getString("props")));
     }
 
     private void editPhotography() {
@@ -267,13 +244,14 @@ public class Photography_edit extends AppCompatActivity {
         dialog.show();
         ws.getApi().editRequest(UserUtils.getAccessToken(getBaseContext()), requestId, map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Request Added successfully", Toast.LENGTH_LONG).show();
                         onBackPressed();
 
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();
                     }
@@ -284,7 +262,7 @@ public class Photography_edit extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }

@@ -1,5 +1,6 @@
 package com.example.followup.requests.view;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -100,6 +101,7 @@ public class Production_view extends Fragment {
         setAttachesList(dataObj.getJSONArray("attach_files"));
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setAttachesList(JSONArray list) {
         try {
             for (int i = 0; i < list.length(); i++) {
