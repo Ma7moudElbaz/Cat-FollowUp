@@ -116,26 +116,23 @@ public class EditProductionSupplierCostActivity extends LocalizationActivity {
             }
         });
 
-        choose_file.setOnClickListener(v -> {
-
-            Dexter.withContext(getBaseContext())
-                    .withPermissions(
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                            Manifest.permission.READ_EXTERNAL_STORAGE
-                    ).withListener(new MultiplePermissionsListener() {
-                        @Override
-                        public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
-                            if (multiplePermissionsReport.areAllPermissionsGranted()) {
-                                pickFromGallery();
-                            }
+        choose_file.setOnClickListener(v -> Dexter.withContext(getBaseContext())
+                .withPermissions(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                ).withListener(new MultiplePermissionsListener() {
+                    @Override
+                    public void onPermissionsChecked(MultiplePermissionsReport multiplePermissionsReport) {
+                        if (multiplePermissionsReport.areAllPermissionsGranted()) {
+                            pickFromGallery();
                         }
+                    }
 
-                        @Override
-                        public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(List<PermissionRequest> list, PermissionToken permissionToken) {
 
-                        }
-                    }).check();
-        });
+                    }
+                }).check());
     }
 
     private void showDatePicker(TextView textview) {
@@ -225,10 +222,6 @@ public class EditProductionSupplierCostActivity extends LocalizationActivity {
             expiry_date.setError("This is required field");
             return false;
         }
-//        if (notes.length() == 0) {
-//            notes.setError("This is required field");
-//            return false;
-//        }
         if (assembly_dismantling.length() == 0) {
             assembly_dismantling.setError("This is required field");
             return false;
@@ -248,13 +241,14 @@ public class EditProductionSupplierCostActivity extends LocalizationActivity {
         dialog.show();
         ws.getApi().editCost(UserUtils.getAccessToken(getBaseContext()),costId,fileToUpload, map).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
-                    if (response.code() == 200 || response.code() == 201) {
+                    if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Cost Added successfully", Toast.LENGTH_LONG).show();
                         onBackPressed();
 
                     } else {
+                        assert response.errorBody() != null;
                         JSONObject res = new JSONObject(response.errorBody().string());
                         Toast.makeText(getBaseContext(), res.getString("error"), Toast.LENGTH_LONG).show();Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
                     }
@@ -265,7 +259,7 @@ public class EditProductionSupplierCostActivity extends LocalizationActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -333,24 +327,23 @@ public class EditProductionSupplierCostActivity extends LocalizationActivity {
         // Result code is RESULT_OK only if the user selects an Image
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK)
-            switch (requestCode) {
-                case FILES_REQUEST_CODE:
-                    filesSelected.clear();
-                    //data.getData returns the content URI for the selected files
-                    if (data == null) {
-                        return;
-                    } else if (data.getClipData() != null) {
-                        for (int i = 0; i < data.getClipData().getItemCount(); i++) {
-                            Uri uri = data.getClipData().getItemAt(i).getUri();
-                            filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
-                        }
-                    } else {
-                        Uri uri = data.getData();
+            if (requestCode == FILES_REQUEST_CODE) {
+                filesSelected.clear();
+                //data.getData returns the content URI for the selected files
+                if (data == null) {
+                    return;
+                } else if (data.getClipData() != null) {
+                    for (int i = 0; i < data.getClipData().getItemCount(); i++) {
+                        Uri uri = data.getClipData().getItemAt(i).getUri();
                         filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
                     }
-                    filesChosen.setText(filesSelected.size() + " Files Selected");
+                } else {
+                    Uri uri = data.getData();
+                    filesSelected.add(RealPathUtil.getRealPath(getBaseContext(), uri));
+                }
+                filesChosen.setText(filesSelected.size() + " Files Selected");
 
-                    Log.e("Data selected", filesSelected.toString());
+                Log.e("Data selected", filesSelected.toString());
             }
     }
 }

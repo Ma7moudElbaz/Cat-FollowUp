@@ -1,5 +1,6 @@
 package com.example.followup.supplier_costs.view;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -113,6 +114,7 @@ public class Print_supplierCost_view extends Fragment {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     public void setAttachesList(String reference) {
         attaches_list.add(new Attach_item(0, reference, "1"));
 
