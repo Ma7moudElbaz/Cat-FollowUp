@@ -375,14 +375,14 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
 
     private void removeTabs(int keepTab) {
         removeAllTabs();
-        ((LinearLayout) requests_tab.getTabAt(keepTab).view).setVisibility(View.VISIBLE);
+        requests_tab.getTabAt(keepTab).view.setVisibility(View.VISIBLE);
     }
 
     private void removeAllTabs() {
-        ((LinearLayout) requests_tab.getTabAt(0).view).setVisibility(View.GONE);
-        ((LinearLayout) requests_tab.getTabAt(1).view).setVisibility(View.GONE);
-        ((LinearLayout) requests_tab.getTabAt(2).view).setVisibility(View.GONE);
-        ((LinearLayout) requests_tab.getTabAt(3).view).setVisibility(View.GONE);
+        requests_tab.getTabAt(0).view.setVisibility(View.GONE);
+        requests_tab.getTabAt(1).view.setVisibility(View.GONE);
+        requests_tab.getTabAt(2).view.setVisibility(View.GONE);
+        requests_tab.getTabAt(3).view.setVisibility(View.GONE);
 //        ((LinearLayout) requests_tab.getTabAt(4).view).setVisibility(View.GONE);
     }
 

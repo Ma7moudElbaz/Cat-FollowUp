@@ -61,7 +61,7 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
         name.setText(UserUtils.getUserName(getContext()));
         email.setText(UserUtils.getUserEmail(getContext()));
         logOut.setOnClickListener(v -> {
-            logout();
+//            logout();
             startActivity(new Intent(getContext(), LoginActivity.class));
             requireActivity().finish();
         });
