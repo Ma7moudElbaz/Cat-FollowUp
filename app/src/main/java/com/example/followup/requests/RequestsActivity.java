@@ -51,6 +51,7 @@ import com.example.followup.webservice.WebserviceContext;
 import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.material.tabs.TabLayout;
+import com.mindorks.editdrawabletext.EditDrawableText;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -95,7 +96,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
     int tabPosition;
     boolean firstCall = true;
     ProgressBar loading;
-    TextView search;
+    EditDrawableText search;
     ImageView filterBtn;
 
     int selectedStatusIndex = 0;
@@ -135,9 +136,13 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_requests);
         initFields();
-
-
         back.setOnClickListener(v -> onBackPressed());
+
+        search.setDrawableClickListener(drawablePosition -> {
+            setRequestsFragment(tabPosition);
+            hideKeyboardActivity(RequestsActivity.this);
+        });
+
         search.setOnEditorActionListener((v, actionId, event) -> {
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {

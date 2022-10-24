@@ -25,10 +25,12 @@ import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_job_orders;
 import com.example.followup.bottomsheets.BottomSheet_po_number;
 import com.example.followup.job_orders.AddJobOrderActivity;
+import com.example.followup.requests.RequestsActivity;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mindorks.editdrawabletext.EditDrawableText;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -65,9 +67,8 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
 
     private ProgressDialog dialog;
     ImageView back;
-    ProgressBar loading;
     RecyclerView recyclerView;
-    TextView search;
+    EditDrawableText search;
     ImageView filterBtn;
     FloatingActionButton fab_add_job_order;
 
@@ -105,12 +106,14 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
 
         back.setOnClickListener(v -> onBackPressed());
         filterBtn.setOnClickListener(v -> showFilterSheet());
+        search.setDrawableClickListener(drawablePosition -> {
+            reloadData();
+            hideKeyboardActivity(JobOrdersActivity.this);
+        });
         search.setOnEditorActionListener((v, actionId, event) -> {
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                job_order_list.clear();
-                currentPageNum = 1;
-                getJobOrders(currentPageNum, getFilterMap());
+                reloadData();
                 hideKeyboardActivity(JobOrdersActivity.this);
                 return true;
             }
@@ -133,10 +136,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
 
         });
 
-        swipe_refresh.setOnRefreshListener(() -> {
-            swipe_refresh.setRefreshing(false);
-            onResume();
-        });
+        swipe_refresh.setOnRefreshListener(() -> reloadData());
     }
 
     private void setUserPermissions() {
@@ -151,7 +151,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
     }
 
     public void getJobOrders(int pageNum, Map<String, String> filterMap) {
-        loading.setVisibility(View.VISIBLE);
+        swipe_refresh.setRefreshing(true);
 
         ws.getApi().getJobOrders(UserUtils.getAccessToken(getBaseContext()), projectId, pageNum, filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -167,7 +167,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
                         lastPageNum = metaObject.getInt("last_page");
                     }
 
-                    loading.setVisibility(View.GONE);
+                    swipe_refresh.setRefreshing(false);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -180,7 +180,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
                 Log.d("commit Test Throw", t.toString());
                 Log.d("Call", t.toString());
                 Toast.makeText(getBaseContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-                loading.setVisibility(View.GONE);
+                swipe_refresh.setRefreshing(false);
             }
         });
     }
@@ -231,7 +231,6 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
 
         back = findViewById(R.id.back);
         fab_add_job_order = findViewById(R.id.fab_add_job_order);
-        loading = findViewById(R.id.loading);
         search = findViewById(R.id.search);
         filterBtn = findViewById(R.id.filter_btn);
         recyclerView = findViewById(R.id.recycler_view);
@@ -267,6 +266,9 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
     @Override
     public void onResume() {
         super.onResume();
+        reloadData();
+    }
+    private void reloadData(){
         job_order_list.clear();
         currentPageNum = 1;
         getJobOrders(currentPageNum, getFilterMap());

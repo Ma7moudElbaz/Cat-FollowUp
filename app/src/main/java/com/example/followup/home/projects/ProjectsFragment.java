@@ -29,9 +29,11 @@ import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_projects;
 import com.example.followup.bottomsheets.BottomSheet_companies;
 import com.example.followup.bottomsheets.BottomSheet_po_number_from_fragment;
+import com.example.followup.requests.RequestsActivity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.mindorks.editdrawabletext.EditDrawableText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,7 +73,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
 
     public void showPoNumberSheet(int projectId) {
         BottomSheet_po_number_from_fragment langBottomSheet =
-                new BottomSheet_po_number_from_fragment(ProjectsFragment.this,projectId,"po_number");
+                new BottomSheet_po_number_from_fragment(ProjectsFragment.this, projectId, "po_number");
         langBottomSheet.show(getParentFragmentManager(), "po_number");
     }
 
@@ -84,7 +86,8 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     FloatingActionButton fab_addProject;
     RecyclerView recyclerView;
     ProgressBar loading;
-    TextView search, client_company;
+    TextView client_company;
+    EditDrawableText search;
     ImageView filterBtn;
 
     ArrayList<Project_item> projects_list;
@@ -114,12 +117,15 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
 
         client_company.setOnClickListener(v -> showCompaniesBottomSheet());
 
+        search.setDrawableClickListener(drawablePosition -> {
+            reloadData();
+            hideKeyboardFragment(requireContext(), view);
+        });
+
         search.setOnEditorActionListener((v, actionId, event) -> {
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                projects_list.clear();
-                currentPageNum = 1;
-                getProjects(currentPageNum, getFilterMap());
+                reloadData();
                 hideKeyboardFragment(requireContext(), view);
                 return true;
             }
@@ -257,7 +263,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
         reloadData();
     }
 
-    private void reloadData(){
+    private void reloadData() {
         projects_list.clear();
         currentPageNum = 1;
         getProjects(currentPageNum, getFilterMap());
@@ -402,7 +408,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     }
 
     @Override
-    public void poNumberSubmitListener(String po_number_text,int projectId, String type) {
-        addPoNumber(projectId,po_number_text);
+    public void poNumberSubmitListener(String po_number_text, int projectId, String type) {
+        addPoNumber(projectId, po_number_text);
     }
 }

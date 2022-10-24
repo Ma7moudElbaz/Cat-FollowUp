@@ -25,9 +25,11 @@ import android.widget.Toast;
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_all_requests;
 import com.example.followup.bottomsheets.BottomSheet_projects;
+import com.example.followup.requests.RequestsActivity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 import com.google.android.material.tabs.TabLayout;
+import com.mindorks.editdrawabletext.EditDrawableText;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -41,10 +43,11 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AllRequestsFragment extends Fragment implements BottomSheet_choose_filter_all_requests.FilterListener,BottomSheet_projects.SelectedProjectsListener {
+public class AllRequestsFragment extends Fragment implements BottomSheet_choose_filter_all_requests.FilterListener, BottomSheet_projects.SelectedProjectsListener {
 
     RecyclerView recyclerView;
-    TextView search, project_name;
+    EditDrawableText search;
+    TextView project_name;
     ImageView filterBtn;
     TabLayout requests_tab;
     SwipeRefreshLayout swipe_refresh;
@@ -96,6 +99,11 @@ public class AllRequestsFragment extends Fragment implements BottomSheet_choose_
         filterBtn.setOnClickListener(v -> showFilterSheet());
 
         project_name.setOnClickListener(v -> showProjectsBottomSheet());
+
+        search.setDrawableClickListener(drawablePosition -> {
+            reloadRequestsData();
+            hideKeyboardFragment(requireContext(), view);
+        });
 
         search.setOnEditorActionListener((v, actionId, event) -> {
 
@@ -243,9 +251,9 @@ public class AllRequestsFragment extends Fragment implements BottomSheet_choose_
     public Map<String, String> getFilterMap() {
         Map<String, String> map = new HashMap<>();
         map.put("project_id", project_id);
-        if (requests_tab.getSelectedTabPosition() == 0 ){
+        if (requests_tab.getSelectedTabPosition() == 0) {
             map.put("type_id", "");
-        }else {
+        } else {
             map.put("type_id", String.valueOf(requests_tab.getSelectedTabPosition()));
         }
         map.put("search", search.getText().toString());

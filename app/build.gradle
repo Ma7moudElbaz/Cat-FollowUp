@@ -102,6 +102,10 @@ dependencies {
     //mention
     implementation("com.otaliastudios:autocomplete:1.1.0")
 
+    //Edit Text Drawable
+    implementation 'com.github.MindorksOpenSource:EditDrawableText:1.1.0'
+
+
 
     //file picker
 //    implementation 'com.github.Atwa:FilePicker:1.0.1'

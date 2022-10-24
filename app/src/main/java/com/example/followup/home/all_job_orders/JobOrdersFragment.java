@@ -26,8 +26,10 @@ import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_job_orders_fragment;
 import com.example.followup.job_orders.list.Job_order_item;
 import com.example.followup.job_orders.list.Job_orders_adapter;
+import com.example.followup.requests.RequestsActivity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.mindorks.editdrawabletext.EditDrawableText;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -62,7 +64,7 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
     }
 
     RecyclerView recyclerView;
-    TextView search;
+    EditDrawableText search;
     ImageView filterBtn;
 
     ArrayList<Job_order_item> job_order_list;
@@ -87,12 +89,16 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
 
         initFields(view);
         filterBtn.setOnClickListener(v -> showFilterSheet());
+
+        search.setDrawableClickListener(drawablePosition -> {
+            reloadData();
+            hideKeyboardFragment(requireContext(), view);
+        });
+
         search.setOnEditorActionListener((v, actionId, event) -> {
 
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                job_order_list.clear();
-                currentPageNum = 1;
-                getJobOrders(currentPageNum, getFilterMap());
+                reloadData();
                 hideKeyboardFragment(requireContext(), v);
                 return true;
             }

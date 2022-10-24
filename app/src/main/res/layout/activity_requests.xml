@@ -74,20 +74,21 @@
             android:layout_marginTop="10dp">
 
 
-            <EditText
+            <com.mindorks.editdrawabletext.EditDrawableText
                 android:id="@+id/search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/filter_btn"
                 android:background="@drawable/et_gray"
-                android:drawableEnd="@drawable/ic_search"
+                android:drawableRight="@drawable/ic_search"
                 android:drawableTint="@color/black"
                 android:hint="@string/type_to_search"
                 android:imeOptions="actionSearch"
                 android:importantForAutofill="no"
                 android:inputType="text"
-                android:padding="8dp" />
+                android:padding="8dp"
+                tools:ignore="RtlHardcoded" />
 
             <ImageView
                 android:id="@+id/filter_btn"
@@ -180,23 +181,19 @@
         app:menu_shadowYOffset="3dp"
         app:menu_showShadow="false">
 
-
-        <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/photography_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_photography"
-            app:fab_colorNormal="@color/colorAccent"
-            app:fab_colorPressed="@color/colorAccent"
-            app:fab_size="mini"
-            app:menu_colorRipple="#99FFFFFF" />
-
-
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/purchase_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_purchase"
+            app:fab_colorNormal="@color/colorAccent"
+            app:fab_size="mini" />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/print_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_print"
             app:fab_colorNormal="@color/colorAccent"
             app:fab_size="mini" />
 
@@ -209,12 +206,14 @@
             app:fab_size="mini" />
 
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/print_btn"
+            android:id="@+id/photography_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_print"
+            android:src="@drawable/ic_photography"
             app:fab_colorNormal="@color/colorAccent"
-            app:fab_size="mini" />
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_size="mini"
+            app:menu_colorRipple="#99FFFFFF" />
 
     </com.github.clans.fab.FloatingActionMenu>
 
