@@ -25,7 +25,6 @@ import android.widget.Toast;
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_all_requests;
 import com.example.followup.bottomsheets.BottomSheet_projects;
-import com.example.followup.requests.RequestsActivity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 import com.google.android.material.tabs.TabLayout;
