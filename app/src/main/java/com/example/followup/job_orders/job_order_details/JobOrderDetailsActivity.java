@@ -119,6 +119,12 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         back.setOnClickListener(v -> onBackPressed());
         download.setOnClickListener(v -> startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(pdfUrl)), null));
 
+        download.setOnClickListener(v -> {
+            Intent i = new Intent(getBaseContext(),PdfViewer.class);
+            i.putExtra("url",pdfUrl);
+            startActivity(i);
+        });
+
         sales_reject.setOnClickListener(v -> showReasonSheet("Rejection reason", "", "", "sales"));
         sales_approve.setOnClickListener(v -> {
             if (poNumber.equals("null")) {
@@ -563,7 +569,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONObject dataObj = responseObject.getJSONObject("data");
                     String pdfLinkUrl = dataObj.getString("url");
-                    pdfUrl = "https://docs.google.com/viewerng/viewer?url=" + pdfLinkUrl;
+//                    pdfUrl = "https://docs.google.com/viewerng/viewer?url=" + pdfLinkUrl;
+                    pdfUrl = pdfLinkUrl;
 
                     jobOrderStatus = dataObj.getInt("status");
                     poNumber = dataObj.getString("po_number");
