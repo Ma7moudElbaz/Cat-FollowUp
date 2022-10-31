@@ -244,7 +244,7 @@ public class AddPurchaseActivity extends LocalizationActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
                 Log.d("Request failure", call + " , " + t.getMessage());
                 dialog.dismiss();

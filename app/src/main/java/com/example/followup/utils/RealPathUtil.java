@@ -174,21 +174,15 @@ public class RealPathUtil {
 
     public static String getFilePath(Context context, Uri uri) {
 
-        Cursor cursor = null;
         final String[] projection = {
                 MediaStore.MediaColumns.DISPLAY_NAME
         };
-
-        try {
-            cursor = context.getContentResolver().query(uri, projection, null, null,
-                    null);
+        try (Cursor cursor = context.getContentResolver().query(uri, projection, null, null,
+                null)) {
             if (cursor != null && cursor.moveToFirst()) {
                 final int index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DISPLAY_NAME);
                 return cursor.getString(index);
             }
-        } finally {
-            if (cursor != null)
-                cursor.close();
         }
         return null;
     }

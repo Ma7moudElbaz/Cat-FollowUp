@@ -19,14 +19,12 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_job_orders_fragment;
 import com.example.followup.job_orders.list.Job_order_item;
 import com.example.followup.job_orders.list.Job_orders_adapter;
-import com.example.followup.requests.RequestsActivity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 import com.mindorks.editdrawabletext.EditDrawableText;
@@ -76,7 +74,7 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
 
     int selectedStatusIndex = -1;
     String selectedStatus = "";
-    String[] chipsStatus = new String[]{"", "1", "2", "3", "5", "6", "8", "9", "7"};
+    final String[] chipsStatus = new String[]{"", "1", "2", "3", "5", "6", "8", "9", "7"};
 
 
     SwipeRefreshLayout swipe_refresh;

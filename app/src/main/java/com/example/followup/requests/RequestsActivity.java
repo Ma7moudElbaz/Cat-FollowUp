@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -101,7 +100,7 @@ public class RequestsActivity extends LocalizationActivity implements BottomShee
 
     int selectedStatusIndex = 0;
     String selectedStatus = "";
-    String[] chipsStatus = new String[]{"", "2", "4", "5", "3", "6"};
+    final String[] chipsStatus = new String[]{"", "2", "4", "5", "3", "6"};
 
     FloatingActionMenu add_menu_btn;
 

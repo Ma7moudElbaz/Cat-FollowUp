@@ -29,7 +29,6 @@ import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_projects;
 import com.example.followup.bottomsheets.BottomSheet_companies;
 import com.example.followup.bottomsheets.BottomSheet_po_number_from_fragment;
-import com.example.followup.requests.RequestsActivity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -100,7 +99,7 @@ public class ProjectsFragment extends Fragment implements Projects_adapter_with_
     int selectedStatusIndex = -1;
     String selectedStatus = "";
     String selectedCompanyId = "";
-    String[] chipsStatus = new String[]{"", "1", "0", "2"};
+    final String[] chipsStatus = new String[]{"", "1", "0", "2"};
 
     SwipeRefreshLayout swipe_refresh;
 

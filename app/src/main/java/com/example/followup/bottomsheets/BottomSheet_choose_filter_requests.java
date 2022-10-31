@@ -36,7 +36,7 @@ public class BottomSheet_choose_filter_requests extends BottomSheetDialogFragmen
     ImageView closeButton;
     Button applyButton, resetButton;
     ChipCloud statusChip;
-    String[] chipsText = new String[]{"All", "Waiting Procurement", "Waiting sales approval", "Sales reject", "Procurement reject", "Approved"};
+    final String[] chipsText = new String[]{"All", "Waiting Procurement", "Waiting sales approval", "Sales reject", "Procurement reject", "Approved"};
 
 
     @Override

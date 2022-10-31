@@ -3,7 +3,6 @@ package com.example.followup.job_orders.list;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,8 +10,6 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -25,7 +22,6 @@ import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_job_orders;
 import com.example.followup.bottomsheets.BottomSheet_po_number;
 import com.example.followup.job_orders.AddJobOrderActivity;
-import com.example.followup.requests.RequestsActivity;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -85,7 +81,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
 
     int selectedStatusIndex = 0;
     String selectedStatus = "";
-    String[] chipsStatus = new String[]{"", "1", "2", "3", "5", "6", "8", "9", "7"};
+    final String[] chipsStatus = new String[]{"", "1", "2", "3", "5", "6", "8", "9", "7"};
 
 
     SwipeRefreshLayout swipe_refresh;
@@ -136,7 +132,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
 
         });
 
-        swipe_refresh.setOnRefreshListener(() -> reloadData());
+        swipe_refresh.setOnRefreshListener(this::reloadData);
     }
 
     private void setUserPermissions() {
