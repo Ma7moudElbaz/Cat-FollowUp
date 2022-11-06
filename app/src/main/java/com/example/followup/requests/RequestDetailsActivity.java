@@ -57,7 +57,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
-import params.com.stepview.StatusViewScroller;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -86,7 +85,6 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
 
     int request_id, type_id;
     JSONObject dataObj;
-    StatusViewScroller steps;
 
     SwipeRefreshLayout swipe_refresh;
     WebserviceContext ws;
@@ -222,7 +220,6 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
         cost_details_content = findViewById(R.id.cost_details_content);
         no_cost_container = findViewById(R.id.no_cost_container);
         add_cost = findViewById(R.id.add_cost);
-        steps = findViewById(R.id.steps);
         sales_approval_layout = findViewById(R.id.sales_approval_layout);
         sales_approve = findViewById(R.id.sales_approve);
         sales_reject = findViewById(R.id.sales_reject);
@@ -392,7 +389,6 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
         switch (costStatus) {
             case 1: {
                 setCostContainer(false);
-                steps.getStatusView().setCurrentCount(1);
                 if (loggedInUser.equals("nagat") && requestStatus != 2) {
                     nagat_reject.setVisibility(View.VISIBLE);
                 }
@@ -404,13 +400,11 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
                 break;
             }
             case 2: {
-                steps.getStatusView().setCurrentCount(2);
                 //handle buttons in SupplierCost fragments
                 break;
             }
             case 3:
             case 5: {
-                steps.getStatusView().setCurrentCount(2);
                 txt_rejection_reason_cost.setVisibility(View.VISIBLE);
                 if (loggedInUser.equals("nagatTeam") || loggedInUser.equals("nagat")) {
                     editCost.setVisibility(View.VISIBLE);
@@ -420,16 +414,11 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
                 break;
             }
             case 4: {
-                steps.getStatusView().setCurrentCount(3);
                 if (canEditProject) {
                     sales_approval_layout.setVisibility(View.VISIBLE);
                 } else {
                     sales_approval_layout.setVisibility(View.GONE);
                 }
-                break;
-            }
-            case 6: {
-                steps.getStatusView().setCurrentCount(4);
                 break;
             }
         }
@@ -479,7 +468,6 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
         switch (costStatus) {
             case 1: {
                 setCostContainer(false);
-                steps.getStatusView().setCurrentCount(1);
                 if (loggedInUser.equals("speranza") && requestStatus != 2) {
                     add_cost.setVisibility(View.VISIBLE);
                     nagat_reject.setVisibility(View.VISIBLE);
@@ -489,7 +477,6 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
                 break;
             }
             case 5: {
-                steps.getStatusView().setCurrentCount(2);
                 txt_rejection_reason_cost.setVisibility(View.VISIBLE);
                 if (loggedInUser.equals("speranza")) {
                     editCost.setVisibility(View.VISIBLE);
@@ -499,7 +486,6 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
                 break;
             }
             case 4: {
-                steps.getStatusView().setCurrentCount(3);
                 if (canEditProject) {
                     sales_approval_layout.setVisibility(View.VISIBLE);
                 } else {
@@ -508,7 +494,6 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
                 break;
             }
             case 6: {
-                steps.getStatusView().setCurrentCount(4);
                 break;
             }
         }

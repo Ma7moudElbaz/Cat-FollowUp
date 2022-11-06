@@ -76,39 +76,6 @@
                 tools:src="@drawable/request_1" />
 
 
-            <params.com.stepview.StatusViewScroller
-                android:id="@+id/steps"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:entries="@array/request_steps"
-                android:visibility="gone"
-                app:alignStatusWithCurrent="true"
-                app:circleColor="@color/green"
-                app:circleColorCurrent="@color/stepper_gray"
-                app:circleColorIncomplete="@color/stepper_gray"
-                app:circleColorType="fillStroke"
-                app:circleStrokeColor="@color/green"
-                app:circleStrokeColorCurrent="@color/green"
-                app:circleStrokeColorIncomplete="@color/stepper_gray"
-                app:circleStrokeWidth="2dp"
-                app:completeDrawable="@drawable/ic_done"
-                app:currentCount="1"
-                app:currentStepZoom="0.2"
-                app:drawLabels="true"
-                app:lineColor="@color/light_gray"
-                app:lineColorCurrent="@color/green"
-                app:lineColorIncomplete="@color/light_gray"
-                app:lineGap="5dp"
-                app:lineLength="80dp"
-                app:lineWidth="0.7dp"
-                app:stepCount="3"
-                app:strictObeyLineLength="true"
-                app:textColorLabelsCurrent="@color/black"
-                app:textColorLabelsIncomplete="@color/light_gray"
-                app:textSizeLabels="18sp" />
-
         </LinearLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
