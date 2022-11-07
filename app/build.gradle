@@ -90,9 +90,6 @@ dependencies {
     //switch toggle
     implementation 'com.github.Chrisvin:FlipTabs:v1.5'
 
-    //shape image view
-    implementation 'com.github.siyamed:android-shape-imageview:0.9.3@aar'
-
     //mention
     implementation("com.otaliastudios:autocomplete:1.1.0")
 

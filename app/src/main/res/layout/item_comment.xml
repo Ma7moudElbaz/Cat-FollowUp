@@ -13,15 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.github.siyamed.shapeimageview.RoundedImageView
+
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/img_profile"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
             android:src="@drawable/ic_profile"
-            app:siBorderColor="@color/white"
-            app:siBorderWidth="0dp"
-            app:siRadius="25dp"
-            app:siSquare="true" />
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent" />
 
         <TextView
             android:id="@+id/user_name"

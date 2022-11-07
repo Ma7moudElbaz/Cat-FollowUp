@@ -6,8 +6,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.followup.R;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,10 +75,10 @@ public class Comments_adapter extends RecyclerView.Adapter<Comments_adapter.View
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        final ImageView img_profile;
+        final ShapeableImageView img_profile;
         final TextView user_name, comment,date,attachment;
 
-        final RelativeLayout parent_layout;
+        final LinearLayout parent_layout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
