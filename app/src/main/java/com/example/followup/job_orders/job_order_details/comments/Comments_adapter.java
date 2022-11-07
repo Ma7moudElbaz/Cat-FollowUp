@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.followup.R;
 import com.google.android.material.imageview.ShapeableImageView;
+import com.tylersuehr.socialtextview.SocialTextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class Comments_adapter extends RecyclerView.Adapter<Comments_adapter.View
     @Override
     public void onBindViewHolder(@NonNull Comments_adapter.ViewHolder holder, final int position) {
 
-        holder.comment.setText(items.get(position).getComment());
+        holder.comment.setLinkText(items.get(position).getComment());
         holder.user_name.setText(items.get(position).getUser_name());
         holder.date.setText(items.get(position).getCreated_at());
         Glide.with(mContext)
@@ -50,9 +51,9 @@ public class Comments_adapter extends RecyclerView.Adapter<Comments_adapter.View
                 .error(R.drawable.ic_profile)
                 .into(holder.img_profile);
 
-        if (!items.get(position).getAttachment().equals("")){
+        if (!items.get(position).getAttachment().equals("")) {
             holder.attachment.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             holder.attachment.setVisibility(View.GONE);
         }
 
@@ -60,9 +61,6 @@ public class Comments_adapter extends RecyclerView.Adapter<Comments_adapter.View
             Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(items.get(position).getAttachment()));
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             mContext.startActivity(i);
-        });
-        holder.parent_layout.setOnClickListener(v -> {
-
         });
 
 
@@ -76,7 +74,8 @@ public class Comments_adapter extends RecyclerView.Adapter<Comments_adapter.View
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
         final ShapeableImageView img_profile;
-        final TextView user_name, comment,date,attachment;
+        final TextView user_name, date, attachment;
+        final SocialTextView comment;
 
         final LinearLayout parent_layout;
 

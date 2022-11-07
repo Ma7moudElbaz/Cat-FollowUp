@@ -60,14 +60,18 @@
         android:orientation="vertical"
         android:padding="10dp">
 
-        <TextView
+
+        <com.tylersuehr.socialtextview.SocialTextView
             android:id="@+id/comment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:textColor="@color/gray"
-            android:textSize="16sp"
-            tools:text="data data datat data datat datat datdatadtada" />
+            tools:text="This project was #developed by @hasankucuk as #opensource. \n
+        hasann.kucuk@yandex.ru \n
+        https://medium.com/@hasann.kucuk \n
+        hasan@gmail.com \n
+        +1 123456789"
+            app:mentionColor="#3574DC"
+            app:linkModes="mention"/>
 
         <TextView
             android:id="@+id/attachment"
