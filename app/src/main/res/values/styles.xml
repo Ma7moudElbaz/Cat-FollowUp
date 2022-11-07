@@ -20,11 +20,10 @@
         <item name="android:spinnerItemStyle">@style/spinnerItemStyle</item>
 
 
-        //font style
-        <!--        <item name="android:textViewStyle">@style/PoppinsTextViewStyle</item>-->
-        <!--        <item name="android:buttonStyle">@style/PoppinsButtonStyle</item>-->
-        <!--        <item name="android:editTextStyle">@style/PoppinsEditTextStyle</item>-->
+    </style>
 
+    <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
+        <item name="cornerSize">50%</item>
     </style>
 
     <style name="blackSpinnerTheme" parent="Theme.MaterialComponents.Light.NoActionBar">

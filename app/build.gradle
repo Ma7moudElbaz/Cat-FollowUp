@@ -62,9 +62,6 @@ dependencies {
     //FAB
     implementation 'com.github.clans:fab:1.6.4'
 
-    //round Image
-    implementation 'com.makeramen:roundedimageview:2.3.0'
-
     //localisation
     implementation 'com.akexorcist:localization:1.2.11'
 
