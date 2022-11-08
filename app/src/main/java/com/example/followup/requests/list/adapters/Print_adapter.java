@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.followup.R;
 import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.list.models.Print_item;
+import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserType;
 
 import java.util.ArrayList;
@@ -61,7 +62,7 @@ public class Print_adapter extends RecyclerView.Adapter<Print_adapter.ViewHolder
         holder.created_by.setText(items.get(position).getCreated_by_name());
         holder.status.setText(String.valueOf(items.get(position).getStatus_message()));
         holder.pages.setText(items.get(position).getPages());
-        holder.colors.setText(items.get(position).getColors());
+        holder.colors.setText(StringCheck.returnText(items.get(position).getColors()));
         holder.quantity.setText(String.valueOf(items.get(position).getQuantity()));
         holder.show_actions.setOnClickListener(v -> showPopup(v, position));
 
