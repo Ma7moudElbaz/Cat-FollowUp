@@ -91,13 +91,15 @@ dependencies {
     implementation 'com.github.Chrisvin:FlipTabs:v1.5'
 
     //mention
-    implementation("com.otaliastudios:autocomplete:1.1.0")
+    implementation "com.otaliastudios:autocomplete:1.1.0"
 
     //Edit Text Drawable
     implementation 'com.github.MindorksOpenSource:EditDrawableText:1.1.0'
 
     //TextView mention
     implementation 'com.github.tylersuehr7:social-text-view:1.0.0'
+
+    api 'com.linkedin.android.spyglass:spyglass:3.0.1'
 
     //file picker
 //    implementation 'com.github.atwa:filepicker:1.0.4'
