@@ -28,6 +28,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.job_orders.job_order_details.comments.mentions.User;
 import com.example.followup.job_orders.job_order_details.comments.mentions.UserPresenter;
@@ -64,7 +65,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CommentsActivity extends AppCompatActivity {
+public class CommentsActivity extends LocalizationActivity {
 
     ImageView back, add_comment, add_attach;
     EditText et_comment;

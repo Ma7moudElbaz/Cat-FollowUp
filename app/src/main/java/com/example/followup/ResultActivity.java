@@ -5,9 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.home.HomeActivity;
 
-public class ResultActivity extends AppCompatActivity {
+public class ResultActivity extends LocalizationActivity {
 
 
     @Override

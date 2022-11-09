@@ -14,9 +14,10 @@ import android.webkit.WebViewClient;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 
-public class PdfViewer extends AppCompatActivity {
+public class PdfViewer extends LocalizationActivity {
     WebView webView;
     ProgressBar loading;
     String url;

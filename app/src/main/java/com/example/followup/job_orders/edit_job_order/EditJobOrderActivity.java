@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -36,7 +37,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class EditJobOrderActivity extends AppCompatActivity implements Edit_job_order_requests_adapter.AdapterCallback {
+public class EditJobOrderActivity extends LocalizationActivity implements Edit_job_order_requests_adapter.AdapterCallback {
     ImageView back;
     TextInputEditText supplier_name;
     ProgressBar loading;

@@ -21,6 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.utils.RealPathUtil;
 import com.example.followup.utils.StringCheck;
@@ -50,7 +51,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Print_edit extends AppCompatActivity {
+public class Print_edit extends LocalizationActivity {
     EditText item_name, quantity, description, pages, paper_weight, colors, di_cut, delivery_address, notes, designer_in_charge;
     Button choose_file, send_request;
     RadioGroup print_type, lamination, binding;

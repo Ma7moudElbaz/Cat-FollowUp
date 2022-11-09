@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserUtils;
@@ -31,7 +32,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Extras_edit extends AppCompatActivity {
+public class Extras_edit extends LocalizationActivity {
 
     TextInputEditText item_name, delivery_address, description;
     Spinner request_types_spinner;

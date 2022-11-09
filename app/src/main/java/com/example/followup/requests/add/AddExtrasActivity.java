@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
@@ -27,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class AddExtrasActivity extends AppCompatActivity {
+public class AddExtrasActivity extends LocalizationActivity {
     TextInputEditText item_name, address, description;
     Spinner request_types_spinner;
     Button send_request;

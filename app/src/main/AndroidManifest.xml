@@ -21,11 +21,7 @@
         tools:targetApi="n">
         <activity
             android:name=".job_orders.job_order_details.PdfViewer"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
+            android:exported="false"/>
         <activity
             android:name=".job_orders.job_order_details.comments.CommentsActivity"
             android:exported="false" />

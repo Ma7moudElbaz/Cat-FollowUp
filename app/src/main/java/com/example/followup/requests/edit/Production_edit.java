@@ -22,6 +22,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.utils.RealPathUtil;
 import com.example.followup.utils.StringCheck;
@@ -55,7 +56,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Production_edit extends AppCompatActivity {
+public class Production_edit extends LocalizationActivity {
 
     TextInputEditText item_name, country, city, venue, days, delivery_date, quantity, dimensions, designer_in_charge, description, notes, screen_specs;
     Button choose_file, send_request;

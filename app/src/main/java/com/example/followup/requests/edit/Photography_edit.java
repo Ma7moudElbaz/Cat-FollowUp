@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserUtils;
@@ -33,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Photography_edit extends AppCompatActivity {
+public class Photography_edit extends LocalizationActivity {
 
     TextInputEditText item_name, country, location, days, project_type, camera_type, number_of_cameras, lighting_specify, chroma_specify, props_specify, description, notes;
     Button send_request;

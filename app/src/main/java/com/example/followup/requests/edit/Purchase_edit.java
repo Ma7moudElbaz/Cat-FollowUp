@@ -20,6 +20,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.utils.RealPathUtil;
 import com.example.followup.utils.StringCheck;
@@ -50,7 +51,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class Purchase_edit extends AppCompatActivity {
+public class Purchase_edit extends LocalizationActivity {
 
     TextInputEditText item_name, quantity, color, material, description, brand, delivery_address, notes;
     Button choose_file, send_request;
