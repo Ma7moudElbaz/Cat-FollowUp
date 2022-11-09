@@ -75,7 +75,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     LinearProgressIndicator progress_indicator;
     EditText payment_percent;
     List<String> filesSelected;
-    ProgressBar loading;
     ImageView back;
     TextView download, reasons, edit;
     int jobOrderId, projectId;
@@ -163,8 +162,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
             startActivity(i);
         });
         swipe_refresh.setOnRefreshListener(() -> {
-            swipe_refresh.setRefreshing(false);
-            onResume();
+            getJobOrderDetails();
         });
 
         adel_pay.setOnClickListener(v -> {
@@ -204,7 +202,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
         back = findViewById(R.id.back);
         btn_comments = findViewById(R.id.btn_comments);
-        loading = findViewById(R.id.loading);
         download = findViewById(R.id.download);
         sales_approval_layout = findViewById(R.id.sales_approval_layout);
         magdi_approval_layout = findViewById(R.id.magdi_approval_layout);
@@ -537,7 +534,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 try {
                     if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Updated successfully", Toast.LENGTH_LONG).show();
-                        onResume();
+                        getJobOrderDetails();
                     } else {
                         assert response.errorBody() != null;
                         Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
@@ -557,14 +554,14 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     }
 
     private void getJobOrderDetails() {
-        loading.setVisibility(View.VISIBLE);
+        swipe_refresh.setRefreshing(true);
 
         ws.getApi().getJobOrderDetails(UserUtils.getAccessToken(getBaseContext()), jobOrderId).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
                 try {
-                    loading.setVisibility(View.GONE);
+                    swipe_refresh.setRefreshing(false);
                     assert response.body() != null;
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONObject dataObj = responseObject.getJSONObject("data");
@@ -627,7 +624,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 Log.d("commit Test Throw", t.toString());
                 Log.d("Call", t.toString());
                 Toast.makeText(getBaseContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-                loading.setVisibility(View.GONE);
+                swipe_refresh.setRefreshing(false);
             }
         });
     }
@@ -728,7 +725,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 try {
                     if (response.isSuccessful()) {
                         Toast.makeText(getBaseContext(), "Cost Added successfully", Toast.LENGTH_LONG).show();
-                        onResume();
+                        getJobOrderDetails();
 
                     } else {
                         assert response.errorBody() != null;

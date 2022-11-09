@@ -75,7 +75,6 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
     RelativeLayout request_cost_container;
     LinearLayout no_cost_container, sales_approval_layout;
     Button sales_approve, sales_reject;
-    ProgressBar loading;
     Button add_cost;
     int costStatus;
     int costId;
@@ -135,8 +134,7 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
 
 
         swipe_refresh.setOnRefreshListener(() -> {
-            swipe_refresh.setRefreshing(false);
-            onResume();
+            getRequestDetails();
         });
 
         job_orders.setOnClickListener(v -> {
@@ -210,8 +208,6 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
         dialog.setCancelable(false);
 
         request_id = getIntent().getIntExtra("request_id", 0);
-//        type_id = getIntent().getIntExtra("type_id", 0);
-        loading = findViewById(R.id.loading);
         expandDetails = findViewById(R.id.expand_details);
         expandCost = findViewById(R.id.expand_cost);
         back = findViewById(R.id.back);
@@ -278,8 +274,7 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
     }
 
     private void getRequestDetails() {
-        loading.setVisibility(View.VISIBLE);
-
+        swipe_refresh.setRefreshing(true);
         ws.getApi().getRequestDetails(UserUtils.getAccessToken(getBaseContext()), request_id).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
@@ -315,7 +310,7 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
                     }
                     setFragments(type_id, costStatus);
                     txt_rejection_reason_request.setText(StringCheck.returnEmpty(dataObj.getString("reason_description")));
-                    loading.setVisibility(View.GONE);
+                    swipe_refresh.setRefreshing(false);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -328,7 +323,7 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
                 Log.d("commit Test Throw", t.toString());
                 Log.d("Call", t.toString());
                 Toast.makeText(getBaseContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-                loading.setVisibility(View.GONE);
+                swipe_refresh.setRefreshing(false);
             }
         });
     }
