@@ -56,14 +56,21 @@ public class Notification_adapter extends RecyclerView.Adapter<Notification_adap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 
+        final boolean isRead = !items.get(position).getRead_at().equalsIgnoreCase("null");
+        final boolean needAction = items.get(position).isNeedAction();
+
         holder.message.setText(items.get(position).getMessage());
         holder.date.setText(items.get(position).getCreated_at());
-        if (items.get(position).getRead_at().equalsIgnoreCase("null")) {
+        if (!isRead) {
             holder.parent_layout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.notification_list_item_bg_unread));
             holder.notification_img.setColorFilter(ContextCompat.getColor(mContext, R.color.colorAccent));
         } else {
             holder.parent_layout.setBackgroundColor(ContextCompat.getColor(mContext, R.color.notification_list_item_bg));
             holder.notification_img.setColorFilter(ContextCompat.getColor(mContext, R.color.gray));
+        }
+
+        if (needAction) {
+            holder.notification_img.setColorFilter(ContextCompat.getColor(mContext, R.color.red));
         }
 
         holder.parent_layout.setOnClickListener(v -> {
@@ -97,7 +104,7 @@ public class Notification_adapter extends RecyclerView.Adapter<Notification_adap
     }
 
     public void readNotification(String notificationId) {
-        WebserviceContext ws  = new WebserviceContext((Activity) mContext);
+        WebserviceContext ws = new WebserviceContext((Activity) mContext);
         Map<String, String> map = new HashMap<>();
         map.put("notification_id", notificationId);
         ws.getApi().readNotification(UserUtils.getAccessToken(mContext), map).enqueue(new Callback<ResponseBody>() {

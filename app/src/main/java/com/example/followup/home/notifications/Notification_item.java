@@ -5,9 +5,10 @@ import java.io.Serializable;
 public class Notification_item implements Serializable {
     private final int action_id;
     private final String notification_id,from,to,subject,message,action_type,read_at,created_at,updated_at;
+    private final boolean needAction;
 
 
-    public Notification_item(int action_id, String notification_id, String from, String to, String subject, String message, String action_type, String read_at, String created_at, String updated_at) {
+    public Notification_item(int action_id, String notification_id, String from, String to, String subject, String message, String action_type, String read_at, String created_at, String updated_at, boolean needAction) {
         this.action_id = action_id;
         this.notification_id = notification_id;
         this.from = from;
@@ -18,6 +19,7 @@ public class Notification_item implements Serializable {
         this.read_at = read_at;
         this.created_at = created_at;
         this.updated_at = updated_at;
+        this.needAction = needAction;
     }
 
     public int getAction_id() {
@@ -58,5 +60,9 @@ public class Notification_item implements Serializable {
 
     public String getUpdated_at() {
         return updated_at;
+    }
+
+    public boolean isNeedAction() {
+        return needAction;
     }
 }

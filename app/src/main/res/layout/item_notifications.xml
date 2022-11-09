@@ -33,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:contentDescription="@string/description"
-                    android:src="@drawable/ic_notifications"
+                    android:src="@drawable/ic_notification_list_item"
                     app:tint="@color/colorAccent" />
 
                 <TextView
