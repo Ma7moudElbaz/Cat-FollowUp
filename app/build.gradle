@@ -78,9 +78,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.10'
     implementation 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.10'
 
-    // ImagePicker
-    implementation 'com.github.jkwiecien:EasyImage:3.2.0'
-
     //Permission Manager
     implementation 'com.karumi:dexter:6.2.3'
 
@@ -99,11 +96,7 @@ dependencies {
     //TextView mention
     implementation 'com.github.tylersuehr7:social-text-view:1.0.0'
 
-    api 'com.linkedin.android.spyglass:spyglass:3.0.1'
-
     //file picker
-//    implementation 'com.github.atwa:filepicker:1.0.4'
-//    implementation 'com.github.girimystr1997:FilePickers:v1.0.6'
-
+    implementation 'com.github.atwa:filepicker:1.0.4'
 
 }
