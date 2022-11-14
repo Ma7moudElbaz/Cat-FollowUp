@@ -98,4 +98,6 @@ dependencies {
 
     implementation 'com.github.braver-tool:Android11FilePicker:1.0.0'
 
+    implementation 'com.github.javiersantos:AppUpdater:2.7'
+
 }

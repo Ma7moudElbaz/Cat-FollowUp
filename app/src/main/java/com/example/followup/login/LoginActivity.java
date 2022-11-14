@@ -20,6 +20,8 @@ import com.example.followup.home.HomeActivity;
 import com.example.followup.utils.Constants;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.Webservice;
+import com.github.javiersantos.appupdater.AppUpdater;
+import com.github.javiersantos.appupdater.enums.UpdateFrom;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -89,21 +91,26 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
     }
 
     public void checkAppVersion() {
-        String versionName = BuildConfig.VERSION_NAME;
+        new AppUpdater(this)
+                .setUpdateFrom(UpdateFrom.JSON)
+                .setUpdateJSON("https://raw.githubusercontent.com/javiersantos/AppUpdater/master/app/update-changelog.json")
+                .start();
 
-        ws.getApi().checkAppVersion(versionName).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
-                if (!response.isSuccessful()) {
-                    showUpdateDialog();
-                }
-            }
+//        String versionName = BuildConfig.VERSION_NAME;
 
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
-            }
-        });
+//        ws.getApi().checkAppVersion(versionName).enqueue(new Callback<ResponseBody>() {
+//            @Override
+//            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+//                if (!response.isSuccessful()) {
+//                    showUpdateDialog();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+//                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
     private void showUpdateDialog() {
