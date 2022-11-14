@@ -134,8 +134,10 @@ public class NotificationsFragment extends Fragment {
                 final String message = data.getString("message");
                 final String action_type = data.getString("action_type");
                 final int action_id = data.getInt("action_id");
-//                final boolean needAction = data.getBoolean("action");
-                final boolean needAction = false;
+                boolean needAction = false;
+                if (data.has("action")){
+                    needAction = data.getBoolean("action");
+                }
                 notifications_list.add(new Notification_item(action_id, notification_id, from, to, subject, message, action_type, read_at, created_at, updated_at, needAction));
 
             }

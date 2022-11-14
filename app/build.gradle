@@ -96,7 +96,6 @@ dependencies {
     //TextView mention
     implementation 'com.github.tylersuehr7:social-text-view:1.0.0'
 
-    //file picker
-    implementation 'com.github.atwa:filepicker:1.0.4'
+    implementation 'com.github.braver-tool:Android11FilePicker:1.0.0'
 
 }
