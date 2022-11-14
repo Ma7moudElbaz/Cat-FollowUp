@@ -93,7 +93,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
     public void checkAppVersion() {
         new AppUpdater(this)
                 .setUpdateFrom(UpdateFrom.JSON)
-                .setUpdateJSON("https://github.com/Ma7moudElbaz/FollowUp/tree/master/app/src/main/assets/update-changelog.json")
+                .setUpdateJSON("https://github.com/Ma7moudElbaz/FollowUp/blob/master/app/src/main/assets/update-changelog.json")
                 .start();
 
 //        String versionName = BuildConfig.VERSION_NAME;
