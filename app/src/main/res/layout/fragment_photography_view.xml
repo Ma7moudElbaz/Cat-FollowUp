@@ -64,9 +64,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
+                    android:contentDescription="@string/description"
                     android:importantForAutofill="no"
                     android:padding="10dp"
                     android:textColor="@color/black"
+                    android:textIsSelectable="true"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -95,9 +97,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
+                    android:contentDescription="@string/description"
                     android:importantForAutofill="no"
                     android:padding="10dp"
                     android:textColor="@color/black"
+                    android:textIsSelectable="true"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -126,9 +130,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
+                    android:contentDescription="@string/description"
                     android:importantForAutofill="no"
                     android:padding="10dp"
                     android:textColor="@color/black"
+                    android:textIsSelectable="true"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -157,9 +163,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
+                    android:contentDescription="@string/description"
                     android:importantForAutofill="no"
                     android:padding="10dp"
                     android:textColor="@color/black"
+                    android:textIsSelectable="true"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -188,9 +196,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
+                    android:contentDescription="@string/description"
                     android:importantForAutofill="no"
                     android:padding="10dp"
                     android:textColor="@color/black"
+                    android:textIsSelectable="true"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -219,9 +229,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
+                    android:contentDescription="@string/description"
                     android:importantForAutofill="no"
                     android:padding="10dp"
                     android:textColor="@color/black"
+                    android:textIsSelectable="true"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -250,9 +262,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
+                    android:contentDescription="@string/description"
                     android:importantForAutofill="no"
                     android:padding="10dp"
                     android:textColor="@color/black"
+                    android:textIsSelectable="true"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -282,9 +296,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
+                    android:contentDescription="@string/description"
                     android:importantForAutofill="no"
                     android:padding="10dp"
                     android:textColor="@color/black"
+                    android:textIsSelectable="true"
                     android:textSize="16sp" />
 
 
@@ -316,9 +332,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
+                    android:contentDescription="@string/description"
                     android:importantForAutofill="no"
                     android:padding="10dp"
                     android:textColor="@color/black"
+                    android:textIsSelectable="true"
                     android:textSize="16sp" />
 
 
@@ -350,9 +368,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
+                    android:contentDescription="@string/description"
                     android:importantForAutofill="no"
                     android:padding="10dp"
                     android:textColor="@color/black"
+                    android:textIsSelectable="true"
                     android:textSize="16sp" />
 
 
@@ -383,10 +403,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
+                    android:contentDescription="@string/description"
                     android:gravity="top"
                     android:importantForAutofill="no"
                     android:padding="10dp"
                     android:textColor="@color/black"
+                    android:textIsSelectable="true"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -416,10 +438,12 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
                     android:background="@drawable/et_white"
+                    android:contentDescription="@string/description"
                     android:gravity="top"
                     android:importantForAutofill="no"
                     android:padding="10dp"
                     android:textColor="@color/black"
+                    android:textIsSelectable="true"
                     android:textSize="16sp" />
             </LinearLayout>
 
