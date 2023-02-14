@@ -43,6 +43,28 @@
 
         </LinearLayout>
 
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/po_number_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:endIconDrawable="@drawable/ic_required"
+            app:endIconMode="custom"
+            app:endIconTint="@color/red">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/po_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/po_number"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/item_name_layout"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

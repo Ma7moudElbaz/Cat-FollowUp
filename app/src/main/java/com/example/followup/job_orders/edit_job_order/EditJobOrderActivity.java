@@ -39,7 +39,7 @@ import retrofit2.Response;
 
 public class EditJobOrderActivity extends LocalizationActivity implements Edit_job_order_requests_adapter.AdapterCallback {
     ImageView back;
-    TextInputEditText supplier_name;
+    TextInputEditText supplier_name,po_number;
     ProgressBar loading;
     RecyclerView recyclerView;
     Button submit;
@@ -73,6 +73,7 @@ public class EditJobOrderActivity extends LocalizationActivity implements Edit_j
 
         back = findViewById(R.id.back);
         supplier_name = findViewById(R.id.supplier_name);
+        po_number = findViewById(R.id.po_number);
         loading = findViewById(R.id.loading);
         submit = findViewById(R.id.submit);
         recyclerView = findViewById(R.id.recycler_view);
@@ -99,7 +100,9 @@ public class EditJobOrderActivity extends LocalizationActivity implements Edit_j
                     JSONObject responseObject = new JSONObject(response.body().string());
                     JSONArray jobOrdersArray = responseObject.getJSONObject("data").getJSONArray("requests");
                     String supplierNameText = responseObject.getJSONObject("data").getJSONObject("jo").getString("supplier_name");
+                    String poNumberText = responseObject.getJSONObject("data").getJSONObject("jo").getString("po_number");
                     supplier_name.setText(supplierNameText);
+                    po_number.setText(poNumberText);
                     setJobOrderRequestsList(jobOrdersArray);
                     loading.setVisibility(View.GONE);
 
@@ -201,6 +204,7 @@ public class EditJobOrderActivity extends LocalizationActivity implements Edit_j
         map.put("quantity", quantity.toString());
         map.put("cost_per_type", cost_per_id.toString());
         map.put("supplier_name", Objects.requireNonNull(supplier_name.getText()).toString());
+        map.put("po_number", Objects.requireNonNull(po_number.getText()).toString());
 
         Log.e("requests map", map.toString());
         return map;
