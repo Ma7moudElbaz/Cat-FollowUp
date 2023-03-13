@@ -2,6 +2,7 @@ package com.example.followup.home.all_job_orders;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -19,12 +20,14 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_job_orders_fragment;
 import com.example.followup.job_orders.list.Job_order_item;
 import com.example.followup.job_orders.list.Job_orders_adapter;
+import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 import com.mindorks.editdrawabletext.EditDrawableText;
@@ -32,6 +35,7 @@ import com.mindorks.editdrawabletext.EditDrawableText;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,9 +65,11 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
+    private ProgressDialog dialog;
     RecyclerView recyclerView;
     EditDrawableText search;
     ImageView filterBtn;
+    TextView btn_reminder;
 
     ArrayList<Job_order_item> job_order_list;
     Job_orders_adapter job_order_adapter;
@@ -102,6 +108,8 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
             }
             return false;
         });
+
+        btn_reminder.setOnClickListener(v -> sendReminder());
         swipe_refresh.setOnRefreshListener(this::reloadData);
         reloadData();
     }
@@ -172,15 +180,57 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
 
     }
 
+    public void sendReminder() {
+        Map<String, String> map = new HashMap<>();
+        map.put("job_order_id", "");
+
+        dialog.show();
+        ws.getApi().sendJobOrderReminder(UserUtils.getAccessToken(getContext()), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getContext(), "Sent successfully", Toast.LENGTH_LONG).show();
+                    } else {
+                        assert response.errorBody() != null;
+                        Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
     private void initFields(View view) {
+
+        dialog = new ProgressDialog(getContext());
+        dialog.setMessage("Please, Wait...");
+        dialog.setCancelable(false);
 
         ws = new WebserviceContext(getActivity());
         search = view.findViewById(R.id.search);
         filterBtn = view.findViewById(R.id.filter_btn);
         recyclerView = view.findViewById(R.id.recycler_view);
+        btn_reminder = view.findViewById(R.id.btn_reminder);
 
         swipe_refresh = view.findViewById(R.id.swipe_refresh);
         job_order_list = new ArrayList<>();
+
+        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getContext()), UserUtils.getChildId(getContext()), UserUtils.getCountryId(getContext()));
+
+        if (loggedInUser.equals("hesham") || loggedInUser.equals("nagat") || loggedInUser.equals("hany") || loggedInUser.equals("speranza")) {
+            btn_reminder.setVisibility(View.VISIBLE);
+        } else {
+            btn_reminder.setVisibility(View.GONE);
+        }
         initRecyclerView();
     }
 
@@ -212,7 +262,7 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
         reloadData();
     }
 
-    private void reloadData(){
+    private void reloadData() {
         job_order_list.clear();
         currentPageNum = 1;
         getJobOrders(currentPageNum, getFilterMap());

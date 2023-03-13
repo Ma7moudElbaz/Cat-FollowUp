@@ -81,7 +81,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     int jobOrderStatus;
     String poNumber;
     String pdfUrl;
-    ExtendedFloatingActionButton btn_comments;
+    ExtendedFloatingActionButton btn_comments,btn_reminder;
 
 
     RecyclerView recyclerView;
@@ -156,6 +156,9 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
             i.putExtra("project_id", projectId);
             startActivity(i);
         });
+
+        btn_reminder.setOnClickListener(v -> sendReminder());
+
         edit.setOnClickListener(view -> {
             Intent i = new Intent(JobOrderDetailsActivity.this, EditJobOrderActivity.class);
             i.putExtra("job_order_id", jobOrderId);
@@ -202,6 +205,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
         back = findViewById(R.id.back);
         btn_comments = findViewById(R.id.btn_comments);
+        btn_reminder = findViewById(R.id.btn_reminder);
         download = findViewById(R.id.download);
         sales_approval_layout = findViewById(R.id.sales_approval_layout);
         magdi_approval_layout = findViewById(R.id.magdi_approval_layout);
@@ -322,6 +326,10 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 } else {
                     ceo_approval_layout.setVisibility(View.GONE);
                 }
+
+                if (loggedInUser.equals("hesham")||loggedInUser.equals("nagat")){
+                    btn_reminder.setVisibility(View.VISIBLE);
+                }
                 break;
             }
         }
@@ -436,6 +444,10 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 } else {
                     ceo_approval_layout.setVisibility(View.GONE);
                 }
+
+                if (loggedInUser.equals("hany")||loggedInUser.equals("speranza")){
+                    btn_reminder.setVisibility(View.VISIBLE);
+                }
                 break;
             }
             case 11: {
@@ -510,6 +522,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         ceo_approval_layout.setVisibility(View.GONE);
         adel_approval_layout.setVisibility(View.GONE);
         txt_hany_notes.setVisibility(View.GONE);
+        btn_reminder.setVisibility(View.GONE);
     }
 
     public void updateStatusDialog(int status, String reason, String hany_notes) {
@@ -518,6 +531,37 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 .setPositiveButton("Yes", (dialog, which) -> updateStatus(status, reason, hany_notes))
                 .setNegativeButton("Dismiss", null)
                 .show();
+    }
+
+
+    public void sendReminder() {
+        Map<String, String> map = new HashMap<>();
+        map.put("job_order_id", String.valueOf(jobOrderId));
+
+        dialog.show();
+        ws.getApi().sendJobOrderReminder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getBaseContext(), "Sent successfully", Toast.LENGTH_LONG).show();
+                        getJobOrderDetails();
+                    } else {
+                        assert response.errorBody() != null;
+                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
     }
 
     public void updateStatus(int status, String reason, String hany_notes) {

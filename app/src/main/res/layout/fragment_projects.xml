@@ -48,6 +48,7 @@
                 android:imeOptions="actionSearch"
                 android:importantForAutofill="no"
                 android:inputType="text"
+                android:minHeight="48dp"
                 android:padding="8dp"
                 tools:ignore="RtlHardcoded" />
 

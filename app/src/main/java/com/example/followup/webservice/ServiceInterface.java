@@ -164,6 +164,10 @@ public interface ServiceInterface {
     @FormUrlEncoded
     Call<ResponseBody> changeJobOrderStatus(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
+    @POST("job-orders/reminder")
+    @FormUrlEncoded
+    Call<ResponseBody> sendJobOrderReminder(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
+
     @Multipart
     @POST("payments")
     Call<ResponseBody> addPayment(@Header("Authorization") String auth, @Part List<MultipartBody.Part> files, @PartMap Map<String, RequestBody> map);
@@ -186,7 +190,7 @@ public interface ServiceInterface {
 
     //notifications
     @GET("notifications")
-    Call<ResponseBody> getNotifications(@Header("Authorization") String auth, @Query("page") int pageNo);
+    Call<ResponseBody> getNotifications(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
 
     @GET("unreadNotificationsNumber")
     Call<ResponseBody> getNotificationsNumber(@Header("Authorization") String auth);

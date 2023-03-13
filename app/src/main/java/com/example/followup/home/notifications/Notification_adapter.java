@@ -93,6 +93,8 @@ public class Notification_adapter extends RecyclerView.Adapter<Notification_adap
                     i.putExtra("project_id", items.get(position).getAction_id());
                     mContext.startActivity(i);
                     break;
+                case "jo_all":
+                    break;
             }
 
             if (items.get(position).getRead_at().equalsIgnoreCase("null")) {

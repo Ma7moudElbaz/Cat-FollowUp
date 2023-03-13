@@ -1,6 +1,8 @@
 package com.example.followup.home.notifications;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,12 +16,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.example.followup.R;
 import com.example.followup.home.HomeActivity;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.mindorks.editdrawabletext.EditDrawableText;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -56,18 +61,41 @@ public class NotificationsFragment extends Fragment {
 
     WebserviceContext ws;
 
+    EditDrawableText search;
+
+    public static void hideKeyboardFragment(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initFields(view);
 
         swipe_refresh.setOnRefreshListener(this::reloadData);
+
+        search.setDrawableClickListener(drawablePosition -> {
+            reloadData();
+            hideKeyboardFragment(requireContext(), view);
+        });
+
+        search.setOnEditorActionListener((v, actionId, event) -> {
+
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                reloadData();
+                hideKeyboardFragment(requireContext(), view);
+                return true;
+            }
+            return false;
+        });
     }
 
     private void initFields(View view) {
         ws = new WebserviceContext(getActivity());
         activity = (HomeActivity) getActivity();
         swipe_refresh = view.findViewById(R.id.swipe_refresh);
+        search = view.findViewById(R.id.search);
         notifications_recycler = view.findViewById(R.id.notifications_recycler);
         notifications_list = new ArrayList<>();
 
@@ -83,13 +111,13 @@ public class NotificationsFragment extends Fragment {
     private void reloadData(){
         notifications_list.clear();
         currentPageNum = 1;
-        loadNotificationsData(currentPageNum);
+        loadNotificationsData(currentPageNum,getFilterMap());
     }
 
-    public void loadNotificationsData(int pageNum) {
+    public void loadNotificationsData(int pageNum, Map<String, String> filterMap) {
         swipe_refresh.setRefreshing(true);
 
-        ws.getApi().getNotifications(UserUtils.getAccessToken(getContext()), pageNum).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().getNotifications(UserUtils.getAccessToken(getContext()), pageNum,filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -167,7 +195,7 @@ public class NotificationsFragment extends Fragment {
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        loadNotificationsData(currentPageNum);
+                        loadNotificationsData(currentPageNum,getFilterMap());
 
                 }
             }
@@ -175,21 +203,15 @@ public class NotificationsFragment extends Fragment {
 
     }
 
-    public void readAllNotifications() {
+    private Map<String, String> getFilterMap() {
+
         Map<String, String> map = new HashMap<>();
-        ws.getApi().readNotification(UserUtils.getAccessToken(getContext()), map).enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+        map.put("per_page", "30");
+        map.put("search", search.getText().toString());
+        map.put("have_action", "");
+        map.put("is_unread", "");
 
-            }
-
-            @Override
-            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
-                Log.d("Error Throw", t.toString());
-                Log.d("commit Test Throw", t.toString());
-                Log.d("Call", t.toString());
-                Toast.makeText(getContext(), getResources().getString(R.string.network_error), Toast.LENGTH_SHORT).show();
-            }
-        });
+        return map;
     }
+
 }
