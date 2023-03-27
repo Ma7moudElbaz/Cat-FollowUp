@@ -18,10 +18,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.adroitandroid.chipcloud.ChipCloud;
+import com.adroitandroid.chipcloud.ChipListener;
 import com.example.followup.R;
 import com.example.followup.home.HomeActivity;
+import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 import com.mindorks.editdrawabletext.EditDrawableText;
@@ -63,6 +68,13 @@ public class NotificationsFragment extends Fragment {
 
     EditDrawableText search;
 
+    String[] chipsText = new String[]{"All", "Unread", "Action required", "Done"};
+    ChipCloud statusChip;
+    Spinner notifications_no;
+    String haveActionStr = "";
+    String isUnreadStr = "";
+
+
     public static void hideKeyboardFragment(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
@@ -72,13 +84,55 @@ public class NotificationsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initFields(view);
-
         swipe_refresh.setOnRefreshListener(this::reloadData);
 
         search.setDrawableClickListener(drawablePosition -> {
             reloadData();
             hideKeyboardFragment(requireContext(), view);
         });
+
+        notifications_no.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                reloadData();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        statusChip.setChipListener(new ChipListener() {
+            @Override
+            public void chipSelected(int index) {
+                switch (index) {
+                    case 0:
+                        haveActionStr = "";
+                        isUnreadStr = "";
+                        break;
+                    case 1:
+                        haveActionStr = "";
+                        isUnreadStr = "yes";
+                        break;
+                    case 2:
+                        haveActionStr = "true";
+                        isUnreadStr = "";
+                        break;
+                    case 3:
+                        haveActionStr = "false";
+                        isUnreadStr = "";
+                        break;
+                }
+                reloadData();
+            }
+
+            @Override
+            public void chipDeselected(int index) {
+
+            }
+        });
+
 
         search.setOnEditorActionListener((v, actionId, event) -> {
 
@@ -89,6 +143,7 @@ public class NotificationsFragment extends Fragment {
             }
             return false;
         });
+
     }
 
     private void initFields(View view) {
@@ -98,6 +153,18 @@ public class NotificationsFragment extends Fragment {
         search = view.findViewById(R.id.search);
         notifications_recycler = view.findViewById(R.id.notifications_recycler);
         notifications_list = new ArrayList<>();
+        notifications_no = view.findViewById(R.id.notifications_no);
+        String loggedInUser = UserType.getUserType(UserUtils.getParentId(getContext()), UserUtils.getChildId(getContext()), UserUtils.getCountryId(getContext()));
+
+        if (loggedInUser.equals("ceo")) {
+            notifications_no.setVisibility(View.VISIBLE);
+        }else {
+            reloadData();
+        }
+
+        statusChip = view.findViewById(R.id.status_chip);
+        statusChip.addChips(chipsText);
+        statusChip.setSelectedChip(0);
 
         initNotificationsRecyclerView();
     }
@@ -105,19 +172,19 @@ public class NotificationsFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        reloadData();
+//        reloadData();
     }
 
-    private void reloadData(){
+    private void reloadData() {
         notifications_list.clear();
         currentPageNum = 1;
-        loadNotificationsData(currentPageNum,getFilterMap());
+        loadNotificationsData(currentPageNum, getFilterMap());
     }
 
     public void loadNotificationsData(int pageNum, Map<String, String> filterMap) {
         swipe_refresh.setRefreshing(true);
 
-        ws.getApi().getNotifications(UserUtils.getAccessToken(getContext()), pageNum,filterMap).enqueue(new Callback<ResponseBody>() {
+        ws.getApi().getNotifications(UserUtils.getAccessToken(getContext()), pageNum, filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
 
@@ -163,7 +230,7 @@ public class NotificationsFragment extends Fragment {
                 final String action_type = data.getString("action_type");
                 final int action_id = data.getInt("action_id");
                 boolean needAction = false;
-                if (data.has("action")){
+                if (data.has("action")) {
                     needAction = data.getBoolean("action");
                 }
                 notifications_list.add(new Notification_item(action_id, notification_id, from, to, subject, message, action_type, read_at, created_at, updated_at, needAction));
@@ -195,7 +262,7 @@ public class NotificationsFragment extends Fragment {
                     mHasReachedBottomOnce = true;
 
                     if (currentPageNum <= lastPageNum)
-                        loadNotificationsData(currentPageNum,getFilterMap());
+                        loadNotificationsData(currentPageNum, getFilterMap());
 
                 }
             }
@@ -206,10 +273,10 @@ public class NotificationsFragment extends Fragment {
     private Map<String, String> getFilterMap() {
 
         Map<String, String> map = new HashMap<>();
-        map.put("per_page", "30");
+        map.put("per_page", notifications_no.getSelectedItem().toString());
         map.put("search", search.getText().toString());
-        map.put("have_action", "");
-        map.put("is_unread", "");
+        map.put("have_action", haveActionStr);
+        map.put("is_unread", isUnreadStr);
 
         return map;
     }

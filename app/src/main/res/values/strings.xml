@@ -5,6 +5,14 @@
     //Development
     <string name="app_name" translatable="false">CATalyst-dev</string>
 
+    <string-array name="notifications_no">
+        <item>30</item>
+        <item>50</item>
+        <item>100</item>
+        <item>200</item>
+        <item>400</item>
+    </string-array>
+
     <string-array name="request_types">
         <item>Purchasing</item>
         <item>Printing</item>
