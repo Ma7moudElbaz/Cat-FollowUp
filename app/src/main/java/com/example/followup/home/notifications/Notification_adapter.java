@@ -21,6 +21,7 @@ import com.example.followup.R;
 import com.example.followup.job_orders.job_order_details.JobOrderDetailsActivity;
 import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.RequestsActivity;
+import com.example.followup.requests.list.adapters.Print_adapter;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 
@@ -41,7 +42,10 @@ public class Notification_adapter extends RecyclerView.Adapter<Notification_adap
 
     private final Context mContext;
 
+    private final AdapterCallback mAdapterCallback;
+
     public Notification_adapter(Context context, ArrayList<Notification_item> items) {
+        this.mAdapterCallback = ((AdapterCallback) context);
         this.mContext = context;
         this.items = items;
     }
@@ -94,6 +98,7 @@ public class Notification_adapter extends RecyclerView.Adapter<Notification_adap
                     mContext.startActivity(i);
                     break;
                 case "jo_all":
+                    mAdapterCallback.adapterCallback("jo_all");
                     break;
             }
 
@@ -143,5 +148,9 @@ public class Notification_adapter extends RecyclerView.Adapter<Notification_adap
             notification_img = itemView.findViewById(R.id.notification_img);
             parent_layout = itemView.findViewById(R.id.parent_layout);
         }
+    }
+
+    public interface AdapterCallback {
+        void adapterCallback(String action);
     }
 }

@@ -13,6 +13,7 @@ import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.R;
 import com.example.followup.home.all_requests.AllRequestsFragment;
 import com.example.followup.home.all_job_orders.JobOrdersFragment;
+import com.example.followup.home.notifications.Notification_adapter;
 import com.example.followup.home.notifications.NotificationsFragment;
 import com.example.followup.home.profile.ProfileFragment;
 import com.example.followup.home.projects.ProjectsFragment;
@@ -33,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity extends LocalizationActivity implements NavigationBarView.OnItemSelectedListener {
+public class HomeActivity extends LocalizationActivity implements NavigationBarView.OnItemSelectedListener , Notification_adapter.AdapterCallback {
 
     public void setProjects() {
         if (bottomNavigationView.getSelectedItemId() != R.id.navigation_projects) {
@@ -162,5 +163,11 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
     protected void onResume() {
         super.onResume();
         getNotificationNumber();
+    }
+
+    @Override
+    public void adapterCallback(String action) {
+        setContentFragment(new JobOrdersFragment());
+        bottomNavigationView.setSelectedItemId(R.id.navigation_job_orders);
     }
 }
