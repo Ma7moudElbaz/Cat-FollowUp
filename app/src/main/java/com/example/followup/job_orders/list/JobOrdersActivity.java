@@ -81,7 +81,7 @@ public class JobOrdersActivity extends LocalizationActivity implements BottomShe
 
     int selectedStatusIndex = 0;
     String selectedStatus = "";
-    final String[] chipsStatus = new String[]{"", "1", "2", "3", "5", "6", "8", "9", "7"};
+    final String[] chipsStatus = new String[]{"", "1", "2", "3", "5", "6", "8", "9", "7","15","14"};
 
 
     SwipeRefreshLayout swipe_refresh;

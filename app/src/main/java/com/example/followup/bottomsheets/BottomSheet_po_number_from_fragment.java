@@ -66,7 +66,7 @@ public class BottomSheet_po_number_from_fragment extends BottomSheetDialogFragme
                     break;
                 case R.id.radio_sample:
                     reasonEt.setVisibility(View.GONE);
-                    po_number_text = "Sample Request";
+                    po_number_text = "Sample Quotation";
                     break;
             }
         });

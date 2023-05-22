@@ -36,7 +36,7 @@ public class BottomSheet_choose_filter_job_orders extends BottomSheetDialogFragm
     ImageView closeButton;
     Button applyButton, resetButton;
     ChipCloud statusChip;
-    String[] chipsText = new String[]{"All", "Waiting sales", "Sales rejected", "Waiting cost control", "Waiting finance manager","Finance manager rejected", "Waiting CEO", "CEO rejected", "Approved"};
+    String[] chipsText = new String[]{"All", "Waiting sales", "Sales rejected", "Waiting cost control", "Waiting finance manager","Finance manager rejected", "Waiting CEO", "CEO rejected", "Approved","Quotation Approved or Sample Quotation","Have PO"};
 
 
     @Override
