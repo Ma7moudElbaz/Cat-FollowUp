@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -64,6 +66,8 @@ public class BottomSheet_suppliers extends BottomSheetDialogFragment implements 
     ArrayList<Supplier_item> suppliers_list;
 
     ImageView closeButton;
+    EditText et_supplier_name;
+    Button btn_submit;
     RecyclerView recyclerView;
     ProgressBar loading;
     WebserviceContext ws;
@@ -75,6 +79,14 @@ public class BottomSheet_suppliers extends BottomSheetDialogFragment implements 
         initFields(view);
 
         closeButton.setOnClickListener(v -> dismiss());
+        btn_submit.setOnClickListener(v -> {
+            if (et_supplier_name.length()!=0){
+                sendBackResult(et_supplier_name.getText().toString(), "1");
+            }
+            else {
+                Toast.makeText(getContext(), "Supplier name cannot be empty", Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
@@ -82,6 +94,8 @@ public class BottomSheet_suppliers extends BottomSheetDialogFragment implements 
         closeButton = view.findViewById(R.id.img_close);
         loading = view.findViewById(R.id.loading);
         recyclerView = view.findViewById(R.id.recycler);
+        et_supplier_name = view.findViewById(R.id.et_supplier_name);
+        btn_submit = view.findViewById(R.id.btn_submit);
         suppliers_list = new ArrayList<>();
         ws = new WebserviceContext(getActivity());
         initRecyclerView();
