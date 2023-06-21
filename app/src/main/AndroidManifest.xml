@@ -20,8 +20,11 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
+            android:name=".admin.AllCompaniesActivity"
+            android:exported="false" />
+        <activity
             android:name=".job_orders.job_order_details.PdfViewer"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".job_orders.job_order_details.comments.CommentsActivity"
             android:exported="false" />

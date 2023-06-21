@@ -67,6 +67,16 @@ public class UserUtils {
         return getSharedPreferences(context).getInt("parent_id", 0);
     }
 
+    public static void setRoleId(Context context, int parent_id) {
+        SharedPreferences.Editor editor = getSharedPreferences(context).edit();
+        editor.putInt("role_id", parent_id);
+        editor.apply();
+    }
+
+    public static int getRoleId(Context context) {
+        return getSharedPreferences(context).getInt("role_id", 0);
+    }
+
 
 
     public static void setChildId(Context context, int parent_id) {

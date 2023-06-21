@@ -171,6 +171,7 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
             } else {
                 UserUtils.setChildId(getBaseContext(), res.getInt("children_id"));
             }
+            UserUtils.setRoleId(getBaseContext(), res.getInt("role_id"));
             UserUtils.setParentId(getBaseContext(), res.getInt("parent_id"));
             UserUtils.setUserId(getBaseContext(), res.getInt("id"));
             UserUtils.setUserName(getBaseContext(), res.getString("name"));

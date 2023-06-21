@@ -15,8 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.followup.R;
+import com.example.followup.admin.AllCompaniesActivity;
 import com.example.followup.bottomsheets.BottomSheet_choose_change_password;
 import com.example.followup.login.LoginActivity;
+import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 
@@ -48,7 +50,7 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
     }
 
     TextView name, email;
-    Button changePassword, logOut;
+    Button changePassword, logOut, allCompanies;
     private ProgressDialog dialog;
     WebserviceContext ws;
 
@@ -65,6 +67,8 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
             startActivity(new Intent(getContext(), LoginActivity.class));
             requireActivity().finish();
         });
+
+        allCompanies.setOnClickListener(v -> startActivity(new Intent(getContext(), AllCompaniesActivity.class)));
     }
 
     private void initFields(View view) {
@@ -74,11 +78,16 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
         email = view.findViewById(R.id.email);
         changePassword = view.findViewById(R.id.btn_change_pass);
         logOut = view.findViewById(R.id.btn_log_out);
+        allCompanies = view.findViewById(R.id.btn_all_companies);
 
 
         dialog = new ProgressDialog(getContext());
         dialog.setMessage("Please, Wait...");
         dialog.setCancelable(false);
+
+        if (UserType.isAdmin(getContext(),UserUtils.getRoleId(getContext()))) {
+            allCompanies.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

@@ -55,4 +55,8 @@ public class UserType {
         return projectOwnerId == UserUtils.getUserId(mContext) ||
                 assignedToId == UserUtils.getUserId(mContext);
     }
+    public static boolean isAdmin(Context mContext, int role_id) {
+
+        return UserUtils.getRoleId(mContext) == 1;
+    }
 }
