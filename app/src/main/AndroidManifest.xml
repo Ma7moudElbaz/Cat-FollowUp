@@ -20,6 +20,9 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
+            android:name=".admin.StatisticsActivity"
+            android:exported="false" />
+        <activity
             android:name=".admin.AllCompaniesActivity"
             android:exported="false" />
         <activity
