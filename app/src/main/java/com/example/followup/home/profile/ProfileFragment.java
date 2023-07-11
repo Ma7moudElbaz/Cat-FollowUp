@@ -16,7 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.followup.R;
 import com.example.followup.admin.AllCompaniesActivity;
-import com.example.followup.admin.StatisticsActivity;
+import com.example.followup.admin.statistics.StatisticsActivity;
 import com.example.followup.bottomsheets.BottomSheet_choose_change_password;
 import com.example.followup.login.LoginActivity;
 import com.example.followup.utils.UserType;

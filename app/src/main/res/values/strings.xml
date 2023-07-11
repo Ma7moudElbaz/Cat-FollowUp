@@ -282,4 +282,5 @@
     <string name="attachment">Attachment</string>
     <string name="ceo_reminder">CEO Reminder</string>
     <string name="statistics">Statistics</string>
+    <string name="users">Users</string>
 </resources>
