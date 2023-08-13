@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.followup.R;
@@ -30,6 +29,7 @@ import com.example.followup.job_orders.list.Job_orders_adapter;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.mindorks.editdrawabletext.EditDrawableText;
 
 import org.json.JSONArray;
@@ -69,7 +69,8 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
     RecyclerView recyclerView;
     EditDrawableText search;
     ImageView filterBtn;
-    TextView btn_reminder;
+
+    ExtendedFloatingActionButton btn_ceo_reminder,btn_sales_reminder;
 
     ArrayList<Job_order_item> job_order_list;
     Job_orders_adapter job_order_adapter;
@@ -109,7 +110,8 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
             return false;
         });
 
-        btn_reminder.setOnClickListener(v -> sendReminder());
+        btn_ceo_reminder.setOnClickListener(v -> sendCeoReminder());
+        btn_sales_reminder.setOnClickListener(v -> sendSalesReminder());
         swipe_refresh.setOnRefreshListener(this::reloadData);
         reloadData();
     }
@@ -180,9 +182,39 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
 
     }
 
-    public void sendReminder() {
+    public void sendCeoReminder() {
         Map<String, String> map = new HashMap<>();
         map.put("job_order_id", "");
+
+        dialog.show();
+        ws.getApi().sendJobOrderReminder(UserUtils.getAccessToken(getContext()), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getContext(), "Sent successfully", Toast.LENGTH_LONG).show();
+                    } else {
+                        assert response.errorBody() != null;
+                        Toast.makeText(getContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Toast.makeText(getContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
+    public void sendSalesReminder() {
+        Map<String, String> map = new HashMap<>();
+        map.put("job_order_id", "");
+        map.put("sales", "1");
 
         dialog.show();
         ws.getApi().sendJobOrderReminder(UserUtils.getAccessToken(getContext()), map).enqueue(new Callback<ResponseBody>() {
@@ -219,7 +251,8 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
         search = view.findViewById(R.id.search);
         filterBtn = view.findViewById(R.id.filter_btn);
         recyclerView = view.findViewById(R.id.recycler_view);
-        btn_reminder = view.findViewById(R.id.btn_reminder);
+        btn_ceo_reminder = view.findViewById(R.id.btn_ceo_reminder);
+        btn_sales_reminder = view.findViewById(R.id.btn_sales_reminder);
 
         swipe_refresh = view.findViewById(R.id.swipe_refresh);
         job_order_list = new ArrayList<>();
@@ -227,9 +260,11 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getContext()), UserUtils.getChildId(getContext()), UserUtils.getCountryId(getContext()));
 
         if (loggedInUser.equals("hesham") || loggedInUser.equals("nagat") || loggedInUser.equals("hany") || loggedInUser.equals("speranza")) {
-            btn_reminder.setVisibility(View.VISIBLE);
+            btn_ceo_reminder.setVisibility(View.VISIBLE);
+            btn_sales_reminder.setVisibility(View.VISIBLE);
         } else {
-            btn_reminder.setVisibility(View.GONE);
+            btn_ceo_reminder.setVisibility(View.GONE);
+            btn_sales_reminder.setVisibility(View.GONE);
         }
         initRecyclerView();
     }

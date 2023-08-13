@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -81,7 +80,7 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     int jobOrderStatus;
     String poNumber;
     String pdfUrl;
-    ExtendedFloatingActionButton btn_comments,btn_reminder;
+    ExtendedFloatingActionButton btn_comments, btn_ceo_reminder,btn_sales_reminder;
 
 
     RecyclerView recyclerView;
@@ -157,7 +156,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
             startActivity(i);
         });
 
-        btn_reminder.setOnClickListener(v -> sendReminder());
+        btn_ceo_reminder.setOnClickListener(v -> sendCeoReminder());
+        btn_sales_reminder.setOnClickListener(v -> sendSalesReminder());
 
         edit.setOnClickListener(view -> {
             Intent i = new Intent(JobOrderDetailsActivity.this, EditJobOrderActivity.class);
@@ -205,7 +205,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
         back = findViewById(R.id.back);
         btn_comments = findViewById(R.id.btn_comments);
-        btn_reminder = findViewById(R.id.btn_reminder);
+        btn_ceo_reminder = findViewById(R.id.btn_ceo_reminder);
+        btn_sales_reminder = findViewById(R.id.btn_sales_reminder);
         download = findViewById(R.id.download);
         sales_approval_layout = findViewById(R.id.sales_approval_layout);
         magdi_approval_layout = findViewById(R.id.magdi_approval_layout);
@@ -328,7 +329,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 }
 
                 if (loggedInUser.equals("hesham")||loggedInUser.equals("nagat")){
-                    btn_reminder.setVisibility(View.VISIBLE);
+                    btn_ceo_reminder.setVisibility(View.VISIBLE);
+                    btn_sales_reminder.setVisibility(View.VISIBLE);
                 }
                 break;
             }
@@ -446,7 +448,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 }
 
                 if (loggedInUser.equals("hany")||loggedInUser.equals("speranza")){
-                    btn_reminder.setVisibility(View.VISIBLE);
+                    btn_ceo_reminder.setVisibility(View.VISIBLE);
+                    btn_sales_reminder.setVisibility(View.VISIBLE);
                 }
                 break;
             }
@@ -522,7 +525,8 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
         ceo_approval_layout.setVisibility(View.GONE);
         adel_approval_layout.setVisibility(View.GONE);
         txt_hany_notes.setVisibility(View.GONE);
-        btn_reminder.setVisibility(View.GONE);
+        btn_ceo_reminder.setVisibility(View.GONE);
+        btn_sales_reminder.setVisibility(View.GONE);
     }
 
     public void updateStatusDialog(int status, String reason, String hany_notes) {
@@ -534,9 +538,40 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
     }
 
 
-    public void sendReminder() {
+    public void sendCeoReminder() {
         Map<String, String> map = new HashMap<>();
         map.put("job_order_id", String.valueOf(jobOrderId));
+
+        dialog.show();
+        ws.getApi().sendJobOrderReminder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getBaseContext(), "Sent successfully", Toast.LENGTH_LONG).show();
+                        getJobOrderDetails();
+                    } else {
+                        assert response.errorBody() != null;
+                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
+    public void sendSalesReminder() {
+        Map<String, String> map = new HashMap<>();
+        map.put("job_order_id", String.valueOf(jobOrderId));
+        map.put("sales", "1");
 
         dialog.show();
         ws.getApi().sendJobOrderReminder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
