@@ -168,6 +168,10 @@ public interface ServiceInterface {
     @FormUrlEncoded
     Call<ResponseBody> sendJobOrderReminder(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
 
+    @POST("costs/reminder")
+    @FormUrlEncoded
+    Call<ResponseBody> sendCostReminder(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
+
     @Multipart
     @POST("payments")
     Call<ResponseBody> addPayment(@Header("Authorization") String auth, @Part List<MultipartBody.Part> files, @PartMap Map<String, RequestBody> map);

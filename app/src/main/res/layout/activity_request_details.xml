@@ -335,4 +335,36 @@
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </LinearLayout>
 
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btn_sales_reminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/btn_proc_reminder"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/sales_reminder"
+        android:text="@string/sales_reminder"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/red"
+        app:icon="@drawable/ic_notification_list_item"
+        app:iconTint="@color/white" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/btn_proc_reminder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:contentDescription="@string/ceo_reminder"
+        android:text="@string/procurement_reminder"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/red"
+        app:icon="@drawable/ic_notification_list_item"
+        app:iconTint="@color/white" />
+
 </RelativeLayout>

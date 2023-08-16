@@ -48,6 +48,7 @@ import com.example.followup.utils.StringCheck;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -92,6 +93,8 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
     boolean canEditProject, hasPoNumber;
 
     ImageView requestStepperImg;
+
+    ExtendedFloatingActionButton btn_proc_reminder, btn_sales_reminder;
 
     public JSONObject getDataObj() {
         return dataObj;
@@ -145,6 +148,9 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
             i.putExtra("has_po_number", hasPoNumber);
             startActivity(i);
         });
+
+        btn_proc_reminder.setOnClickListener(v -> sendProcReminder());
+        btn_sales_reminder.setOnClickListener(v -> sendSalesReminder());
     }
 
     private void gotoEditCost(int cost_id, int type_id) {
@@ -224,6 +230,10 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
         job_orders = findViewById(R.id.job_orders);
         txt_canceled = findViewById(R.id.txt_canceled);
 
+
+        btn_proc_reminder = findViewById(R.id.btn_proc_reminder);
+        btn_sales_reminder = findViewById(R.id.btn_sales_reminder);
+
         txt_rejection_reason_request = findViewById(R.id.txt_rejection_reason_request);
         txt_rejection_reason_cost = findViewById(R.id.txt_rejection_reason_cost);
         nagat_reject = findViewById(R.id.nagat_reject);
@@ -271,6 +281,67 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
         } else {
             expandDetails();
         }
+    }
+
+    public void sendProcReminder() {
+        Map<String, String> map = new HashMap<>();
+        map.put("cost_id", String.valueOf(costId));
+
+        dialog.show();
+        ws.getApi().sendCostReminder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getBaseContext(), "Sent successfully", Toast.LENGTH_LONG).show();
+                        getRequestDetails();
+                    } else {
+                        assert response.errorBody() != null;
+                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
+    }
+
+    public void sendSalesReminder() {
+        Map<String, String> map = new HashMap<>();
+        map.put("cost_id", String.valueOf(costId));
+        map.put("sales", "1");
+
+        dialog.show();
+        ws.getApi().sendCostReminder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
+                try {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(getBaseContext(), "Sent successfully", Toast.LENGTH_LONG).show();
+                        getRequestDetails();
+                    } else {
+                        assert response.errorBody() != null;
+                        Toast.makeText(getBaseContext(), response.errorBody().string(), Toast.LENGTH_LONG).show();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
+                Toast.makeText(getBaseContext(), R.string.network_error, Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+            }
+        });
     }
 
     private void getRequestDetails() {
@@ -383,6 +454,11 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
         }
         switch (costStatus) {
             case 1: {
+                if (canEditProject) {
+                    btn_proc_reminder.setVisibility(View.VISIBLE);
+                } else {
+                    btn_proc_reminder.setVisibility(View.GONE);
+                }
                 setCostContainer(false);
                 if (loggedInUser.equals("nagat") && requestStatus != 2) {
                     nagat_reject.setVisibility(View.VISIBLE);
@@ -400,6 +476,11 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
             }
             case 3:
             case 5: {
+                if (canEditProject) {
+                    btn_proc_reminder.setVisibility(View.VISIBLE);
+                } else {
+                    btn_proc_reminder.setVisibility(View.GONE);
+                }
                 txt_rejection_reason_cost.setVisibility(View.VISIBLE);
                 if (loggedInUser.equals("nagatTeam") || loggedInUser.equals("nagat")) {
                     editCost.setVisibility(View.VISIBLE);
@@ -409,6 +490,12 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
                 break;
             }
             case 4: {
+                if (loggedInUser.equals("nagat")) {
+                    btn_sales_reminder.setVisibility(View.VISIBLE);
+                } else {
+                    btn_sales_reminder.setVisibility(View.GONE);
+                }
+
                 if (canEditProject) {
                     sales_approval_layout.setVisibility(View.VISIBLE);
                 } else {
@@ -525,6 +612,8 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
         nagat_reject.setVisibility(View.GONE);
         txt_rejection_reason_request.setVisibility(View.GONE);
         txt_rejection_reason_cost.setVisibility(View.GONE);
+        btn_proc_reminder.setVisibility(View.GONE);
+        btn_sales_reminder.setVisibility(View.GONE);
     }
 
     public void deleteRequestDialog() {
@@ -652,7 +741,7 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
                 nagatReject(2, reason);
                 break;
             case "nagat_reject_cost":
-                    updateStatusDialog(3, reason);
+                updateStatusDialog(3, reason);
                 break;
             case "sales_reject":
                 updateStatusDialog(5, reason);
