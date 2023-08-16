@@ -472,6 +472,11 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
             }
             case 2: {
                 //handle buttons in SupplierCost fragments
+                if (canEditProject) {
+                    btn_proc_reminder.setVisibility(View.VISIBLE);
+                } else {
+                    btn_proc_reminder.setVisibility(View.GONE);
+                }
                 break;
             }
             case 3:

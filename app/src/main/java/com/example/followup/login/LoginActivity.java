@@ -1,8 +1,11 @@
 package com.example.followup.login;
 
+import static android.Manifest.permission.POST_NOTIFICATIONS;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +14,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.akexorcist.localizationactivity.ui.LocalizationActivity;
 import com.example.followup.BuildConfig;
@@ -65,6 +70,10 @@ public class LoginActivity extends LocalizationActivity implements BottomSheet_f
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initFields();
+
+        if (ContextCompat.checkSelfPermission(this, POST_NOTIFICATIONS) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(this, new String[]{POST_NOTIFICATIONS}, 1);
+        }
 
         email.setText(UserUtils.getLoginName(getBaseContext()));
         password.setText(UserUtils.getLoginPassword(getBaseContext()));
