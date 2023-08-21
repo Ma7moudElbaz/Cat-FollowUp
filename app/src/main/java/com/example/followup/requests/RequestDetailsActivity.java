@@ -285,7 +285,7 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
 
     public void sendProcReminder() {
         Map<String, String> map = new HashMap<>();
-        map.put("cost_id", String.valueOf(costId));
+        map.put("request_id", String.valueOf(request_id));
 
         dialog.show();
         ws.getApi().sendCostReminder(UserUtils.getAccessToken(getBaseContext()), map).enqueue(new Callback<ResponseBody>() {
@@ -315,7 +315,7 @@ public class RequestDetailsActivity extends LocalizationActivity implements Bott
 
     public void sendSalesReminder() {
         Map<String, String> map = new HashMap<>();
-        map.put("cost_id", String.valueOf(costId));
+        map.put("request_id", String.valueOf(request_id));
         map.put("sales", "1");
 
         dialog.show();
