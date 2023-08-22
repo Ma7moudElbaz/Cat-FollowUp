@@ -34,7 +34,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity extends LocalizationActivity implements NavigationBarView.OnItemSelectedListener , Notification_adapter.AdapterCallback {
+public class HomeActivity extends LocalizationActivity implements NavigationBarView.OnItemSelectedListener, Notification_adapter.AdapterCallback {
 
     public void setProjects() {
         if (bottomNavigationView.getSelectedItemId() != R.id.navigation_projects) {
@@ -65,6 +65,16 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
 
     WebserviceContext ws;
 
+    int joSelectedStatusIndex = 0;
+
+    public int getJoSelectedStatusIndex() {
+        return joSelectedStatusIndex;
+    }
+
+    public void setJoSelectedStatusIndex(int joSelectedStatusIndex) {
+        this.joSelectedStatusIndex = joSelectedStatusIndex;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +82,7 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
         initFields();
 
         String loggedInUser = UserType.getUserType(UserUtils.getParentId(getBaseContext()), UserUtils.getChildId(getBaseContext()), UserUtils.getCountryId(getBaseContext()));
-        if (!(loggedInUser.equals("nagat")||loggedInUser.equals("speranza"))) {
+        if (!(loggedInUser.equals("nagat") || loggedInUser.equals("speranza"))) {
             bottomNavigationView.getMenu().removeItem(R.id.navigation_all_requests);
         }
 
@@ -167,7 +177,19 @@ public class HomeActivity extends LocalizationActivity implements NavigationBarV
 
     @Override
     public void adapterCallback(String action) {
-        setContentFragment(new JobOrdersFragment());
+        switch (action) {
+            case "jo_all":
+                joSelectedStatusIndex = 6;
+                break;
+
+            case "sales_jo_all":
+                joSelectedStatusIndex = 1;
+                break;
+
+        }
+
         bottomNavigationView.setSelectedItemId(R.id.navigation_job_orders);
+
+
     }
 }

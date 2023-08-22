@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.followup.R;
 import com.example.followup.bottomsheets.BottomSheet_choose_filter_job_orders_fragment;
+import com.example.followup.home.HomeActivity;
 import com.example.followup.job_orders.list.Job_order_item;
 import com.example.followup.job_orders.list.Job_orders_adapter;
 import com.example.followup.utils.UserType;
@@ -70,7 +71,7 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
     EditDrawableText search;
     ImageView filterBtn;
 
-    ExtendedFloatingActionButton btn_ceo_reminder,btn_sales_reminder;
+    ExtendedFloatingActionButton btn_ceo_reminder, btn_sales_reminder;
 
     ArrayList<Job_order_item> job_order_list;
     Job_orders_adapter job_order_adapter;
@@ -79,20 +80,27 @@ public class JobOrdersFragment extends Fragment implements BottomSheet_choose_fi
     int lastPageNum;
     boolean mHasReachedBottomOnce = false;
 
-    int selectedStatusIndex = -1;
+    int selectedStatusIndex = 0;
     String selectedStatus = "";
-    final String[] chipsStatus = new String[]{"", "1", "2", "3", "5", "6", "8", "9", "7","15","14"};
+    final String[] chipsStatus = new String[]{"", "1", "2", "3", "5", "6", "8", "9", "7", "15", "14"};
 
 
     SwipeRefreshLayout swipe_refresh;
 
     WebserviceContext ws;
 
+    HomeActivity activity;
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         initFields(view);
+        activity = (HomeActivity) getActivity();
+        selectedStatusIndex = activity.getJoSelectedStatusIndex();
+        selectedStatus = chipsStatus[selectedStatusIndex];
+
+        activity.setJoSelectedStatusIndex(0);
+
         filterBtn.setOnClickListener(v -> showFilterSheet());
 
         search.setDrawableClickListener(drawablePosition -> {

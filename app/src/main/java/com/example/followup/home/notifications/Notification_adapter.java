@@ -21,7 +21,6 @@ import com.example.followup.R;
 import com.example.followup.job_orders.job_order_details.JobOrderDetailsActivity;
 import com.example.followup.requests.RequestDetailsActivity;
 import com.example.followup.requests.RequestsActivity;
-import com.example.followup.requests.list.adapters.Print_adapter;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
 
@@ -87,6 +86,7 @@ public class Notification_adapter extends RecyclerView.Adapter<Notification_adap
                     mContext.startActivity(i);
                     break;
                 case "jo":
+                case "sales_jo":
                 case "comment":
                     i = new Intent(mContext, JobOrderDetailsActivity.class);
                     i.putExtra("job_order_id", items.get(position).getAction_id());
@@ -99,6 +99,9 @@ public class Notification_adapter extends RecyclerView.Adapter<Notification_adap
                     break;
                 case "jo_all":
                     mAdapterCallback.adapterCallback("jo_all");
+                    break;
+                case "sales_jo_all":
+                    mAdapterCallback.adapterCallback("sales_jo_all");
                     break;
             }
 

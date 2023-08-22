@@ -296,6 +296,10 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 } else {
                     sales_approval_layout.setVisibility(View.GONE);
                 }
+
+                if (loggedInUser.equals("hesham")||loggedInUser.equals("nagat")){
+                    btn_sales_reminder.setVisibility(View.VISIBLE);
+                }
                 break;
             }
             case 3:
@@ -330,7 +334,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
                 if (loggedInUser.equals("hesham")||loggedInUser.equals("nagat")){
                     btn_ceo_reminder.setVisibility(View.VISIBLE);
-                    btn_sales_reminder.setVisibility(View.VISIBLE);
                 }
                 break;
             }
@@ -407,6 +410,11 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
                 } else {
                     sales_approval_layout.setVisibility(View.GONE);
                 }
+
+                if (loggedInUser.equals("hany")||loggedInUser.equals("speranza")){
+                    btn_ceo_reminder.setVisibility(View.VISIBLE);
+                    btn_sales_reminder.setVisibility(View.VISIBLE);
+                }
                 break;
             }
             case 3:
@@ -449,7 +457,6 @@ public class JobOrderDetailsActivity extends LocalizationActivity implements Bot
 
                 if (loggedInUser.equals("hany")||loggedInUser.equals("speranza")){
                     btn_ceo_reminder.setVisibility(View.VISIBLE);
-                    btn_sales_reminder.setVisibility(View.VISIBLE);
                 }
                 break;
             }
