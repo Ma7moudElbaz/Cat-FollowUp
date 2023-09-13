@@ -98,4 +98,7 @@ dependencies {
 
     implementation 'com.github.braver-tool:Android11FilePicker:1.0.0'
 
+    //chart
+    implementation 'com.github.razerdp:AnimatedPieView:1.2.6'
+    implementation 'org.apmem.tools:layouts:1.10@aar'
 }

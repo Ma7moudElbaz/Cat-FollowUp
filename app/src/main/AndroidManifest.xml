@@ -21,6 +21,9 @@
         tools:replace="android:allowBackup"
         tools:targetApi="n">
         <activity
+            android:name=".admin.statistics.users.Statistics_single_user"
+            android:exported="false" />
+        <activity
             android:name=".admin.statistics.StatisticsActivity"
             android:exported="false" />
         <activity

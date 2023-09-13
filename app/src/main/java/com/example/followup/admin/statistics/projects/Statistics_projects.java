@@ -1,4 +1,4 @@
-package com.example.followup.admin.statistics;
+package com.example.followup.admin.statistics.projects;
 
 import android.os.Bundle;
 
@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 
 import com.example.followup.R;
 
-public class Statistics_job_orders extends Fragment {
 
+public class Statistics_projects extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +21,6 @@ public class Statistics_job_orders extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_statistics_job_orders, container, false);
+        return inflater.inflate(R.layout.fragment_statistics_projects, container, false);
     }
 }

@@ -202,4 +202,9 @@ public interface ServiceInterface {
     @POST("markAsRead")
     @FormUrlEncoded
     Call<ResponseBody> readNotification(@Header("Authorization") String auth, @FieldMap Map<String, String> map);
+
+    //statistics
+    @GET("statistics/users")
+    Call<ResponseBody> getStatisticsUsers(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
+
 }

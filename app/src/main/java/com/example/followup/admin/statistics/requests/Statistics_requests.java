@@ -1,4 +1,4 @@
-package com.example.followup.admin.statistics;
+package com.example.followup.admin.statistics.requests;
 
 import android.os.Bundle;
 

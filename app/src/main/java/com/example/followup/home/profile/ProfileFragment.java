@@ -90,7 +90,7 @@ public class ProfileFragment extends Fragment implements BottomSheet_choose_chan
 
         if (UserType.isAdmin(getContext(),UserUtils.getRoleId(getContext()))) {
 //            allCompanies.setVisibility(View.VISIBLE);
-//            statistics.setVisibility(View.VISIBLE);
+            statistics.setVisibility(View.VISIBLE);
         }
     }
 

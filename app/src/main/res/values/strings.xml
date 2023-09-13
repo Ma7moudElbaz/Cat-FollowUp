@@ -285,4 +285,10 @@
     <string name="users">Users</string>
     <string name="sales_reminder">Sales Reminder</string>
     <string name="procurement_reminder">Procurement Reminder</string>
+    <string name="requests_no">Requests No</string>
+    <string name="projects_no">Projects No</string>
+    <string name="user_statistics">User Statistics</string>
+    <string name="projects_count">Projects Count</string>
+    <string name="job_orders_count">Job Orders Count</string>
+    <string name="requests_count">Requests Count</string>
 </resources>
