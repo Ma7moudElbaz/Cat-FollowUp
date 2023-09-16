@@ -1,7 +1,9 @@
 package com.example.followup.admin.statistics.users;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +29,7 @@ import com.example.followup.job_orders.list.Job_orders_adapter;
 import com.example.followup.utils.UserType;
 import com.example.followup.utils.UserUtils;
 import com.example.followup.webservice.WebserviceContext;
+import com.mindorks.editdrawabletext.EditDrawableText;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -56,6 +61,7 @@ public class Statistics_users extends Fragment {
     private ProgressDialog dialog;
     RecyclerView recyclerView;
     ProgressBar loading;
+    EditDrawableText search;
     TextView total_users;
     ArrayList<Statistics_user_item> statistics_user_list;
     Statistics_users_adapter statistics_users_adapter;
@@ -64,12 +70,32 @@ public class Statistics_users extends Fragment {
     boolean mHasReachedBottomOnce = false;
     WebserviceContext ws;
     HomeActivity activity;
+
+    public static void hideKeyboardFragment(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         initFields(view);
         reloadData();
+
+        search.setDrawableClickListener(drawablePosition -> {
+            reloadData();
+            hideKeyboardFragment(requireContext(), view);
+        });
+
+        search.setOnEditorActionListener((v, actionId, event) -> {
+
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                reloadData();
+                hideKeyboardFragment(requireContext(), v);
+                return true;
+            }
+            return false;
+        });
     }
 
     private void initFields(View view) {
@@ -82,6 +108,7 @@ public class Statistics_users extends Fragment {
         recyclerView = view.findViewById(R.id.recycler_view);
         total_users = view.findViewById(R.id.total_users);
         loading = view.findViewById(R.id.loading);
+        search = view.findViewById(R.id.search);
 
         statistics_user_list = new ArrayList<>();
 
@@ -119,7 +146,7 @@ public class Statistics_users extends Fragment {
     public Map<String, String> getFilterMap() {
         Map<String, String> map = new HashMap<>();
         map.put("per_page", "20");
-//        map.put("search", search.getText().toString());
+        map.put("search", search.getText().toString());
 
         return map;
     }

@@ -16,7 +16,11 @@
     <color name="line_blue">#4D0050A6</color>
     <color name="text_light_blue">#9903A9F4</color>
     <color name="green">#23DB80</color>
+    <color name="more_green">#014C27</color>
+    <color name="between_green">#042917</color>
     <color name="red">#ED6F6F</color>
+    <color name="more_red">#FB0000</color>
+    <color name="between_red">#4A1E1E</color>
     <color name="request_details_bg">#F2F2F2</color>
     <color name="comment_bg">#F5F9FC</color>
 

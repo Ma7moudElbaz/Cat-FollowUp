@@ -239,4 +239,6 @@
     <string name="projects_count">Projects Count</string>
     <string name="job_orders_count">Job Orders Count</string>
     <string name="requests_count">Requests Count</string>
+    <string name="types">Types</string>
+    <string name="statuss">Status</string>
 </resources>

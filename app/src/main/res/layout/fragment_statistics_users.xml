@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".admin.statistics.users.Statistics_users">
+
+    <com.mindorks.editdrawabletext.EditDrawableText
+        android:id="@+id/search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/et_gray"
+        android:drawableRight="@drawable/ic_search"
+        android:drawableTint="@color/black"
+        android:hint="@string/type_to_search"
+        android:imeOptions="actionSearch"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:padding="8dp"
+        tools:ignore="RtlHardcoded" />
 
     <TextView
         android:id="@+id/total_users"
@@ -16,7 +32,6 @@
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/total_users"
         android:layout_marginTop="10dp"
         tools:listitem="@layout/item_statistics_user" />
 
@@ -26,4 +41,4 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true" />
 
-</RelativeLayout>
+</LinearLayout>
