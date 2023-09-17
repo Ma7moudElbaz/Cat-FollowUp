@@ -153,7 +153,6 @@ public class Statistics_users extends Fragment {
 
     public void getUsers(int pageNum, Map<String, String> filterMap) {
         loading.setVisibility(View.VISIBLE);
-
         ws.getApi().getStatisticsUsers(UserUtils.getAccessToken(getContext()), pageNum, filterMap).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
