@@ -293,4 +293,6 @@
     <string name="requests_count">Requests Count</string>
     <string name="types">Types</string>
     <string name="statuss">Status</string>
+    <string name="cat_projects">CAT Projects</string>
+    <string name="_237_projects">237 Projects</string>
 </resources>

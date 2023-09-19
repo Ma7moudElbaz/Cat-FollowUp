@@ -206,5 +206,7 @@ public interface ServiceInterface {
     //statistics
     @GET("statistics/users")
     Call<ResponseBody> getStatisticsUsers(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
+   @GET("statistics/projects")
+    Call<ResponseBody> getStatisticsProjects(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
 
 }
