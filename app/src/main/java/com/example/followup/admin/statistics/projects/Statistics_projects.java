@@ -217,7 +217,7 @@ public class Statistics_projects extends Fragment {
 
     public Map<String, String> getFilterMap(String country_id) {
         Map<String, String> map = new HashMap<>();
-        map.put("per_page", "20");
+        map.put("per_page", "2  ");
         map.put("country_id", country_id);
 //        map.put("user_ids", "3");
 

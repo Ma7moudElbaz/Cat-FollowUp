@@ -295,4 +295,7 @@
     <string name="statuss">Status</string>
     <string name="cat_projects">CAT Projects</string>
     <string name="_237_projects">237 Projects</string>
+    <string name="all">All</string>
+    <string name="cat">CAT</string>
+    <string name="_237">237</string>
 </resources>
