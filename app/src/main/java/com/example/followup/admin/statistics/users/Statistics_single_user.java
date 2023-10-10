@@ -3,7 +3,6 @@ package com.example.followup.admin.statistics.users;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,8 +33,8 @@ import retrofit2.Response;
 public class Statistics_single_user extends AppCompatActivity {
 
     ImageView back;
-    TextView projects_no, requests_no, purchasing_no, printing_no, production_no, photography_no, extras_no, jo_no;
-    AnimatedPieView projects_chart, requests_status_chart, requests_types_chart, purchasing_chart, printing_chart, production_chart, photography_chart, extras_chart, jo_chart;
+    TextView projects_no, requests_no, purchasing_no, printing_no, production_no, photography_no, extras_no, jo_no, eg_jo_no, ksa_jo_no;
+    AnimatedPieView projects_chart, requests_status_chart, requests_types_chart, purchasing_chart, printing_chart, production_chart, photography_chart, extras_chart, eg_jo_chart, ksa_jo_chart;
     ProgressBar loading;
     WebserviceContext ws;
     int user_id;
@@ -63,6 +62,8 @@ public class Statistics_single_user extends AppCompatActivity {
         photography_no = findViewById(R.id.photography_no);
         extras_no = findViewById(R.id.extras_no);
         jo_no = findViewById(R.id.jo_no);
+        eg_jo_no = findViewById(R.id.eg_jo_no);
+        ksa_jo_no = findViewById(R.id.ksa_jo_no);
 
         projects_chart = findViewById(R.id.projects_chart);
         requests_status_chart = findViewById(R.id.requests_status_chart);
@@ -72,7 +73,8 @@ public class Statistics_single_user extends AppCompatActivity {
         production_chart = findViewById(R.id.production_chart);
         photography_chart = findViewById(R.id.photography_chart);
         extras_chart = findViewById(R.id.extras_chart);
-        jo_chart = findViewById(R.id.jo_chart);
+        eg_jo_chart = findViewById(R.id.eg_jo_chart);
+        ksa_jo_chart = findViewById(R.id.ksa_jo_chart);
 
 
     }
@@ -125,7 +127,9 @@ public class Statistics_single_user extends AppCompatActivity {
     private void setUserData(JSONObject userObject) throws JSONException {
         projects_no.setText(userObject.getString("projects_count"));
         requests_no.setText(userObject.getJSONObject("requests").getString("count"));
-        jo_no.setText(userObject.getJSONObject("job_orders").getString("count"));
+        int jobOrdersTotal = userObject.getJSONObject("job_orders").getJSONObject("EGY").getInt("total")
+                + userObject.getJSONObject("job_orders").getJSONObject("KSA").getInt("total");
+        jo_no.setText(String.valueOf(jobOrdersTotal));
         purchasing_no.setText(userObject.getJSONObject("requests").getJSONObject("types").getJSONObject("Purchasing").getString("count"));
         printing_no.setText(userObject.getJSONObject("requests").getJSONObject("types").getJSONObject("Printing").getString("count"));
         production_no.setText(userObject.getJSONObject("requests").getJSONObject("types").getJSONObject("Production").getString("count"));
@@ -146,43 +150,57 @@ public class Statistics_single_user extends AppCompatActivity {
         JSONObject requestsPhotography = requestsTypesData.getJSONObject("Photography");
         JSONObject requestsExtras = requestsTypesData.getJSONObject("Extras");
 
-        setRequestsTypesChart(requestsPurchasing.getInt("count"),requestsPrinting.getInt("count")
-                ,requestsProduction.getInt("count"),requestsPhotography.getInt("count"),
+        setRequestsTypesChart(requestsPurchasing.getInt("count"), requestsPrinting.getInt("count")
+                , requestsProduction.getInt("count"), requestsPhotography.getInt("count"),
                 requestsExtras.getInt("count"));
 
-        setPurchasingChart(requestsPurchasing.getInt("created"),requestsPurchasing.getInt("canceled")
-                ,requestsPurchasing.getInt("approved"),requestsPurchasing.getInt("have_jo"));
+        setPurchasingChart(requestsPurchasing.getInt("created"), requestsPurchasing.getInt("canceled")
+                , requestsPurchasing.getInt("approved"), requestsPurchasing.getInt("have_jo"));
 
-        setPrintingChart(requestsPrinting.getInt("created"),requestsPrinting.getInt("canceled")
-                ,requestsPrinting.getInt("approved"),requestsPrinting.getInt("have_jo"));
+        setPrintingChart(requestsPrinting.getInt("created"), requestsPrinting.getInt("canceled")
+                , requestsPrinting.getInt("approved"), requestsPrinting.getInt("have_jo"));
 
-        setProductionChart(requestsProduction.getInt("created"),requestsProduction.getInt("canceled")
-                ,requestsProduction.getInt("approved"),requestsProduction.getInt("have_jo"));
+        setProductionChart(requestsProduction.getInt("created"), requestsProduction.getInt("canceled")
+                , requestsProduction.getInt("approved"), requestsProduction.getInt("have_jo"));
 
-        setPhotographyChart(requestsPhotography.getInt("created"),requestsPhotography.getInt("canceled")
-                ,requestsPhotography.getInt("approved"),requestsPhotography.getInt("have_jo"));
+        setPhotographyChart(requestsPhotography.getInt("created"), requestsPhotography.getInt("canceled")
+                , requestsPhotography.getInt("approved"), requestsPhotography.getInt("have_jo"));
 
-        setExtrasChart(requestsExtras.getInt("created"),requestsExtras.getInt("canceled")
-                ,requestsExtras.getInt("approved"),requestsExtras.getInt("have_jo"));
-
-
-        JSONObject joData = userObject.getJSONObject("job_orders").getJSONObject("status");
-
-        int create = joData.getInt("CREATE");
-        int sales_reject = joData.getInt("SALES_REJECT");
-        int sales_approve = joData.getInt("SALES_APPROVE");
-        int magdy_hold = joData.getInt("MAGDY_HOLD");
-        int magdy_approve = joData.getInt("MAGDY_APPROVE");
-        int hesham_reject = joData.getInt("HESHAM_REJECT");
-        int hesham_approve = joData.getInt("HESHAM_APPROVE");
-        int send_to_co = joData.getInt("SEND_TO_CO");
-        int co_reject = joData.getInt("CO_REJECT");
-        int co_approve = joData.getInt("CO_APPROVE");
-        int adel_paid = joData.getInt("ADEL_PAID");
+        setExtrasChart(requestsExtras.getInt("created"), requestsExtras.getInt("canceled")
+                , requestsExtras.getInt("approved"), requestsExtras.getInt("have_jo"));
 
 
-        setJOChart(create,sales_reject,sales_approve,magdy_hold,magdy_approve,hesham_reject,hesham_approve
-                ,send_to_co,co_reject,co_approve,adel_paid);
+        JSONObject joData = userObject.getJSONObject("job_orders");
+
+        JSONObject ksaJo = joData.getJSONObject("KSA");
+        JSONObject egJo = joData.getJSONObject("EGY");
+
+        eg_jo_no.setText(egJo.getString("total"));
+        ksa_jo_no.setText(ksaJo.getString("total"));
+
+
+        int eg_pending_sales = egJo.getInt("pending_sales");
+        int eg_pending_cost_control = egJo.getInt("pending_cost_control");
+        int eg_pending_finance_manager = egJo.getInt("pending_finance_manager");
+        int eg_pending_ceo = egJo.getInt("pending_ceo");
+        int eg_rejected = ksaJo.getInt("rejected");
+
+
+        int ksa_pending_sales = ksaJo.getInt("pending_sales");
+        int ksa_pending_cost_control = ksaJo.getInt("pending_cost_control");
+        int ksa_pending_finance_manager = ksaJo.getInt("pending_finance_manager");
+        int ksa_pending_ceo = ksaJo.getInt("pending_ceo");
+        int ksa_pending_payment = ksaJo.getInt("pending_payment");
+        int ksa_rejected = ksaJo.getInt("rejected");
+
+        setEgJoChart(eg_pending_sales,eg_pending_cost_control,eg_pending_finance_manager,eg_pending_ceo,eg_rejected);
+        setKsaJoChart(ksa_pending_sales,ksa_pending_cost_control,ksa_pending_finance_manager,ksa_pending_ceo,ksa_pending_payment,ksa_rejected);
+
+
+//
+//
+//        setJOChart(create,sales_reject,sales_approve,magdy_hold,magdy_approve,hesham_reject,hesham_approve
+//                ,send_to_co,co_reject,co_approve,adel_paid);
 
     }
 
@@ -244,6 +262,7 @@ public class Statistics_single_user extends AppCompatActivity {
 
 
     }
+
     public void setRequestsTypesChart(int requestsPurchasing, int requestsPrinting, int requestsProduction, int requestsPhotography, int requestsExtras) {
 
         AnimatedPieViewConfig config = new AnimatedPieViewConfig();
@@ -273,6 +292,7 @@ public class Statistics_single_user extends AppCompatActivity {
 
 
     }
+
     public void setPurchasingChart(int created, int cancelled, int approved, int haveJo) {
 
         AnimatedPieViewConfig config = new AnimatedPieViewConfig();
@@ -301,6 +321,7 @@ public class Statistics_single_user extends AppCompatActivity {
 
 
     }
+
     public void setPrintingChart(int created, int cancelled, int approved, int haveJo) {
 
         AnimatedPieViewConfig config = new AnimatedPieViewConfig();
@@ -329,6 +350,7 @@ public class Statistics_single_user extends AppCompatActivity {
 
 
     }
+
     public void setProductionChart(int created, int cancelled, int approved, int haveJo) {
 
         AnimatedPieViewConfig config = new AnimatedPieViewConfig();
@@ -357,6 +379,7 @@ public class Statistics_single_user extends AppCompatActivity {
 
 
     }
+
     public void setPhotographyChart(int created, int cancelled, int approved, int haveJo) {
 
         AnimatedPieViewConfig config = new AnimatedPieViewConfig();
@@ -384,6 +407,7 @@ public class Statistics_single_user extends AppCompatActivity {
         photography_chart.start();
 
     }
+
     public void setExtrasChart(int created, int cancelled, int approved, int haveJo) {
 
         AnimatedPieViewConfig config = new AnimatedPieViewConfig();
@@ -412,8 +436,8 @@ public class Statistics_single_user extends AppCompatActivity {
 
     }
 
-    public void setJOChart(int created,int sales_reject, int sales_approve, int cc_hold, int cc_approve,
-                           int fm_reject,int fm_approve,int pending_ceo,int ceo_reject,int ceo_approve,int adel_paid) {
+    public void setEgJoChart(int pending_sales, int pending_cost_control, int pending_finance_manager, int pending_ceo, int rejected) {
+
 
         AnimatedPieViewConfig config = new AnimatedPieViewConfig();
         config
@@ -428,23 +452,47 @@ public class Statistics_single_user extends AppCompatActivity {
                 .textSize(34)
                 .autoSize(true)
                 .pieRadius(170)
-                .legendsWith(findViewById(R.id.jo_legends))
-                .addData(new SimplePieInfo(created, getColor(R.color.text_dark_blue), "Created :" + created))
-                .addData(new SimplePieInfo(sales_reject, getColor(R.color.red), "Sales Reject :" + sales_reject))
-                .addData(new SimplePieInfo(sales_approve, getColor(R.color.gray), "Sales Approve :" + sales_approve))
-                .addData(new SimplePieInfo(cc_hold, getColor(R.color.colorAccent), "CC Hold :" + cc_hold))
-                .addData(new SimplePieInfo(cc_approve, getColor(R.color.green), "CC Approve :" + cc_approve))
-                .addData(new SimplePieInfo(fm_reject, getColor(R.color.more_red), "FM Reject :" + fm_reject))
-                .addData(new SimplePieInfo(fm_approve, getColor(R.color.more_green), "FM Approve :" + fm_approve))
-                .addData(new SimplePieInfo(pending_ceo, getColor(R.color.text_light_blue), "Pending ceo :" + fm_approve))
-                .addData(new SimplePieInfo(ceo_approve, getColor(R.color.between_green), "Ceo Approved :" + ceo_approve))
-                .addData(new SimplePieInfo(ceo_reject, getColor(R.color.between_red), "Ceo Reject :" + ceo_reject))
-                .addData(new SimplePieInfo(adel_paid, getColor(R.color.text_request_gray), "Adel Paid :" + adel_paid))
+                .legendsWith(findViewById(R.id.eg_jo_legends))
+                .addData(new SimplePieInfo(pending_sales, getColor(R.color.text_dark_blue), "Pending Sales :" + pending_sales))
+                .addData(new SimplePieInfo(pending_cost_control, getColor(R.color.red), "Pending Cost Control :" + pending_cost_control))
+                .addData(new SimplePieInfo(pending_finance_manager, getColor(R.color.gray), "Pending Finance Manager :" + pending_finance_manager))
+                .addData(new SimplePieInfo(pending_ceo, getColor(R.color.colorAccent), "Pending CEO :" + pending_ceo))
+                .addData(new SimplePieInfo(rejected, getColor(R.color.more_red), "Rejected  :" + rejected))
 
                 .duration(500);// 持续时间
 
-        jo_chart.applyConfig(config);
-        jo_chart.start();
+        eg_jo_chart.applyConfig(config);
+        eg_jo_chart.start();
+
+    }
+    public void setKsaJoChart(int pending_sales, int pending_cost_control, int pending_finance_manager, int pending_ceo,int pending_payment, int rejected) {
+
+
+        AnimatedPieViewConfig config = new AnimatedPieViewConfig();
+        config
+//                .startAngle(-90)// 起始角度偏移
+                .animatePie(true)
+                .strokeMode(true)
+                .floatUpDuration(500)
+                .floatDownDuration(500)
+                .splitAngle(0.5f)
+                .duration(1000)
+//                .drawText(true)
+                .textSize(34)
+                .autoSize(true)
+                .pieRadius(170)
+                .legendsWith(findViewById(R.id.ksa_jo_legends))
+                .addData(new SimplePieInfo(pending_sales, getColor(R.color.text_dark_blue), "Pending Sales :" + pending_sales))
+                .addData(new SimplePieInfo(pending_cost_control, getColor(R.color.red), "Pending Cost Control :" + pending_cost_control))
+                .addData(new SimplePieInfo(pending_finance_manager, getColor(R.color.gray), "Pending Finance Manager :" + pending_finance_manager))
+                .addData(new SimplePieInfo(pending_ceo, getColor(R.color.colorAccent), "Pending CEO :" + pending_ceo))
+                .addData(new SimplePieInfo(pending_payment, getColor(R.color.green), "Pending Payment  :" + pending_payment))
+                .addData(new SimplePieInfo(rejected, getColor(R.color.more_red), "Rejected  :" + rejected))
+
+                .duration(500);// 持续时间
+
+        ksa_jo_chart.applyConfig(config);
+        ksa_jo_chart.start();
 
     }
 }
