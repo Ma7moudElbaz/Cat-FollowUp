@@ -56,14 +56,14 @@ public class Statistics_projects extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initFields(view);
-        getAllData();
+        getProjectsData(1,getFilterMap(""),"");
     }
 
-    private void getAllData() {
-        getProjectsData(1,getFilterMap(""),"");
-        getProjectsData(1,getFilterMap("1"),"1");
-        getProjectsData(1,getFilterMap("2"),"2");
-    }
+//    private void getAllData() {
+//        getProjectsData(1,getFilterMap(""),"");
+//        getProjectsData(1,getFilterMap("1"),"1");
+//        getProjectsData(1,getFilterMap("2"),"2");
+//    }
 
     private void initFields(View view) {
         ws = new WebserviceContext(getActivity());
@@ -115,22 +115,45 @@ public class Statistics_projects extends Fragment {
 
         Log.e("Object", countryId);
 
-        int total_projects = projectObject.getInt("total_projects");
-        int total_done_projects = projectObject.getInt("total_done_projects");
-        int total_cancel_projects = projectObject.getInt("total_cancel_projects");
-        int total_created_projects = projectObject.getInt("total_created_projects");
-//        int total_havent_request = projectObject.getInt("total_haven\'t_request");
-//        int total_haven_request = projectObject.getInt("total_haven_request");
-        if (countryId.equals("")) {
-            all_projects_no.setText(String.valueOf(total_projects));
-            setAllProjectsChart(total_created_projects, total_done_projects, total_cancel_projects);
-        } else if (countryId.equals("1")) {
-            cat_projects_no.setText(String.valueOf(total_projects));
-            setCatProjectsChart(total_created_projects, total_done_projects, total_cancel_projects);
-        } else if (countryId.equals("2")) {
-            _237_projects_no.setText(String.valueOf(total_projects));
-            set237ProjectsChart(total_created_projects, total_done_projects, total_cancel_projects);
-        }
+
+
+        JSONObject allProjectsObj = projectObject.getJSONObject("ALL");
+
+        int total_projects = allProjectsObj.getInt("total_projects");
+        int total_done_projects = allProjectsObj.getInt("done_projects");
+        int total_cancel_projects = allProjectsObj.getInt("canceled_projects");
+        int total_created_projects = allProjectsObj.getInt("created_projects");
+        int total_havent_request = allProjectsObj.getInt("haven\'t_request");
+        int total_haven_request = allProjectsObj.getInt("have_request");
+        all_projects_no.setText(String.valueOf(total_projects));
+        setAllProjectsChart(total_created_projects, total_done_projects, total_cancel_projects);
+
+
+        JSONObject egProjectsObj = projectObject.getJSONObject("EGY");
+
+        int eg_projects = egProjectsObj.getInt("total_projects");
+        int eg_done_projects = egProjectsObj.getInt("done_projects");
+        int eg_cancel_projects = egProjectsObj.getInt("canceled_projects");
+        int eg_created_projects = egProjectsObj.getInt("created_projects");
+        int eg_havent_request = egProjectsObj.getInt("haven\'t_request");
+        int eg_haven_request = egProjectsObj.getInt("have_request");
+
+        cat_projects_no.setText(String.valueOf(eg_projects));
+        setCatProjectsChart(eg_created_projects, eg_done_projects, eg_cancel_projects);
+
+        JSONObject ksaProjectsObj = projectObject.getJSONObject("KSA");
+
+        int ksa_projects = ksaProjectsObj.getInt("total_projects");
+        int ksa_done_projects = ksaProjectsObj.getInt("done_projects");
+        int ksa_cancel_projects = ksaProjectsObj.getInt("canceled_projects");
+        int ksa_created_projects = ksaProjectsObj.getInt("created_projects");
+        int ksa_havent_request = ksaProjectsObj.getInt("haven\'t_request");
+        int ksa_haven_request = ksaProjectsObj.getInt("have_request");
+
+        _237_projects_no.setText(String.valueOf(ksa_projects));
+        set237ProjectsChart(ksa_created_projects, ksa_done_projects, ksa_cancel_projects);
+
+
     }
 
     public void setAllProjectsChart(int created, int done, int cancelled) {
@@ -217,8 +240,8 @@ public class Statistics_projects extends Fragment {
 
     public Map<String, String> getFilterMap(String country_id) {
         Map<String, String> map = new HashMap<>();
-        map.put("per_page", "2  ");
-        map.put("country_id", country_id);
+//        map.put("per_page", "2  ");
+//        map.put("country_id", country_id);
 //        map.put("user_ids", "3");
 
         return map;

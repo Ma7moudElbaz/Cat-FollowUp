@@ -207,13 +207,13 @@ public interface ServiceInterface {
     @GET("statistics/users")
     Call<ResponseBody> getStatisticsUsers(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
 
-    @GET("statistics/projects")
+    @GET("statistics/project")
     Call<ResponseBody> getStatisticsProjects(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
 
     @GET("statistics/request")
     Call<ResponseBody> getStatisticsRequests(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
 
-    @GET("statistics/jobOrders")
+    @GET("statistics/job-orders")
     Call<ResponseBody> getStatisticsJO(@Header("Authorization") String auth, @Query("page") int pageNo, @QueryMap Map<String, String> filters);
 
 }
